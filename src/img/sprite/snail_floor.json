@@ -1,0 +1,47 @@
+{"frames": {
+
+"snail_floor_1.png":
+{
+	"frame": {"x":0,"y":0,"w":208,"h":173},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":208,"h":173},
+	"sourceSize": {"w":208,"h":173}
+},
+"snail_floor_2.png":
+{
+	"frame": {"x":0,"y":173,"w":208,"h":173},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":208,"h":173},
+	"sourceSize": {"w":208,"h":173}
+},
+"snail_floor_3.png":
+{
+	"frame": {"x":0,"y":346,"w":208,"h":172},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":208,"h":172},
+	"sourceSize": {"w":208,"h":172}
+},
+"snail_floor_4.png":
+{
+	"frame": {"x":0,"y":518,"w":205,"h":171},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":205,"h":171},
+	"sourceSize": {"w":205,"h":171}
+}},
+"animations": {
+	"snail_floor": ["snail_floor_1.png","snail_floor_2.png","snail_floor_3.png","snail_floor_4.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "snail_floor.png",
+	"format": "RGBA8888",
+	"size": {"w":208,"h":689},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:1897b95cffd27437ea816209ebc9bd5f:051d45eb3bd010f4e13ccdc33dbb51ed:8e1a85c87f852099ce89867dd0589992$"
+}
+}

@@ -1,0 +1,51 @@
+{"frames": {
+
+"btn1.png":
+{
+	"frame": {"x":0,"y":0,"w":90,"h":80},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":90,"h":80},
+	"sourceSize": {"w":90,"h":80},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"btn2.png":
+{
+	"frame": {"x":90,"y":0,"w":89,"h":86},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":89,"h":86},
+	"sourceSize": {"w":89,"h":86},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"btn3.png":
+{
+	"frame": {"x":0,"y":86,"w":92,"h":90},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":92,"h":90},
+	"sourceSize": {"w":92,"h":90},
+	"anchor": {"x":0.5,"y":0.5}
+},
+"btn4.png":
+{
+	"frame": {"x":92,"y":86,"w":86,"h":90},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":86,"h":90},
+	"sourceSize": {"w":86,"h":90},
+	"anchor": {"x":0.5,"y":0.5}
+}},
+"animations": {
+	"btn": ["btn1.png","btn2.png","btn3.png","btn4.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "btn.png",
+	"format": "RGBA8888",
+	"size": {"w":179,"h":176},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:9267240b360cfbd875a646c579e4f6a5:26098519098869ca048cc21eba91f9ea:382bbd42eff5a2b763aa915dc00d7597$"
+}
+}

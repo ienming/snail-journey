@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dist/main.css">
+</head>
+<body>
+    <div id="app">
+        <transition name="fade">
+            <div id="loading" v-if="nowLoading">
+                <div class="wrapper">
+                    <h1 @click="startGame">START</h1>
+                </div>
+            </div>
+        </transition>
+        <div id="canvasContainer"></div>
+        <transition name="fade">
+            <div class="mock" v-show="popup">
+                <div class="wrapper">
+                    <div id="imgCanvasContainer" v-show="animatedSpriteSpeak"></div>
+                    <div v-show="!animatedSpriteSpeak" class="mr-2" id="imgStaticContainer">
+                        <img :src="itemSpeakImgSrc" alt="">
+                    </div>
+                    <div class="popup">
+                        <!-- 不管怎樣都會有的見面招呼語 -->
+                        <div>
+                            <p v-if="nowSpeak == undefined">
+                                This is {{ itemSpeak }} speaking
+                            </p>
+                            <p v-else>
+                                <p>{{ nowSpeak }}</p>
+                                <p>{{ nowPopupText }}</p>
+                            </p>
+                            <div>
+                                {{gameSpeak}}
+                            </div>
+                        </div>
+                        <!-- 有認養行動案就顯示 -->
+                        <button v-if="adoptable" @click="switchProgram">認養行動案:{{program.name}}</button>
+                        <!-- 跳轉到行動案的視窗 -->
+                        <div v-if="showProgram">
+                            <p>認養行動案：{{program.name}}</p>
+                            <p>{{program.description}}</p>
+                            <form action="">
+                                <p>表單測試</p>
+                                <input type="text" />
+                            </form>
+                        </div>
+                        <!-- Close Button -->
+                        <div class="close" @click="switchPopup">
+                            <img src="src/img/icons/close.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </div>
+    
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <!-- PIXI -->
+    <script src="https://pixijs.download/release/pixi.js"></script>
+    <script src="https://unpkg.com/@pixi/sound/dist/pixi-sound.js"></script>
+    <!-- GSAP -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.js' integrity='sha512-1KGTH8Epj8H43YrKn130fyDzVvNn2YMoyYy6TmF2tgemLZ4sfSoAxRSPq9li4BKHdoON4GwwQUMPL2gFreHSbw==' crossorigin='anonymous'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/PixiPlugin.min.js" integrity="sha512-sSYM7MQVTmI4X9VmroJBmkixnxxX6TFRKfzXgFg7PXWz7VeYwGgEeqK7cVRZPFw30sjH3aZOhiwLv6ObJpoWRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Custom -->
+    <!-- <script type="module" src="assets/js/main.js"></script> -->
+    <script type="module" src="dist/main.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data: {
+                nowLoading: true,
+                popup: false,
+                animatedSpriteSpeak: false,
+                adoptable: false,
+                program: undefined,
+                showProgram: false,
+                nowSpeak: undefined,
+                itemClicked: false,
+                itemSpeak: undefined,
+                nowPopupText: undefined,
+                gameState: 'progress',
+                gameSpeak: undefined
+            },
+            computed: {
+                itemSpeakImgSrc(){
+                    if (this.itemSpeak !== undefined){
+                        if (!this.animatedSpriteSpeak){
+                            return `src/img/${this.itemSpeak}.png`
+                        }
+                    }
+                }
+            },
+            mounted() {
+                console.log("vue completed load")
+            },
+            methods: {
+                switchPopup(){
+                    this.popup = !this.popup
+                    window.setTimeout(()=>{
+                        this.showProgram = false
+                        this.animatedSpriteSpeak = false
+                    }, 100)
+                },
+                switchProgram(){
+                    this.showProgram = true
+                },
+                startGame(){
+                    this.nowLoading = false
+                }
+            }
+        })
+    </script>
+    <script>
+        // popup image canvas
+        // init
+        let imgCanvasContainer = document.querySelector("#imgCanvasContainer")
+        let imgCanvasApp = new PIXI.Application({
+            backgroundColor: 0x000000,
+            antialias: true,
+            backgroundAlpha: 0
+        })
+        imgCanvasApp.renderer.resize(300, 300)
+        imgCanvasContainer.appendChild(imgCanvasApp.view)
+
+        // animatedSprite
+        imgCanvasApp.loader.add('spritesheet', 'src/img/sprite/snail_floor.json')
+            .load(onAssetsLoaded)
+
+        function onAssetsLoaded(){
+            let uiContainer = new PIXI.Container()
+            let uiTextures = []
+
+            let uiBaseTexture = new PIXI.Texture.from(`src/img/sprite/snail_floor_color.png`)
+            let uiBase = new PIXI.Sprite(uiBaseTexture)
+            uiBase.anchor.set(0.5)
+            uiBase.x = 155
+            uiBase.y = 150
+
+            for (let i=0; i< 4; i++){
+                let texture = PIXI.Texture.from(`snail_floor_${i + 1}.png`)
+                uiTextures.push(texture)
+            }
+
+            ui = new PIXI.AnimatedSprite(uiTextures)
+            ui.anchor.set(0.5)
+            ui.x = 150
+            ui.y = 150
+            ui.animationSpeed = .03
+            ui.play()
+
+            uiContainer.addChild(uiBase)
+            uiContainer.addChild(ui)
+
+            imgCanvasApp.stage.addChild(uiContainer)
+
+            let counter = 0
+            let v = 0.1
+            imgCanvasApp.ticker.add(()=>{
+                uiContainer.x -= v
+                counter ++
+                if (counter > 300){
+                    v *= -1
+                    counter = 0
+                }
+            })
+        }
+    </script>
+</body>
+</html>

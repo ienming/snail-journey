@@ -1,0 +1,22 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "node-sass": "^7.0.1",
+    "sass-loader": "^12.6.0",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "scripts": {
+    "watch": "webpack --watch --mode development",
+    "start": "webpack --mode development",
+    "deploy": "webpack"
+  },
+  "dependencies": {
+    "axios": "^0.26.0"
+  }
+}
