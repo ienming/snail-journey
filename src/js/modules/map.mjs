@@ -41,7 +41,7 @@ function onDragMove() {
 }
 
 function createMap(){
-    let mapTexture = new PIXI.Texture.from('../src/img/roads.png')
+    let mapTexture = new PIXI.Texture.from('../../img/roads.png')
     let map = new PIXI.Sprite(mapTexture)
     // set the transform origin and anchor point of the image which will effect the starting point of the image
     map.anchor.set(0.5) //center center
