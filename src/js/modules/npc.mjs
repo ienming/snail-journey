@@ -42,7 +42,7 @@ function createNormalHouse(){
 }
 
 function createItem(el){
-    let texture = new PIXI.Texture.from(`../src/img/${el.name}.png`)
+    let texture = new PIXI.Texture.from(`./src/img/${el.name}.png`)
     let item = new PIXI.Sprite(texture)
     item.name = el.name
     item.x = el.x*scale
