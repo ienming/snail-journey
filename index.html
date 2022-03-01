@@ -48,9 +48,18 @@
                             <p v-else>
                                 <p>{{ nowSpeak }}</p>
                             </p>
-                            <div v-if="gameState">
-                                <button @click="gameNext">好啊</button>
-                                <button @click="gameDeny">不了</button>
+                            <div class="game-ui">
+                                <!-- 承接尚未開啟的任務時的按鈕 -->
+                                <div v-show="nowNPC !== undefined && nowStateOnNPC == 'notyet'">
+                                    <button @click="gameNext">好啊</button>
+                                    <button @click="gameDeny">不了</button>
+                                </div>
+                                <div v-show="nowNPC !== undefined && nowStateOnNPC == 'accept'">
+                                    <button @click="gameNext(); switchPopup();">OK</button>
+                                </div>
+                                <div v-show="nowNPC !== undefined && nowStateOnNPC == 'progress'||'complete'||'finish'">
+                                    <button @click="pureNext">OK</button>
+                                </div>
                             </div>
                         </div>
                         <!-- 有認養行動案就顯示 -->
@@ -97,7 +106,6 @@
                 nowSpeak: undefined,
                 itemClicked: false,
                 itemSpeak: undefined,
-                gameState: true,
                 nowNPC: undefined,
                 user: {
                     gameState: {
@@ -105,7 +113,8 @@
                         block2: 'progress',
                         block3: 'complete'
                     }
-                }
+                },
+                test: undefined
             },
             computed: {
                 itemSpeakImgSrc(){
@@ -114,6 +123,9 @@
                             return `src/img/${this.itemSpeak}.png`
                         }
                     }
+                },
+                nowStateOnNPC(){
+                    return this.user.gameState[`block${this.nowNPC.block}`]
                 }
             },
             mounted() {
@@ -135,24 +147,36 @@
                 },
                 gameDeny(){
                     this.nowSpeak = this.nowNPC.gameSpeak.deny
-                    this.gameState = false
                 },
                 gameNext(){
-                    console.log("推到下一階段")
-                    switch (this.user.gameState[`block${this.nowNPC.block}`]){ //用現在點到的 NPC 區域來判斷目前使用者在這個區塊的遊戲階段
+                    switch (this.nowStateOnNPC){ //用現在點到的 NPC 區域來判斷目前使用者在這個區塊的遊戲階段
                         case 'notyet':
-                            this.user.gameState[`block${this.nowNPC.block}`] = 'progress' //如果是 notyet 就把這個區塊的遊戲階段推到下一個階段
+                            console.log("前往accept")
+                            this.nowSpeak = this.nowNPC.gameSpeak.accept
+                            this.user.gameState[`block${this.nowNPC.block}`] = 'accept' //如果是 notyet 就把這個區塊的遊戲階段推到下一個階段
+                            break;
+                        case 'accept':
+                            console.log("前往progress")
+                            this.user.gameState[`block${this.nowNPC.block}`] = 'progress'
                             break;
                         case 'progress':
+                            console.log("前往complete")
                             this.user.gameState[`block${this.nowNPC.block}`] = 'complete'
                             break;
+                        case 'complete':
+                            console.log("前往finish")
+                            this.user.gameState[`block${this.nowNPC.block}`] = 'finish'
+                            break;
                     }
+                },
+                pureNext(){ // 純粹的下一步，不會切換狀態
+                    console.log("純粹的下一步，不會切換狀態")
                 }
             }
         })
     </script>
+    <!-- popup image canvas -->
     <script>
-        // popup image canvas
         // init
         let imgCanvasContainer = document.querySelector("#imgCanvasContainer")
         let imgCanvasApp = new PIXI.Application({

@@ -87,7 +87,8 @@ let fetchItems = async () => {
                     accept: d[keyMap.game_speak_a],
                     deny: d[keyMap.game_speak_d],
                     finish: d[keyMap.game_speak_f]
-                }
+                },
+                inGame: d[keyMap.in_game]
             };
             let speakStartCol = d.length - speaksNum
             let speaksArr = [];

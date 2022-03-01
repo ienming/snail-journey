@@ -83,9 +83,10 @@ function createItem(el){
             switch (el.block){ //用物件本身的資料區域去對應目前使用者在該區塊的遊戲階段
                 case '1':
                     console.log("I'm from block 1")
-                    if (el.gameSpeak[vm.$data.user.gameState.block1]){
+                    if (el.gameSpeak[vm.$data.user.gameState.block1] && el.inGame == true){ //把使用者在某區塊的遊戲階段對應回去物件身上在該階段應該說的話
+                        // 且目前的順序這個 NPC 有話要說
                         vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block1]
-                    }else {
+                    } else {
                         speakRandomly(el)
                     }
                     break;
@@ -93,7 +94,7 @@ function createItem(el){
                     console.log("I'm from block 2")
                     if (el.gameSpeak[vm.$data.user.gameState.block2]){
                         vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block2]
-                    }else {
+                    } else {
                         speakRandomly(el)
                     }
                     break;
@@ -101,7 +102,7 @@ function createItem(el){
                     console.log("I'm from block 3")
                     if (el.gameSpeak[vm.$data.user.gameState.block3]){
                         vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block3]
-                    }else {
+                    } else {
                         speakRandomly(el)
                     }
                     break;
