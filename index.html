@@ -6,9 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="dist/main.css">
+    <style>
+        #userState{
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 99;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
+        <!-- 測試使用者狀態 -->
+        <div id="userState">
+            <h3>User State:</h3>
+            <ul>
+                <li v-for="(el,idx) of user.gameState"><span>{{idx}}: </span> {{ el }}</li>
+            </ul>
+        </div>
         <transition name="fade">
             <div id="loading" v-if="nowLoading">
                 <div class="wrapper">
@@ -32,10 +47,10 @@
                             </p>
                             <p v-else>
                                 <p>{{ nowSpeak }}</p>
-                                <p>{{ nowPopupText }}</p>
                             </p>
-                            <div>
-                                {{gameSpeak}}
+                            <div v-if="gameState">
+                                <button @click="gameNext">好啊</button>
+                                <button @click="gameDeny">不了</button>
                             </div>
                         </div>
                         <!-- 有認養行動案就顯示 -->
@@ -68,7 +83,6 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.js' integrity='sha512-1KGTH8Epj8H43YrKn130fyDzVvNn2YMoyYy6TmF2tgemLZ4sfSoAxRSPq9li4BKHdoON4GwwQUMPL2gFreHSbw==' crossorigin='anonymous'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/PixiPlugin.min.js" integrity="sha512-sSYM7MQVTmI4X9VmroJBmkixnxxX6TFRKfzXgFg7PXWz7VeYwGgEeqK7cVRZPFw30sjH3aZOhiwLv6ObJpoWRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Custom -->
-    <!-- <script type="module" src="assets/js/main.js"></script> -->
     <script type="module" src="dist/main.js"></script>
     <script>
         const vm = new Vue({
@@ -83,9 +97,15 @@
                 nowSpeak: undefined,
                 itemClicked: false,
                 itemSpeak: undefined,
-                nowPopupText: undefined,
-                gameState: 'progress',
-                gameSpeak: undefined
+                gameState: true,
+                nowNPC: undefined,
+                user: {
+                    gameState: {
+                        block1: 'notyet',
+                        block2: 'progress',
+                        block3: 'complete'
+                    }
+                }
             },
             computed: {
                 itemSpeakImgSrc(){
@@ -112,6 +132,21 @@
                 },
                 startGame(){
                     this.nowLoading = false
+                },
+                gameDeny(){
+                    this.nowSpeak = this.nowNPC.gameSpeak.deny
+                    this.gameState = false
+                },
+                gameNext(){
+                    console.log("推到下一階段")
+                    switch (this.user.gameState[`block${this.nowNPC.block}`]){ //用現在點到的 NPC 區域來判斷目前使用者在這個區塊的遊戲階段
+                        case 'notyet':
+                            this.user.gameState[`block${this.nowNPC.block}`] = 'progress' //如果是 notyet 就把這個區塊的遊戲階段推到下一個階段
+                            break;
+                        case 'progress':
+                            this.user.gameState[`block${this.nowNPC.block}`] = 'complete'
+                            break;
+                    }
                 }
             }
         })

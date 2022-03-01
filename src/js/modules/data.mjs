@@ -18,31 +18,35 @@ let fetchSnails = async () => {
     if (response.data){
         let rows = response.data.split("\n");
         let output = [];
+        let keyMap = {};
+        console.log(rows[0].split(","))
+        for (let i =0; i<rows[0].length; i++){
+            keyMap[rows[0].split(",")[i]] = i
+        }
         rows.shift();
         rows.forEach((el) => {
             let d = el.split(",");
             let obj = {
-                name: d[0],
-                x: d[1],
-                y: d[2],
-                adoptable: d[3],
-                animated: d[4],
+                name: d[keyMap.name],
+                x: d[keyMap.x],
+                y: d[keyMap.y],
+                adoptable: d[keyMap.adoptable],
+                animated: d[keyMap.animated],
                 program: {
-                    name: d[5],
-                    description: d[6]
+                    name: d[keyMap.program_name],
+                    description: d[keyMap.program_description]
                 }
             };
             let speakStartCol = d.length - speaksNum
             let speaksArr = [];
             for (let i = speakStartCol; i < speakStartCol + speaksNum; i++) {
-                if (d[i] !== ''){
+                if (d[i] !== '' && d[i] !== '\r'){
                     speaksArr.push(d[i])
                 }
             }
             obj.speaks = speaksArr;
             output.push(obj);
         });
-        console.log("output: "+output[0].speaks)
         return output
     }else{
         return
@@ -64,25 +68,37 @@ let fetchItems = async () => {
     if (response.data){
         let rows = response.data.split("\n");
         let output = [];
+        let keyMap = {};
+        for (let i =0; i<rows[0].length; i++){
+            keyMap[rows[0].split(",")[i]] = i
+        }
         rows.shift();
         rows.forEach((el) => {
             let d = el.split(",");
             let obj = {
-                name: d[0],
-                x: d[1],
-                y: d[2],
+                name: d[keyMap.name],
+                x: d[keyMap.x],
+                y: d[keyMap.y],
+                block: d[keyMap.block],
+                gameSpeak: {
+                    notyet: d[keyMap.game_speak_n],
+                    progress: d[keyMap.game_speak_p],
+                    complete: d[keyMap.game_speak_c],
+                    accept: d[keyMap.game_speak_a],
+                    deny: d[keyMap.game_speak_d],
+                    finish: d[keyMap.game_speak_f]
+                }
             };
             let speakStartCol = d.length - speaksNum
             let speaksArr = [];
             for (let i = speakStartCol; i < speakStartCol + speaksNum; i++) {
-                if (d[i] !== ''){
+                if (d[i] !== '' && d[i] !== '\r'){
                     speaksArr.push(d[i])
                 }
             }
             obj.speaks = speaksArr;
             output.push(obj);
         });
-        console.log("output: "+output[0].speaks)
         return output
     }else{
         return

@@ -10,7 +10,7 @@ function createSnail(){
         snails = res
         for (let i =0; i<snails.length; i++){
             createItem(snails[i])
-            console.log(snails[i])
+            // console.log('Snails: '+snails[i])
         }
     }
     waitSnails()
@@ -23,7 +23,7 @@ function createInteractiveItem(){
         items = res
         for (let i =0; i<items.length; i++){
             createItem(items[i])
-            console.log(items[i])
+            // console.log('Items: '+items[i])
         }
     }
     waitItems()
@@ -59,15 +59,14 @@ function createItem(el){
             vm.$data.itemClicked = true
             vm.$data.popup = !vm.$data.popup
             vm.$data.itemSpeak = el.name
+            vm.$data.nowNPC = el
             // 抽籤決定 NPC 要講哪一句話
             if (el.speaks){
-                let randomSentenceNum = getRandom(0, el.speaks.length-1)
-                vm.$data.nowSpeak = el.speaks[randomSentenceNum]
+                speakRandomly(el)
             }else{
                 vm.$data.nowSpeak = undefined
             }
             // 決定要不要放動畫的角色
-            console.log(el.animated)
             if (el.animated == 1){
                 vm.$data.animatedSpriteSpeak = true
             }else {
@@ -81,25 +80,38 @@ function createItem(el){
                 vm.$data.adoptable = false
             }
             // 切換遊戲進度中講的話
-            if (el.gameSpeak){
-                switch (vm.$data.gameState){
-                    case 'notyet': 
-                        vm.$data.gameSpeak = el.gameSpeak.notyet
-                        break;
-                    case 'progress':
-                        vm.$data.gameSpeak = el.gameSpeak.progress
-                        break;
-                    case 'finished':
-                        vm.$data.gameSpeak = el.gameSpeak.finished
-                        break;
-                }
+            switch (el.block){ //用物件本身的資料區域去對應目前使用者在該區塊的遊戲階段
+                case '1':
+                    console.log("I'm from block 1")
+                    if (el.gameSpeak[vm.$data.user.gameState.block1]){
+                        vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block1]
+                    }else {
+                        speakRandomly(el)
+                    }
+                    break;
+                case '2':
+                    console.log("I'm from block 2")
+                    if (el.gameSpeak[vm.$data.user.gameState.block2]){
+                        vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block2]
+                    }else {
+                        speakRandomly(el)
+                    }
+                    break;
+                case '3':
+                    console.log("I'm from block 3")
+                    if (el.gameSpeak[vm.$data.user.gameState.block3]){
+                        vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block3]
+                    }else {
+                        speakRandomly(el)
+                    }
+                    break;
             }
             clickSoundEffect() //點擊音效
             window.setTimeout(()=>{ // 點擊後離開點擊狀態，解決抓住地圖不放的問題
                 vm.$data.itemClicked = false
             }, 300)
         })
-    item.mouseover = function(){
+    item.mouseover = function(){ //hover時的放大效果
         gsap.to(this, .2, {
             pixi: {
                 scaleX: scale*1.18,
@@ -113,6 +125,11 @@ function createItem(el){
     }
 
     allContainer.addChild(item)
+}
+
+function speakRandomly(el){
+    let randomSentenceNum = getRandom(0, el.speaks.length-1)
+    vm.$data.nowSpeak = el.speaks[randomSentenceNum]
 }
 
 export {createSnail, createInteractiveItem, createNormalHouse, createItem}
