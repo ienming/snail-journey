@@ -4,7 +4,8 @@ import {fetchSnails, fetchItems, normalHouses} from './data.mjs'
 
 // Mission flow map test
 let gameFlow = {
-    mission1: ['bike', 'house_cinemaroll', 'house_literature', 'house_cinemaroll', 'house_literature', 'bike']
+    mission1: ['bike', 'house_cinemaroll', 'house_literature', 'bike'],
+    mission2: []
 }
 
 // Snail
@@ -15,7 +16,6 @@ function createSnail(){
         snails = res
         for (let i =0; i<snails.length; i++){
             createItem(snails[i])
-            // console.log('Snails: '+snails[i])
         }
     }
     waitSnails()
@@ -28,7 +28,6 @@ function createInteractiveItem(){
         items = res
         for (let i =0; i<items.length; i++){
             createItem(items[i])
-            // console.log('Items: '+items[i])
         }
     }
     waitItems()
@@ -60,7 +59,6 @@ function createItem(el){
     }
     item
         .on("pointerdown", ()=>{
-            console.log("點擊到："+el.name)
             vm.$data.itemClicked = true
             vm.$data.popup = !vm.$data.popup
             vm.$data.itemSpeak = el.name
@@ -86,10 +84,9 @@ function createItem(el){
             }
             // 
             // 主線探索遊戲邏輯
-            if (el.mission){
-                console.log(`I'm from mission${el.mission}`)
+            if (el.mission && gameFlow[`mission${el.mission}`].indexOf('finished') == -1){ //此NPC有任務而且該任務還沒完成
                 // 首先確認是不是點到開啟新任務的NPC
-                if (el.enterGame == 0 && vm.$data.user.gameProgress[`mission${el.mission}`].length == 0){ //而且玩家這條任務還沒開啟
+                if (el.enterGame == 1 && vm.$data.user.gameProgress[`mission${el.mission}`].length == 0){ //而且玩家這條任務還沒開啟
                     vm.$data.showMissionBtn = 'notyet'
                     vm.$data.nowSpeak = el.gameSpeak.notyet
                 }else if (vm.$data.user.gameProgress[`mission${el.mission}`].length > 0){  //確認NPC所屬的這條任務是不是開啟
@@ -103,19 +100,26 @@ function createItem(el){
                     }
                     console.log("要被推入的NPC："+el.name)
                     arr.push(el.name)
-                    if (arrayEquals(arr, gameFlow.mission1.slice(0, arr.length))){ //確認順序是不是正確的
+                    if (arrayEquals(arr, gameFlow[`mission${el.mission}`].slice(0, arr.length))){ //確認順序是不是正確的
                         vm.$data.user.gameProgress[`mission${el.mission}`].push(el.name)
                         vm.$data.nowSpeak = el.gameSpeak.progress
                         console.log("點對人了")
+                        // 結束遊戲
+                        if (arr.length == gameFlow[`mission${el.mission}`].length){
+                            console.log(`任務${el.mission}完成！`)
+                            vm.$data.nowSpeak = el.gameSpeak.complete
+                            gameFlow[`mission${el.mission}`].push('finished')
+                        }
                     }else{
                         console.log("順序錯了，不是找我")
                         console.log("目前的順序："+arr)
-                        console.log("正確的順序："+gameFlow.mission1.slice(0, arr.length))
+                        console.log("正確的順序："+gameFlow[`mission${el.mission}`].slice(0, arr.length))
                     }
                 }else{
-                    console.log("任務尚未開啟")
-                    speakRandomly(el)
+                    console.log(`任務${el.mission}尚未開啟`)
                 }
+            }else{
+                console.log("沒有任務喔～")
             }
             // 
             // 

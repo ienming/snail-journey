@@ -122,7 +122,7 @@
                     }
                 },
                 nowMissionProgress(){
-                    return this.user.gameProgress[`mission${this.nowNPC.mission}`].length
+                    return this.user.gameProgress[`mission${this.nowNPC.mission}`]
                 }
             },
             mounted() {
@@ -153,7 +153,6 @@
                     this.user.gameProgress[`mission${this.nowNPC.mission}`].push(this.nowNPC.name)
                 },
                 pureNext(){
-                    console.log("純粹的下一步，不會切換狀態")
                     this.switchPopup()
                 }
             }

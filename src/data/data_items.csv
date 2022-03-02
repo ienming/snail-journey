@@ -1,5 +1,5 @@
-﻿name,x,y,block,mission,enter_game,leave_game,game_speak_n,game_speak_p,game_speak_c,game_speak_a,game_speak_d,game_speak_f,speak1,speak2,speak3,speak4,speak5,speak6
-bike,-650,-300,1,1,0,,可以幫我修腳踏車嗎,還沒修好嗎,修好了！,真是感謝你，可以請你去問一下那塊板子我的汽油放在哪裡嗎？,小氣鬼,感激不盡，這樣以後我就可以快樂的玩耍了,腳踏車腳踏車,,,,,
-house_cinemaroll,530,350,1,1,1,,,我說我說我說這是肉桂捲欸，蛤板子,,,,,肉桂捲肉桂捲,今天又下雨,頭開始痛,,,
-house_literature,1000,-200,1,1,2,,,今天要說故事，板子放在我家床上你自己去拿,,,,,想下班了,,,,,
-board,-900,100,2,2,,,最近身上灰塵很多,怎麼還沒清乾淨啊,感謝你！,,,,,,,,,
+﻿name,x,y,mission,enter_game,game_speak_n,game_speak_p,game_speak_c,game_speak_a,game_speak_d,game_speak_f,speak1,speak2,speak3,speak4,speak5,speak6
+bike,-650,-300,1,1,可以幫我修腳踏車嗎,還沒修好嗎,修好了！,真是感謝你，可以請你去問一下那塊板子我的汽油放在哪裡嗎？,小氣鬼,感激不盡，這樣以後我就可以快樂的玩耍了,腳踏車腳踏車,,,,,
+house_cinemaroll,530,350,1,,,我說我說我說這是肉桂捲欸，蛤板子,,,,,肉桂捲肉桂捲,今天又下雨,頭開始痛,,,
+house_literature,1000,-200,1,,,今天要說故事，板子放在我家床上你自己去拿,,,,,想下班了,,,,,
+board,-900,100,2,,最近身上灰塵很多,怎麼還沒清乾淨啊,感謝你！,,,,,,,,,
