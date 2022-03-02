@@ -34,4 +34,11 @@ function getRandom(min, max){
     return Math.floor(Math.random()*(max-min+1))+min
 }
 
-export {canvasContainer, canvasWidth, canvasHeight, app, scale, allContainer, getRandom}
+function arrayEquals(a, b) {
+    return Array.isArray(a) &&
+        Array.isArray(b) &&
+        a.length === b.length &&
+        a.every((val, index) => val === b[index]);
+}
+
+export {canvasContainer, canvasWidth, canvasHeight, app, scale, allContainer, getRandom, arrayEquals}

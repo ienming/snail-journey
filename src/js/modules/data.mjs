@@ -97,7 +97,9 @@ let fetchItems = async () => {
                     speaksArr.push(d[i])
                 }
             }
-            obj.speaks = speaksArr;
+            if (speaksArr.length > 0){
+                obj.speaks = speaksArr;
+            }
             output.push(obj);
         });
         return output

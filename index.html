@@ -21,7 +21,7 @@
         <div id="userState">
             <h3>User State:</h3>
             <ul>
-                <li v-for="(el,idx) of user.gameProgress"><span>{{idx}}: </span> {{ el }}</li>
+                <li v-for="(el,idx) of user.missions"><span>{{idx}}: </span> {{ el }}</li>
             </ul>
         </div>
         <transition name="fade">
@@ -106,7 +106,7 @@
                 nowNPC: undefined,
                 showMissionBtn: false,
                 user: {
-                    gameProgress: {
+                    missions: {
                         mission1: [],
                         mission2: [],
                         mission3: [],
@@ -122,11 +122,33 @@
                     }
                 },
                 nowMissionProgress(){
-                    return this.user.gameProgress[`mission${this.nowNPC.mission}`]
+                    return this.user.missions[`mission${this.nowNPC.mission}`]
                 }
+            },
+            created(){
+                let missionRecorded = JSON.parse(localStorage.getItem('missions'))
+                if (missionRecorded){ //如果有已經儲存的任務資料
+                    this.user.missionRecorded = missionRecorded //放到 Vue 裏面
+                    for (prop in missionRecorded){
+                        this.user.missions[prop] = missionRecorded[prop] // 讓前臺拉出紀錄同步，所以遊戲可以進行
+                    }
+                }
+                console.log('missionRecorded: ')
+                console.log(missionRecorded)
             },
             mounted() {
                 console.log("vue completed load")
+            },
+            watch: {
+                'user.missions': {
+                    handler: function(newValue, oldValue){
+                        console.log("任務資料有變動，開始儲存")
+                        let d = JSON.stringify(newValue)
+                        console.log('d: '+d)
+                        this.storageData('missions', d)
+                    },
+                    deep: true
+                }
             },
             methods: {
                 switchPopup(){
@@ -150,10 +172,13 @@
                     console.log("開啟新任務")
                     this.nowSpeak = this.nowNPC.gameSpeak.accept
                     this.showMissionBtn = 'progress'
-                    this.user.gameProgress[`mission${this.nowNPC.mission}`].push(this.nowNPC.name)
+                    this.user.missions[`mission${this.nowNPC.mission}`].push(this.nowNPC.name)
                 },
                 pureNext(){
                     this.switchPopup()
+                },
+                storageData(key, value){
+                    localStorage.setItem(key, value)
                 }
             }
         })

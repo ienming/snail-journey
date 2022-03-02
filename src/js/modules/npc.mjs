@@ -1,12 +1,7 @@
 import {scale, allContainer, getRandom } from './global.mjs'
 import {clickSoundEffect} from './sound.mjs'
 import {fetchSnails, fetchItems, normalHouses} from './data.mjs'
-
-// Mission flow map test
-let gameFlow = {
-    mission1: ['bike', 'house_cinemaroll', 'house_literature', 'bike'],
-    mission2: []
-}
+import {missionStart} from './game.mjs'
 
 // Snail
 function createSnail(){
@@ -82,47 +77,7 @@ function createItem(el){
             }else{
                 vm.$data.adoptable = false
             }
-            // 
-            // 主線探索遊戲邏輯
-            if (el.mission && gameFlow[`mission${el.mission}`].indexOf('finished') == -1){ //此NPC有任務而且該任務還沒完成
-                // 首先確認是不是點到開啟新任務的NPC
-                if (el.enterGame == 1 && vm.$data.user.gameProgress[`mission${el.mission}`].length == 0){ //而且玩家這條任務還沒開啟
-                    vm.$data.showMissionBtn = 'notyet'
-                    vm.$data.nowSpeak = el.gameSpeak.notyet
-                }else if (vm.$data.user.gameProgress[`mission${el.mission}`].length > 0){  //確認NPC所屬的這條任務是不是開啟
-                    console.log("任務已開啟，目前階段： "+vm.$data.user.gameProgress[`mission${el.mission}`].length)
-                    let arr = []
-                    arr = vm.$data.user.gameProgress[`mission${el.mission}`].slice(0)
-                    if (el.name == arr[arr.length-1]) { //如果點到的跟上一個一樣
-                        vm.$data.nowSpeak = el.gameSpeak.progress //再講一次一樣的提示
-                        console.log("同一NPC, 尚未前往下一階段")
-                        return
-                    }
-                    console.log("要被推入的NPC："+el.name)
-                    arr.push(el.name)
-                    if (arrayEquals(arr, gameFlow[`mission${el.mission}`].slice(0, arr.length))){ //確認順序是不是正確的
-                        vm.$data.user.gameProgress[`mission${el.mission}`].push(el.name)
-                        vm.$data.nowSpeak = el.gameSpeak.progress
-                        console.log("點對人了")
-                        // 結束遊戲
-                        if (arr.length == gameFlow[`mission${el.mission}`].length){
-                            console.log(`任務${el.mission}完成！`)
-                            vm.$data.nowSpeak = el.gameSpeak.complete
-                            gameFlow[`mission${el.mission}`].push('finished')
-                        }
-                    }else{
-                        console.log("順序錯了，不是找我")
-                        console.log("目前的順序："+arr)
-                        console.log("正確的順序："+gameFlow[`mission${el.mission}`].slice(0, arr.length))
-                    }
-                }else{
-                    console.log(`任務${el.mission}尚未開啟`)
-                }
-            }else{
-                console.log("沒有任務喔～")
-            }
-            // 
-            // 
+            missionStart(el) // 主線探索遊戲邏輯
             clickSoundEffect() //點擊音效
             window.setTimeout(()=>{ // 點擊後離開點擊狀態，解決抓住地圖不放的問題
                 vm.$data.itemClicked = false
@@ -147,13 +102,6 @@ function createItem(el){
 function speakRandomly(el){
     let randomSentenceNum = getRandom(0, el.speaks.length-1)
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
-}
-
-function arrayEquals(a, b) {
-    return Array.isArray(a) &&
-        Array.isArray(b) &&
-        a.length === b.length &&
-        a.every((val, index) => val === b[index]);
 }
 
 export {createSnail, createInteractiveItem, createNormalHouse, createItem}
