@@ -17,6 +17,8 @@
 </head>
 <body>
     <div id="app">
+        <!-- Header -->
+        <my-header @switch-personalpage="switchPersonalPage"></my-header>
         <!-- 測試使用者狀態 -->
         <div id="userState">
             <h3>User State:</h3>
@@ -24,6 +26,7 @@
                 <li v-for="(el,idx) of user.missions"><span>{{idx}}: </span> {{ el }}</li>
             </ul>
         </div>
+        <!-- 進場動畫 -->
         <transition name="fade">
             <div id="loading" v-if="nowLoading">
                 <div class="wrapper">
@@ -31,7 +34,15 @@
                 </div>
             </div>
         </transition>
+        <!-- 主要遊戲畫面 -->
         <div id="canvasContainer"></div>
+        <!-- Personal Page -->
+        <transition name="fade">
+            <div v-show="showPersonalPage" class="personal-page">
+                <p>Personal Page</p>
+                <div id="personalCanvasContainer"></div>
+            </div>
+        </transition>
         <transition name="fade">
             <div class="mock" v-show="popup">
                 <div class="wrapper">
@@ -81,7 +92,8 @@
     </div>
     
     <!-- Vue -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <!-- PIXI -->
     <script src="https://pixijs.download/release/pixi.js"></script>
     <script src="https://unpkg.com/@pixi/sound/dist/pixi-sound.js"></script>
@@ -89,6 +101,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.js' integrity='sha512-1KGTH8Epj8H43YrKn130fyDzVvNn2YMoyYy6TmF2tgemLZ4sfSoAxRSPq9li4BKHdoON4GwwQUMPL2gFreHSbw==' crossorigin='anonymous'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/PixiPlugin.min.js" integrity="sha512-sSYM7MQVTmI4X9VmroJBmkixnxxX6TFRKfzXgFg7PXWz7VeYwGgEeqK7cVRZPFw30sjH3aZOhiwLv6ObJpoWRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Custom -->
+    <script src="src/js/components.js"></script>
     <script type="module" src="dist/main.js"></script>
     <script>
         const vm = new Vue({
@@ -96,6 +109,7 @@
             data: {
                 nowLoading: true,
                 popup: false,
+                showPersonalPage: false,
                 animatedSpriteSpeak: false,
                 adoptable: false,
                 program: undefined,
@@ -157,6 +171,10 @@
                         this.showProgram = false
                         this.animatedSpriteSpeak = false
                     }, 100)
+                },
+                switchPersonalPage(){
+                    this.showPersonalPage = !this.showPersonalPage
+                    console.log("Vue外層已收到")
                 },
                 switchProgram(){
                     this.showProgram = true

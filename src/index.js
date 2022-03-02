@@ -21,11 +21,14 @@ import {
     createInteractiveItem,
     createNormalHouse,
 } from "./js/modules/npc.mjs";
+import { initPersonalPage } from './js/modules/personal.mjs';
 
 createMap();
 createInteractiveItem();
 createSnail();
 createNormalHouse();
+
+initPersonalPage();
 
 app.stage.addChild(allContainer);
 
