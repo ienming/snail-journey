@@ -50,16 +50,16 @@
                             </p>
                             <div class="game-ui">
                                 <!-- 承接尚未開啟的任務時的按鈕 -->
-                                <div v-show="nowNPC !== undefined && nowStateOnNPC == 'notyet'">
+                                <div v-show="nowNPC !== undefined && nowNPC.enterGame == 0 && nowMissionState == 0">
                                     <button @click="gameNext">好啊</button>
                                     <button @click="gameDeny">不了</button>
                                 </div>
-                                <div v-show="nowNPC !== undefined && nowStateOnNPC == 'accept'">
+                                <div v-show="nowNPC !== undefined && nowMissionState > 0">
                                     <button @click="gameNext(); switchPopup();">OK</button>
                                 </div>
-                                <div v-show="nowNPC !== undefined && nowStateOnNPC == 'progress'||'complete'||'finish'">
-                                    <button @click="pureNext">OK</button>
-                                </div>
+                                <!-- <div v-show="nowNPC !== undefined && nowMissionState == 'progress'||'complete'||'finish'">
+                                    <button @click="pureNext">OK Pure Next</button>
+                                </div> -->
                             </div>
                         </div>
                         <!-- 有認養行動案就顯示 -->
@@ -109,12 +109,16 @@
                 nowNPC: undefined,
                 user: {
                     gameState: {
-                        block1: 'notyet',
-                        block2: 'progress',
-                        block3: 'complete'
+                        mission1: 0,
+                        mission2: 1,
+                        mission3: 0
+                    },
+                    gameProgress: {
+                        mission1: [],
+                        mission2: [],
+                        mission3: [],
                     }
                 },
-                test: undefined
             },
             computed: {
                 itemSpeakImgSrc(){
@@ -124,8 +128,8 @@
                         }
                     }
                 },
-                nowStateOnNPC(){
-                    return this.user.gameState[`block${this.nowNPC.block}`]
+                nowMissionState(){
+                    return this.user.gameState[`mission${this.nowNPC.mission}`]
                 }
             },
             mounted() {
@@ -149,23 +153,27 @@
                     this.nowSpeak = this.nowNPC.gameSpeak.deny
                 },
                 gameNext(){
-                    switch (this.nowStateOnNPC){ //用現在點到的 NPC 區域來判斷目前使用者在這個區塊的遊戲階段
-                        case 'notyet':
-                            console.log("前往accept")
+                    switch (this.nowMissionState){ //用現在點到的 NPC 區域來判斷目前使用者在這個區塊的遊戲階段
+                        case 0: //領任務
+                            console.log("前往1")
                             this.nowSpeak = this.nowNPC.gameSpeak.accept
-                            this.user.gameState[`block${this.nowNPC.block}`] = 'accept' //如果是 notyet 就把這個區塊的遊戲階段推到下一個階段
+                            this.user.gameState[`mission${this.nowNPC.mission}`] = 1
                             break;
-                        case 'accept':
-                            console.log("前往progress")
-                            this.user.gameState[`block${this.nowNPC.block}`] = 'progress'
+                        case 1:
+                            console.log("前往2")
+                            this.user.gameState[`mission${this.nowNPC.mission}`] = 2 //如果是 notyet 就把這個區塊的遊戲階段推到下一個階段
                             break;
-                        case 'progress':
-                            console.log("前往complete")
-                            this.user.gameState[`block${this.nowNPC.block}`] = 'complete'
+                        case 2:
+                            console.log("前往3")
+                            this.user.gameState[`mission${this.nowNPC.mission}`] = 3
                             break;
-                        case 'complete':
-                            console.log("前往finish")
-                            this.user.gameState[`block${this.nowNPC.block}`] = 'finish'
+                        case 3:
+                            console.log("前往4")
+                            this.user.gameState[`mission${this.nowNPC.mission}`] = 4
+                            break;
+                        case 4:
+                            console.log("前往5")
+                            this.user.gameState[`mission${this.nowNPC.mission}`] = 5
                             break;
                     }
                 },

@@ -2,6 +2,11 @@ import {scale, allContainer, getRandom } from './global.mjs'
 import {clickSoundEffect} from './sound.mjs'
 import {fetchSnails, fetchItems, normalHouses} from './data.mjs'
 
+// Mission flow map test
+let gameFlow = {
+    mission1: ['bike', 'house_cinemaroll', 'house_literature']
+}
+
 // Snail
 function createSnail(){
     let snails
@@ -80,28 +85,47 @@ function createItem(el){
                 vm.$data.adoptable = false
             }
             // 切換遊戲進度中講的話
-            switch (el.block){ //用物件本身的資料區域去對應目前使用者在該區塊的遊戲階段
-                case '1':
-                    console.log("I'm from block 1")
-                    if (el.gameSpeak[vm.$data.user.gameState.block1] && el.inGame == true){ //把使用者在某區塊的遊戲階段對應回去物件身上在該階段應該說的話
-                        // 且目前的順序這個 NPC 有話要說
-                        vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block1]
+            switch (el.mission){ //用NPC的資料區域去對應目前使用者在該區塊的遊戲階段
+                case 1:
+                    console.log(`I'm from mission${el.mission}`)
+                    // 首先確認是不是點到開啟新任務的NPC
+                    if (el.enterGame == 0 && vm.$data.user.gameProgress.mission1.length == 0){ //而且玩家這條任務還沒開啟
+                        vm.$data.nowSpeak = el.gameSpeak.notyet
+                        console.log(vm.$data.user.gameProgress.mission1.length)
+                        vm.$data.user.gameProgress.mission1.push(el.name)
+                        console.log("開啟新任務")
+                        console.log(vm.$data.user.gameProgress.mission1.length)
+                    }else if (vm.$data.user.gameProgress.mission1.length > 0){  //確認NPC所屬的這條任務是不是開啟
+                        console.log("任務已開啟: "+vm.$data.user.gameProgress.mission1.length)
+                        let arr = []
+                        arr = vm.$data.user.gameProgress.mission1.slice(0)
+                        console.log("要被推入的NPC："+el.name)
+                        arr.push(el.name)
+                        if (arrayEquals(arr, gameFlow.mission1.slice(0, arr.length))){ //確認順序是不是正確的
+                            vm.$data.user.gameProgress.mission1.push(el.name)
+                            console.log("點對人了")
+                        }else{
+                            console.log("順序錯了，不是找我")
+                            console.log("目前的順序："+arr)
+                            console.log("正確的順序："+gameFlow.mission1.slice(0, arr.length))
+                        }
+                    }else{
+                        console.log("任務尚未開啟")
+                        speakRandomly(el)
+                    }
+                    break;
+                case 2:
+                    console.log("I'm from mission 2")
+                    if (vm.$data.user.gameState.mission2 >= el.enterGame){
+                        vm.$data.nowSpeak = el.gameSpeak.progress
                     } else {
                         speakRandomly(el)
                     }
                     break;
-                case '2':
-                    console.log("I'm from block 2")
-                    if (el.gameSpeak[vm.$data.user.gameState.block2]){
-                        vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block2]
-                    } else {
-                        speakRandomly(el)
-                    }
-                    break;
-                case '3':
-                    console.log("I'm from block 3")
-                    if (el.gameSpeak[vm.$data.user.gameState.block3]){
-                        vm.$data.nowSpeak = el.gameSpeak[vm.$data.user.gameState.block3]
+                case 3:
+                    console.log("I'm from mission 3")
+                    if (vm.$data.user.gameState.mission3 >= el.enterGame){
+                        vm.$data.nowSpeak = el.gameSpeak.progress
                     } else {
                         speakRandomly(el)
                     }
@@ -131,6 +155,13 @@ function createItem(el){
 function speakRandomly(el){
     let randomSentenceNum = getRandom(0, el.speaks.length-1)
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
+}
+
+function arrayEquals(a, b) {
+    return Array.isArray(a) &&
+        Array.isArray(b) &&
+        a.length === b.length &&
+        a.every((val, index) => val === b[index]);
 }
 
 export {createSnail, createInteractiveItem, createNormalHouse, createItem}

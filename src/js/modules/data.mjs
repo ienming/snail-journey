@@ -79,7 +79,8 @@ let fetchItems = async () => {
                 name: d[keyMap.name],
                 x: d[keyMap.x],
                 y: d[keyMap.y],
-                block: d[keyMap.block],
+                block: d[keyMap.block]*1,
+                mission: d[keyMap.mission]*1,
                 gameSpeak: {
                     notyet: d[keyMap.game_speak_n],
                     progress: d[keyMap.game_speak_p],
@@ -88,7 +89,8 @@ let fetchItems = async () => {
                     deny: d[keyMap.game_speak_d],
                     finish: d[keyMap.game_speak_f]
                 },
-                inGame: d[keyMap.in_game]
+                enterGame: d[keyMap.enter_game]*1,
+                leaveGame: d[keyMap.leave_game]*1
             };
             let speakStartCol = d.length - speaksNum
             let speaksArr = [];
