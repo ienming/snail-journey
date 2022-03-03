@@ -11,7 +11,7 @@
             position: fixed;
             left: 0;
             top: 0;
-            z-index: 99;
+            z-index: 97;
         }
     </style>
 </head>
@@ -38,13 +38,11 @@
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
         <transition name="fade">
-            <div v-show="showPersonalPage" class="personal-page">
-                <p>Personal Page</p>
-                <div id="personalCanvasContainer"></div>
-            </div>
+            <personal-page v-if="showPersonalPage" :user-got-badges="userGotBadges" :outer-show-personal-page="showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
         </transition>
+        <!-- popup 對話框 -->
         <transition name="fade">
-            <div class="mock" v-show="popup">
+            <div class="mock" v-show="showPopup">
                 <div class="wrapper">
                     <div id="imgCanvasContainer" v-show="animatedSpriteSpeak"></div>
                     <div v-show="!animatedSpriteSpeak" class="mr-2" id="imgStaticContainer">
@@ -82,9 +80,7 @@
                             </form>
                         </div>
                         <!-- Close Button -->
-                        <div class="close" @click="switchPopup">
-                            <img src="src/img/icons/close.svg" alt="">
-                        </div>
+                        <close-btn :outer-show-popup="showPopup" @switch-popup="switchPopup"></close-btn>
                     </div>
                 </div>
             </div>
@@ -101,14 +97,16 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.js' integrity='sha512-1KGTH8Epj8H43YrKn130fyDzVvNn2YMoyYy6TmF2tgemLZ4sfSoAxRSPq9li4BKHdoON4GwwQUMPL2gFreHSbw==' crossorigin='anonymous'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/PixiPlugin.min.js" integrity="sha512-sSYM7MQVTmI4X9VmroJBmkixnxxX6TFRKfzXgFg7PXWz7VeYwGgEeqK7cVRZPFw30sjH3aZOhiwLv6ObJpoWRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Custom -->
-    <script src="src/js/components.js"></script>
+    <script src="src/js/components/PersonalPage.js"></script>
+    <script src="src/js/components/CloseBtn.js"></script>
+    <script src="src/js/components/Header.js"></script>
     <script type="module" src="dist/main.js"></script>
     <script>
         const vm = new Vue({
             el: "#app",
             data: {
                 nowLoading: true,
-                popup: false,
+                showPopup: false,
                 showPersonalPage: false,
                 animatedSpriteSpeak: false,
                 adoptable: false,
@@ -136,7 +134,19 @@
                     }
                 },
                 nowMissionProgress(){
-                    return this.user.missions[`mission${this.nowNPC.mission}`]
+                    if (this.nowNPC){
+                        return this.user.missions[`mission${this.nowNPC.mission}`]
+                    }else{
+                        return
+                    }
+                },
+                userGotBadges(){
+                    let badges = {
+                        mission1: true,
+                        mission2: false,
+                        mission3: false
+                    }
+                    return badges
                 }
             },
             created(){
@@ -166,7 +176,7 @@
             },
             methods: {
                 switchPopup(){
-                    this.popup = !this.popup
+                    this.showPopup = !this.showPopup
                     window.setTimeout(()=>{
                         this.showProgram = false
                         this.animatedSpriteSpeak = false
@@ -174,7 +184,6 @@
                 },
                 switchPersonalPage(){
                     this.showPersonalPage = !this.showPersonalPage
-                    console.log("Vue外層已收到")
                 },
                 switchProgram(){
                     this.showProgram = true

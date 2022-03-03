@@ -5,6 +5,7 @@
     top: 0
     left: 0
     background-color: $accent
+    z-index: 99
 
 .popup
     background-color: lighten($main, 10%)
@@ -21,6 +22,7 @@
     top: 0
     height: 100vh
     width: 100vw
+    z-index: 99
 
 .wrapper
     display: grid
@@ -31,17 +33,18 @@
     top: 50%
     left: 50%
     transform: translate(-50%, -50%)
-    .close
-        position: absolute
-        +size(30px)
-        right: 0
-        top: -50px
+
+.close
+    position: absolute
+    +size(30px)
+    right: 0
+    top: -50px
+    >img
+        transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55)
+    &:hover
+        cursor: pointer
         >img
-            transition: all 600ms cubic-bezier(0.68, -0.55, 0.265, 1.55)
-        &:hover
-            cursor: pointer
-            >img
-                transform: scaleX(1.5) scaleY(.8)
+            transform: scaleX(1.5) scaleY(.8)
 
 // personal Page
 .personal-page
@@ -50,5 +53,7 @@
     left: 50%
     transform: translate(-50%, -50%)
     background-color: $lightBg
+    border-radius: 8px
+    box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
 #personalCanvasContainer
-    padding: 30px
+    padding: 1rem

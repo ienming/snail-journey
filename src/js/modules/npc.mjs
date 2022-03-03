@@ -55,7 +55,7 @@ function createItem(el){
     item
         .on("pointerdown", ()=>{
             vm.$data.itemClicked = true
-            vm.$data.popup = !vm.$data.popup
+            vm.$data.showPopup = !vm.$data.showPopup
             vm.$data.itemSpeak = el.name
             vm.$data.nowNPC = el
             // 抽籤決定 NPC 要講哪一句話
