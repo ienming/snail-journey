@@ -34,7 +34,7 @@ function onDragMove() {
             dist.y = newPosition.y - this.y
             distDefined = true // turn to "is defined" for preventing from overwritten
         }
-        console.log(dist)
+        // console.log(dist)
         this.x = newPosition.x - dist.x;
         this.y = newPosition.y - dist.y;
     }
@@ -57,14 +57,14 @@ export { onDragStart, onDragMove, onDragEnd, createMap, dist, distDefined }
 // scroll on canvas for zomming
 canvasContainer.addEventListener('wheel',(e)=>{
     if (e.deltaY > 0){
-        console.log("up")
+        // console.log("up")
         gsap.to(allContainer, 2, {
             pixi: {
                 scale: 1
             }
         })
     }else if (e.deltaY < 0){
-        console.log("down")
+        // console.log("down")
         gsap.to(allContainer, 2, {
             pixi: {
                 scale: 1.5

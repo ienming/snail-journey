@@ -97,10 +97,10 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.js' integrity='sha512-1KGTH8Epj8H43YrKn130fyDzVvNn2YMoyYy6TmF2tgemLZ4sfSoAxRSPq9li4BKHdoON4GwwQUMPL2gFreHSbw==' crossorigin='anonymous'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/PixiPlugin.min.js" integrity="sha512-sSYM7MQVTmI4X9VmroJBmkixnxxX6TFRKfzXgFg7PXWz7VeYwGgEeqK7cVRZPFw30sjH3aZOhiwLv6ObJpoWRg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Custom -->
+    <script type="module" src="dist/main.js"></script>
     <script src="src/js/components/PersonalPage.js"></script>
     <script src="src/js/components/CloseBtn.js"></script>
     <script src="src/js/components/Header.js"></script>
-    <script type="module" src="dist/main.js"></script>
     <script>
         const vm = new Vue({
             el: "#app",
@@ -142,9 +142,14 @@
                 },
                 userGotBadges(){
                     let badges = {
-                        mission1: true,
+                        mission1: false,
                         mission2: false,
                         mission3: false
+                    }
+                    for (let prop in this.user.missions){
+                        if (this.user.missions[prop].indexOf('finished') !== -1){
+                            badges[prop] = true
+                        }
                     }
                     return badges
                 }

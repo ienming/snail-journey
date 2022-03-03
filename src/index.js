@@ -1,5 +1,4 @@
 import './sass/style.sass'
-
 import {
     app,
     allContainer,
@@ -16,8 +15,8 @@ import {
 createMap();
 createInteractiveItem();
 createSnail();
-createNormalHouse();
+window.setTimeout(()=>{
+    createNormalHouse();
+}, 500)
 
 app.stage.addChild(allContainer);
-
-console.log("hello webpack")

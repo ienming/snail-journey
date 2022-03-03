@@ -41,11 +41,12 @@ const PersonalPage = {
             let container = new PIXI.Container()
             let pY = 0
             for (prop in this.userGotBadges){
-                // console.log(`目前有的蝸牛，${prop}: ${this.userGotBadges[prop]}`)
-                let txt = new PIXI.Text(`目前有的蝸牛，${prop}: ${this.userGotBadges[prop]}`)
-                txt.position.y = pY
-                container.addChild(txt)
-                pY += 50
+                if (this.userGotBadges[prop]){
+                    let txt = new PIXI.Text(`目前有的蝸牛，${prop}: ${this.userGotBadges[prop]}`)
+                    txt.position.y = pY
+                    container.addChild(txt)
+                    pY += 50
+                }
             }
             this.pixiApp.stage.addChild(container)
         }

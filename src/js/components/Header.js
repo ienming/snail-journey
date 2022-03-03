@@ -16,6 +16,8 @@ const Header = {
             {
                 name: "personalpage",
                 src: "./src/img/icons/menu.png"
+            },{
+                name: "clearData"
             }
         ]
         return {
@@ -25,6 +27,10 @@ const Header = {
     methods: {
         switchPage(name){
             this.$emit(`switch-${name}`)
+            if (name == 'clearData'){
+                localStorage.clear()
+                window.location.reload()
+            }
         }
     }
 }
