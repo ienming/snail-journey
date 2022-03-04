@@ -1,4 +1,5 @@
 import './sass/style.sass'
+
 import {
     app,
     allContainer,
@@ -11,6 +12,7 @@ import {
     createInteractiveItem,
     createNormalHouse,
 } from "./js/modules/npc.mjs";
+// import { test } from './js/modules/test.mjs';
 
 createMap();
 createInteractiveItem();
@@ -18,5 +20,8 @@ createSnail();
 window.setTimeout(()=>{
     createNormalHouse();
 }, 500)
+
+
+// test()
 
 app.stage.addChild(allContainer);

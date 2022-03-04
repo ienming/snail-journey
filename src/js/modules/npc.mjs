@@ -70,14 +70,17 @@ function createItem(el){
             }else {
                 vm.$data.animatedSpriteSpeak = false
             }
-            // 是否有可以認養的按鈕
-            if (el.adoptable){
-                vm.$data.adoptable = true
-                vm.$data.program = el.program
+            if (el.gameSpeaks){
+                missionStart(el) // 主線探索遊戲邏輯
             }else{
-                vm.$data.adoptable = false
+                // 是否有可以認養的按鈕
+                if (el.adoptable){
+                    vm.$data.adoptable = true
+                    vm.$data.program = el.program
+                }else{
+                    vm.$data.adoptable = false
+                }
             }
-            missionStart(el) // 主線探索遊戲邏輯
             clickSoundEffect() //點擊音效
             window.setTimeout(()=>{ // 點擊後離開點擊狀態，解決抓住地圖不放的問題
                 vm.$data.itemClicked = false

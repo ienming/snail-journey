@@ -25,6 +25,11 @@
             <ul>
                 <li v-for="(el,idx) of user.missions"><span>{{idx}}: </span> {{ el }}</li>
             </ul>
+            <ul>
+                <p>Achievements</p>
+                <li v-for="(el, idx) of user.achievements"><span>{{idx}}: </span>{{el}}</li>
+                <span>{{userGotAchievement}}</span>
+            </ul>
         </div>
         <!-- 進場動畫 -->
         <transition name="fade">
@@ -54,17 +59,16 @@
                             <p v-if="nowSpeak == undefined">
                                 This is {{ itemSpeak }} speaking
                             </p>
-                            <p v-else>
-                                <p>{{ nowSpeak }}</p>
-                            </p>
                             <div class="game-ui">
-                                <!-- 承接尚未開啟的任務時的按鈕 -->
-                                <div v-if="showMissionBtn == 'notyet'">
-                                    <button @click="getMission">好啊</button>
-                                    <button @click="denyMission">不了</button>
+                                <!-- 有選項時的按鈕 -->
+                                <div v-if="showMissionBtn">
+                                    <button v-for="btn of missionBtns" @click="pureNext">{{btn}}</button>
                                 </div>
                                 <div v-else>
-                                    <button @click="pureNext">純下一步</button>
+                                    <p>
+                                        <p>{{ nowSpeak }}</p>
+                                    </p>
+                                    <button @click="pureNext">下一步</button>
                                 </div>
                             </div>
                         </div>
@@ -117,11 +121,20 @@
                 itemSpeak: undefined,
                 nowNPC: undefined,
                 showMissionBtn: false,
+                achievementMap: {
+                    block1: ['bike', 'house_literature'],
+                    block2: ['board', 'house_cinemaroll']
+                },
                 user: {
                     missions: {
                         mission1: [],
                         mission2: [],
                         mission3: [],
+                    },
+                    achievements: {
+                        block1: [],
+                        block2: [],
+                        block3: []
                     }
                 },
             },
@@ -135,10 +148,8 @@
                 },
                 nowMissionProgress(){
                     if (this.nowNPC){
-                        return this.user.missions[`mission${this.nowNPC.mission}`]
-                    }else{
-                        return
-                    }
+                        return this.user.missions[`mission${this.nowNPC.mission}`].length
+                    }else return
                 },
                 userGotBadges(){
                     let badges = {
@@ -152,9 +163,36 @@
                         }
                     }
                     return badges
+                },
+                userGotAchievement(){
+                    let output = {}
+                    let maps = 0
+                    for (prop in this.achievementMap){
+                        maps ++
+                    }
+                    for (let i=0; i<maps; i++){
+                        let map = this.achievementMap[`block${i+1}`]
+                        let userGotArr = this.user.achievements[`block${i+1}`]
+                        if (userGotArr.length > 0){
+                            if (map.length == userGotArr.length && map.every(val => userGotArr.includes(val))){
+                                output[`block${i+1}`] = `探索玩區域${i+1}了！`
+                            }else{
+                                output[`block${i+1}`] = `尚未探索玩區域${i+1}`
+                            }
+                        }else{
+                            output[`block${i+1}`] = `區域${i+1}尚未開始`
+                        }
+                    }
+                    return output
+                },
+                missionBtns(){
+                    if (this.showMissionBtn){
+                        return this.showMissionBtn.split("+") //回傳包有兩個選項內容的陣列
+                    }else return
                 }
             },
             created(){
+                //任務資料
                 let missionRecorded = JSON.parse(localStorage.getItem('missions'))
                 if (missionRecorded){ //如果有已經儲存的任務資料
                     this.user.missionRecorded = missionRecorded //放到 Vue 裏面
@@ -162,8 +200,18 @@
                         this.user.missions[prop] = missionRecorded[prop] // 讓前臺拉出紀錄同步，所以遊戲可以進行
                     }
                 }
+                //區塊發現成就資料
+                let achievementRecorded = JSON.parse(localStorage.getItem('achievements'))
+                if (achievementRecorded){ //如果有已經儲存的任務資料
+                    this.user.achievementRecorded = achievementRecorded //放到 Vue 裏面
+                    for (prop in achievementRecorded){
+                        this.user.achievements[prop] = achievementRecorded[prop] // 讓前臺拉出紀錄同步，所以遊戲可以進行
+                    }
+                }
                 console.log('missionRecorded: ')
                 console.log(missionRecorded)
+                console.log('achievementRecorded: ')
+                console.log(achievementRecorded)
             },
             mounted() {
                 console.log("vue completed load")
@@ -175,6 +223,15 @@
                         let d = JSON.stringify(newValue)
                         console.log('d: '+d)
                         this.storageData('missions', d)
+                    },
+                    deep: true
+                },
+                'user.achievements': {
+                    handler: function(newValue, oldValue){
+                        console.log("區塊發現資料有變動，開始儲存")
+                        let d = JSON.stringify(newValue)
+                        console.log('d: '+d)
+                        this.storageData('achievements', d)
                     },
                     deep: true
                 }
@@ -196,18 +253,37 @@
                 startGame(){
                     this.nowLoading = false
                 },
-                denyMission(){
-                    this.nowSpeak = this.nowNPC.gameSpeak.deny
-                    this.showMissionBtn = 'denied'
-                },
-                getMission(){
-                    console.log("開啟新任務")
-                    this.nowSpeak = this.nowNPC.gameSpeak.accept
-                    this.showMissionBtn = 'progress'
-                    this.user.missions[`mission${this.nowNPC.mission}`].push(this.nowNPC.name)
-                },
                 pureNext(){
-                    this.switchPopup()
+                    if (this.nowNPC.gameSpeaks){ //如果有遊戲對話
+                        // 判斷對話結束了沒
+                        if (this.nowMissionProgress + 1 < this.nowNPC.gameSpeaks.length){
+                            this.user.missions[`mission${this.nowNPC.mission}`].push(this.nowNPC.name) //推進到下一步
+                            // 
+                            // 判斷目前的進展有沒有遊戲選項
+                            if (this.nowNPC.gameOptions[this.nowMissionProgress]){
+                                this.showMissionBtn = this.nowNPC.gameSpeaks[this.nowMissionProgress]
+                                console.log("顯示遊戲選項")
+                            }else{
+                                // 顯示對話內容
+                                this.nowSpeak = this.nowNPC.gameSpeaks[this.nowMissionProgress]
+                                this.showMissionBtn = undefined
+                            }
+                        }else if (this.user.missions[`mission${this.nowNPC.mission}`].indexOf('finished') == -1){ //正要結束
+                            this.user.missions[`mission${this.nowNPC.mission}`].push('finished') //記錄結束
+                            this.switchPopup()
+                            console.log(`完成任務${this.nowNPC.mission}！`)
+                            this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                        }else{
+                            console.log(`任務${this.nowNPC.mission}已經結束囉`)
+                            this.switchPopup()
+                        }
+                    }else{
+                        console.log("我只是在講廢話")
+                        if (this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.nowNPC.name) == -1){
+                            this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                        }
+                        this.switchPopup()
+                    }
                 },
                 storageData(key, value){
                     localStorage.setItem(key, value)
