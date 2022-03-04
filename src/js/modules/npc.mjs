@@ -1,7 +1,7 @@
 import {scale, allContainer, getRandom } from './global.mjs'
 import {clickSoundEffect} from './sound.mjs'
 import {fetchNPC, normalHouses} from './data.mjs'
-import {missionStart} from './game.mjs'
+import {initMission} from './game.mjs'
 
 // Snail
 // function createSnail(){
@@ -58,6 +58,7 @@ function createItem(el){
             vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
             vm.$data.itemSpeak = el.name
             vm.$data.nowNPC = el
+            vm.$data.showMissionBtn = undefined //初始化關閉選項
             // 抽籤決定 NPC 要講哪一句話
             if (el.speaks){
                 speakRandomly(el)
@@ -71,7 +72,7 @@ function createItem(el){
                 vm.$data.animatedSpriteSpeak = false
             }
             if (el.gameSpeaks){
-                missionStart(el) // 主線探索遊戲邏輯
+                initMission(el) // 主線探索遊戲邏輯
             }else{
                 // 是否有可以認養的按鈕
                 if (el.adoptable){
@@ -82,6 +83,7 @@ function createItem(el){
                     vm.$data.adoptable = false
                     vm.$data.btnTxt = "關閉"
                 }
+                console.log("講一下廢話")
             }
             clickSoundEffect() //點擊音效
             window.setTimeout(()=>{ // 點擊後離開點擊狀態，解決抓住地圖不放的問題

@@ -62,7 +62,7 @@
                             <div class="game-ui">
                                 <!-- 有選項時的按鈕 -->
                                 <div v-if="showMissionBtn">
-                                    <button v-for="btn of missionBtns" @click="pureNext">{{btn}}</button>
+                                    <button v-for="btn of missionBtns" @click="checkAns(btn.correct);">{{btn.option}}</button>
                                 </div>
                                 <div v-else>
                                     <p>
@@ -115,6 +115,7 @@
                     nowLoading: true,
                     showPopup: false,
                     showPersonalPage: false,
+                    nowAns: true
                 },
                 adoptable: false,
                 program: undefined,
@@ -125,8 +126,9 @@
                 itemSpeak: undefined,
                 nowNPC: undefined,
                 achievementMap: {
-                    block1: ['bike', 'house_literature'],
-                    block2: ['board', 'house_cinemaroll']
+                    block1: ['bike'],
+                    block2: ['board', 'house_cinemaroll'],
+                    block3: ['house_literature']
                 },
                 user: {
                     missions: {
@@ -149,7 +151,7 @@
                         }
                     }
                 },
-                nowMissionProgress(){
+                finishedProgress(){
                     if (this.nowNPC){
                         return this.user.missions[`mission${this.nowNPC.mission}`].length
                     }else return
@@ -190,7 +192,19 @@
                 },
                 missionBtns(){
                     if (this.showMissionBtn){
-                        return this.showMissionBtn.split("+") //回傳包有兩個選項內容的陣列
+                        let btns = this.showMissionBtn.split("+") //包有多個選項內容的陣列
+                        let arr = []
+                        btns.forEach(btn=>{
+                            let obj = {}
+                            if (btn.indexOf("Y") !== -1){ //確認是不是對的選項
+                                obj.option = btn.slice(-btn.length, -1)
+                                obj.correct = true
+                            }else{
+                                obj.option = btn
+                            }
+                            arr.push(obj)
+                        })
+                        return arr
                     }else return
                 }
             },
@@ -222,10 +236,14 @@
             watch: {
                 'user.missions': {
                     handler: function(newValue, oldValue){
-                        console.log("任務資料有變動，開始儲存")
-                        let d = JSON.stringify(newValue)
-                        console.log('d: '+d)
-                        this.storageData('missions', d)
+                        for (prop in newValue){
+                            if (newValue[prop].join().indexOf("finished") !== -1){
+                                console.log("任務資料完成的變動，開始儲存")
+                                let d = JSON.stringify(newValue)
+                                console.log('d: '+d)
+                                this.storageData('missions', d)
+                            }
+                        }
                     },
                     deep: true
                 },
@@ -242,6 +260,14 @@
             methods: {
                 switchPopup(){
                     this.interaction.showPopup = !this.interaction.showPopup
+                    //如果點到講廢話的NPC然後關閉視窗
+                    if (this.nowNPC.enterGame !== 1 && this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.nowNPC.name) == -1){
+                            this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                    }
+                    //如果遊戲講話到一半的NPC被關閉
+                    if (this.nowNPC.enterGame == 1 && this.finishedProgress + 1 < this.nowNPC.gameSpeaks.length){
+                        this.user.missions[`mission${this.nowNPC.mission}`] = []
+                    }
                     window.setTimeout(()=>{
                         this.showProgram = false
                         this.animatedSpriteSpeak = false
@@ -256,36 +282,45 @@
                 startGame(){
                     this.interaction.nowLoading = false
                 },
-                pureNext(){
-                    if (this.nowNPC.gameSpeaks){ //如果有遊戲對話
-                        // 判斷對話結束了沒
-                        if (this.nowMissionProgress + 1 < this.nowNPC.gameSpeaks.length){
-                            this.user.missions[`mission${this.nowNPC.mission}`].push(this.nowNPC.name) //推進到下一步
-                            // 
-                            // 判斷目前的進展有沒有遊戲選項
-                            if (this.nowNPC.gameOptions[this.nowMissionProgress]){
-                                this.showMissionBtn = this.nowNPC.gameSpeaks[this.nowMissionProgress]
-                                console.log("顯示遊戲選項")
-                            }else{
-                                // 顯示對話內容
-                                this.nowSpeak = this.nowNPC.gameSpeaks[this.nowMissionProgress]
-                                this.showMissionBtn = undefined
-                            }
-                            //判斷是不是倒數
-                            if (this.nowMissionProgress + 1 == this.nowNPC.gameSpeaks.length){
-                                this.btnTxt = "關閉"
-                            }
-                        }else if (this.user.missions[`mission${this.nowNPC.mission}`].indexOf('finished') == -1){ //正要結束
-                            this.user.missions[`mission${this.nowNPC.mission}`].push('finished') //記錄結束
-                            this.switchPopup()
-                            console.log(`完成任務${this.nowNPC.mission}！`)
-                            this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
-                        }else{
-                            console.log(`任務${this.nowNPC.mission}已經結束囉`)
-                            this.switchPopup()
-                        }
+                checkAns(correct){
+                    if (correct){
+                        this.pureNext()
+                        this.interaction.nowAns = true
                     }else{
-                        console.log("我只是在講廢話")
+                        this.nowSpeak = this.nowNPC.gameSpeakN
+                        this.btnTxt = "關閉"
+                        this.showMissionBtn = undefined
+                        this.interaction.nowAns = false
+                    }
+                },
+                pureNext(){
+                    if (!this.interaction.nowAns){ //已經答錯了，要關閉視窗
+                        this.switchPopup()
+                        return
+                    }
+                    // 以下是正常運作對話進度
+                    if (this.nowNPC.gameSpeaks){
+                        if (this.user.missions[`mission${this.nowNPC.mission}`].indexOf('finished') == -1){
+                            if (this.finishedProgress + 1 < this.nowNPC.gameSpeaks.length){// 判斷對話結束了沒
+                                this.user.missions[`mission${this.nowNPC.mission}`].push(this.nowNPC.name) //推進到下一步
+                                if (this.nowNPC.gameOptions[this.finishedProgress]){ // 判斷目前的進展有沒有遊戲選項
+                                    this.showMissionBtn = this.nowNPC.gameSpeaks[this.finishedProgress]
+                                }else{
+                                    // 顯示對話內容
+                                    this.nowSpeak = this.nowNPC.gameSpeaks[this.finishedProgress]
+                                    this.showMissionBtn = undefined
+                                }
+                                if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length){// 判斷是不是倒數
+                                    this.btnTxt = "關閉"
+                                }
+                            }else if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length){ //正要結束
+                                this.user.missions[`mission${this.nowNPC.mission}`].push('finished') //記錄結束
+                                this.switchPopup()
+                                console.log(`完成任務${this.nowNPC.mission}！`)
+                                this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                            }
+                        }else this.switchPopup()
+                    }else{ //廢話黨
                         if (this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.nowNPC.name) == -1){
                             this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
                         }

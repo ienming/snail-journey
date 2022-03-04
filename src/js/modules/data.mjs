@@ -33,6 +33,7 @@ let fetchNPC = async () => {
                 y: d[keyMap.y],
                 mission: d[keyMap.mission]*1,
                 enterGame: d[keyMap.enter_game]*1,
+                gameSpeakN: d[keyMap.game_speak_n]
             };
             // 有認養的東西
             if (d[keyMap.adoptable]){

@@ -1,23 +1,24 @@
 import {arrayEquals} from './global.mjs'
 
 // Achievement Map for mapping whether get badges or not
-let achievementMap = {
-    block1: ['bike', 'house_literature'],
-    block2: []
-}
+// let achievementMap = {
+//     block1: ['bike', 'house_literature'],
+//     block2: []
+// }
 // 把這邊改成某一區全區講完話就有徽章
 
 // 主線探索遊戲邏輯
-function missionStart(el){
+function initMission(el){
     let nowUserMissionProgress = vm.$data.user.missions[`mission${el.mission}`]
     if (el.mission && nowUserMissionProgress.indexOf('finished') == -1){ //此NPC有任務而且該任務還沒完成
         // 首先確認是不是點到開啟新任務的NPC
         if (el.enterGame == 1 && nowUserMissionProgress.length == 0){ //而且玩家這條任務還沒開啟
             vm.$data.nowSpeak = el.gameSpeaks[0]
             vm.$data.btnTxt = "下一步"
+            vm.$data.adoptable = false
+            vm.$data.interaction.nowAns = true
         }
-    }else if (el.mission){
-        // 此 NPC 的任務對話完成了
+    }else if (el.mission){  // 此 NPC 的任務對話完成了
         // 是否有可以認養的按鈕
         if (el.adoptable){
             vm.$data.adoptable = true
@@ -26,9 +27,10 @@ function missionStart(el){
             vm.$data.adoptable = false
             vm.$data.btnTxt = "關閉"
         }
+        console.log(`任務${el.mission}結束，講一下廢話`)
     }
 }
-// function missionStart(el){
+// function initMission(el){
 //     let nowUserMissionProgress = vm.$data.user.missions[`mission${el.mission}`]
 //     if (el.mission && nowUserMissionProgress.indexOf('finished') == -1){ //此NPC有任務而且該任務還沒完成
 //         // 首先確認是不是點到開啟新任務的NPC
@@ -70,4 +72,4 @@ function missionStart(el){
 //     }
 // }
 
-export {missionStart}
+export {initMission}
