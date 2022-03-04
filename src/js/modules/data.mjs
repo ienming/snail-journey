@@ -1,65 +1,13 @@
 //load data
 import axios from "axios";
-// 預設全部最多會說的話
-// let speaksNum = 6
 
-// let fetchSnails = async () => {
-//     let response;
-
-//     try {
-//         response = await axios
-//             .get("src/data/data_snails.csv", {})
-//             console.log("async completed get snails data")
-//     } catch (e) {
-//         // catch error
-//         throw new Error(e.message)
-//     }
-
-//     if (response.data){
-//         let rows = response.data.split("\n");
-//         let output = [];
-//         let keyMap = {};
-//         console.log(rows[0].split(","))
-//         for (let i =0; i<rows[0].length; i++){
-//             keyMap[rows[0].split(",")[i]] = i
-//         }
-//         rows.shift();
-//         rows.forEach((el) => {
-//             let d = el.split(",");
-//             let obj = {
-//                 name: d[keyMap.name],
-//                 x: d[keyMap.x],
-//                 y: d[keyMap.y],
-//                 adoptable: d[keyMap.adoptable],
-//                 animated: d[keyMap.animated],
-//                 program: {
-//                     name: d[keyMap.program_name],
-//                     description: d[keyMap.program_description]
-//                 }
-//             };
-//             let speakStartCol = d.length - speaksNum
-//             let speaksArr = [];
-//             for (let i = speakStartCol; i < speakStartCol + speaksNum; i++) {
-//                 if (d[i] !== '' && d[i] !== '\r'){
-//                     speaksArr.push(d[i])
-//                 }
-//             }
-//             obj.speaks = speaksArr;
-//             output.push(obj);
-//         });
-//         return output
-//     }else{
-//         return
-//     }
-// };
-
-let fetchItems = async () => {
+let fetchNPC = async () => {
     let response;
 
     try {
         response = await axios
-            .get("src/data/data_items.csv", {})
-            console.log("async completed get items data")
+            .get("src/data/data_npc.csv", {})
+            console.log("async completed get NPC data")
     } catch (e) {
         // catch error
         throw new Error(e.message)
@@ -138,4 +86,54 @@ let normalHouses = [
     },
 ];
 
-export { fetchItems, normalHouses };
+export { fetchNPC, normalHouses };
+
+// let fetchSnails = async () => {
+//     let response;
+
+//     try {
+//         response = await axios
+//             .get("src/data/data_snails.csv", {})
+//             console.log("async completed get snails data")
+//     } catch (e) {
+//         // catch error
+//         throw new Error(e.message)
+//     }
+
+//     if (response.data){
+//         let rows = response.data.split("\n");
+//         let output = [];
+//         let keyMap = {};
+//         console.log(rows[0].split(","))
+//         for (let i =0; i<rows[0].length; i++){
+//             keyMap[rows[0].split(",")[i]] = i
+//         }
+//         rows.shift();
+//         rows.forEach((el) => {
+//             let d = el.split(",");
+//             let obj = {
+//                 name: d[keyMap.name],
+//                 x: d[keyMap.x],
+//                 y: d[keyMap.y],
+//                 adoptable: d[keyMap.adoptable],
+//                 animated: d[keyMap.animated],
+//                 program: {
+//                     name: d[keyMap.program_name],
+//                     description: d[keyMap.program_description]
+//                 }
+//             };
+//             let speakStartCol = d.length - speaksNum
+//             let speaksArr = [];
+//             for (let i = speakStartCol; i < speakStartCol + speaksNum; i++) {
+//                 if (d[i] !== '' && d[i] !== '\r'){
+//                     speaksArr.push(d[i])
+//                 }
+//             }
+//             obj.speaks = speaksArr;
+//             output.push(obj);
+//         });
+//         return output
+//     }else{
+//         return
+//     }
+// };
