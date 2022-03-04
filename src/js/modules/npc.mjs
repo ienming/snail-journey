@@ -1,20 +1,20 @@
 import {scale, allContainer, getRandom } from './global.mjs'
 import {clickSoundEffect} from './sound.mjs'
-import {fetchSnails, fetchItems, normalHouses} from './data.mjs'
+import {fetchItems, normalHouses} from './data.mjs'
 import {missionStart} from './game.mjs'
 
 // Snail
-function createSnail(){
-    let snails
-    let waitSnails = async ()=>{
-        let res = await fetchSnails()
-        snails = res
-        for (let i =0; i<snails.length; i++){
-            createItem(snails[i])
-        }
-    }
-    waitSnails()
-}
+// function createSnail(){
+//     let snails
+//     let waitSnails = async ()=>{
+//         let res = await fetchSnails()
+//         snails = res
+//         for (let i =0; i<snails.length; i++){
+//             createItem(snails[i])
+//         }
+//     }
+//     waitSnails()
+// }
 
 function createInteractiveItem(){
     let items
@@ -107,4 +107,4 @@ function speakRandomly(el){
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
 }
 
-export {createSnail, createInteractiveItem, createNormalHouse, createItem}
+export {createInteractiveItem, createNormalHouse, createItem}

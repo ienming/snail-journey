@@ -16,7 +16,7 @@ import {
 
 createMap();
 createInteractiveItem();
-createSnail();
+// createSnail();
 window.setTimeout(()=>{
     createNormalHouse();
 }, 500)

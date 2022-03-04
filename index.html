@@ -28,7 +28,7 @@
             <ul>
                 <p>Achievements</p>
                 <li v-for="(el, idx) of user.achievements"><span>{{idx}}: </span>{{el}}</li>
-                <span>{{userGotAchievement}}</span>
+                <span>{{userGotAchievements}}</span>
             </ul>
         </div>
         <!-- 進場動畫 -->
@@ -43,7 +43,7 @@
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
         <transition name="fade">
-            <personal-page v-if="showPersonalPage" :user-got-badges="userGotBadges" :outer-show-personal-page="showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
+            <personal-page v-if="showPersonalPage" :user-got-badges="userGotBadges" :user-got-achievements="userGotAchievements" :outer-show-personal-page="showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
         </transition>
         <!-- popup 對話框 -->
         <transition name="fade">
@@ -164,7 +164,7 @@
                     }
                     return badges
                 },
-                userGotAchievement(){
+                userGotAchievements(){
                     let output = {}
                     let maps = 0
                     for (prop in this.achievementMap){

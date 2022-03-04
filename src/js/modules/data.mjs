@@ -1,57 +1,57 @@
 //load data
 import axios from "axios";
 // 預設全部最多會說的話
-let speaksNum = 6
+// let speaksNum = 6
 
-let fetchSnails = async () => {
-    let response;
+// let fetchSnails = async () => {
+//     let response;
 
-    try {
-        response = await axios
-            .get("src/data/data_snails.csv", {})
-            console.log("async completed get snails data")
-    } catch (e) {
-        // catch error
-        throw new Error(e.message)
-    }
+//     try {
+//         response = await axios
+//             .get("src/data/data_snails.csv", {})
+//             console.log("async completed get snails data")
+//     } catch (e) {
+//         // catch error
+//         throw new Error(e.message)
+//     }
 
-    if (response.data){
-        let rows = response.data.split("\n");
-        let output = [];
-        let keyMap = {};
-        console.log(rows[0].split(","))
-        for (let i =0; i<rows[0].length; i++){
-            keyMap[rows[0].split(",")[i]] = i
-        }
-        rows.shift();
-        rows.forEach((el) => {
-            let d = el.split(",");
-            let obj = {
-                name: d[keyMap.name],
-                x: d[keyMap.x],
-                y: d[keyMap.y],
-                adoptable: d[keyMap.adoptable],
-                animated: d[keyMap.animated],
-                program: {
-                    name: d[keyMap.program_name],
-                    description: d[keyMap.program_description]
-                }
-            };
-            let speakStartCol = d.length - speaksNum
-            let speaksArr = [];
-            for (let i = speakStartCol; i < speakStartCol + speaksNum; i++) {
-                if (d[i] !== '' && d[i] !== '\r'){
-                    speaksArr.push(d[i])
-                }
-            }
-            obj.speaks = speaksArr;
-            output.push(obj);
-        });
-        return output
-    }else{
-        return
-    }
-};
+//     if (response.data){
+//         let rows = response.data.split("\n");
+//         let output = [];
+//         let keyMap = {};
+//         console.log(rows[0].split(","))
+//         for (let i =0; i<rows[0].length; i++){
+//             keyMap[rows[0].split(",")[i]] = i
+//         }
+//         rows.shift();
+//         rows.forEach((el) => {
+//             let d = el.split(",");
+//             let obj = {
+//                 name: d[keyMap.name],
+//                 x: d[keyMap.x],
+//                 y: d[keyMap.y],
+//                 adoptable: d[keyMap.adoptable],
+//                 animated: d[keyMap.animated],
+//                 program: {
+//                     name: d[keyMap.program_name],
+//                     description: d[keyMap.program_description]
+//                 }
+//             };
+//             let speakStartCol = d.length - speaksNum
+//             let speaksArr = [];
+//             for (let i = speakStartCol; i < speakStartCol + speaksNum; i++) {
+//                 if (d[i] !== '' && d[i] !== '\r'){
+//                     speaksArr.push(d[i])
+//                 }
+//             }
+//             obj.speaks = speaksArr;
+//             output.push(obj);
+//         });
+//         return output
+//     }else{
+//         return
+//     }
+// };
 
 let fetchItems = async () => {
     let response;
@@ -72,19 +72,13 @@ let fetchItems = async () => {
         for (let i =0; i<rows[0].length; i++){
             if (rows[0].split(",")[i] !== undefined){
                 keyMap[rows[0].split(",")[i].trim()] = i
-                // console.log("key: "+rows[0].split(",")[i])
+                console.log("key: "+rows[0].split(",")[i])
             }
         }
-        // console.log(keyMap)
+        console.log(keyMap)
         rows.shift();
         rows.forEach((el) => {
             let d = el.split(",");
-            if (d[keyMap.name] == 'bike'){
-                console.log(d[keyMap.name])
-                console.log(d[keyMap.game_option])
-                console.log(d[keyMap.game_img])
-                console.log(d[keyMap.speaks])
-            }
             let obj = {
                 name: d[keyMap.name],
                 x: d[keyMap.x],
@@ -92,6 +86,14 @@ let fetchItems = async () => {
                 mission: d[keyMap.mission]*1,
                 enterGame: d[keyMap.enter_game]*1,
             };
+            // 有認養的東西
+            if (d[keyMap.adoptable]){
+                obj.adoptable = d[keyMap.adoptable]*1
+                obj.program = {
+                    name: d[keyMap.program_name],
+                    intro: d[keyMap.program_intro]
+                }
+            }
             // NPC 遊戲中要講的話
             if (d[keyMap.game_speaks]){
                 let gameSpeaksArr = []
@@ -136,4 +138,4 @@ let normalHouses = [
     },
 ];
 
-export { fetchSnails, fetchItems, normalHouses };
+export { fetchItems, normalHouses };

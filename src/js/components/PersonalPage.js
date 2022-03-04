@@ -10,7 +10,8 @@ const PersonalPage = {
     `,
     props: {
         outerShowPersonalPage: Boolean,
-        userGotBadges: Object
+        userGotBadges: Object,
+        userGotAchievements: Object
     },
     mounted(){
         this.initPersonalPage()
@@ -36,6 +37,7 @@ const PersonalPage = {
 
             this.pixiApp = personalCanvasApp //把 PIXI app 丟到 component 資料裡面變成元件的全域變數
             this.showBadges() // 顯示使用者有的蝸牛徽章
+            this.showAchievements() //顯示使用者探索過的區域
         },
         showBadges(){
             let container = new PIXI.Container()
@@ -43,6 +45,19 @@ const PersonalPage = {
             for (prop in this.userGotBadges){
                 if (this.userGotBadges[prop]){
                     let txt = new PIXI.Text(`目前有的蝸牛，${prop}: ${this.userGotBadges[prop]}`)
+                    txt.position.y = pY
+                    container.addChild(txt)
+                    pY += 50
+                }
+            }
+            this.pixiApp.stage.addChild(container)
+        },
+        showAchievements(){
+            let container = new PIXI.Container()
+            let pY = 100
+            for (prop in this.userGotAchievements){
+                if (this.userGotAchievements[prop]){
+                    let txt = new PIXI.Text(`目前探索過的區域，${prop}: ${this.userGotAchievements[prop]}`)
                     txt.position.y = pY
                     container.addChild(txt)
                     pY += 50
