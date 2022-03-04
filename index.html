@@ -33,7 +33,7 @@
         </div>
         <!-- 進場動畫 -->
         <transition name="fade">
-            <div id="loading" v-if="nowLoading">
+            <div id="loading" v-if="interaction.nowLoading">
                 <div class="wrapper">
                     <h1 @click="startGame">START</h1>
                 </div>
@@ -43,11 +43,11 @@
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
         <transition name="fade">
-            <personal-page v-if="showPersonalPage" :user-got-badges="userGotBadges" :user-got-achievements="userGotAchievements" :outer-show-personal-page="showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
+            <personal-page v-if="interaction.showPersonalPage" :user-got-badges="userGotBadges" :user-got-achievements="userGotAchievements" :outer-show-personal-page="interaction.showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
         </transition>
         <!-- popup 對話框 -->
         <transition name="fade">
-            <div class="mock" v-show="showPopup">
+            <div class="mock" v-show="interaction.showPopup">
                 <div class="wrapper">
                     <div id="imgCanvasContainer" v-show="animatedSpriteSpeak"></div>
                     <div v-show="!animatedSpriteSpeak" class="mr-2" id="imgStaticContainer">
@@ -68,7 +68,7 @@
                                     <p>
                                         <p>{{ nowSpeak }}</p>
                                     </p>
-                                    <button @click="pureNext">下一步</button>
+                                    <button @click="pureNext" v-show="btnTxt">{{btnTxt}}</button>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             </form>
                         </div>
                         <!-- Close Button -->
-                        <close-btn :outer-show-popup="showPopup" @switch-popup="switchPopup"></close-btn>
+                        <close-btn :outer-show-popup="interaction.showPopup" @switch-popup="switchPopup"></close-btn>
                     </div>
                 </div>
             </div>
@@ -109,18 +109,21 @@
         const vm = new Vue({
             el: "#app",
             data: {
-                nowLoading: true,
-                showPopup: false,
-                showPersonalPage: false,
                 animatedSpriteSpeak: false,
+                interaction: {
+                    nowClicked: false,
+                    nowLoading: true,
+                    showPopup: false,
+                    showPersonalPage: false,
+                },
                 adoptable: false,
                 program: undefined,
                 showProgram: false,
+                showMissionBtn: false,
+                btnTxt: "關閉",
                 nowSpeak: undefined,
-                itemClicked: false,
                 itemSpeak: undefined,
                 nowNPC: undefined,
-                showMissionBtn: false,
                 achievementMap: {
                     block1: ['bike', 'house_literature'],
                     block2: ['board', 'house_cinemaroll']
@@ -238,20 +241,20 @@
             },
             methods: {
                 switchPopup(){
-                    this.showPopup = !this.showPopup
+                    this.interaction.showPopup = !this.interaction.showPopup
                     window.setTimeout(()=>{
                         this.showProgram = false
                         this.animatedSpriteSpeak = false
                     }, 100)
                 },
                 switchPersonalPage(){
-                    this.showPersonalPage = !this.showPersonalPage
+                    this.interaction.showPersonalPage = !this.interaction.showPersonalPage
                 },
                 switchProgram(){
                     this.showProgram = true
                 },
                 startGame(){
-                    this.nowLoading = false
+                    this.interaction.nowLoading = false
                 },
                 pureNext(){
                     if (this.nowNPC.gameSpeaks){ //如果有遊戲對話
@@ -267,6 +270,10 @@
                                 // 顯示對話內容
                                 this.nowSpeak = this.nowNPC.gameSpeaks[this.nowMissionProgress]
                                 this.showMissionBtn = undefined
+                            }
+                            //判斷是不是倒數
+                            if (this.nowMissionProgress + 1 == this.nowNPC.gameSpeaks.length){
+                                this.btnTxt = "關閉"
                             }
                         }else if (this.user.missions[`mission${this.nowNPC.mission}`].indexOf('finished') == -1){ //正要結束
                             this.user.missions[`mission${this.nowNPC.mission}`].push('finished') //記錄結束

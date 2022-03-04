@@ -14,6 +14,7 @@ function missionStart(el){
         // 首先確認是不是點到開啟新任務的NPC
         if (el.enterGame == 1 && nowUserMissionProgress.length == 0){ //而且玩家這條任務還沒開啟
             vm.$data.nowSpeak = el.gameSpeaks[0]
+            vm.$data.btnTxt = "下一步"
         }
     }else if (el.mission){
         // 此 NPC 的任務對話完成了
@@ -23,6 +24,7 @@ function missionStart(el){
             vm.$data.program = el.program
         }else{
             vm.$data.adoptable = false
+            vm.$data.btnTxt = "關閉"
         }
     }
 }

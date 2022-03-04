@@ -54,8 +54,8 @@ function createItem(el){
     }
     item
         .on("pointerdown", ()=>{
-            vm.$data.itemClicked = true
-            vm.$data.showPopup = !vm.$data.showPopup
+            vm.$data.interaction.nowClicked = true
+            vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
             vm.$data.itemSpeak = el.name
             vm.$data.nowNPC = el
             // 抽籤決定 NPC 要講哪一句話
@@ -77,13 +77,15 @@ function createItem(el){
                 if (el.adoptable){
                     vm.$data.adoptable = true
                     vm.$data.program = el.program
+                    vm.$data.btnTxt = undefined
                 }else{
                     vm.$data.adoptable = false
+                    vm.$data.btnTxt = "關閉"
                 }
             }
             clickSoundEffect() //點擊音效
             window.setTimeout(()=>{ // 點擊後離開點擊狀態，解決抓住地圖不放的問題
-                vm.$data.itemClicked = false
+                vm.$data.interaction.nowClicked = false
             }, 300)
         })
     item.mouseover = function(){ //hover時的放大效果
