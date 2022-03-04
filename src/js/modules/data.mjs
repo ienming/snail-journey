@@ -33,8 +33,10 @@ let fetchNPC = async () => {
                 y: d[keyMap.y],
                 mission: d[keyMap.mission]*1,
                 enterGame: d[keyMap.enter_game]*1,
-                gameSpeakN: d[keyMap.game_speak_n]
             };
+            if (d[keyMap.game_speak_n]){
+                obj.gameSpeakN = d[keyMap.game_speak_n]
+            }
             // 有認養的東西
             if (d[keyMap.adoptable]){
                 obj.adoptable = d[keyMap.adoptable]*1
@@ -65,6 +67,17 @@ let fetchNPC = async () => {
                 let speaksArr = [];
                 speaksArr = d[keyMap.speaks].trim().split("&")
                 obj.speaks = speaksArr;
+            }
+            // 中間穿插的連結何時顯示
+            if (d[keyMap.link_show]){
+                let linkShows = d[keyMap.link_show].trim().split("&")
+                obj.linkShow = linkShows.map(el=>el*1)
+                // 切開黏在一起的網址
+                let links = d[keyMap.links].trim().split("http")
+                let filterLinks = links.filter(el=>el !== '')
+                let output = []
+                filterLinks.forEach(el=>output.push("http"+el))
+                obj.link = output
             }
             output.push(obj);
         });

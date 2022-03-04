@@ -67,6 +67,9 @@
                                 <div v-else>
                                     <p>
                                         <p>{{ nowSpeak }}</p>
+                                        <p v-if="npcShowLink.url">
+                                            <a :href="npcShowLink.url" target="_blank">{{ npcShowLink.name }}</a>
+                                        </p>
                                     </p>
                                     <button @click="pureNext" v-show="btnTxt">{{btnTxt}}</button>
                                 </div>
@@ -125,6 +128,7 @@
                 nowSpeak: undefined,
                 itemSpeak: undefined,
                 nowNPC: undefined,
+                npcShowLink: {},
                 achievementMap: {
                     block1: ['bike'],
                     block2: ['board', 'house_cinemaroll'],
@@ -260,6 +264,7 @@
             methods: {
                 switchPopup(){
                     this.interaction.showPopup = !this.interaction.showPopup
+                    // this.npcShowLink = {}
                     //如果點到講廢話的NPC然後關閉視窗
                     if (this.nowNPC.enterGame !== 1 && this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.nowNPC.name) == -1){
                             this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
@@ -303,12 +308,25 @@
                         if (this.user.missions[`mission${this.nowNPC.mission}`].indexOf('finished') == -1){
                             if (this.finishedProgress + 1 < this.nowNPC.gameSpeaks.length){// 判斷對話結束了沒
                                 this.user.missions[`mission${this.nowNPC.mission}`].push(this.nowNPC.name) //推進到下一步
-                                if (this.nowNPC.gameOptions[this.finishedProgress]){ // 判斷目前的進展有沒有遊戲選項
+                                if (this.nowNPC.gameOptions && this.nowNPC.gameOptions[this.finishedProgress]){ // 判斷目前的進展有沒有遊戲選項
                                     this.showMissionBtn = this.nowNPC.gameSpeaks[this.finishedProgress]
                                 }else{
                                     // 顯示對話內容
                                     this.nowSpeak = this.nowNPC.gameSpeaks[this.finishedProgress]
                                     this.showMissionBtn = undefined
+                                }
+                                if (this.nowNPC.linkShow && this.nowNPC.linkShow[this.finishedProgress]){ // 判斷是不是有連結要顯示
+                                    let linkNum = 0
+                                    for (let i =0; i<this.finishedProgress; i++){
+                                        if (this.nowNPC.linkShow[i] == 1){
+                                            linkNum ++
+                                        }
+                                    }
+                                    this.npcShowLink.name = "測試外部連結"
+                                    this.npcShowLink.url = this.nowNPC.link[linkNum]
+                                    console.log('here')
+                                }else{
+                                    this.npcShowLink = {} //關閉顯示外部連結
                                 }
                                 if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length){// 判斷是不是倒數
                                     this.btnTxt = "關閉"
