@@ -12,7 +12,7 @@ autoResize: true
 app.renderer.resize(window.innerWidth, window.innerHeight);
 canvasContainer.appendChild(app.view)
 // PIXI size for resizing
-let scale = 0.3;
+let scale = 0.35;
 
 app.renderer.autoResize = true; //隨視窗改變大小
 app.renderer.resize(window.innerWidth, window.innerHeight); //全螢幕

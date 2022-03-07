@@ -12,6 +12,7 @@
             left: 0;
             top: 0;
             z-index: 97;
+            /* display: none; */
         }
     </style>
 </head>
@@ -118,7 +119,8 @@
                     nowLoading: true,
                     showPopup: false,
                     showPersonalPage: false,
-                    nowAns: true
+                    nowAns: true,
+                    cursorImg: 'src/img/icons/menu.png'
                 },
                 adoptable: false,
                 program: undefined,
@@ -130,9 +132,9 @@
                 nowNPC: undefined,
                 npcShowLink: {},
                 achievementMap: {
-                    block1: ['bike'],
-                    block2: ['board', 'house_cinemaroll'],
-                    block3: ['house_literature']
+                    block1: ['snail_mryeh', 'snail_oasis', 'snail_text', 'snail_book', 'snail_paint'],
+                    block2: ['snail_cinnamon', 'snail_scon', 'snail_dorayaki'],
+                    block3: [],
                 },
                 user: {
                     missions: {
@@ -184,9 +186,18 @@
                         let userGotArr = this.user.achievements[`block${i+1}`]
                         if (userGotArr.length > 0){
                             if (map.length == userGotArr.length && map.every(val => userGotArr.includes(val))){
-                                output[`block${i+1}`] = `探索玩區域${i+1}了！`
+                                let blockName = ""
+                                switch (i+1) {
+                                    case 1:
+                                        blockName = "文學區"
+                                        break;
+                                    case 2:
+                                        blockName = "慢活甜點區"
+                                        break;
+                                }   
+                                output[`block${i+1}`] = `探索完${blockName}了！`
                             }else{
-                                output[`block${i+1}`] = `尚未探索玩區域${i+1}`
+                                output[`block${i+1}`] = `尚未探索完區域${i+1}`
                             }
                         }else{
                             output[`block${i+1}`] = `區域${i+1}尚未開始`
@@ -264,7 +275,7 @@
             methods: {
                 switchPopup(){
                     this.interaction.showPopup = !this.interaction.showPopup
-                    // this.npcShowLink = {}
+                    this.npcShowLink = {}
                     //如果點到講廢話的NPC然後關閉視窗
                     if (this.nowNPC.enterGame !== 1 && this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.nowNPC.name) == -1){
                             this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)

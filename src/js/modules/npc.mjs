@@ -56,6 +56,7 @@ function createItem(el){
         .on("pointerdown", ()=>{
             vm.$data.interaction.nowClicked = true
             vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
+            vm.$data.interaction.cursorImg = "src/img/icons/checked.svg"
             vm.$data.itemSpeak = el.name
             vm.$data.nowNPC = el
             vm.$data.showMissionBtn = undefined //初始化關閉選項

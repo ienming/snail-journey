@@ -11,7 +11,6 @@ import {
     createNPC,
     createNormalHouse,
 } from "./js/modules/npc.mjs";
-// import { test } from './js/modules/test.mjs';
 
 createMap();
 createNPC();
@@ -19,7 +18,17 @@ window.setTimeout(()=>{
     createNormalHouse();
 }, 500)
 
-
-// test()
+// create cursor following
+// let cursorTexture = new PIXI.Texture.from(vm.$data.interaction.cursorImg)
+// let cursorSprite = new PIXI.Sprite(cursorTexture)
+// cursorSprite.anchor.set(0.5)
+// window.addEventListener("mousemove", (evt)=>{
+//     console.log(evt)
+//     cursorSprite.x = evt.clientX
+//     cursorSprite.y = evt.clientY
+// })
+// window.setTimeout(()=>{
+//     allContainer.addChild(cursorSprite)
+// }, 1500)
 
 app.stage.addChild(allContainer);
