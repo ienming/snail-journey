@@ -63,16 +63,20 @@
                             <div class="game-ui">
                                 <!-- 有選項時的按鈕 -->
                                 <div v-if="showMissionBtn">
-                                    <button v-for="btn of missionBtns" @click="checkAns(btn.correct);">{{btn.option}}</button>
+                                    <button v-for="btn of missionBtns" @click="checkAns(btn.correct);" class="my-btn outline" style="margin: 0 8px;">{{btn.option}}</button>
                                 </div>
                                 <div v-else>
                                     <p>
                                         <p>{{ nowSpeak }}</p>
                                         <p v-if="npcShowLink.url">
-                                            <a :href="npcShowLink.url" target="_blank">{{ npcShowLink.name }}</a>
+                                            <basic-link :title="npcShowLink.name" :url="npcShowLink.url"></basic-link>
+                                            <!-- <a :href="npcShowLink.url" target="_blank" class="my-link">
+                                                <img src="src/img/icons/arrow_rightLong.svg" alt="">
+                                                <span>{{ npcShowLink.name }}</span>
+                                            </a> -->
                                         </p>
                                     </p>
-                                    <button @click="pureNext" v-show="btnTxt">{{btnTxt}}</button>
+                                    <button @click="pureNext" v-show="btnTxt" class="my-btn mt-1 fl-r">{{btnTxt}}</button>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +111,7 @@
     <!-- Custom -->
     <script type="module" src="dist/main.js"></script>
     <script src="src/js/components/PersonalPage.js"></script>
-    <script src="src/js/components/CloseBtn.js"></script>
+    <script src="src/js/components/Parts.js"></script>
     <script src="src/js/components/Header.js"></script>
     <script>
         const vm = new Vue({
@@ -133,7 +137,7 @@
                 npcShowLink: {},
                 achievementMap: {
                     block1: ['snail_mryeh', 'snail_oasis', 'snail_text', 'snail_book', 'snail_paint'],
-                    block2: ['snail_cinnamon', 'snail_scon', 'snail_dorayaki'],
+                    block2: ['snail_cinnamon', 'snail_scone', 'snail_dorayaki', 'snail_greenbean'],
                     block3: [],
                 },
                 user: {
@@ -189,7 +193,7 @@
                                 let blockName = ""
                                 switch (i+1) {
                                     case 1:
-                                        blockName = "文學區"
+                                        blockName = "文藝生活區"
                                         break;
                                     case 2:
                                         blockName = "慢活甜點區"
