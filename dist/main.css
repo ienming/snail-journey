@@ -3552,6 +3552,11 @@ footer {
   height: 100vh;
   width: 100vw;
   z-index: 99; }
+  .mock.personal-page {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 15vh; }
 
 .wrapper {
   display: grid;
@@ -3576,17 +3581,45 @@ footer {
     .close:hover > img {
       transform: scaleX(1.5) scaleY(0.8); }
 
-.personal-page {
+#personalPage {
+  background-color: #f3f0e7;
+  border-radius: 8px;
+  box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
+  position: relative; }
+
+#personalCanvasContainer {
+  padding: 1rem; }
+
+#coinContainer {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  background-color: #ffffff; }
+
+#furnitureContainer {
+  max-width: 500px;
+  padding: 1rem;
+  background-color: #f3f0e7;
+  border-radius: 8px;
+  margin-top: 1rem; }
+  @media (min-width: 768px) {
+    #furnitureContainer {
+      margin-top: 0;
+      margin-left: 1rem; } }
+  #furnitureContainer .furniture {
+    border: 1px solid #000;
+    margin: .5rem 0;
+    padding: 1rem;
+    display: flex; }
+
+#buyConfirm {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #f3f0e7;
-  border-radius: 8px;
-  box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25); }
-
-#personalCanvasContainer {
-  padding: 1rem; }
+  padding: 1rem;
+  border-radius: 8px; }
 
 html, body {
   width: 100%;

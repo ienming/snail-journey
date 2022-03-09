@@ -44,7 +44,7 @@
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
         <transition name="fade">
-            <personal-page v-if="interaction.showPersonalPage" :user-got-badges="userGotBadges" :user-got-achievements="userGotAchievements" :outer-show-personal-page="interaction.showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
+            <personal-page v-if="interaction.showPersonalPage" :user-got-badges="userGotBadges" :user-got-achievements="userGotAchievements" :user-coins="user.coins" :outer-show-personal-page="interaction.showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
         </transition>
         <!-- popup 對話框 -->
         <transition name="fade">
@@ -70,10 +70,6 @@
                                         <p>{{ nowSpeak }}</p>
                                         <p v-if="npcShowLink.url">
                                             <basic-link :title="npcShowLink.name" :url="npcShowLink.url"></basic-link>
-                                            <!-- <a :href="npcShowLink.url" target="_blank" class="my-link">
-                                                <img src="src/img/icons/arrow_rightLong.svg" alt="">
-                                                <span>{{ npcShowLink.name }}</span>
-                                            </a> -->
                                         </p>
                                     </p>
                                     <button @click="pureNext" v-show="btnTxt" class="my-btn mt-1 fl-r">{{btnTxt}}</button>
@@ -150,7 +146,9 @@
                         block1: [],
                         block2: [],
                         block3: []
-                    }
+                    },
+                    coins: 1000,
+                    furnitures: []
                 },
             },
             computed: {
