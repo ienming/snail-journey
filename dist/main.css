@@ -3594,7 +3594,8 @@ footer {
   position: absolute;
   top: -15px;
   left: -15px;
-  background-color: #ffffff; }
+  background-color: #ffffff;
+  cursor: pointer; }
 
 #furnitureContainer {
   max-width: 500px;
@@ -3610,7 +3611,14 @@ footer {
     border: 1px solid #000;
     margin: .5rem 0;
     padding: 1rem;
-    display: flex; }
+    display: flex;
+    cursor: pointer;
+    transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+    #furnitureContainer .furniture:hover {
+      opacity: 0.5; }
+    #furnitureContainer .furniture.bought {
+      pointer-events: none;
+      opacity: .3; }
 
 #buyConfirm {
   position: fixed;

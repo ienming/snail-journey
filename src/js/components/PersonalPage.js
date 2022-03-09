@@ -7,10 +7,10 @@ const PersonalPage = {
             <personal-coin @show-furnitures="showFurnitures" :coins="userCoins"></personal-coin>
         </div>
         <template name="fade">
-            <furnitures-page v-show="furnitureHasShown" @show-confirm="showConfirm"></furnitures-page>
+            <furnitures-page v-if="furnitureHasShown" :user-got-furnitures="userGotFurnitures" @show-confirm="showConfirm"></furnitures-page>
         </template>
         <template name="fade">
-            <buy-confirm v-if="confirmHasShown" :furniture="nowAddFurniture" @close-confirm="closeConfirm"></buy-confirm>
+            <buy-confirm v-show="confirmHasShown" :furniture="nowAddFurniture" @close-confirm="closeConfirm"></buy-confirm>
         </template>
     </div>
     `,
@@ -18,17 +18,28 @@ const PersonalPage = {
         outerShowPersonalPage: Boolean,
         userGotBadges: Object,
         userGotAchievements: Object,
-        userCoins: Number
+        userCoins: Number,
+        userGotFurnitures: Array
     },
     mounted(){
         this.init()
     },
     data(){
         return {
-            pixiApp: undefined,
+            pixi: {
+                app: undefined
+            },
             furnitureHasShown: false,
             confirmHasShown: false,
             nowAddFurniture: undefined
+        }
+    },
+    watch: {
+        'userGotBadges': {
+            handler: function(newValue, oldValue){
+                console.log("使用者徽章有變，重畫")
+                this.draw()
+            }
         }
     },
     methods: {
@@ -43,38 +54,44 @@ const PersonalPage = {
             })
             let [paddingWidth, paddingHeight] = [window.innerWidth*0.2, window.innerHeight*0.4]
             // personalCanvasApp.renderer.resize(window.innerWidth-paddingWidth, window.innerHeight-paddingHeight)
-            personalCanvasApp.renderer.resize(300, 500)
+            personalCanvasApp.renderer.resize(800, 500)
             personalCanvasContainer.appendChild(personalCanvasApp.view)
 
-            this.pixiApp = personalCanvasApp //把 PIXI app 丟到 component 資料裡面變成元件的全域變數
+            this.pixi.app = personalCanvasApp //把 PIXI app 丟到 component 資料裡面變成元件的全域變數
+            this.pixi.badgesContainer = new PIXI.Container()
+            this.pixi.app.stage.addChild(this.pixi.badgesContainer)
+            this.pixi.achievesContainer = new PIXI.Container()
+            this.pixi.app.stage.addChild(this.pixi.achievesContainer)
+            this.draw()//開始畫房間
+        },
+        draw(){
+            // this.pixi.app.ticker.add(delta=>{
+            //     console.log("重畫房間")
+            // })
             this.showBadges() // 顯示使用者有的蝸牛徽章
             this.showAchievements() //顯示使用者探索過的區域
         },
         showBadges(){
-            let container = new PIXI.Container()
             let pY = 0
             for (prop in this.userGotBadges){
                 if (this.userGotBadges[prop]){
                     let txt = new PIXI.Text(`目前有的蝸牛，${prop}: ${this.userGotBadges[prop]}`)
                     txt.position.y = pY
-                    container.addChild(txt)
+                    this.pixi.badgesContainer.addChild(txt)
                     pY += 50
                 }
             }
-            this.pixiApp.stage.addChild(container)
         },
         showAchievements(){
-            let container = new PIXI.Container()
             let pY = 100
             for (prop in this.userGotAchievements){
                 if (this.userGotAchievements[prop]){
                     let txt = new PIXI.Text(`目前探索過的區域，${prop}: ${this.userGotAchievements[prop]}`)
                     txt.position.y = pY
-                    container.addChild(txt)
+                    this.pixi.achievesContainer.addChild(txt)
                     pY += 50
                 }
             }
-            this.pixiApp.stage.addChild(container)
         },
         showFurnitures(){
             console.log("personalPage 收到，打開傢俱櫃！")
@@ -116,7 +133,6 @@ const PersonalCoin = {
     },
     methods: {
         showFurnitures(){
-            // 顯示家具櫃子的function, 點擊裡面的icon後呼叫這個函式，然後 emit 給 PersonalPage
             this.$emit("show-furnitures")
         }
     }
@@ -131,7 +147,7 @@ const Furnitures = {
         <div id="furnitureContainer">
             <p>這是家具櫃子</p>
             <div class="d-flex flex-column">
-                <div class="furniture" :class="" v-for="item of furnitures" @click="buyFurniture(item)">
+                <div class="furniture" :class="item.bought ? 'bought' : ''" v-for="item of allFurnituresState" @click="buyFurniture(item)">
                     <div class="img-container">
                         <img :src="item.imgSrc" alt="" />
                     </div>
@@ -144,12 +160,14 @@ const Furnitures = {
             </div>
         </div>
     `,
-    // 判斷哪些家具已經有了
-    // 已經有的家具透明度降低、無法點擊
-    props: [],
+    props: {
+        userGotFurnitures: {
+            type: Array
+        }
+    },
     data(){
         return {
-            furnitures: [
+            allFurnitures: [
                 {
                     imgSrc: '',
                     name: '烤箱',
@@ -159,9 +177,22 @@ const Furnitures = {
                     imgSrc: '',
                     name: '書桌',
                     txt: '我是一張普通的書桌',
-                    price: 300
+                    price: 3000
                 }
             ]
+        }
+    },
+    computed: {
+        allFurnituresState(){
+            let lists = [...this.allFurnitures]
+            if (this.userGotFurnitures){
+                // 比較已經有的家具和所有家具
+                this.userGotFurnitures.forEach(name=>{
+                    let idx = this.allFurnitures.findIndex(el => el.name == name)
+                    lists[idx].bought = true
+                })
+            }
+            return lists
         }
     },
     mounted(){
@@ -227,21 +258,18 @@ const BuyConfirm = {
             if (vm.$data.user.coins >= this.furniture.price){
                 // 計算蝸牛幣扣款
                 vm.$data.user.coins -= this.furniture.price
-                console.log(`現在剩下：${vm.$data.user.coins}`)
                 // 把資料送到外層的 Vue app
                 vm.$data.user.furnitures.push(this.furniture.name)
                 // 顯示已購買、關閉視窗
                 this.buyable = "bought"
             }else{
-                console.log("錢不夠買不起><")
                 this.buyable = "disable"
             }
         },
         discard(){
-            console.log(`放棄購買${this.furniture}`)
-            // 關閉購買確認視窗
+            // console.log(`放棄購買${this.furniture}`)
             this.$emit("close-confirm")
-            // 是否要把 buyable 切換回來
+            this.buyable = 'able'
         }
     }
 }

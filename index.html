@@ -44,7 +44,7 @@
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
         <transition name="fade">
-            <personal-page v-if="interaction.showPersonalPage" :user-got-badges="userGotBadges" :user-got-achievements="userGotAchievements" :user-coins="user.coins" :outer-show-personal-page="interaction.showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
+            <personal-page v-if="interaction.showPersonalPage" :user-got-badges="userGotBadges" :user-got-achievements="userGotAchievements" :user-coins="user.coins" :user-got-furnitures="user.furnitures" :outer-show-personal-page="interaction.showPersonalPage" @switch-personal-page="switchPersonalPage"></personal-page>
         </transition>
         <!-- popup 對話框 -->
         <transition name="fade">
@@ -150,6 +150,7 @@
                     coins: 1000,
                     furnitures: []
                 },
+                userRecord: {}
             },
             computed: {
                 itemSpeakImgSrc(){
@@ -226,26 +227,16 @@
                 }
             },
             created(){
-                //任務資料
-                let missionRecorded = JSON.parse(localStorage.getItem('missions'))
-                if (missionRecorded){ //如果有已經儲存的任務資料
-                    this.user.missionRecorded = missionRecorded //放到 Vue 裏面
-                    for (prop in missionRecorded){
-                        this.user.missions[prop] = missionRecorded[prop] // 讓前臺拉出紀錄同步，所以遊戲可以進行
+                // fetch data from localStorage
+                for (prop in this.user){
+                    let record = JSON.parse(localStorage.getItem(prop))
+                    if (record){
+                        this.userRecord[prop] = record
+                        this.user[prop] = record
+                    }else{
+                        console.log(`no record of ${prop}`)
                     }
                 }
-                //區塊發現成就資料
-                let achievementRecorded = JSON.parse(localStorage.getItem('achievements'))
-                if (achievementRecorded){ //如果有已經儲存的任務資料
-                    this.user.achievementRecorded = achievementRecorded //放到 Vue 裏面
-                    for (prop in achievementRecorded){
-                        this.user.achievements[prop] = achievementRecorded[prop] // 讓前臺拉出紀錄同步，所以遊戲可以進行
-                    }
-                }
-                console.log('missionRecorded: ')
-                console.log(missionRecorded)
-                console.log('achievementRecorded: ')
-                console.log(achievementRecorded)
             },
             mounted() {
                 console.log("vue completed load")
@@ -257,7 +248,6 @@
                             if (newValue[prop].join().indexOf("finished") !== -1){
                                 console.log("任務資料完成的變動，開始儲存")
                                 let d = JSON.stringify(newValue)
-                                console.log('d: '+d)
                                 this.storageData('missions', d)
                             }
                         }
@@ -268,10 +258,23 @@
                     handler: function(newValue, oldValue){
                         console.log("區塊發現資料有變動，開始儲存")
                         let d = JSON.stringify(newValue)
-                        console.log('d: '+d)
                         this.storageData('achievements', d)
                     },
                     deep: true
+                },
+                'user.furnitures': {
+                    handler: function(newValue, oldValue){
+                        console.log("家具資料有變動，開始儲存")
+                        let d = JSON.stringify(newValue)
+                        this.storageData('furnitures', d)
+                    }
+                },
+                'user.coins': {
+                    handler: function(newValue, oldValue){
+                        console.log("蝸牛幣資料有變動，開始儲存")
+                        let d = JSON.stringify(newValue)
+                        this.storageData('coins', d)
+                    }
                 }
             },
             methods: {
