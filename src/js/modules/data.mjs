@@ -100,7 +100,39 @@ let normalHouses = [
     },
 ];
 
-export { fetchNPC, normalHouses };
+//all furnitures
+function fetchFurnitures(){
+    let response = [];
+    axios.get("src/data/data_furnitures.csv")
+        .then(res=>{
+            let rows = res.data.split("\n")
+            let keyMap = {};
+            for (let i =0; i<rows[0].length; i++){
+                if (rows[0].split(",")[i] !== undefined){
+                    keyMap[rows[0].split(",")[i].trim()] = i
+                    console.log("key: "+rows[0].split(",")[i])
+                }
+            }
+            rows.shift()
+            rows.forEach(el=>{
+                let d = el.split(",");
+                let obj = {
+                    name: d[keyMap.name],
+                    x: d[keyMap.x],
+                    y: d[keyMap.y],
+                    txt: d[keyMap.txt],
+                    price: d[keyMap.price]*1
+                };
+                response.push(obj)
+            })
+            vm.$data.allFurnitures = response
+        })
+        .catch(err=>{
+            throw(err)
+        })
+}
+
+export { fetchNPC, normalHouses, fetchFurnitures };
 
 // let fetchSnails = async () => {
 //     let response;

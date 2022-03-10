@@ -71,9 +71,12 @@
     background-color: $lightBg
     border-radius: 8px
     margin-top: 1rem
+    overflow: scroll
     +rwd(md)
         margin-top: 0
         margin-left: 1rem
+        max-height: 530px
+        max-width: unset
     .furniture
         border: 1px solid #000
         margin: .5rem 0
@@ -86,6 +89,7 @@
         &.bought
             pointer-events: none
             opacity: .3
+            color: green
 #buyConfirm
     position: fixed
     top: 50%

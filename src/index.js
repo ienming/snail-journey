@@ -11,12 +11,14 @@ import {
     createNPC,
     createNormalHouse,
 } from "./js/modules/npc.mjs";
+import { fetchFurnitures } from './js/modules/data.mjs';
 
 createMap();
 createNPC();
 window.setTimeout(()=>{
     createNormalHouse();
 }, 500)
+fetchFurnitures();
 
 // create cursor following
 // let cursorTexture = new PIXI.Texture.from(vm.$data.interaction.cursorImg)

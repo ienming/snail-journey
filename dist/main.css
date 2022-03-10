@@ -3602,11 +3602,14 @@ footer {
   padding: 1rem;
   background-color: #f3f0e7;
   border-radius: 8px;
-  margin-top: 1rem; }
+  margin-top: 1rem;
+  overflow: scroll; }
   @media (min-width: 768px) {
     #furnitureContainer {
       margin-top: 0;
-      margin-left: 1rem; } }
+      margin-left: 1rem;
+      max-height: 530px;
+      max-width: unset; } }
   #furnitureContainer .furniture {
     border: 1px solid #000;
     margin: .5rem 0;
@@ -3618,7 +3621,8 @@ footer {
       opacity: 0.5; }
     #furnitureContainer .furniture.bought {
       pointer-events: none;
-      opacity: .3; }
+      opacity: .3;
+      color: green; }
 
 #buyConfirm {
   position: fixed;
