@@ -1,11 +1,6 @@
-import {arrayEquals} from './global.mjs'
-
-// Achievement Map for mapping whether get badges or not
-// let achievementMap = {
-//     block1: ['bike', 'house_literature'],
-//     block2: []
-// }
-// 把這邊改成某一區全區講完話就有徽章
+import { collisionDetect } from "./global.mjs"
+import { canvasWidth, canvasHeight, scale, allContainer} from "./global.mjs"
+import { npcsG } from "./npc.mjs"
 
 // 主線探索遊戲邏輯
 function initMission(el){
@@ -30,6 +25,67 @@ function initMission(el){
         console.log(`任務${el.mission}結束，講一下廢話`)
     }
 }
+
+// 撿垃圾
+function generateTrash(){
+    let num = 10;
+    let scale = 0.1;
+    let padding = 100;
+    let trashContainer = new PIXI.Container()
+    for (let i=0; i<num; i++){
+        console.log(`製造第${i}個垃圾`)
+        let trashTexture = new PIXI.Texture.from("./src/img/board.png")
+        let trash = new PIXI.Sprite(trashTexture)
+        trash.x = Math.random()*canvasWidth-padding*2
+        trash.y = Math.random()*window.innerHeight-padding*2
+        trash.scale.set(scale)
+        trash.interactive = true
+        trash.buttonMode = true
+        trash.on("pointerdown", (el)=>{
+            console.log("撿到垃圾了")
+            console.log(el.target)
+            console.log(trashContainer.children)
+            //做動畫變小消失
+            //增加蝸牛幣、計算總共撿了多少垃圾？累積一定數量可以給成就
+            //確定動畫完成後destroy
+            el.target.destroy()
+        })
+        trash.mouseover = function(){ //hover時的放大效果
+            gsap.to(this, .2, {
+                pixi: {
+                    scaleX: scale*1.18,
+                },
+                yoyo: true,
+                repeat: 2,
+                onComplete: function(){
+                    trash.scale.set(scale)
+                }
+            })
+        }
+        // 判斷是否撞到 NPC
+        npcsG.forEach(npc=>{
+            while (collisionDetect(npc, trash)){
+                console.log(`第${i}個垃圾撞到了`)
+                trash.x = Math.random()*(canvasWidth-padding)+padding/2
+                trash.y = Math.random()*(window.innerHeight-padding)+padding/2
+            }
+            trashContainer.addChild(trash)
+        })
+    }
+    trashContainer.x = -window.innerWidth/2
+    trashContainer.y = -window.innerHeight/2
+    allContainer.addChild(trashContainer)
+}
+
+export {initMission, generateTrash}
+
+// Achievement Map for mapping whether get badges or not
+// let achievementMap = {
+//     block1: ['bike', 'house_literature'],
+//     block2: []
+// }
+// 把這邊改成某一區全區講完話就有徽章
+
 // function initMission(el){
 //     let nowUserMissionProgress = vm.$data.user.missions[`mission${el.mission}`]
 //     if (el.mission && nowUserMissionProgress.indexOf('finished') == -1){ //此NPC有任務而且該任務還沒完成
@@ -67,9 +123,7 @@ function initMission(el){
 //             console.log(`任務${el.mission}尚未開啟`)
 //         }
 //     }else{
-//         console.log("沒有任務喔～")
-//         return
-//     }
-// }
-
-export {initMission}
+    //         console.log("沒有任務喔～")
+    //         return
+    //     }
+    // }

@@ -15,7 +15,7 @@ import {initMission} from './game.mjs'
 //     }
 //     waitSnails()
 // }
-
+let npcsG = []
 function createNPC(){
     let npcs
     let waitNPC = async ()=>{
@@ -104,6 +104,7 @@ function createItem(el){
         })
     }
 
+    npcsG.push(item)
     allContainer.addChild(item)
 }
 
@@ -112,4 +113,4 @@ function speakRandomly(el){
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
 }
 
-export {createNPC, createNormalHouse, createItem}
+export {createNPC, createNormalHouse, createItem, npcsG}

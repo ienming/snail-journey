@@ -41,4 +41,13 @@ function arrayEquals(a, b) {
         a.every((val, index) => val === b[index]);
 }
 
-export {canvasContainer, canvasWidth, canvasHeight, app, scale, allContainer, getRandom, arrayEquals}
+function collisionDetect(a, b){
+    let aBox = a.getBounds()
+    let bBox = b.getBounds()
+
+    return aBox.x + aBox.width > bBox.x &&
+            aBox.y + aBox.height > bBox.y &&
+            aBox.x < bBox.x + bBox.width &&
+            aBox.y < bBox.y + bBox.height
+}
+export {canvasContainer, canvasWidth, canvasHeight, app, scale, allContainer, getRandom, arrayEquals, collisionDetect}
