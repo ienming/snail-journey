@@ -161,11 +161,13 @@ const Adoption = {
             </div>
             <p class="my-2">{{program.intro}}</p>
             <div class="d-flex flex-wrap my-1 action">
-                <div class="d-flex aic flex-column" v-for="action of program.actions">
-                    <img src="" alt="" />
-                    <h5 class="t-z-2">{{action.title}}</h5>
-                    <p class="t-z-2">{{action.intro}}</p>
-                </div>
+                <figure class="m-0 d-flex aic flex-column" v-for="action of program.actions">
+                    <img :src="action.imgSrc" alt="" />
+                    <figcaption class="mt-1 t-a-c">
+                        <h5 class="t-z-2">{{action.title}}</h5>
+                        <p class="t-z-2">{{action.intro}}</p>
+                    </figcaption>
+                </figure>
             </div>
             <cta></cta>
         </div>

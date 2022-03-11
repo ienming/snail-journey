@@ -59,7 +59,7 @@ let fetchNPC = async () => {
                     let actions = []
                     for (let i=0; i<d[keyMap.action_titles].trim().split("^").length; i++){
                         let action = {
-                            imgSrc: d[keyMap.action_imgs].trim().split("^")[i],
+                            imgSrc: `./src/img/${d[keyMap.action_imgs].trim().split("^")[i]}.png`,
                             title: d[keyMap.action_titles].trim().split("^")[i],
                             intro: d[keyMap.action_intros].trim().split("^")[i]
                         }
