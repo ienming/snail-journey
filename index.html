@@ -49,47 +49,48 @@
         <!-- popup 對話框 -->
         <transition name="fade">
             <div class="mock" v-show="interaction.showPopup">
-                <div class="wrapper">
+                <div class="wrapper" :style="showProgram ? 'align-items: flex-end' : ''">
                     <div id="imgCanvasContainer" v-show="animatedSpriteSpeak"></div>
-                    <div v-show="!animatedSpriteSpeak" class="mr-2" id="imgStaticContainer">
+                    <div v-show="!animatedSpriteSpeak" class="mr-2 speak-img">
                         <img :src="itemSpeakImgSrc" alt="">
                     </div>
-                    <div class="popup">
-                        <!-- 不管怎樣都會有的見面招呼語 -->
-                        <div>
-                            <p v-if="nowSpeak == undefined">
-                                This is {{ itemSpeak }} speaking
-                            </p>
-                            <div class="game-ui">
-                                <!-- 有選項時的按鈕 -->
-                                <div v-if="showMissionBtn">
-                                    <button v-for="btn of missionBtns" @click="checkAns(btn.correct);" class="my-btn outline" style="margin: 0 8px;">{{btn.option}}</button>
-                                </div>
-                                <div v-else>
-                                    <p>
-                                        <p>{{ nowSpeak }}</p>
-                                        <p v-if="npcShowLink.url">
-                                            <basic-link :title="npcShowLink.name" :url="npcShowLink.url"></basic-link>
+                    <!-- 一般對話 -->
+                    <transition name="fade" v-if="!showProgram">
+                        <div class="popup">
+                            <!-- 不管怎樣都會有的見面招呼語 -->
+                            <div>
+                                <p v-if="nowSpeak == undefined">
+                                    This is {{ itemSpeak }} speaking
+                                </p>
+                                <div class="game-ui">
+                                    <!-- 有選項時的按鈕 -->
+                                    <div v-if="showMissionBtn">
+                                        <button v-for="btn of missionBtns" @click="checkAns(btn.correct);" class="my-btn outline" style="margin: 0 8px;">{{btn.option}}</button>
+                                    </div>
+                                    <div v-else>
+                                        <p>
+                                            <p>{{ nowSpeak }}</p>
+                                            <p v-if="npcShowLink.url">
+                                                <basic-link :title="npcShowLink.name" :url="npcShowLink.url"></basic-link>
+                                            </p>
                                         </p>
-                                    </p>
-                                    <button @click="pureNext" v-show="btnTxt" class="my-btn mt-1 fl-r">{{btnTxt}}</button>
+                                        <button @click="pureNext" v-show="btnTxt" class="my-btn mt-1 fl-r">{{btnTxt}}</button>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- 有認養行動案就顯示 -->
+                            <button v-if="adoptable" @click="switchProgram">認養行動案:{{program.title}}</button>
+                            <!-- Close Button -->
+                            <close-btn :outer-show-popup="interaction.showPopup" @switch-popup="switchPopup"></close-btn>
                         </div>
-                        <!-- 有認養行動案就顯示 -->
-                        <button v-if="adoptable" @click="switchProgram">認養行動案:{{program.name}}</button>
-                        <!-- 跳轉到行動案的視窗 -->
-                        <div v-if="showProgram">
-                            <p>認養行動案：{{program.name}}</p>
-                            <p>{{program.description}}</p>
-                            <form action="">
-                                <p>表單測試</p>
-                                <input type="text" />
-                            </form>
+                    </transition>
+                    <!-- 跳轉到行動案的視窗 -->
+                    <transition name="fade" v-else>
+                        <div class="por">
+                            <adoption :program="program"></adoption>
+                            <close-btn :outer-show-popup="interaction.showPopup" @switch-popup="switchPopup"></close-btn>
                         </div>
-                        <!-- Close Button -->
-                        <close-btn :outer-show-popup="interaction.showPopup" @switch-popup="switchPopup"></close-btn>
-                    </div>
+                    </transition>
                 </div>
             </div>
         </transition>

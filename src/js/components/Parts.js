@@ -78,3 +78,105 @@ const Link = {
 }
 
 Vue.component('basic-link', Link)
+
+const CTA = {
+    template: `
+        <div class="my-cta-container" :class="{ 'large' : large}">
+        <a :href="url" class="my-cta" :class="{ 'fill' : childFill}" :target="{ '_blank' : outer }">
+            <span v-html="title"></span>
+            <div class="icon-container">
+                <img :src="iconUrl" alt="">
+                <img :src="iconUrl" alt="">
+            </div>
+        </a>
+        </div>
+    `,
+    props: {
+        title: {
+            title: String,
+            default: "加入認養"
+        },
+        large: {
+            type: Boolean, 
+            default: false
+        },
+        fill: {
+            type: Boolean,
+            default: false
+        },
+        url: {
+            type: String,
+            default: ""
+        },
+        outer: {
+            type: Boolean,
+            default: false
+        }
+    },
+    computed: {
+        childFill(){
+            let state = this.fill
+            if (this.large) {
+                state = true
+            }
+            return state
+        },
+        iconUrl(){
+            let iconUrl = "/src/img/icons/arrow_rightLong_ht.svg"
+            // if (this.childFill){
+            //     iconUrl = "/assets/img/icons/arrow_rightLong_ht.svg"
+            // }
+            return iconUrl
+        }
+    },
+    data(){
+        return {}
+    }
+}
+
+Vue.component('cta', CTA)
+
+
+const Adoption = {
+    template: `
+        <div class="popup adoption">
+            <div class="d-flex justify-between head">
+                <div>
+                    <h3>{{program.subTitle}}</h3>
+                    <h1>{{program.title}}</h1>
+                </div>
+                <div class="d-flex flex-column jcc">
+                    <img src="" alt="" />
+                    <span></span>
+                </div>
+            </div>
+            <p class="mt-1">
+                <p class="t-w-8 t-z-1">專案目標</p>
+                <p class="t-z-2">{{program.goal}}</p>
+            </p>
+            <div class="d-flex my-1">
+                <div v-for="keyword of program.keywords" class="keyword">
+                    {{keyword}}
+                </div>
+            </div>
+            <p class="my-2">{{program.intro}}</p>
+            <div class="d-flex flex-wrap my-1 action">
+                <div class="d-flex aic flex-column" v-for="action of program.actions">
+                    <img src="" alt="" />
+                    <h5 class="t-z-2">{{action.title}}</h5>
+                    <p class="t-z-2">{{action.intro}}</p>
+                </div>
+            </div>
+            <cta></cta>
+        </div>
+    `,
+    props: {
+        program: {
+            type: Object
+        }
+    },
+    data(){
+        return {}
+    }
+}
+Vue.component('adoption', Adoption)

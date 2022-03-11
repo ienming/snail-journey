@@ -41,36 +41,51 @@ let fetchNPC = async () => {
             if (d[keyMap.adoptable]){
                 obj.adoptable = d[keyMap.adoptable]*1
                 obj.program = {
-                    name: d[keyMap.program_name],
-                    intro: d[keyMap.program_intro]
+                    title: d[keyMap.program_title],
+                    subTitle: d[keyMap.program_subtitle],
+                    intro: d[keyMap.program_intro],
+                    goal: d[keyMap.program_goal],
                 }
+                let keywords = d[keyMap.program_keywords].trim().split("^")
+                obj.program.keywords = keywords
+                // actions
+                let actions = []
+                for (let i=0; i<d[keyMap.action_titles].trim().split("^").length; i++){
+                    let action = {
+                        imgSrc: d[keyMap.action_imgs].trim().split("^")[i],
+                        title: d[keyMap.action_titles].trim().split("^")[i],
+                        intro: d[keyMap.action_intros].trim().split("^")[i]
+                    }
+                    actions.push(action)
+                }
+                obj.program.actions = actions
             }
             // NPC 遊戲中要講的話
             if (d[keyMap.game_speaks]){
                 let gameSpeaksArr = []
-                gameSpeaksArr = d[keyMap.game_speaks].trim().split("&")
+                gameSpeaksArr = d[keyMap.game_speaks].trim().split("^")
                 obj.gameSpeaks = gameSpeaksArr
             }
             // NPC 遊戲對應的選項內容
             if (d[keyMap.game_option]){
                 let gameOptionArr = []
-                gameOptionArr = d[keyMap.game_option].trim().split("&")
+                gameOptionArr = d[keyMap.game_option].trim().split("^")
                 obj.gameOptions = gameOptionArr.map(el=>el*1)
             }
             // NPC 遊戲對應的圖片顯示
             if (d[keyMap.game_img]){
-                let gameImgArr = d[keyMap.game_img].trim().split("&")
+                let gameImgArr = d[keyMap.game_img].trim().split("^")
                 obj.gameImgs = gameImgArr.map(el=>el*1)
             }
             // NPC 講的廢話
             if (d[keyMap.speaks]){
                 let speaksArr = [];
-                speaksArr = d[keyMap.speaks].trim().split("&")
+                speaksArr = d[keyMap.speaks].trim().split("^")
                 obj.speaks = speaksArr;
             }
             // 中間穿插的連結何時顯示
             if (d[keyMap.link_show]){
-                let linkShows = d[keyMap.link_show].trim().split("&")
+                let linkShows = d[keyMap.link_show].trim().split("^")
                 obj.linkShow = linkShows.map(el=>el*1)
                 // 切開黏在一起的網址
                 let links = d[keyMap.links].trim().split("http")
