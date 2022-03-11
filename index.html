@@ -116,6 +116,19 @@
                 </div>
             </div>
         </transition>
+        <!-- 系統提示進度說明 -->
+        <transition name="fade">
+            <div class="mock" v-if="sys.popup">
+                <div class="wrapper">
+                    <div class="popup">
+                        <p>{{sys.say}}</p>
+                        <div class="t-a-r">
+                            <button @click="sys.popup = !sys.popup" class="my-btn" style="margin: 0 8px;">確定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 
     <!-- Vue -->
@@ -147,6 +160,10 @@
                     showPersonalPage: false,
                     nowAns: true,
                     cursorImg: 'src/img/icons/menu.png'
+                },
+                sys: {
+                    popup: false,
+                    say: ""
                 },
                 adoptable: false,
                 program: undefined,
@@ -222,7 +239,7 @@
                                         blockName = "慢活甜點區"
                                         break;
                                 }
-                                output[`block${i + 1}`] = `探索完${blockName}了！`
+                                output[`block${i + 1}`] = `${blockName}finished！`
                             } else {
                                 output[`block${i + 1}`] = `尚未探索完區域${i + 1}`
                             }
@@ -373,19 +390,42 @@
                             } else if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) { //正要結束
                                 this.user.missions[`mission${this.nowNPC.mission}`].push('finished') //記錄結束
                                 this.switchPopup()
-                                console.log(`完成任務${this.nowNPC.mission}！`)
                                 this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                                this.checkBlockFinished()
                             }
                         } else this.switchPopup()
                     } else { //廢話黨
                         if (this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.nowNPC.name) == -1) {
                             this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                            // 判斷對話完後自己這區有沒有完成
+                            this.checkBlockFinished()
                         }
                         this.switchPopup()
                     }
                 },
                 storageData(key, value) {
                     localStorage.setItem(key, value)
+                },
+                showSysTxt(txt) {
+                    this.sys.popup = true
+                    this.sys.say = txt
+                },
+                checkBlockFinished() {
+                    if (this.userGotAchievements[`block${this.nowNPC.mission}`].indexOf("finished") !== -1) {
+                        blockFinished = this.nowNPC.mission
+                        window.setTimeout(() => {
+                            let output
+                            switch (blockFinished) {
+                                case 1:
+                                    output = "文藝生活區"
+                                    break;
+                                case 2:
+                                    output = "慢活甜點區"
+                                    break;
+                            }
+                            this.showSysTxt(`探索完${output}了！可以到房間裡看看解鎖的家具囉！`)
+                        }, 800)
+                    }
                 }
             }
         })
