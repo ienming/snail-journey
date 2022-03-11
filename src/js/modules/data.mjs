@@ -23,7 +23,7 @@ let fetchNPC = async () => {
                 console.log("key: "+rows[0].split(",")[i])
             }
         }
-        console.log(keyMap)
+        // console.log(keyMap)
         rows.shift();
         rows.forEach((el) => {
             let d = el.split(",");
@@ -42,23 +42,31 @@ let fetchNPC = async () => {
                 obj.adoptable = d[keyMap.adoptable]*1
                 obj.program = {
                     title: d[keyMap.program_title],
-                    subTitle: d[keyMap.program_subtitle],
                     intro: d[keyMap.program_intro],
-                    goal: d[keyMap.program_goal],
                 }
-                let keywords = d[keyMap.program_keywords].trim().split("^")
-                obj.program.keywords = keywords
+                if (d[keyMap.program_subtitle]){
+                    obj.program.subTitle = d[keyMap.program_subtitle]
+                }
+                if (d[keyMap.program_goal]){
+                    obj.program.goal = d[keyMap.program_goal]
+                }
+                if (d[keyMap.program_keywords]){
+                    let keywords = d[keyMap.program_keywords].trim().split("^")
+                    obj.program.keywords = keywords
+                }
                 // actions
-                let actions = []
-                for (let i=0; i<d[keyMap.action_titles].trim().split("^").length; i++){
-                    let action = {
-                        imgSrc: d[keyMap.action_imgs].trim().split("^")[i],
-                        title: d[keyMap.action_titles].trim().split("^")[i],
-                        intro: d[keyMap.action_intros].trim().split("^")[i]
+                if (d[keyMap.action_titles]){
+                    let actions = []
+                    for (let i=0; i<d[keyMap.action_titles].trim().split("^").length; i++){
+                        let action = {
+                            imgSrc: d[keyMap.action_imgs].trim().split("^")[i],
+                            title: d[keyMap.action_titles].trim().split("^")[i],
+                            intro: d[keyMap.action_intros].trim().split("^")[i]
+                        }
+                        actions.push(action)
                     }
-                    actions.push(action)
+                    obj.program.actions = actions
                 }
-                obj.program.actions = actions
             }
             // NPC 遊戲中要講的話
             if (d[keyMap.game_speaks]){
@@ -125,7 +133,7 @@ function fetchFurnitures(){
             for (let i =0; i<rows[0].length; i++){
                 if (rows[0].split(",")[i] !== undefined){
                     keyMap[rows[0].split(",")[i].trim()] = i
-                    console.log("key: "+rows[0].split(",")[i])
+                    // console.log("key: "+rows[0].split(",")[i])
                 }
             }
             rows.shift()
