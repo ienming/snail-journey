@@ -15,11 +15,21 @@
             z-index: 97;
             /* display: none; */
         }
+        .msg-board{
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            z-index: 97;
+        }
     </style>
 </head>
 
 <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v13.0&appId=405617263518270&autoLogAppEvents=1" nonce="PtvRz5Pa"></script>
     <div id="app">
+        <!-- 留言板測試 -->
+        <div class="fb-comments msg-board" data-href="https://ienming.github.io/snail-journey/" data-width="" data-numposts="5"></div>
         <!-- Header -->
         <my-header @switch-personalpage="switchPersonalPage"></my-header>
         <!-- 測試使用者狀態 -->
