@@ -6,6 +6,7 @@ const vm = new Vue({
             nowLoading: true,
             showPopup: false,
             showPersonalPage: false,
+            showMsg: false,
             nowAns: true,
             cursorImg: 'src/img/icons/menu.png'
         },
@@ -114,6 +115,12 @@ const vm = new Vue({
                 })
                 return arr
             } else return
+        },
+        showMsgBoard(){
+            // if (this.itemSpeak && this.itemSpeak == "board"){
+            //     return true
+            // }else return false
+            //還是不要跟npc混在一起好了
         }
     },
     created() {
@@ -192,6 +199,9 @@ const vm = new Vue({
         },
         switchPersonalPage() {
             this.interaction.showPersonalPage = !this.interaction.showPersonalPage
+        },
+        switchMsg(){
+            console.log("關閉留言板")
         },
         switchProgram() {
             this.showProgram = true
