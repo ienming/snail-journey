@@ -82,13 +82,20 @@ Vue.component('basic-link', Link)
 const CTA = {
     template: `
         <div class="my-cta-container" :class="{ 'large' : large}">
-        <a :href="url" class="my-cta" :class="{ 'fill' : childFill}" :target="{ '_blank' : outer }">
-            <span v-html="title"></span>
-            <div class="icon-container">
-                <img :src="iconUrl" alt="">
-                <img :src="iconUrl" alt="">
-            </div>
-        </a>
+            <button v-if="!url" class="my-cta cta-link" :class="{ 'fill' : childFill}" @click="$emit('adopting')">
+                <span v-html="title"></span>
+                <div class="icon-container">
+                    <img :src="iconUrl" alt="">
+                    <img :src="iconUrl" alt="">
+                </div>
+            </button>
+            <a v-else :href="url" class="my-cta cta-link" :class="{ 'fill' : childFill}" :target="{ '_blank' : outer }">
+                <span v-html="title"></span>
+                <div class="icon-container">
+                    <img :src="iconUrl" alt="">
+                    <img :src="iconUrl" alt="">
+                </div>
+            </a>
         </div>
     `,
     props: {
@@ -169,7 +176,7 @@ const Adoption = {
                     </figcaption>
                 </figure>
             </div>
-            <cta></cta>
+            <cta @adopting="adopt"></cta>
         </div>
     `,
     props: {
@@ -179,6 +186,24 @@ const Adoption = {
     },
     data(){
         return {}
+    },
+    methods: {
+        adopt(){
+            //判斷是否已經認養過
+            if (vm.$data.user.adoptions.every(val => val !== this.program.title)){
+                if (this.program.subTitle){
+                    //打事件到vm 呼叫 showsys()
+                    this.$emit(`adopted`, `已認養方案：「${this.program.subTitle}：${this.program.title}」`)
+                }
+                else{
+                    this.$emit(`adopted`, `已認養方案：「${this.program.title}」`)
+                }
+                //把認養的資料儲存
+                vm.$data.user.adoptions.push(this.program.title)
+            }else{
+                this.$emit(`adopted`, `已經認養過方案：「${this.program.title}」囉～`)
+            }
+        },
     }
 }
 Vue.component('adoption', Adoption)

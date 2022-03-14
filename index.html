@@ -70,7 +70,7 @@
                                     <!-- 有選項時的按鈕 -->
                                     <div v-if="showMissionBtn">
                                         <button v-for="btn of missionBtns" @click="checkAns(btn.correct);"
-                                            class="my-btn" style="margin: 0 8px;">{{btn.option}}</button>
+                                            class="my-btn" style="margin: 8px;">{{btn.option}}</button>
                                     </div>
                                     <div v-else>
                                         <p>
@@ -108,7 +108,7 @@
                     <!-- 跳轉到行動案的視窗 -->
                     <div v-else key="adoption-dialogue" class="d-flex ain">
                         <div class="por">
-                            <adoption :program="program"></adoption>
+                            <adoption :program="program" @adopted="showSysTxt"></adoption>
                             <close-btn :outer-show-popup="interaction.showPopup" @switch-popup="switchPopup">
                             </close-btn>
                         </div>
@@ -149,7 +149,8 @@
     <script src="src/js/components/PersonalPage.js"></script>
     <script src="src/js/components/Parts.js"></script>
     <script src="src/js/components/Header.js"></script>
-    <script>
+    <script src="src/js/globalVue.js"></script>
+    <!-- <script>
         const vm = new Vue({
             el: "#app",
             data: {
@@ -429,7 +430,7 @@
                 }
             }
         })
-    </script>
+    </script> -->
 </body>
 
 </html>

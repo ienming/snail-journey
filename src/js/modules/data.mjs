@@ -93,14 +93,20 @@ let fetchNPC = async () => {
             }
             // 中間穿插的連結何時顯示
             if (d[keyMap.link_show]){
+                obj.link = {}
                 let linkShows = d[keyMap.link_show].trim().split("^")
-                obj.linkShow = linkShows.map(el=>el*1)
+                obj.link.shows = linkShows.map(el=>el*1)
                 // 切開黏在一起的網址
                 let links = d[keyMap.links].trim().split("http")
                 let filterLinks = links.filter(el=>el !== '')
                 let output = []
                 filterLinks.forEach(el=>output.push("http"+el))
-                obj.link = output
+                obj.link.urls = output
+                //連結顯示文字
+                if (d[keyMap.link_names]){
+                    let linkNames = d[keyMap.link_names].trim().split("^")
+                    obj.link.names = linkNames
+                }
             }
             output.push(obj);
         });
