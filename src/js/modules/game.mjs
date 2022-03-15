@@ -30,24 +30,97 @@ function initMission(el){
 // 撿垃圾
 let trashContainer = new PIXI.Container()
 function startDailyTrash(){
+    // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
+    let recordTrashes = vm.$data.userRecord.gotTrashes
+    if (recordTrashes && recordTrashes.length > 0){
+        if (recordTrashes.length < vm.$data.dailyTrashNum){
+            console.log("依據資料產生垃圾")
+            let notYetGotTrashes = [...trashes].splice(0, vm.$data.dailyTrashNum) //先依照今天總量切短
+            console.log(notYetGotTrashes)
+            // recordTrashes.forEach(record=>{
+            //     // notYetGotTrashes.splice(record, 1)
+            //     notYetGotTrashes.filter(el => el.id == 1)
+            // })
+            for (let i=0; i<recordTrashes.length; i++){
+                //這行不知怎樣沒被執行
+                notYetGotTrashes.filter(el => el.id !== recordTrashes[i])
+                console.log("hi")
+            }
+            console.log(notYetGotTrashes)
+            notYetGotTrashes.forEach(trash=>{
+                let trashTexture = new PIXI.Texture.from("./src/img/board.png")
+                let trashSp = new PIXI.Sprite(trashTexture)
+                let scale = .1;
+                trashSp.x = trash.x
+                trashSp.y = trash.y
+                trashSp.scale.set(scale)
+                trashSp.interactive = true
+                trashSp.buttonMode = true
+                trashSp.on("pointerdown", (el)=>{
+                    console.log("撿到垃圾了")
+                    //這邊要記得 watch 撿垃圾的資料
+                    vm.$data.user.gotTrashes.push(trash.id)
+                    //做動畫變小消失
+                    // gsap.to(el.target, .2, {
+                    //     pixi: {
+                    //         scale: 0
+                    //     },
+                    //     onComplete(){
+                    //         //確定動畫完成後destroy
+                    //     }
+                    // })
+                    //增加蝸牛幣、計算總共撿了多少垃圾？
+                    el.target.destroy()
+                    // 判斷是否完成每日撿垃圾任務
+                    if (vm.$data.user.gotTrashes.length == vm.$data.dailyTrashNum){
+                        let str = "謝謝你幫忙清理街道上的垃圾！因為有你，蝸牛綠洲變得更清新了。"
+                        vm.$data.sys.popup = true
+                        vm.$data.sys.say = str
+                    }
+                })
+                trashSp.mouseover = function(){ //hover時的放大效果
+                    gsap.to(this, .2, {
+                        pixi: {
+                            scaleX: scale*1.18,
+                        },
+                        yoyo: true,
+                        repeat: 2,
+                        onComplete: function(){
+                            trashSp.scale.set(scale)
+                        }
+                    })
+                }
+                trashContainer.addChild(trashSp)
+            })
+            trashContainer.x = -window.innerWidth/2
+            trashContainer.y = -window.innerHeight/2
+            allContainer.addChild(trashContainer)
+        }else{
+            console.log("今天的垃圾已經清完了")
+        }
+    }else{
+        // 如果一切都還沒開始（新玩家）
+        console.log("新開始產生垃圾")
+        generateTrash()
+    }
+    // 判斷每日更新
     let nowTime = new Date().getMinutes()
-    generateTrash() // init trashes
     window.setInterval(()=>{
         if (new Date().getMinutes() !== nowTime){
             nowTime = new Date().getMinutes()
-            console.log("重新產生垃圾")
+            console.log("計時重新產生垃圾")
             while(trashContainer.children.length > 0){
                 trashContainer.removeChild(trashContainer.children[0])
             }
             generateTrash()
-            vm.$data.user.daily.gotTrashes = 0
+            vm.$data.user.gotTrashes = []
         }
     }, 1000)
 }
 
 function generateTrash(){
     let todayTrashNum = getRandom(1,10)
-    vm.$data.user.daily.trashNum = todayTrashNum
+    vm.$data.dailyTrashNum = todayTrashNum
     let scale = .1;
     for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)
@@ -60,7 +133,8 @@ function generateTrash(){
         trashSp.buttonMode = true
         trashSp.on("pointerdown", (el)=>{
             console.log("撿到垃圾了")
-            vm.$data.user.daily.gotTrashes ++
+            //這邊要記得 watch 撿垃圾的資料
+            vm.$data.user.gotTrashes.push(trashes[i].id)
             //做動畫變小消失
             // gsap.to(el.target, .2, {
             //     pixi: {
@@ -73,8 +147,10 @@ function generateTrash(){
             //增加蝸牛幣、計算總共撿了多少垃圾？
             el.target.destroy()
             // 判斷是否完成每日撿垃圾任務
-            if (vm.$data.user.daily.gotTrashes == todayTrashNum){
-                console.log("今天的垃圾撿完了！謝謝光臨！")
+            if (vm.$data.user.gotTrashes.length == vm.$data.dailyTrashNum){
+                let str = "謝謝你幫忙清理街道上的垃圾！因為有你，蝸牛綠洲變得更清新了。"
+                vm.$data.sys.popup = true
+                vm.$data.sys.say = str
             }
         })
         trashSp.mouseover = function(){ //hover時的放大效果
