@@ -37,14 +37,8 @@ function startDailyTrash(){
             console.log("依據資料產生垃圾")
             let notYetGotTrashes = [...trashes].splice(0, vm.$data.dailyTrashNum) //先依照今天總量切短
             console.log(notYetGotTrashes)
-            // recordTrashes.forEach(record=>{
-            //     // notYetGotTrashes.splice(record, 1)
-            //     notYetGotTrashes.filter(el => el.id == 1)
-            // })
             for (let i=0; i<recordTrashes.length; i++){
-                //這行不知怎樣沒被執行
-                notYetGotTrashes.filter(el => el.id !== recordTrashes[i])
-                console.log("hi")
+                notYetGotTrashes = notYetGotTrashes.filter(el => el.id !== recordTrashes[i])
             }
             console.log(notYetGotTrashes)
             notYetGotTrashes.forEach(trash=>{
