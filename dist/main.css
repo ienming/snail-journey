@@ -3606,57 +3606,88 @@ footer {
     .close:hover > img {
       transform: scaleX(1.5) scaleY(0.8); }
 
+.personal-page .container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh; }
+  @media (min-width: 768px) {
+    .personal-page .container {
+      flex-direction: row; } }
+
 #personalPage {
   border-radius: 8px;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   position: relative; }
 
+#roomCanvasContainer {
+  max-width: 90vw;
+  overflow: scroll; }
+  @media (min-width: 768px) {
+    #roomCanvasContainer {
+      max-width: 800px; } }
+
 #coinContainer {
   position: absolute;
-  top: -15px;
-  left: -15px;
   background-color: #f3f0e7;
   border: 2px solid #786c2d;
   padding: 4px 20px;
   padding-left: 40px;
   border-radius: 30px;
-  cursor: default; }
+  cursor: default;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%); }
+  @media (min-width: 768px) {
+    #coinContainer {
+      top: -15px;
+      left: -15px;
+      transform: unset; } }
   #coinContainer .icon {
     position: absolute;
-    right: 10px;
-    bottom: -32px;
     cursor: pointer;
     width: 32px;
     transform: translateY(-50%);
     transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+    @media (min-width: 768px) {
+      #coinContainer .icon {
+        right: 10px;
+        bottom: -32px; } }
     #coinContainer .icon:hover {
       transform: translateY(-50%) scale(1.35); }
   #coinContainer #coin {
     position: absolute;
-    left: -50px;
     top: 50%;
     transform: translateY(-50%);
-    width: 90px; }
+    width: 60px;
+    left: -30px; }
+    @media (min-width: 768px) {
+      #coinContainer #coin {
+        left: -50px;
+        width: 90px; } }
 
 #furnitureContainer {
-  max-width: 500px;
-  padding: 1rem;
   background-color: #f3f0e7;
   border-radius: 8px;
-  margin-top: 1rem;
-  overflow: scroll; }
+  position: absolute;
+  box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
+  padding: 1.5rem; }
   @media (min-width: 768px) {
     #furnitureContainer {
-      margin-top: 0;
-      margin-left: 1rem;
-      max-height: 530px;
-      max-width: unset; } }
+      bottom: -20px;
+      left: 50%;
+      width: 60vw;
+      transform: translateX(-50%); } }
+  #furnitureContainer .furnitures {
+    overflow: scroll;
+    gap: 12px; }
   #furnitureContainer .furniture {
-    border: 1px solid #000;
-    margin: .5rem 0;
+    background-color: #e2dcc6;
+    border-radius: 1rem;
     padding: 1rem;
     display: flex;
     cursor: pointer;
+    flex-shrink: 0;
     transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
     #furnitureContainer .furniture:hover {
       opacity: 0.5; }

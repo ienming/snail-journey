@@ -39,7 +39,7 @@ const vm = new Vue({
                 block2: [],
                 block3: [],
             },
-            coins: 1234567890,
+            coins: 9999,
             furnitures: [],
             adoptions: []
         },

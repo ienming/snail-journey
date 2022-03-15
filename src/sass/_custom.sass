@@ -56,54 +56,79 @@
             transform: scaleX(1.5) scaleY(.8)
 
 // personal Page
+.personal-page
+    .container
+        position: relative
+        display: flex
+        flex-direction: column
+        max-height: 100vh
+        +rwd(md)
+            flex-direction: row
 #personalPage
     border-radius: 8px
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     position: relative
+#roomCanvasContainer
+    max-width: 90vw
+    +rwd(md)
+        max-width: 800px
+    overflow: scroll
 #coinContainer
     position: absolute
-    top: -15px
-    left: -15px
     background-color: $lightBg
     border: 2px solid $darkYellowGreen
     padding: 4px 20px
     padding-left: 40px
     border-radius: 30px
     cursor: default
+    top: -20px
+    left: 50%
+    transform: translateX(-50%)
+    +rwd(md)
+        top: -15px
+        left: -15px
+        transform: unset
     .icon
         position: absolute
-        right: 10px
-        bottom: -32px
         cursor: pointer
         width: 32px
         transform: translateY(-50%)
         +basicTransition()
+        +rwd(md)
+            right: 10px
+            bottom: -32px
         &:hover
             transform: translateY(-50%) scale(1.35)
     #coin
         position: absolute
-        left: -50px
         top: 50%
         transform: translateY(-50%)
-        width: 90px
+        width: 60px
+        left: -30px
+        +rwd(md)
+            left: -50px
+            width: 90px
 #furnitureContainer
-    max-width: 500px
-    padding: 1rem
     background-color: $lightBg
     border-radius: 8px
-    margin-top: 1rem
-    overflow: scroll
+    position: absolute
+    box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
+    padding: 1.5rem
     +rwd(md)
-        margin-top: 0
-        margin-left: 1rem
-        max-height: 530px
-        max-width: unset
+        bottom: -20px
+        left: 50%
+        width: 60vw
+        transform: translateX(-50%)
+    .furnitures
+        overflow: scroll
+        gap: 12px
     .furniture
-        border: 1px solid #000
-        margin: .5rem 0
+        background-color: $main
+        border-radius: 1rem
         padding: 1rem
         display: flex
         cursor: pointer
+        flex-shrink: 0
         +basicTransition()
         &:hover
             opacity: 0.5

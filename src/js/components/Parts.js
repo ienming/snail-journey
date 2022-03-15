@@ -6,6 +6,7 @@ const CloseBtn = {
     props: {
         outerShowPopup: Boolean,
         outerShowPersonalPage: Boolean,
+        outerShowFurnitures: Boolean,
         outerShowMsg: Boolean
     },
     data(){
@@ -19,6 +20,8 @@ const CloseBtn = {
                 this.$emit(`switch-personal-page`)
             }else if (this.outerShowMsg){
                 this.$emit(`switch-msg`)
+            }else if (this.outerShowFurnitures){
+                this.$emit(`switch-furnitures`)
             }
         }
     }

@@ -1,15 +1,15 @@
 const PersonalPage = {
     template: `
     <div class="mock personal-page">
-        <div class="por d-flex">
+        <div class="container">
             <div id="personalPage">
-                <div id="personalCanvasContainer"></div>
+                <div id="roomCanvasContainer"></div>
                 <personal-coin @switch-furnitures="switchFurnitures" :coins="userCoins"></personal-coin>
+                <span @click="switchPersonalPage">離開房間</span>
             </div>
             <template name="fade">
-            <furnitures-page v-if="furnitureHasShown" :user-got-furnitures="userGotFurnitures" @show-confirm="showConfirm"></furnitures-page>
+            <furnitures-page v-if="furnitureHasShown" :user-got-furnitures="userGotFurnitures" :outer-show-furnitures="furnitureHasShown" @show-confirm="showConfirm" @switch-furnitures="switchFurnitures"></furnitures-page>
             </template>
-            <close-btn :outer-show-personal-page="outerShowPersonalPage" @switch-personal-page="switchPersonalPage"></close-btn>
         </div>
         <template name="fade">
         <buy-confirm v-show="confirmHasShown" :furniture="nowAddFurniture" @close-confirm="closeConfirm"></buy-confirm>
@@ -59,13 +59,13 @@ const PersonalPage = {
             let paddingY = 80
             let roomScale = (window.innerHeight-paddingY*2)/1600
             this.pixi.roomScale = roomScale //傳給 global Variable
-            let personalCanvasContainer = document.querySelector("#personalCanvasContainer")
+            let roomCanvasContainer = document.querySelector("#roomCanvasContainer")
             let personalCanvasApp = new PIXI.Application({
                 backgroundColor: 0xffffff,
                 antialias: true,
             })
             personalCanvasApp.renderer.resize(1771*roomScale, 1600*roomScale)
-            personalCanvasContainer.appendChild(personalCanvasApp.view)
+            roomCanvasContainer.appendChild(personalCanvasApp.view)
 
             this.pixi.app = personalCanvasApp //把 PIXI app 丟到 component 資料裡面變成元件的全域變數
             // 初始化房間背景
@@ -83,8 +83,8 @@ const PersonalPage = {
             this.draw() //初始化房間
         },
         draw(){
-            this.drawBadges()
-            this.drawAchievements()
+            // this.drawBadges()
+            // this.drawAchievements()
             this.drawFurnitures()
         },
         drawBadges(){
@@ -140,7 +140,7 @@ const PersonalPage = {
         },
         closeConfirm(){
             this.confirmHasShown = false
-        }
+        },
     }
 }
 Vue.component("personal-page", PersonalPage)
@@ -180,26 +180,29 @@ Vue.component("personal-coin", PersonalCoin)
 // 家具櫃子
 const Furnitures = {
     template: `
-        <div id="furnitureContainer">
-            <p>這是家具櫃子</p>
-            <div class="d-flex flex-column">
-                <div class="furniture" :class="item.bought ? 'bought' : ''" v-for="item of allFurnituresState" @click="buyFurniture(item)">
-                    <div class="img-container">
-                        <img :src="item.imgSrc" alt="" />
-                    </div>
-                    <div class="txt-container">
-                        <p>{{ item.name }}</p>
-                        <p>{{ item.txt }}</p>
-                        <p class="price">{{ item.price }}</p>
+        <transition name="fade">
+            <div id="furnitureContainer">
+                <div class="d-flex furnitures">
+                    <div class="furniture" :class="item.bought ? 'bought' : ''" v-for="item of allFurnituresState" @click="buyFurniture(item)">
+                        <div class="img-container">
+                            <img :src="item.imgSrc" alt="" />
+                        </div>
+                        <div class="txt-container">
+                            <p>{{ item.name }}</p>
+                            <p>{{ item.txt }}</p>
+                            <p class="price">{{ item.price }}</p>
+                        </div>
                     </div>
                 </div>
+                <close-btn :outer-show-furnitures="outerShowFurnitures" @switch-furnitures="switchFurnitures"></close-btn>
             </div>
-        </div>
+        </transition>
     `,
     props: {
         userGotFurnitures: {
             type: Array
-        }
+        },
+        outerShowFurnitures: Boolean
     },
     data(){
         return {
@@ -232,6 +235,9 @@ const Furnitures = {
             console.log(item)
             // emit 給確認購買的 component
             this.$emit("show-confirm", item)
+        },
+        switchFurnitures(){
+            this.$emit("switch-furnitures")
         }
     }
 }
