@@ -39,7 +39,7 @@ const vm = new Vue({
                 block2: [],
                 block3: [],
             },
-            coins: 100000,
+            coins: 1234567890,
             furnitures: [],
             adoptions: []
         },
@@ -292,7 +292,7 @@ const vm = new Vue({
                             output = "慢活甜點區"
                             break;
                     }
-                    this.showSysTxt(`探索完${output}了！可以到房間裡看看解鎖的家具囉！`)
+                    this.showSysTxt(`探索完${output}了！`)
                 }, 800)
             }
         }

@@ -147,6 +147,7 @@ function fetchFurnitures(){
                 let d = el.split(",");
                 let obj = {
                     name: d[keyMap.name],
+                    id: d[keyMap.id],
                     x: d[keyMap.x],
                     y: d[keyMap.y],
                     txt: d[keyMap.txt],

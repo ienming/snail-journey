@@ -37,13 +37,7 @@
             </ul>
         </div>
         <!-- 進場動畫 -->
-        <transition name="fade">
-            <div id="loading" v-if="interaction.nowLoading">
-                <div class="wrapper">
-                    <h1 @click="startGame">START</h1>
-                </div>
-            </div>
-        </transition>
+        <enter :loading="interaction.nowLoading" @start-game="startGame"></enter>
         <!-- 主要遊戲畫面 -->
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
@@ -163,6 +157,7 @@
     <script type="module" src="dist/main.js"></script>
     <script src="src/js/components/PersonalPage.js"></script>
     <script src="src/js/components/Parts.js"></script>
+    <script src="src/js/components/Enter.js"></script>
     <script src="src/js/components/Header.js"></script>
     <script src="src/js/globalVue.js"></script>
     <!-- <script>

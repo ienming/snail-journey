@@ -6,6 +6,8 @@
     left: 0
     background-color: $accent
     z-index: 99
+    button
+        cursor: pointer
 
 .popup
     background-color: lighten($main, 10%)
@@ -27,8 +29,7 @@
     &.personal-page
         display: flex
         justify-content: center
-        align-items: start
-        padding-top: 15vh
+        align-items: center
 
 .wrapper
     width: 80vw
@@ -56,18 +57,35 @@
 
 // personal Page
 #personalPage
-    background-color: $lightBg
     border-radius: 8px
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     position: relative
-#personalCanvasContainer
-    padding: 1rem
 #coinContainer
     position: absolute
     top: -15px
     left: -15px
-    background-color: $white
-    cursor: pointer
+    background-color: $lightBg
+    border: 2px solid $darkYellowGreen
+    padding: 4px 20px
+    padding-left: 40px
+    border-radius: 30px
+    cursor: default
+    .icon
+        position: absolute
+        right: 10px
+        bottom: -32px
+        cursor: pointer
+        width: 32px
+        transform: translateY(-50%)
+        +basicTransition()
+        &:hover
+            transform: translateY(-50%) scale(1.35)
+    #coin
+        position: absolute
+        left: -50px
+        top: 50%
+        transform: translateY(-50%)
+        width: 90px
 #furnitureContainer
     max-width: 500px
     padding: 1rem
@@ -99,7 +117,7 @@
     left: 50%
     transform: translate(-50%, -50%)
     background-color: $lightBg
-    padding: 1rem
+    padding: 2rem
     border-radius: 8px
 
 //認養介面

@@ -9,6 +9,10 @@
 /*!******************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/sass/style.sass (2) ***!
   \******************************************************************************************************************/
+@import url(https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap);
+/*!******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/sass/style.sass (3) ***!
+  \******************************************************************************************************************/
 * {
   box-sizing: border-box; }
 
@@ -3552,6 +3556,8 @@ footer {
   left: 0;
   background-color: #c09079;
   z-index: 99; }
+  #loading button {
+    cursor: pointer; }
 
 .popup {
   background-color: #f3f1e8;
@@ -3573,8 +3579,7 @@ footer {
   .mock.personal-page {
     display: flex;
     justify-content: center;
-    align-items: start;
-    padding-top: 15vh; }
+    align-items: center; }
 
 .wrapper {
   width: 80vw;
@@ -3602,20 +3607,36 @@ footer {
       transform: scaleX(1.5) scaleY(0.8); }
 
 #personalPage {
-  background-color: #f3f0e7;
   border-radius: 8px;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   position: relative; }
-
-#personalCanvasContainer {
-  padding: 1rem; }
 
 #coinContainer {
   position: absolute;
   top: -15px;
   left: -15px;
-  background-color: #ffffff;
-  cursor: pointer; }
+  background-color: #f3f0e7;
+  border: 2px solid #786c2d;
+  padding: 4px 20px;
+  padding-left: 40px;
+  border-radius: 30px;
+  cursor: default; }
+  #coinContainer .icon {
+    position: absolute;
+    right: 10px;
+    bottom: -32px;
+    cursor: pointer;
+    width: 32px;
+    transform: translateY(-50%);
+    transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+    #coinContainer .icon:hover {
+      transform: translateY(-50%) scale(1.35); }
+  #coinContainer #coin {
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90px; }
 
 #furnitureContainer {
   max-width: 500px;
@@ -3650,7 +3671,7 @@ footer {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #f3f0e7;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 8px; }
 
 .adoption {
@@ -3677,7 +3698,7 @@ html, body {
   padding: 0;
   overflow: hidden;
   color: #312D2C;
-  font-family: 'Noto Sans TC', sans-serif;
+  font-family: 'Kalam', 'Noto Sans TC', sans-serif, cursive;
   font-weight: normal; }
 
 body {

@@ -29,11 +29,12 @@ const PersonalPage = {
     data(){
         return {
             pixi: {
-                app: undefined
+                app: undefined,
+                roomScale: 0
             },
             furnitureHasShown: false,
             confirmHasShown: false,
-            nowAddFurniture: undefined
+            nowAddFurniture: undefined,
         }
     },
     watch: {
@@ -55,17 +56,24 @@ const PersonalPage = {
             this.$emit("switch-personal-page")
         },
         init(){
+            let paddingY = 80
+            let roomScale = (window.innerHeight-paddingY*2)/1600
+            this.pixi.roomScale = roomScale //傳給 global Variable
             let personalCanvasContainer = document.querySelector("#personalCanvasContainer")
             let personalCanvasApp = new PIXI.Application({
                 backgroundColor: 0xffffff,
                 antialias: true,
             })
-            let [paddingWidth, paddingHeight] = [window.innerWidth*0.2, window.innerHeight*0.4]
-            // personalCanvasApp.renderer.resize(window.innerWidth-paddingWidth, window.innerHeight-paddingHeight)
-            personalCanvasApp.renderer.resize(800, 500)
+            personalCanvasApp.renderer.resize(1771*roomScale, 1600*roomScale)
             personalCanvasContainer.appendChild(personalCanvasApp.view)
 
             this.pixi.app = personalCanvasApp //把 PIXI app 丟到 component 資料裡面變成元件的全域變數
+            // 初始化房間背景
+            let roomTexture = new PIXI.Texture.from(`./src/img/room.jpg`)
+            let room = new PIXI.Sprite(roomTexture)
+            room.scale.set(roomScale)
+            this.pixi.app.stage.addChild(room)
+            // 
             this.pixi.badgesContainer = new PIXI.Container()
             this.pixi.app.stage.addChild(this.pixi.badgesContainer)
             this.pixi.achievesContainer = new PIXI.Container()
@@ -112,10 +120,12 @@ const PersonalPage = {
                 this.pixi.furnituresContainer.removeChild(this.pixi.furnituresContainer.children[0])
             }
             this.userGotFurnitures.forEach(el =>{
-                let txt = new PIXI.Text(el.name)
-                txt.position.x = el.x
-                txt.position.y = el.y
-                this.pixi.furnituresContainer.addChild(txt)
+                let texture = new PIXI.Texture.from(`./src/img/fur_${el.id}.png`)
+                let furniture = new PIXI.Sprite(texture)
+                furniture.scale.set(this.pixi.roomScale)
+                furniture.x = el.x
+                furniture.y = el.y
+                this.pixi.furnituresContainer.addChild(furniture)
             })
         },
         switchFurnitures(){
@@ -141,8 +151,9 @@ Vue.component("personal-page", PersonalPage)
 const PersonalCoin = {
     template: `
         <div id="coinContainer">
-            <span>{{ coins }}</span>
-            <img src="./src/img/icons/menu.png" alt="" @click="switchFurniture"/>
+            <img src="./src/img/coin.png" alt="蝸牛幣icon" id="coin" />
+            <span style="font-size: 24px;">{{ coins }}</span>
+            <img src="./src/img/icons/plus.png" class="icon" alt="plus icon" @click="switchFurniture"/>
         </div>
     `,
     props: {
@@ -201,7 +212,7 @@ const Furnitures = {
             if (this.userGotFurnitures){
                 // 比較已經有的家具和所有家具
                 this.userGotFurnitures.forEach(gotItem=>{
-                    let idx = this.allFurnitures.findIndex(el => el.name == gotItem.name)
+                    let idx = this.allFurnitures.findIndex(el => el.id == gotItem.id)
                     lists[idx].bought = true
                 })
             }
@@ -234,15 +245,15 @@ const BuyConfirm = {
     <div class="mock">
         <div id="buyConfirm">
             <template v-if="buyable == 'able'">
-                <p>確定要將 {{ furniture.name }} 加入房間內嗎？</p>
+                <p>確定要將「{{ furniture.name }}」加入房間內嗎？</p>
             </template>
             <template v-else-if="buyable == 'bought'">
-                <p>已將 {{ furniture.name }} 加入房間！</p>
+                <p>已將「{{ furniture.name }}」加入房間！</p>
             </template>
             <template v-else>
                 <p>錢不夠買不起><</p>
             </template>
-            <div class="mt-1">
+            <div class="mt-1 t-a-c">
                 <template v-if="buyable == 'able'">
                     <button class="my-btn" @click="buy">確認</button>
                     <button class="my-btn outline" @click="discard">放棄</button>
@@ -267,14 +278,14 @@ const BuyConfirm = {
     },
     methods: {
         buy(){
-            console.log(`確認購買${this.furniture}`)
+            console.log(`確認購買${this.furniture.id}`)
             // 判斷蝸牛幣夠不夠
             if (vm.$data.user.coins >= this.furniture.price){
                 // 計算蝸牛幣扣款
                 vm.$data.user.coins -= this.furniture.price
                 // 把資料送到外層的 Vue app
                 let obj = {
-                    name: this.furniture.name,
+                    id: this.furniture.id,
                     x: this.furniture.x,
                     y: this.furniture.y
                 }
