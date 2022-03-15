@@ -30,7 +30,8 @@ const PersonalPage = {
         return {
             pixi: {
                 app: undefined,
-                roomScale: 0
+                roomScale: 0,
+                originScale: 0.349375 //(719-80*2)/1600 macBook 螢幕大小作為原點
             },
             furnitureHasShown: false,
             confirmHasShown: false,
@@ -122,8 +123,8 @@ const PersonalPage = {
             this.userGotFurnitures.forEach(el =>{
                 let texture = new PIXI.Texture.from(`./src/img/fur_${el.id}.png`)
                 let furniture = new PIXI.Sprite(texture)
-                furniture.x = el.x
-                furniture.y = el.y
+                furniture.x = el.x*this.pixi.roomScale/this.pixi.originScale
+                furniture.y = el.y*this.pixi.roomScale/this.pixi.originScale
                 furniture.scale.set(this.pixi.roomScale)
                 this.pixi.furnituresContainer.addChild(furniture)
             })
