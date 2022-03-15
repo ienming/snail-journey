@@ -3548,6 +3548,11 @@ footer {
   margin-bottom: 8px;
   margin-right: 8px; }
 
+.game-ui.icon {
+  width: 60px;
+  cursor: pointer;
+  transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+
 #loading {
   width: 100%;
   height: 100%;
@@ -3619,6 +3624,21 @@ footer {
   border-radius: 8px;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   position: relative; }
+  #personalPage .game-ui {
+    width: 100px;
+    position: absolute;
+    z-index: -1;
+    right: 0;
+    top: -60px; }
+    @media (min-width: 768px) {
+      #personalPage .game-ui {
+        right: -75px;
+        top: 30px; } }
+    #personalPage .game-ui:hover {
+      transform: translateY(-10px); }
+      @media (min-width: 768px) {
+        #personalPage .game-ui:hover {
+          transform: translateX(10px); } }
 
 #roomCanvasContainer {
   max-width: 90vw;
@@ -3671,12 +3691,15 @@ footer {
   border-radius: 8px;
   position: absolute;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
-  padding: 1.5rem; }
+  padding: 1.5rem;
+  bottom: 0;
+  max-width: 90vw; }
   @media (min-width: 768px) {
     #furnitureContainer {
       bottom: -20px;
       left: 50%;
       width: 60vw;
+      max-width: unset;
       transform: translateX(-50%); } }
   #furnitureContainer .furnitures {
     overflow: scroll;

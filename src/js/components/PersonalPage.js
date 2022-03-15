@@ -5,7 +5,7 @@ const PersonalPage = {
             <div id="personalPage">
                 <div id="roomCanvasContainer"></div>
                 <personal-coin @switch-furnitures="switchFurnitures" :coins="userCoins"></personal-coin>
-                <span @click="switchPersonalPage">離開房間</span>
+                <img src="./src/img/icons/exit.png" alt="離開房間" @click="switchPersonalPage" class="game-ui icon" />
             </div>
             <template name="fade">
             <furnitures-page v-if="furnitureHasShown" :user-got-furnitures="userGotFurnitures" :outer-show-furnitures="furnitureHasShown" @show-confirm="showConfirm" @switch-furnitures="switchFurnitures"></furnitures-page>
@@ -122,9 +122,9 @@ const PersonalPage = {
             this.userGotFurnitures.forEach(el =>{
                 let texture = new PIXI.Texture.from(`./src/img/fur_${el.id}.png`)
                 let furniture = new PIXI.Sprite(texture)
-                furniture.scale.set(this.pixi.roomScale)
                 furniture.x = el.x
                 furniture.y = el.y
+                furniture.scale.set(this.pixi.roomScale)
                 this.pixi.furnituresContainer.addChild(furniture)
             })
         },

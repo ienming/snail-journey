@@ -1,3 +1,9 @@
+// global game UI
+.game-ui.icon
+    width: 60px
+    cursor: pointer
+    +basicTransition()
+
 // 進場動畫
 #loading
     +size(100%)
@@ -68,6 +74,19 @@
     border-radius: 8px
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     position: relative
+    .game-ui //exit icon
+        width: 100px
+        position: absolute
+        z-index: -1
+        right: 0
+        top: -60px
+        +rwd(md)
+            right: -75px
+            top: 30px
+        &:hover
+            transform: translateY(-10px)
+            +rwd(md)
+                transform: translateX(10px)
 #roomCanvasContainer
     max-width: 90vw
     +rwd(md)
@@ -114,10 +133,13 @@
     position: absolute
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     padding: 1.5rem
+    bottom: 0
+    max-width: 90vw
     +rwd(md)
         bottom: -20px
         left: 50%
         width: 60vw
+        max-width: unset
         transform: translateX(-50%)
     .furnitures
         overflow: scroll
