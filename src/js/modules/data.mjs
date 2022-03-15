@@ -129,6 +129,44 @@ let normalHouses = [
     },
 ];
 
+//all trash
+let trashes = [
+    {
+        x: 300,
+        y: 500
+    },{
+        x: 300,
+        y: 520
+    },{
+        x: 300,
+        y: 540
+    },{
+        x: 300,
+        y: 560
+    },{
+        x: 300,
+        y: 580
+    },{
+        x: 300,
+        y: 600
+    },{
+        x: 300,
+        y: 620
+    },{
+        x: 300,
+        y: 640
+    },{
+        x: 300,
+        y: 660
+    },{
+        x: 300,
+        y: 680
+    },{
+        x: 300,
+        y: 700
+    }
+]
+
 //all furnitures
 function fetchFurnitures(){
     let response = [];
@@ -162,7 +200,7 @@ function fetchFurnitures(){
         })
 }
 
-export { fetchNPC, normalHouses, fetchFurnitures };
+export { fetchNPC, normalHouses, fetchFurnitures, trashes };
 
 // let fetchSnails = async () => {
 //     let response;

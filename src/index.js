@@ -12,13 +12,13 @@ import {
     createNormalHouse,
 } from "./js/modules/npc.mjs";
 import { fetchFurnitures } from './js/modules/data.mjs';
-import { generateTrash } from './js/modules/game.mjs';
+import { startDailyTrash } from './js/modules/game.mjs';
 
 createMap();
 createNPC();
 window.setTimeout(()=>{
     createNormalHouse();
-    generateTrash();
+    startDailyTrash();
 }, 500)
 fetchFurnitures();
 

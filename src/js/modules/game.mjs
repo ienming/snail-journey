@@ -1,4 +1,5 @@
-import { collisionDetect } from "./global.mjs"
+import { trashes } from "./data.mjs"
+import { collisionDetect, getRandom } from "./global.mjs"
 import { canvasWidth, canvasHeight, scale, allContainer} from "./global.mjs"
 import { npcsG } from "./npc.mjs"
 
@@ -27,30 +28,56 @@ function initMission(el){
 }
 
 // 撿垃圾
+let trashContainer = new PIXI.Container()
+function startDailyTrash(){
+    let nowTime = new Date().getMinutes()
+    generateTrash() // init trashes
+    window.setInterval(()=>{
+        if (new Date().getMinutes() !== nowTime){
+            nowTime = new Date().getMinutes()
+            console.log("重新產生垃圾")
+            while(trashContainer.children.length > 0){
+                trashContainer.removeChild(trashContainer.children[0])
+            }
+            generateTrash()
+            vm.$data.user.daily.gotTrashes = 0
+        }
+    }, 1000)
+}
+
 function generateTrash(){
-    let num = 10;
-    let scale = 0.1;
-    let padding = 100;
-    let trashContainer = new PIXI.Container()
-    for (let i=0; i<num; i++){
+    let todayTrashNum = getRandom(1,10)
+    vm.$data.user.daily.trashNum = todayTrashNum
+    let scale = .1;
+    for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)
         let trashTexture = new PIXI.Texture.from("./src/img/board.png")
-        let trash = new PIXI.Sprite(trashTexture)
-        trash.x = Math.random()*canvasWidth-padding*2
-        trash.y = Math.random()*window.innerHeight-padding*2
-        trash.scale.set(scale)
-        trash.interactive = true
-        trash.buttonMode = true
-        trash.on("pointerdown", (el)=>{
+        let trashSp = new PIXI.Sprite(trashTexture)
+        trashSp.x = trashes[i].x
+        trashSp.y = trashes[i].y
+        trashSp.scale.set(scale)
+        trashSp.interactive = true
+        trashSp.buttonMode = true
+        trashSp.on("pointerdown", (el)=>{
             console.log("撿到垃圾了")
-            console.log(el.target)
-            console.log(trashContainer.children)
+            vm.$data.user.daily.gotTrashes ++
             //做動畫變小消失
-            //增加蝸牛幣、計算總共撿了多少垃圾？累積一定數量可以給成就
-            //確定動畫完成後destroy
+            // gsap.to(el.target, .2, {
+            //     pixi: {
+            //         scale: 0
+            //     },
+            //     onComplete(){
+            //         //確定動畫完成後destroy
+            //     }
+            // })
+            //增加蝸牛幣、計算總共撿了多少垃圾？
             el.target.destroy()
+            // 判斷是否完成每日撿垃圾任務
+            if (vm.$data.user.daily.gotTrashes == todayTrashNum){
+                console.log("今天的垃圾撿完了！謝謝光臨！")
+            }
         })
-        trash.mouseover = function(){ //hover時的放大效果
+        trashSp.mouseover = function(){ //hover時的放大效果
             gsap.to(this, .2, {
                 pixi: {
                     scaleX: scale*1.18,
@@ -58,26 +85,18 @@ function generateTrash(){
                 yoyo: true,
                 repeat: 2,
                 onComplete: function(){
-                    trash.scale.set(scale)
+                    trashSp.scale.set(scale)
                 }
             })
         }
-        // 判斷是否撞到 NPC
-        npcsG.forEach(npc=>{
-            while (collisionDetect(npc, trash)){
-                console.log(`第${i}個垃圾撞到了`)
-                trash.x = Math.random()*(canvasWidth-padding)+padding/2
-                trash.y = Math.random()*(window.innerHeight-padding)+padding/2
-            }
-            trashContainer.addChild(trash)
-        })
+        trashContainer.addChild(trashSp)
     }
     trashContainer.x = -window.innerWidth/2
     trashContainer.y = -window.innerHeight/2
     allContainer.addChild(trashContainer)
 }
 
-export {initMission, generateTrash}
+export {initMission, startDailyTrash}
 
 // Achievement Map for mapping whether get badges or not
 // let achievementMap = {

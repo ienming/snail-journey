@@ -3643,9 +3643,6 @@ footer {
 #roomCanvasContainer {
   max-width: 90vw;
   overflow: scroll; }
-  @media (min-width: 768px) {
-    #roomCanvasContainer {
-      max-width: 800px; } }
 
 #coinContainer {
   position: absolute;
