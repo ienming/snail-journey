@@ -7,12 +7,14 @@ function guySay(guy){
     while(guySayContainer.children.length > 0){
         guySayContainer.removeChild(guySayContainer.children[0])
     }
-    let said = new PIXI.Text(guy.speaks[0])
+    const style = new PIXI.TextStyle({
+        fontSize: 16
+    })
+    let said = new PIXI.Text(guy.speaks[0], style)
     said.x = guy.x*scale
     said.y = guy.y*scale
     guySayContainer.addChild(said)
 }
-guysContainer.addChild(guySayContainer)
 
 function cleanAllGuysSaid(){
     while(guySayContainer.children.length > 0){

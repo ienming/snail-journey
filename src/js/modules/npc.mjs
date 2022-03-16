@@ -127,6 +127,7 @@ function createItem(el){
         }
         // 每日任務的那些 guys
         guysContainer.addChild(item)
+        guysContainer.addChild(guySayContainer)
     }
 
     npcsG.push(item)
