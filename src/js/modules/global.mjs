@@ -1,5 +1,3 @@
-import { onDragStart, onDragMove, onDragEnd } from './map.mjs';
-
 let canvasContainer = document.querySelector("#canvasContainer"),
 canvasWidth = canvasContainer.offsetWidth,
 canvasHeight = canvasContainer.offsetHeight
@@ -51,5 +49,27 @@ function collisionDetect(a, b){
             aBox.x < bBox.x + bBox.width &&
             aBox.y < bBox.y + bBox.height
 }
+
+// from PIXI
+function onDragStart(event) {
+    this.data = event.data;
+    this.alpha = 0.5;
+    this.dragging = true;
+}
+
+function onDragEnd() {
+    this.alpha = 1;
+    this.dragging = false;
+    this.data = null;
+}
+
+function onDragMove() {
+    if (this.dragging) {
+        const newPosition = this.data.getLocalPosition(this.parent);
+        this.x = newPosition.x;
+        this.y = newPosition.y;
+    }
+}
 export {canvasContainer, canvasWidth, canvasHeight, app, scale, mapContainer, 
-    npcContainer, guysContainer, npcContainerIsClicking, getRandom, arrayEquals, collisionDetect}
+    npcContainer, guysContainer, npcContainerIsClicking, getRandom, arrayEquals, collisionDetect,
+    onDragStart, onDragMove, onDragEnd}

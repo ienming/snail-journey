@@ -6,7 +6,7 @@ let dist = {x:0, y:0} //initialize the distance between event x,y and current ma
 let distDefined = false 
 
 // from PIXI
-function onDragStart(event) {
+function mapDragStart(event) {
     // store a reference to the data
     // the reason for this is because of multitouch
     // we want to track the movement of this particular touch
@@ -16,14 +16,14 @@ function onDragStart(event) {
     distDefined = false;
 }
 
-function onDragEnd() {
+function mapDragEnd() {
     this.alpha = 1;
     this.dragging = false;
     // set the interaction data to null
     this.data = null;
 }
 
-function onDragMove() {
+function mapDragMove() {
     if (this.dragging) {
         const newPosition = this.data.getLocalPosition(this.parent);
         if (!distDefined){ //if the distance haven't been defined, start to record while the first newPosition is detected
@@ -41,10 +41,10 @@ function createMap(){
     mapContainer.interactive = true
     mapContainer.buttonMode = true
     mapContainer
-    .on('pointerdown', onDragStart)
-    .on('pointerup', onDragEnd)
-    .on('pointerupoutside', onDragEnd)
-    .on('pointermove', onDragMove);
+    .on('pointerdown', mapDragStart)
+    .on('pointerup', mapDragEnd)
+    .on('pointerupoutside', mapDragEnd)
+    .on('pointermove', mapDragMove);
     mapContainer.x = window.innerWidth/2
     mapContainer.y = window.innerHeight/2
     // draw Map
@@ -57,7 +57,7 @@ function createMap(){
     mapContainer.addChild(map)
 }
 
-export { onDragStart, onDragMove, onDragEnd, createMap, dist, distDefined }
+export { createMap, dist, distDefined }
 
 // scroll on canvas for zomming
 canvasContainer.addEventListener('wheel',(e)=>{

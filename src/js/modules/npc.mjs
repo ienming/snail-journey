@@ -9,7 +9,7 @@ import { mapContainer } from './global.mjs'
 import { guySay, guySayContainer, showGuyJudgeTools, judgeToolsContainer, cleanAllGuysSaid} from './gameGuy.mjs'
 import { distDefined } from './map.mjs'
 
-let npcsG = []
+let globalNPCs = [], globalGuys = []
 function createNPC(){
     let npcs
     let waitNPC = async ()=>{
@@ -117,6 +117,7 @@ function createItem(el){
             })
         }
         npcContainer.addChild(item)
+        globalNPCs.push(item)
     }else if (el.group == 'daily'){
         item.mouseover = function(){
             guySay(el)
@@ -128,9 +129,9 @@ function createItem(el){
         // 每日任務的那些 guys
         guysContainer.addChild(item)
         guysContainer.addChild(guySayContainer)
+        globalGuys.push(item)
     }
 
-    npcsG.push(item)
     mapContainer.addChild(npcContainer)
     mapContainer.addChild(guysContainer)
 }
@@ -140,4 +141,4 @@ function speakRandomly(el){
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
 }
 
-export {createNPC, createNormalHouse, createItem, createGuys, npcsG}
+export {createNPC, createNormalHouse, createItem, createGuys, globalGuys}
