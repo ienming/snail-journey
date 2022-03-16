@@ -18,7 +18,7 @@ app.renderer.autoResize = true; //隨視窗改變大小
 app.renderer.resize(window.innerWidth, window.innerHeight); //全螢幕
 
 // create container for map
-let allContainer = new PIXI.Container()
+let mapContainer = new PIXI.Container()
 
 // container for all NPCs (except guys)
 let npcContainerIsClicking = false
@@ -51,5 +51,5 @@ function collisionDetect(a, b){
             aBox.x < bBox.x + bBox.width &&
             aBox.y < bBox.y + bBox.height
 }
-export {canvasContainer, canvasWidth, canvasHeight, app, scale, allContainer, 
+export {canvasContainer, canvasWidth, canvasHeight, app, scale, mapContainer, 
     npcContainer, guysContainer, npcContainerIsClicking, getRandom, arrayEquals, collisionDetect}

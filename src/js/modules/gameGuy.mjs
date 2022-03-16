@@ -1,10 +1,9 @@
 import { guysContainer } from './global.mjs'
-import {scale } from './global.mjs'
+import { app, scale } from './global.mjs'
 
 // guys 在說話
 let guySayContainer = new PIXI.Container()
 function guySay(guy){
-    console.log(`${guy.name}is speaking~~~`)
     while(guySayContainer.children.length > 0){
         guySayContainer.removeChild(guySayContainer.children[0])
     }
@@ -15,8 +14,30 @@ function guySay(guy){
 }
 guysContainer.addChild(guySayContainer)
 
-function showGuyJudgeTools(){
-    //
+function cleanAllGuysSaid(){
+    while(guySayContainer.children.length > 0){
+        guySayContainer.removeChild(guySayContainer.children[0])
+    }
 }
 
-export {guySay, guySayContainer}
+// 評價 guys 的行為
+let judgeToolsContainer = new PIXI.Container()
+function showGuyJudgeTools(){
+    //
+    judgeToolsContainer.visible = true
+    let greatTexture = new PIXI.Texture.from(`./src/img/icons/great.png`)
+    const greatTool = new PIXI.Sprite(greatTexture)
+    greatTool.scale.set(scale)
+    let badTexture = new PIXI.Texture.from(`./src/img/icons/bad.png`)
+    const badTool = new PIXI.Sprite(badTexture)
+    badTool.scale.set(scale)
+    badTool.x = 50
+    judgeToolsContainer.addChild(greatTool)
+    judgeToolsContainer.addChild(badTool)
+
+    judgeToolsContainer.x = 80*scale
+    judgeToolsContainer.y = 100*scale
+}
+app.stage.addChild(judgeToolsContainer)
+
+export {guySay, guySayContainer, cleanAllGuysSaid, showGuyJudgeTools, judgeToolsContainer}

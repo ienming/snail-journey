@@ -1,6 +1,6 @@
 import { trashes } from "./data.mjs"
 import { getRandom } from "./global.mjs"
-import { allContainer} from "./global.mjs"
+import { mapContainer} from "./global.mjs"
 
 // 撿垃圾
 let trashContainer = new PIXI.Container()
@@ -28,7 +28,7 @@ function startDailyTrash(){
             })
             trashContainer.x = -window.innerWidth/2
             trashContainer.y = -window.innerHeight/2
-            allContainer.addChild(trashContainer)
+            mapContainer.addChild(trashContainer)
         }else{
             console.log("今天的垃圾已經清完了")
         }
@@ -67,7 +67,7 @@ function generateTrash(){
     }
     trashContainer.x = -window.innerWidth/2
     trashContainer.y = -window.innerHeight/2
-    allContainer.addChild(trashContainer)
+    mapContainer.addChild(trashContainer)
 }
 
 function drawTrash(trash){

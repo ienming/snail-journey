@@ -2,7 +2,7 @@ import './sass/style.sass'
 
 import {
     app,
-    allContainer,
+    mapContainer,
 } from "./js/modules/global.mjs";
 import {
     createMap,
@@ -34,7 +34,7 @@ fetchFurnitures();
 //     cursorSprite.y = evt.clientY
 // })
 // window.setTimeout(()=>{
-//     allContainer.addChild(cursorSprite)
+//     mapContainer.addChild(cursorSprite)
 // }, 1500)
 
-app.stage.addChild(allContainer);
+app.stage.addChild(mapContainer);

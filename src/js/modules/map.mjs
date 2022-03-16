@@ -1,5 +1,5 @@
 import { npcContainerIsClicking } from './global.mjs';
-import { scale, allContainer} from './global.mjs'
+import { scale, mapContainer} from './global.mjs'
 
 // Drag & Drop
 let dist = {x:0, y:0} //initialize the distance between event x,y and current map x,y
@@ -31,23 +31,22 @@ function onDragMove() {
             dist.y = newPosition.y - this.y
             distDefined = true // turn to "is defined" for preventing from overwritten
         }
-        // console.log(dist)
         this.x = newPosition.x - dist.x;
         this.y = newPosition.y - dist.y;
     }
 }
 
 function createMap(){
-    // set allContainer (as map) for dragging
-    allContainer.interactive = true
-    allContainer.buttonMode = true
-    allContainer
+    // set mapContainer (as map) for dragging
+    mapContainer.interactive = true
+    mapContainer.buttonMode = true
+    mapContainer
     .on('pointerdown', onDragStart)
     .on('pointerup', onDragEnd)
     .on('pointerupoutside', onDragEnd)
     .on('pointermove', onDragMove);
-    allContainer.x = window.innerWidth/2
-    allContainer.y = window.innerHeight/2
+    mapContainer.x = window.innerWidth/2
+    mapContainer.y = window.innerHeight/2
     // draw Map
     let mapTexture = new PIXI.Texture.from('./src/img/roads.png')
     let map = new PIXI.Sprite(mapTexture)
@@ -55,7 +54,7 @@ function createMap(){
     map.anchor.set(0.5) //center center
     map.scale.set(scale)
 
-    allContainer.addChild(map)
+    mapContainer.addChild(map)
 }
 
 export { onDragStart, onDragMove, onDragEnd, createMap, dist, distDefined }
@@ -64,14 +63,14 @@ export { onDragStart, onDragMove, onDragEnd, createMap, dist, distDefined }
 canvasContainer.addEventListener('wheel',(e)=>{
     if (e.deltaY > 0){
         // console.log("up")
-        gsap.to(allContainer, 2, {
+        gsap.to(mapContainer, 2, {
             pixi: {
                 scale: 1
             }
         })
     }else if (e.deltaY < 0){
         // console.log("down")
-        gsap.to(allContainer, 2, {
+        gsap.to(mapContainer, 2, {
             pixi: {
                 scale: 1.5
             }
