@@ -104,6 +104,7 @@ function checkJudged(tool){
             }
         })
         let respnodGuy = globalGuys[globalGuys.findIndex( el => el.name == beingJudged)]
+        let respondSp = guysContainer.children[guysContainer.children.findIndex(el=>el.name == beingJudged)]
         switch (tool.name){
             case 'great':
                 guySay(respnodGuy, `${beingJudged}被讚了！`)
@@ -114,6 +115,8 @@ function checkJudged(tool){
         }
         window.setTimeout(()=>{
             cleanAllGuysSaid()
+            // 慢慢動畫消失後移除
+            // respondSp.destroy()
         }, 1500)
     }else{
         console.log("什麼事也沒有")
