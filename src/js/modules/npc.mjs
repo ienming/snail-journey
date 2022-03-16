@@ -3,18 +3,6 @@ import {clickSoundEffect} from './sound.mjs'
 import {fetchNPC, normalHouses} from './data.mjs'
 import {initMission} from './game.mjs'
 
-// Snail
-// function createSnail(){
-//     let snails
-//     let waitSnails = async ()=>{
-//         let res = await fetchSnails()
-//         snails = res
-//         for (let i =0; i<snails.length; i++){
-//             createItem(snails[i])
-//         }
-//     }
-//     waitSnails()
-// }
 let npcsG = []
 function createNPC(){
     let npcs

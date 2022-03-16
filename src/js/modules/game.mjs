@@ -1,6 +1,6 @@
 import { trashes } from "./data.mjs"
-import { collisionDetect, getRandom } from "./global.mjs"
-import { canvasWidth, canvasHeight, scale, allContainer} from "./global.mjs"
+import { getRandom } from "./global.mjs"
+import { allContainer} from "./global.mjs"
 import { npcsG } from "./npc.mjs"
 
 // 主線探索遊戲邏輯
@@ -32,14 +32,22 @@ let trashContainer = new PIXI.Container()
 function startDailyTrash(){
     // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
     let recordTrashes = vm.$data.userRecord.gotTrashes
+    let dailyTrashesQues = vm.$data.dailyTrashes
     if (recordTrashes && recordTrashes.length > 0){
-        if (recordTrashes.length < vm.$data.dailyTrashNum){
+        if (recordTrashes.length < vm.$data.dailyTrashes.length){
             console.log("依據資料產生垃圾")
-            let notYetGotTrashes = [...trashes].splice(0, vm.$data.dailyTrashNum) //先依照今天總量切短
-            console.log(notYetGotTrashes)
+            let notYetIds = [...dailyTrashesQues], notYetGotTrashes = []
             for (let i=0; i<recordTrashes.length; i++){
-                notYetGotTrashes = notYetGotTrashes.filter(el => el.id !== recordTrashes[i])
+                let removeId = notYetIds.indexOf(recordTrashes[i])
+                notYetIds.splice(removeId, 1)
             }
+            notYetIds.forEach(nyid=>{
+                trashes.forEach(trash=>{
+                    if (trash.id == nyid){
+                        notYetGotTrashes.push(trash)
+                    }
+                })
+            })
             console.log(notYetGotTrashes)
             notYetGotTrashes.forEach(trash=>{
                 drawTrash(trash)
@@ -53,6 +61,8 @@ function startDailyTrash(){
     }else{
         // 如果一切都還沒開始（新玩家）
         console.log("新開始產生垃圾")
+        vm.$data.dailyTrashes = []
+        vm.$data.user.gotTrashes = []
         generateTrash()
     }
     // 判斷每日更新
@@ -64,6 +74,7 @@ function startDailyTrash(){
             while(trashContainer.children.length > 0){
                 trashContainer.removeChild(trashContainer.children[0])
             }
+            vm.$data.dailyTrashes = []
             generateTrash()
             vm.$data.user.gotTrashes = []
         }
@@ -72,11 +83,13 @@ function startDailyTrash(){
 
 function generateTrash(){
     let todayTrashNum = getRandom(1,10)
-    vm.$data.dailyTrashNum = todayTrashNum
-    let scale = .1;
+    let readyTrashes = [...trashes]
     for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)
-        drawTrash(trashes[i])
+        let id = getRandom(0,readyTrashes.length -1)
+        drawTrash(readyTrashes[id])
+        vm.$data.dailyTrashes.push(readyTrashes[id].id) //儲存新題目
+        readyTrashes.splice(id, 1) //移除已經畫過的，所以不會再抽到一樣的位置
     }
     trashContainer.x = -window.innerWidth/2
     trashContainer.y = -window.innerHeight/2
@@ -107,7 +120,7 @@ function drawTrash(trash){
         //增加蝸牛幣、計算總共撿了多少垃圾？
         el.target.destroy()
         // 判斷是否完成每日撿垃圾任務
-        if (vm.$data.user.gotTrashes.length == vm.$data.dailyTrashNum){
+        if (vm.$data.user.gotTrashes.length == vm.$data.dailyTrashes.length){
             let str = "謝謝你幫忙清理街道上的垃圾！因為有你，蝸牛綠洲變得更清新了。"
             vm.$data.sys.popup = true
             vm.$data.sys.say = str

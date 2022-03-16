@@ -14,7 +14,7 @@ const vm = new Vue({
             popup: false,
             say: ""
         },
-        dailyTrashNum: 0,
+        dailyTrashes: [],
         adoptable: false,
         program: undefined,
         showProgram: false,
@@ -136,10 +136,10 @@ const vm = new Vue({
                 console.log(`no record of ${prop}`)
             }
         }
-        // dailyTrashNum storage
-        let recordDailyTrashNum = JSON.parse(localStorage.getItem('dailyTrashNum'))
-        if (recordDailyTrashNum){
-            this.dailyTrashNum = recordDailyTrashNum
+        // dailyTrashes storage
+        let recorddailyTrashes = JSON.parse(localStorage.getItem('dailyTrashes'))
+        if (recorddailyTrashes){
+            this.dailyTrashes = recorddailyTrashes
         }
     },
     mounted() {
@@ -194,11 +194,11 @@ const vm = new Vue({
                 this.storageData('gotTrashes', d)
             }
         },
-        'dailyTrashNum': {
+        'dailyTrashes': {
             handler: function (newValue, oldValue) {
                 console.log("每日垃圾總量有變動，開始儲存")
                 let d = JSON.stringify(newValue)
-                this.storageData('dailyTrashNum', d)
+                this.storageData('dailyTrashes', d)
             }
         }
     },
