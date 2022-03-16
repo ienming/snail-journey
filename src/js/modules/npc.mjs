@@ -120,11 +120,10 @@ function createItem(el){
         globalNPCs.push(item)
     }else if (el.group == 'daily'){
         item.mouseover = function(){
-            guySay(el)
+            guySay(el, el.speaks[0])
         }
         item.mouseout = function(){
             cleanAllGuysSaid()
-            // judgeToolsContainer.visible = false
         }
         // 每日任務的那些 guys
         guysContainer.addChild(item)

@@ -5,14 +5,15 @@ import { globalGuys } from './npc.mjs'
 
 // guys 在說話
 let guySayContainer = new PIXI.Container()
-function guySay(guy){
+guySayContainer.name = 'guySaidsContainer'
+function guySay(guy, txt = '沒有說話'){
     while(guySayContainer.children.length > 0){
         guySayContainer.removeChild(guySayContainer.children[0])
     }
     const style = new PIXI.TextStyle({
         fontSize: 16
     })
-    let said = new PIXI.Text(guy.speaks[0], style)
+    let said = new PIXI.Text(txt, style)
     said.x = guy.x*scale
     said.y = guy.y*scale
     guySayContainer.addChild(said)
@@ -37,9 +38,8 @@ let toolsData = [
     }
 ]
 let judgeToolsContainer = new PIXI.Container()
+judgeToolsContainer.name = 'judgeToolsContainer'
 function showGuyJudgeTools(){
-    //
-    judgeToolsContainer.visible = true
     let tools = []
 
     for (let i=0; i<toolsData.length; i++){
@@ -76,6 +76,7 @@ function showGuyJudgeTools(){
 
 function checkJudged(tool){
     let beingJudged = ''
+    let toolId = toolsData.findIndex( el => el.name == tool.name )
     for (let i=0; i<globalGuys.length; i++){
         if (collisionDetect(tool, globalGuys[i])){
             beingJudged = globalGuys[i].name
@@ -83,15 +84,39 @@ function checkJudged(tool){
     }
     if (beingJudged !== ''){
         console.log(`給${beingJudged +' '+ tool.name}的評價了`)
-        gsap.to(tool, .2, {
+        gsap.to(tool, .5, {
             pixi: {
-                scale: scale*2
+                scale: scale*2,
+                alpha: 0
+            },
+            onComplete: function(){
+                // tools 要縮小飛回去
+                gsap.to(tool, .5, {
+                    pixi: {
+                        x: toolsData[toolId].x,
+                        y: toolsData[toolId].y,
+                        scale: scale,
+                        alpha: 1
+                    },
+                    delay: .5
+                })
             }
         })
+        let respnodGuy = globalGuys[globalGuys.findIndex( el => el.name == beingJudged)]
+        switch (tool.name){
+            case 'great':
+                guySay(respnodGuy, `${beingJudged}被讚了！`)
+                break;
+            case 'bad':
+                guySay(respnodGuy, `${beingJudged}被罵了......`)
+                break;
+        }
+        window.setTimeout(()=>{
+            cleanAllGuysSaid()
+        }, 1500)
     }else{
         console.log("什麼事也沒有")
-        let toolId = toolsData.findIndex( el => el.name == tool.name )
-        gsap.to(tool, .2, {
+        gsap.to(tool, .5, {
             pixi: {
                 x: toolsData[toolId].x,
                 y: toolsData[toolId].y,

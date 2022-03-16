@@ -4,6 +4,7 @@ import { mapContainer} from "./global.mjs"
 
 // 撿垃圾
 let trashContainer = new PIXI.Container()
+trashContainer.name = 'trashesContainer'
 function startDailyTrash(){
     // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
     let recordTrashes = vm.$data.userRecord.gotTrashes

@@ -17,16 +17,19 @@ app.renderer.resize(window.innerWidth, window.innerHeight); //全螢幕
 
 // create container for map
 let mapContainer = new PIXI.Container()
+mapContainer.name = 'mapContainer'
 
 // container for all NPCs (except guys)
 let npcContainerIsClicking = false
 let npcContainer = new PIXI.Container()
+npcContainer.name = 'npcContainer'
 npcContainer.on("pointer", ()=>{
     npcContainerIsClicking = true
 })
 
 // container for Guys
 let guysContainer = new PIXI.Container()
+guysContainer.name = 'guysContainer'
 
 // get random stences
 function getRandom(min, max){
