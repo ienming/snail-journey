@@ -1,8 +1,12 @@
-import {scale, allContainer, getRandom } from './global.mjs'
+import {scale, getRandom } from './global.mjs'
 import {clickSoundEffect} from './sound.mjs'
 import {fetchNPC, normalHouses} from './data.mjs'
 import {initMission} from './gameExplore.mjs'
 import {fetchGuys} from './data.mjs'
+import { npcContainer } from './global.mjs'
+import { guysContainer } from './global.mjs'
+import { allContainer } from './global.mjs'
+import { guySay, guySayContainer} from './gameGuy.mjs'
 
 let npcsG = []
 function createNPC(){
@@ -106,13 +110,24 @@ function createItem(el){
                 }
             })
         }
+        npcContainer.addChild(item)
     }else if (el.group == 'daily'){
+        item.mouseover = function(){
+            guySay(el)
+            showGuyJudgeTools()
+        },
+        item.mouseout = function(){
+            while(guySayContainer.children.length > 0){
+                guySayContainer.removeChild(guySayContainer.children[0])
+            }
+        }
         // 每日任務的那些 guys
+        guysContainer.addChild(item)
     }
 
-
     npcsG.push(item)
-    allContainer.addChild(item)
+    allContainer.addChild(npcContainer)
+    allContainer.addChild(guysContainer)
 }
 
 function speakRandomly(el){

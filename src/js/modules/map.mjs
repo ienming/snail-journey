@@ -1,3 +1,4 @@
+import { npcContainerIsClicking } from './global.mjs';
 import { scale, allContainer} from './global.mjs'
 
 // Drag & Drop
@@ -11,11 +12,7 @@ function onDragStart(event) {
     // we want to track the movement of this particular touch
     this.data = event.data;
     this.alpha = 0.95;
-    if (!vm.$data.itemClicked){
-        this.dragging = true;
-    }else{
-        this.dragging = false
-    }
+    this.dragging = true;
     distDefined = false;
 }
 
@@ -41,12 +38,21 @@ function onDragMove() {
 }
 
 function createMap(){
+    // set allContainer (as map) for dragging
+    allContainer.interactive = true
+    allContainer.buttonMode = true
+    allContainer
+    .on('pointerdown', onDragStart)
+    .on('pointerup', onDragEnd)
+    .on('pointerupoutside', onDragEnd)
+    .on('pointermove', onDragMove);
+    allContainer.x = window.innerWidth/2
+    allContainer.y = window.innerHeight/2
+    // draw Map
     let mapTexture = new PIXI.Texture.from('./src/img/roads.png')
     let map = new PIXI.Sprite(mapTexture)
     // set the transform origin and anchor point of the image which will effect the starting point of the image
     map.anchor.set(0.5) //center center
-    // map.x = this.width/2
-    // map.y = this.height/2
     map.scale.set(scale)
 
     allContainer.addChild(map)

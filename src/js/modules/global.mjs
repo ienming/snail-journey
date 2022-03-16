@@ -19,15 +19,16 @@ app.renderer.resize(window.innerWidth, window.innerHeight); //全螢幕
 
 // create container for map
 let allContainer = new PIXI.Container()
-allContainer.interactive = true
-allContainer.buttonMode = true
-allContainer
-.on('pointerdown', onDragStart)
-.on('pointerup', onDragEnd)
-.on('pointerupoutside', onDragEnd)
-.on('pointermove', onDragMove);
-allContainer.x = window.innerWidth/2
-allContainer.y = window.innerHeight/2
+
+// container for all NPCs (except guys)
+let npcContainerIsClicking = false
+let npcContainer = new PIXI.Container()
+npcContainer.on("pointer", ()=>{
+    npcContainerIsClicking = true
+})
+
+// container for Guys
+let guysContainer = new PIXI.Container()
 
 // get random stences
 function getRandom(min, max){
@@ -50,4 +51,5 @@ function collisionDetect(a, b){
             aBox.x < bBox.x + bBox.width &&
             aBox.y < bBox.y + bBox.height
 }
-export {canvasContainer, canvasWidth, canvasHeight, app, scale, allContainer, getRandom, arrayEquals, collisionDetect}
+export {canvasContainer, canvasWidth, canvasHeight, app, scale, allContainer, 
+    npcContainer, guysContainer, npcContainerIsClicking, getRandom, arrayEquals, collisionDetect}
