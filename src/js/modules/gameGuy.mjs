@@ -25,21 +25,21 @@ function cleanAllGuysSaid(){
 }
 
 // 評價 guys 的行為
+let toolsData = [
+    {
+        name: 'great',
+        x: 0,
+        y: 100
+    },{
+        name: 'bad',
+        x: 50,
+        y: 100
+    }
+]
 let judgeToolsContainer = new PIXI.Container()
 function showGuyJudgeTools(){
     //
     judgeToolsContainer.visible = true
-    let toolsData = [
-        {
-            name: 'great',
-            x: 0,
-            y: 100
-        },{
-            name: 'bad',
-            x: 50,
-            y: 100
-        }
-    ]
     let tools = []
 
     for (let i=0; i<toolsData.length; i++){
@@ -75,12 +75,29 @@ function showGuyJudgeTools(){
 }
 
 function checkJudged(tool){
+    let beingJudged = ''
     for (let i=0; i<globalGuys.length; i++){
         if (collisionDetect(tool, globalGuys[i])){
-            console.log(`給${globalGuys[i].name +' '+ tool.name}的評價了`)
-        }else{
-            console.log("什麼事也沒有")
+            beingJudged = globalGuys[i].name
         }
+    }
+    if (beingJudged !== ''){
+        console.log(`給${beingJudged +' '+ tool.name}的評價了`)
+        gsap.to(tool, .2, {
+            pixi: {
+                scale: scale*2
+            }
+        })
+    }else{
+        console.log("什麼事也沒有")
+        let toolId = toolsData.findIndex( el => el.name == tool.name )
+        gsap.to(tool, .2, {
+            pixi: {
+                x: toolsData[toolId].x,
+                y: toolsData[toolId].y,
+                scale: scale
+            }
+        })
     }
 }
 
