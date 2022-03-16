@@ -9,7 +9,8 @@ import { mapContainer } from './global.mjs'
 import { guySay, guySayContainer, showGuyJudgeTools, judgeToolsContainer, cleanAllGuysSaid} from './gameGuy.mjs'
 import { distDefined } from './map.mjs'
 
-let globalNPCs = [], globalGuys = []
+let globalNPCs = [], globalGuySprites = []
+let globalGuys = []
 function createNPC(){
     let npcs
     let waitNPC = async ()=>{
@@ -23,12 +24,11 @@ function createNPC(){
 }
 
 function createGuys(){
-    let guys
     let waitGuys = async()=>{
         let res = await fetchGuys()
-        guys = res
-        for (let i=0; i<guys.length; i++){
-            createItem(guys[i])
+        globalGuys = res
+        for (let i=0; i<globalGuys.length; i++){
+            createItem(globalGuys[i])
         }
         showGuyJudgeTools()
     }
@@ -128,7 +128,7 @@ function createItem(el){
         // 每日任務的那些 guys
         guysContainer.addChild(item)
         guysContainer.addChild(guySayContainer)
-        globalGuys.push(item)
+        globalGuySprites.push(item)
     }
 
     mapContainer.addChild(npcContainer)
@@ -140,4 +140,4 @@ function speakRandomly(el){
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
 }
 
-export {createNPC, createNormalHouse, createItem, createGuys, globalGuys}
+export {createNPC, createNormalHouse, createItem, createGuys, globalGuySprites, globalGuys}

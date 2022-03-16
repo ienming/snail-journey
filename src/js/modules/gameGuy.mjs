@@ -2,6 +2,7 @@ import { guysContainer } from './global.mjs'
 import { app, scale, collisionDetect } from './global.mjs'
 import { onDragStart, onDragMove, onDragEnd} from './global.mjs'
 import { globalGuys } from './npc.mjs'
+import { globalGuySprites } from './npc.mjs'
 
 // guys 在說話
 let guySayContainer = new PIXI.Container()
@@ -77,9 +78,9 @@ function showGuyJudgeTools(){
 function checkJudged(tool){
     let beingJudged = ''
     let toolId = toolsData.findIndex( el => el.name == tool.name )
-    for (let i=0; i<globalGuys.length; i++){
-        if (collisionDetect(tool, globalGuys[i])){
-            beingJudged = globalGuys[i].name
+    for (let i=0; i<globalGuySprites.length; i++){
+        if (collisionDetect(tool, globalGuySprites[i])){
+            beingJudged = globalGuySprites[i].name
         }
     }
     if (beingJudged !== ''){
