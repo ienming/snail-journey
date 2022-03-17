@@ -1,8 +1,51 @@
-import { guysContainer } from './global.mjs'
-import { app, scale, collisionDetect } from './global.mjs'
+import { fetchGuys } from './data.mjs'
+import { app, scale, collisionDetect, guysContainer } from './global.mjs'
 import { onDragStart, onDragMove, onDragEnd} from './global.mjs'
-import { globalGuys } from './npc.mjs'
-import { globalGuySprites } from './npc.mjs'
+import { globalGuySprites, createItem } from './npc.mjs'
+
+// 計時每日評價任務
+function startDailyJudge(){
+    createGuys()
+    let nowTime = new Date().getMinutes()
+    window.setInterval(()=>{
+        if (new Date().getMinutes() !== nowTime){
+            nowTime = new Date().getMinutes()
+            console.log("計時重新產生評價角色")
+            while(guysContainer.children.length > 0){
+                guysContainer.removeChild(guysContainer.children[0])
+            }
+            vm.$data.user.judges = []
+            createGuys()
+        }
+    }, 1000)
+}
+
+// 產生 Guys
+let globalGuys = []
+function createGuys(){
+    let waitGuys = async()=>{
+        let res = await fetchGuys()
+        if (vm.$data.user.judges){ //只要畫出還沒評價的就好
+            let recordJudges = vm.$data.user.judges
+            globalGuys = [...res]
+            for (let i=0; i<recordJudges.length; i++){
+                globalGuys.splice(globalGuys.findIndex(el=>el.name == recordJudges[i]))
+            }
+            if (globalGuys.length == 0){
+                console.log("今天的評價已經結束了")
+            }
+            // console.log("有記錄的資料，現在只要畫：")
+            // console.log(globalGuys)
+        }else{
+            globalGuys = res // 如果沒有紀錄的資料，就全部畫出來
+        }
+        for (let i=0; i<globalGuys.length; i++){
+            createItem(globalGuys[i])
+        }
+        showGuyJudgeTools()
+    }
+    waitGuys()
+}
 
 // guys 在說話
 let guySayContainer = new PIXI.Container()
@@ -40,6 +83,7 @@ let toolsData = [
 ]
 let judgeToolsContainer = new PIXI.Container()
 judgeToolsContainer.name = 'judgeToolsContainer'
+
 function showGuyJudgeTools(){
     let tools = []
 
@@ -107,6 +151,7 @@ function checkJudged(tool){
         let respondSp = guysContainer.children[guysContainer.children.findIndex(el=>el.name == beingJudged)]
         switch (tool.name){
             case 'great':
+                // 在這裡判斷是否要給獎勵
                 guySay(respnodGuy, `${beingJudged}被讚了！`)
                 break;
             case 'bad':
@@ -115,8 +160,18 @@ function checkJudged(tool){
         }
         window.setTimeout(()=>{
             cleanAllGuysSaid()
-            // 慢慢動畫消失後移除
-            // respondSp.destroy()
+            // 只要互動過了就消失
+            gsap.to(respondSp, .5, {
+                pixi: {
+                    scale: 0
+                },
+                onComplete(){
+                    respondSp.destroy()
+                    globalGuySprites.splice(globalGuySprites.findIndex(el=>el.name == beingJudged), 1) //把用來比對撞擊的資料也清除
+                    // 儲存資料給 Vue watch 記錄今天的 respondSp 已經結束了
+                    vm.$data.user.judges.push(beingJudged)
+                }
+            })
         }, 1500)
     }else{
         console.log("什麼事也沒有")
@@ -131,3 +186,4 @@ function checkJudged(tool){
 }
 
 export {guySay, guySayContainer, cleanAllGuysSaid, showGuyJudgeTools, judgeToolsContainer}
+export {startDailyJudge}

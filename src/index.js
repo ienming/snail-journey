@@ -9,18 +9,18 @@ import {
 } from "./js/modules/map.mjs";
 import {
     createNPC,
-    createGuys,
     createNormalHouse,
 } from "./js/modules/npc.mjs";
 import { fetchFurnitures } from './js/modules/data.mjs';
 import { startDailyTrash } from './js/modules/gameTrash.mjs';
+import { startDailyJudge } from './js/modules/gameGuy.mjs'
 
 createMap();
 createNPC();
-createGuys();
 window.setTimeout(()=>{
     createNormalHouse();
     startDailyTrash();
+    startDailyJudge();
 }, 500)
 fetchFurnitures();
 

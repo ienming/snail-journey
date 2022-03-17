@@ -43,7 +43,8 @@ const vm = new Vue({
             gotTrashes: [],
             coins: 9999,
             furnitures: [],
-            adoptions: []
+            adoptions: [],
+            judges: []
         },
         userRecord: {}
     },
@@ -199,6 +200,13 @@ const vm = new Vue({
                 console.log("每日垃圾總量有變動，開始儲存")
                 let d = JSON.stringify(newValue)
                 this.storageData('dailyTrashes', d)
+            }
+        },
+        'user.judges': {
+            handler: function (newValue, oldValue) {
+                console.log("評價好壞的資料有變動，開始儲存")
+                let d = JSON.stringify(newValue)
+                this.storageData('judges', d)
             }
         }
     },

@@ -2,7 +2,6 @@ import {scale, getRandom } from './global.mjs'
 import {clickSoundEffect} from './sound.mjs'
 import {fetchNPC, normalHouses} from './data.mjs'
 import {initMission} from './gameExplore.mjs'
-import {fetchGuys} from './data.mjs'
 import { npcContainer } from './global.mjs'
 import { guysContainer } from './global.mjs'
 import { mapContainer } from './global.mjs'
@@ -10,7 +9,6 @@ import { guySay, guySayContainer, showGuyJudgeTools, judgeToolsContainer, cleanA
 import { distDefined } from './map.mjs'
 
 let globalNPCs = [], globalGuySprites = []
-let globalGuys = []
 function createNPC(){
     let npcs
     let waitNPC = async ()=>{
@@ -21,18 +19,6 @@ function createNPC(){
         }
     }
     waitNPC()
-}
-
-function createGuys(){
-    let waitGuys = async()=>{
-        let res = await fetchGuys()
-        globalGuys = res
-        for (let i=0; i<globalGuys.length; i++){
-            createItem(globalGuys[i])
-        }
-        showGuyJudgeTools()
-    }
-    waitGuys()
 }
 
 function createNormalHouse(){
@@ -140,4 +126,4 @@ function speakRandomly(el){
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
 }
 
-export {createNPC, createNormalHouse, createItem, createGuys, globalGuySprites, globalGuys}
+export {createNPC, createNormalHouse, createItem, globalGuySprites}
