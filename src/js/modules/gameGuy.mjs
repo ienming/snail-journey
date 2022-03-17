@@ -27,15 +27,15 @@ function createGuys(){
         let res = await fetchGuys()
         if (vm.$data.user.judges){ //只要畫出還沒評價的就好
             let recordJudges = vm.$data.user.judges
-            globalGuys = [...res]
-            for (let i=0; i<recordJudges.length; i++){
-                globalGuys.splice(globalGuys.findIndex(el=>el.name == recordJudges[i]))
-            }
-            if (globalGuys.length == 0){
-                console.log("今天的評價已經結束了")
-            }
-            // console.log("有記錄的資料，現在只要畫：")
-            // console.log(globalGuys)
+                globalGuys = [...res]
+                for (let i=0; i<recordJudges.length; i++){
+                    globalGuys.splice(globalGuys.findIndex(el=>el.name == recordJudges[i]), 1)
+                }
+                if (globalGuys.length == 0){
+                    console.log("今天的評價已經結束了")
+                }
+                // console.log("有記錄的資料，現在只要畫：")
+                // console.log(globalGuys)
         }else{
             globalGuys = res // 如果沒有紀錄的資料，就全部畫出來
         }
