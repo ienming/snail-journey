@@ -27,15 +27,15 @@ function createGuys(){
         let res = await fetchGuys()
         if (vm.$data.user.judges){ //只要畫出還沒評價的就好
             let recordJudges = vm.$data.user.judges
-                globalGuys = [...res]
-                for (let i=0; i<recordJudges.length; i++){
-                    globalGuys.splice(globalGuys.findIndex(el=>el.name == recordJudges[i]), 1)
-                }
-                if (globalGuys.length == 0){
-                    console.log("今天的評價已經結束了")
-                }
-                // console.log("有記錄的資料，現在只要畫：")
-                // console.log(globalGuys)
+            globalGuys = [...res]
+            for (let i=0; i<recordJudges.length; i++){
+                globalGuys.splice(globalGuys.findIndex(el=>el.name == recordJudges[i]), 1)
+            }
+            if (globalGuys.length == 0){
+                console.log("今天的評價已經結束了")
+            }
+            // console.log("有記錄的資料，現在只要畫：")
+            // console.log(globalGuys)
         }else{
             globalGuys = res // 如果沒有紀錄的資料，就全部畫出來
         }
@@ -153,9 +153,15 @@ function checkJudged(tool){
             case 'great':
                 // 在這裡判斷是否要給獎勵
                 guySay(respnodGuy, `${beingJudged}被讚了！`)
+                if (beingJudged.indexOf("good") !== -1){
+                    alert("被你讚美的他很開心，之後也一定會持續替綠洲做好事的～")
+                }
                 break;
             case 'bad':
                 guySay(respnodGuy, `${beingJudged}被罵了......`)
+                if (beingJudged.indexOf("bad") !== -1){
+                    alert("給臭傢伙一點教訓了！哇哈哈")
+                }
                 break;
         }
         window.setTimeout(()=>{

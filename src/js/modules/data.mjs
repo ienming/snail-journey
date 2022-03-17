@@ -137,7 +137,7 @@ let fetchGuys = async ()=>{
         for (let i =0; i<rows[0].length; i++){
             if (rows[0].split(",")[i] !== undefined){
                 keyMap[rows[0].split(",")[i].trim()] = i
-                console.log("key: "+rows[0].split(",")[i])
+                // console.log("key: "+rows[0].split(",")[i])
             }
         }
         // console.log("guys data:")
@@ -157,7 +157,7 @@ let fetchGuys = async ()=>{
                 obj.speaks = speaksArr;
             }
             output.push(obj)
-            console.log(obj)
+            // console.log(obj)
         })
         return output
     }else return
@@ -179,43 +179,43 @@ let normalHouses = [
 let trashes = [
     {
         x: 300,
-        y: 500,
+        y: 520,
         id: 0
     },{
         x: 300,
-        y: 520,
+        y: 540,
         id: 1
     },{
         x: 300,
-        y: 540,
+        y: 560,
         id: 2
     },{
         x: 300,
-        y: 560,
+        y: 580,
         id: 3
     },{
         x: 300,
-        y: 580,
+        y: 600,
         id: 4
     },{
         x: 300,
-        y: 600,
+        y: 620,
         id: 5
     },{
         x: 300,
-        y: 620,
+        y: 640,
         id: 6
     },{
         x: 300,
-        y: 640,
+        y: 660,
         id: 7
     },{
         x: 300,
-        y: 660,
+        y: 680,
         id: 8
     },{
         x: 300,
-        y: 680,
+        y: 700,
         id: 9
     }
 ]
