@@ -8,7 +8,7 @@ const vm = new Vue({
             showPersonalPage: false,
             showMsg: false,
             nowAns: true,
-            cursorImg: 'src/img/icons/menu.png'
+            // cursorImg: 'src/img/icons/menu.png'
         },
         sys: {
             popup: false,

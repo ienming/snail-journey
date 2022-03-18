@@ -140,15 +140,11 @@ let fetchGuys = async ()=>{
                 // console.log("key: "+rows[0].split(",")[i])
             }
         }
-        // console.log("guys data:")
-        // console.log(keyMap)
         rows.shift();
         rows.forEach((el) => {
             let d = el.split(",");
             let obj = {
                 name: d[keyMap.name],
-                // x: d[keyMap.x],
-                // y: d[keyMap.y],
                 group: d[keyMap.group]
             };
             if (d[keyMap.speaks]){

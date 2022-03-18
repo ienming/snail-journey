@@ -12,20 +12,22 @@ function startDailyJudge(){
     createGuys()
     let nowTime = new Date().getMinutes()
     window.setInterval(()=>{
-        if (new Date().getMinutes() !== nowTime){
+        // if (new Date().getMinutes() !== nowTime){
             nowTime = new Date().getMinutes()
             console.log("計時重新產生評價角色")
             while(guysContainer.children.length > 0){
                 guysContainer.removeChild(guysContainer.children[0])
+                console.log("清掉")
+                console.log(guysContainer.children)
             }
             vm.$data.user.judges = []
             createGuys()
-        }
-    }, 1000)
+        // }
+    }, 20000)
 }
 
 // 產生 Guys
-let globalGuys = []
+let globalGuys
 function createGuys(){
     // init 所有 guys 會出現的位置
     guyPositions = [
@@ -43,15 +45,25 @@ function createGuys(){
             y: -1000
         }
     ]
+    globalGuys = []
     let waitGuys = async()=>{
         let res = await fetchGuys()
+        let arr = [...res]
         let recordJudges = vm.$data.user.judges // 已經被評價的
         if (recordJudges.length > 0){ //只要畫出還沒評價的就好
             console.log("有被評價的guys")
             globalGuys = [...vm.$data.dailyGuys]
             for (let i=0; i<recordJudges.length; i++){
-                globalGuys.splice(globalGuys.findIndex(el=>el.name == recordJudges[i]), 1)
+                globalGuys.splice(globalGuys.findIndex(el=>el == recordJudges[i]), 1)
             }
+            let num  = globalGuys.length, prepareds =[]
+            for (let i=0; i<num; i++){
+                console.log(globalGuys[i])
+                let guy = arr.filter(el=>el.name == globalGuys[i])[0]
+                prepareds.push(guy)
+            }
+            globalGuys = prepareds
+            console.log(globalGuys)
             if (globalGuys.length == 0){
                 console.log("今天的評價已經結束了")
             }
@@ -59,14 +71,23 @@ function createGuys(){
             // 如果沒有紀錄的資料，就重新隨機抓取
             console.log("重新抓取要出現的guys")
             vm.$data.dailyGuys = [] //刷新題目
-            let todayGuysNum = getRandom(0,res.length-1)
-            for (let i=0; i<todayGuysNum; i++){
-                let todayGuyId = getRandom(0,res.length-1)
-                let todayGuy = res.splice(todayGuyId, 1)[0]
-                res.splice(todayGuyId, 1)
-                globalGuys.push(todayGuy)
-                // 記錄今天出現的 guys
-                vm.$data.dailyGuys.push(todayGuy.name)
+            let todayGuysNum = getRandom(1,res.length)
+            console.log(`今天要抽出的數量為：${todayGuysNum}`)
+            if (arr){
+                // console.log("allResponses: ")
+                // console.log(res)
+                for (let i=0; i<todayGuysNum; i++){
+                    let todayGuyId = getRandom(0,arr.length-1)
+                    // console.log("todayGuyId: "+todayGuyId)
+                    let todayGuy = arr.splice(todayGuyId, 1)[0]
+                    // console.log("todayGuyIs: ")
+                    // console.log(todayGuy)
+                    // console.log("respondArr: ")
+                    // console.log(arr)
+                    globalGuys.push(todayGuy)
+                    // 記錄今天出現的 guys
+                    vm.$data.dailyGuys.push(todayGuy.name)
+                }
             }
         }
         if (globalGuys.length == 0){
@@ -103,6 +124,7 @@ function drawGuy(el){
     // 放進去 container
     guysContainer.addChild(sp)
     guysContainer.addChild(guySayContainer)
+    console.log(`把${sp.name}放進去guysContainer`)
     globalGuySprites.push(sp)
     mapContainer.addChild(guysContainer)
     // 把已經有 guy 站的位置移除，所以畫下一個 guy 的時候不會重疊
@@ -191,6 +213,8 @@ function checkJudged(tool){
     }
     if (beingJudged !== ''){
         console.log(`給${beingJudged +' '+ tool.name}的評價了`)
+        // 儲存資料給 Vue watch 記錄今天的 judges 已經結束了
+        vm.$data.user.judges.push(beingJudged)
         gsap.to(tool, .5, {
             pixi: {
                 scale: scale*2,
@@ -236,8 +260,6 @@ function checkJudged(tool){
                 onComplete(){
                     respondSp.destroy()
                     globalGuySprites.splice(globalGuySprites.findIndex(el=>el.name == beingJudged), 1) //把用來比對撞擊的資料也清除
-                    // 儲存資料給 Vue watch 記錄今天的 respondSp 已經結束了
-                    vm.$data.user.judges.push(beingJudged)
                 }
             })
         }, 1500)
