@@ -57,7 +57,7 @@ function startDailyTrash(){
 }
 
 function generateTrash(){
-    let todayTrashNum = getRandom(1,10)
+    let todayTrashNum = getRandom(0,10)
     let readyTrashes = [...trashes]
     for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)

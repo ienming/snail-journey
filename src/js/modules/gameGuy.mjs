@@ -1,7 +1,10 @@
 import { fetchGuys } from './data.mjs'
-import { app, scale, collisionDetect, guysContainer } from './global.mjs'
+import { app, scale, collisionDetect, guysContainer, getRandom, mapContainer } from './global.mjs'
 import { onDragStart, onDragMove, onDragEnd} from './global.mjs'
-import { globalGuySprites, createItem } from './npc.mjs'
+import { globalGuySprites } from './npc.mjs'
+
+// 所有 guys 可能出現的位置
+let guyPositions = []
 
 // 計時每日評價任務
 function startDailyJudge(){
@@ -23,6 +26,22 @@ function startDailyJudge(){
 // 產生 Guys
 let globalGuys = []
 function createGuys(){
+    // init 所有 guys 會出現的位置
+    guyPositions = [
+        {
+            x: -900,
+            y: -600
+        },{
+            x: -1200,
+            y: -450
+        },{
+            x: -900,
+            y: -800
+        },{
+            x: -900,
+            y: -1000
+        }
+    ]
     let waitGuys = async()=>{
         let res = await fetchGuys()
         if (vm.$data.user.judges){ //只要畫出還沒評價的就好
@@ -35,24 +54,53 @@ function createGuys(){
                 if (globalGuys.length == 0){
                     console.log("今天的評價已經結束了")
                 }
-                // console.log("有記錄的資料，現在只要畫：")
-                // console.log(globalGuys)
             }
         }else{
             globalGuys = res // 如果沒有紀錄的資料，就全部畫出來
         }
         for (let i=0; i<globalGuys.length; i++){
-            createItem(globalGuys[i])
+            drawGuy(globalGuys[i])
         }
         showGuyJudgeTools()
     }
     waitGuys()
 }
 
+// 畫所有的 guys
+function drawGuy(el){
+    let texture = new PIXI.Texture.from(`./src/img/${el.name}.png`)
+    let sp = new PIXI.Sprite(texture)
+    let posId = getRandom(0,guyPositions.length-1)
+    sp.name = el.name
+    sp.x = guyPositions[posId].x*scale
+    sp.y = guyPositions[posId].y*scale
+    // sp.x = el.x*scale
+    // sp.y = el.y*scale
+    sp.scale.set(scale)
+    sp.anchor.set(0.5)
+    if (el.interactive !== false){
+        sp.interactive = true
+        sp.buttonMode = true
+    }
+    sp.mouseover = function(){
+        guySay(el, sp.x, sp.y, el.speaks[0])
+    }
+    sp.mouseout = function(){
+        cleanAllGuysSaid()
+    }
+    // 放進去 container
+    guysContainer.addChild(sp)
+    guysContainer.addChild(guySayContainer)
+    globalGuySprites.push(sp)
+    mapContainer.addChild(guysContainer)
+    // 把已經有 guy 站的位置移除，所以畫下一個 guy 的時候不會重疊
+    guyPositions.splice(posId, 1)
+}
+
 // guys 在說話
 let guySayContainer = new PIXI.Container()
 guySayContainer.name = 'guySaidsContainer'
-function guySay(guy, txt = '沒有說話'){
+function guySay(guy, x, y, txt = '沒有說話'){
     while(guySayContainer.children.length > 0){
         guySayContainer.removeChild(guySayContainer.children[0])
     }
@@ -60,8 +108,8 @@ function guySay(guy, txt = '沒有說話'){
         fontSize: 16
     })
     let said = new PIXI.Text(txt, style)
-    said.x = guy.x*scale
-    said.y = guy.y*scale
+    said.x = x
+    said.y = y
     guySayContainer.addChild(said)
 }
 
@@ -149,18 +197,18 @@ function checkJudged(tool){
                 })
             }
         })
-        let respnodGuy = globalGuys[globalGuys.findIndex( el => el.name == beingJudged)]
+        let respondGuy = globalGuys[globalGuys.findIndex( el => el.name == beingJudged)]
         let respondSp = guysContainer.children[guysContainer.children.findIndex(el=>el.name == beingJudged)]
         switch (tool.name){
             case 'great':
                 // 在這裡判斷是否要給獎勵
-                guySay(respnodGuy, `${beingJudged}被讚了！`)
+                guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被讚了！`)
                 if (beingJudged.indexOf("good") !== -1){
                     alert("被你讚美的他很開心，之後也一定會持續替綠洲做好事的～")
                 }
                 break;
             case 'bad':
-                guySay(respnodGuy, `${beingJudged}被罵了......`)
+                guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被罵了......`)
                 if (beingJudged.indexOf("bad") !== -1){
                     alert("給臭傢伙一點教訓了！哇哈哈")
                 }

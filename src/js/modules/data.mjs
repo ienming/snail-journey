@@ -147,8 +147,8 @@ let fetchGuys = async ()=>{
             let d = el.split(",");
             let obj = {
                 name: d[keyMap.name],
-                x: d[keyMap.x],
-                y: d[keyMap.y],
+                // x: d[keyMap.x],
+                // y: d[keyMap.y],
                 group: d[keyMap.group]
             };
             if (d[keyMap.speaks]){
