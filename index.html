@@ -47,6 +47,10 @@
                 :user-got-furnitures="user.furnitures" :outer-show-personal-page="interaction.showPersonalPage"
                 @switch-personal-page="switchPersonalPage"></personal-page>
         </transition>
+        <!-- NPC House -->
+        <transition name="fade">
+            <house v-if="interaction.showHouse" :house-name="interaction.houseName" @switch-house-page="switchHousePage"></house>
+        </transition>
         <!-- popup 對話框 -->
         <transition name="fade">
             <div class="mock" v-show="interaction.showPopup">
@@ -156,6 +160,7 @@
     <!-- Custom -->
     <script type="module" src="dist/main.js"></script>
     <script src="src/js/components/PersonalPage.js"></script>
+    <script src="src/js/components/House.js"></script>
     <script src="src/js/components/Parts.js"></script>
     <script src="src/js/components/Enter.js"></script>
     <script src="src/js/components/Header.js"></script>

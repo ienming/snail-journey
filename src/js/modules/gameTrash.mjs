@@ -5,6 +5,8 @@ import { mapContainer} from "./global.mjs"
 // 撿垃圾
 let trashContainer = new PIXI.Container()
 trashContainer.name = 'trashesContainer'
+trashContainer.x = -window.innerWidth/2
+trashContainer.y = -window.innerHeight/2
 function startDailyTrash(){
     // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
     let recordTrashes = vm.$data.userRecord.gotTrashes
@@ -27,8 +29,6 @@ function startDailyTrash(){
             notYetGotTrashes.forEach(trash=>{
                 drawTrash(trash)
             })
-            trashContainer.x = -window.innerWidth/2
-            trashContainer.y = -window.innerHeight/2
             mapContainer.addChild(trashContainer)
         }else{
             console.log("今天的垃圾已經清完了")
@@ -66,8 +66,6 @@ function generateTrash(){
         vm.$data.dailyTrashes.push(readyTrashes[id].id) //儲存新題目
         readyTrashes.splice(id, 1) //移除已經畫過的，所以不會再抽到一樣的位置
     }
-    trashContainer.x = -window.innerWidth/2
-    trashContainer.y = -window.innerHeight/2
     mapContainer.addChild(trashContainer)
 }
 

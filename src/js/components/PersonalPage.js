@@ -1,8 +1,8 @@
 const PersonalPage = {
     template: `
-    <div class="mock personal-page">
+    <div class="mock room">
         <div class="container">
-            <div id="personalPage">
+            <div class="room-page">
                 <div id="roomCanvasContainer"></div>
                 <personal-coin @switch-furnitures="switchFurnitures" :coins="userCoins"></personal-coin>
                 <img src="./src/img/icons/exit.png" alt="離開房間" @click="switchPersonalPage" class="game-ui icon" />

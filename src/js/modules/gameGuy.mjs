@@ -12,18 +12,18 @@ function startDailyJudge(){
     createGuys()
     let nowTime = new Date().getMinutes()
     window.setInterval(()=>{
-        // if (new Date().getMinutes() !== nowTime){
+        if (new Date().getMinutes() !== nowTime){
             nowTime = new Date().getMinutes()
             console.log("計時重新產生評價角色")
             while(guysContainer.children.length > 0){
                 guysContainer.removeChild(guysContainer.children[0])
-                console.log("清掉")
-                console.log(guysContainer.children)
+                // console.log("清掉")
+                // console.log(guysContainer.children)
             }
             vm.$data.user.judges = []
             createGuys()
-        // }
-    }, 20000)
+        }
+    }, 1000)
 }
 
 // 產生 Guys
@@ -58,12 +58,12 @@ function createGuys(){
             }
             let num  = globalGuys.length, prepareds =[]
             for (let i=0; i<num; i++){
-                console.log(globalGuys[i])
+                // console.log(globalGuys[i])
                 let guy = arr.filter(el=>el.name == globalGuys[i])[0]
                 prepareds.push(guy)
             }
             globalGuys = prepareds
-            console.log(globalGuys)
+            // console.log(globalGuys)
             if (globalGuys.length == 0){
                 console.log("今天的評價已經結束了")
             }

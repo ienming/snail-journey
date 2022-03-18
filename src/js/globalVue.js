@@ -6,6 +6,8 @@ const vm = new Vue({
             nowLoading: true,
             showPopup: false,
             showPersonalPage: false,
+            showHouse: false,
+            houseName: '',
             showMsg: false,
             nowAns: true,
             // cursorImg: 'src/img/icons/menu.png'
@@ -241,6 +243,9 @@ const vm = new Vue({
         },
         switchPersonalPage() {
             this.interaction.showPersonalPage = !this.interaction.showPersonalPage
+        },
+        switchHousePage() {
+            this.interaction.showHouse = !this.interaction.showHouse
         },
         switchMsg(){
             console.log("關閉留言板")

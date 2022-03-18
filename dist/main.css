@@ -3581,7 +3581,7 @@ footer {
   height: 100vh;
   width: 100vw;
   z-index: 99; }
-  .mock.personal-page {
+  .mock.room {
     display: flex;
     justify-content: center;
     align-items: center; }
@@ -3611,33 +3611,33 @@ footer {
     .close:hover > img {
       transform: scaleX(1.5) scaleY(0.8); }
 
-.personal-page .container {
+.room .container {
   position: relative;
   display: flex;
   flex-direction: column;
   max-height: 100vh; }
   @media (min-width: 768px) {
-    .personal-page .container {
+    .room .container {
       flex-direction: row; } }
 
-#personalPage {
+.room-page {
   border-radius: 8px;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   position: relative; }
-  #personalPage .game-ui {
+  .room-page .game-ui {
     width: 100px;
     position: absolute;
     z-index: -1;
     right: 0;
     top: -60px; }
     @media (min-width: 768px) {
-      #personalPage .game-ui {
+      .room-page .game-ui {
         right: -75px;
         top: 30px; } }
-    #personalPage .game-ui:hover {
+    .room-page .game-ui:hover {
       transform: translateY(-10px); }
       @media (min-width: 768px) {
-        #personalPage .game-ui:hover {
+        .room-page .game-ui:hover {
           transform: translateX(10px); } }
 
 #roomCanvasContainer {

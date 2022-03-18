@@ -3,9 +3,7 @@ import {clickSoundEffect} from './sound.mjs'
 import {fetchNPC, normalHouses} from './data.mjs'
 import {initMission} from './gameExplore.mjs'
 import { npcContainer } from './global.mjs'
-import { guysContainer } from './global.mjs'
 import { mapContainer } from './global.mjs'
-import { guySay, guySayContainer, showGuyJudgeTools, judgeToolsContainer, cleanAllGuysSaid} from './gameGuy.mjs'
 import { distDefined } from './map.mjs'
 
 let globalNPCs = [], globalGuySprites = []
@@ -45,19 +43,21 @@ function createItem(el){
         item.interactive = true
         item.buttonMode = true
     }
-    // 一般 NPC
-    if (!el.group){
-        item
-            .on("pointerup", ()=>{
-                if (distDefined){
-                    console.log("now dragging map")
+    item
+        .on("pointerup", ()=>{
+            if (distDefined){
+                console.log("now dragging map")
+            }else{
+                vm.$data.interaction.nowClicked = true
+                vm.$data.itemSpeak = el.name
+                vm.$data.nowNPC = el
+                vm.$data.showMissionBtn = undefined //初始化關閉選項
+                if (el.house){
+                    // 把是誰的房子這個資料傳出去，準備給 component 接進去
+                    vm.$data.interaction.showHouse = true
+                    vm.$data.interaction.houseName = el.name
                 }else{
-                    vm.$data.interaction.nowClicked = true
                     vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
-                    vm.$data.interaction.cursorImg = "src/img/icons/checked.svg"
-                    vm.$data.itemSpeak = el.name
-                    vm.$data.nowNPC = el
-                    vm.$data.showMissionBtn = undefined //初始化關閉選項
                     // 抽籤決定 NPC 要講哪一句話
                     if (el.speaks){
                         speakRandomly(el)
@@ -84,41 +84,42 @@ function createItem(el){
                         }
                         console.log("講一下廢話")
                     }
-                    clickSoundEffect() //點擊音效
-                    window.setTimeout(()=>{ // 點擊後離開點擊狀態，解決抓住地圖不放的問題
-                        vm.$data.interaction.nowClicked = false
-                    }, 300)
                 }
-            })
-        item.mouseover = function(){ //hover時的放大效果
-            gsap.to(this, .2, {
-                pixi: {
-                    scaleX: scale*1.18,
-                },
-                yoyo: true,
-                repeat: 2,
-                onComplete: function(){
-                    item.scale.set(scale)
-                }
-            })
-        }
-        npcContainer.addChild(item)
-        globalNPCs.push(item)
-    }else if (el.group == 'daily'){
-        item.mouseover = function(){
-            guySay(el, el.speaks[0])
-        }
-        item.mouseout = function(){
-            cleanAllGuysSaid()
-        }
-        // 每日任務的那些 guys
-        guysContainer.addChild(item)
-        guysContainer.addChild(guySayContainer)
-        globalGuySprites.push(item)
+                clickSoundEffect() //點擊音效
+                window.setTimeout(()=>{ // 點擊後離開點擊狀態，解決抓住地圖不放的問題
+                    vm.$data.interaction.nowClicked = false
+                }, 300)
+            }
+        })
+    item.mouseover = function(){ //hover時的放大效果
+        gsap.to(this, .2, {
+            pixi: {
+                scaleX: scale*1.18,
+            },
+            yoyo: true,
+            repeat: 2,
+            onComplete: function(){
+                item.scale.set(scale)
+            }
+        })
     }
+    npcContainer.addChild(item)
+    globalNPCs.push(item)
+    // else if (el.group == 'daily'){
+    //     item.mouseover = function(){
+    //         guySay(el, el.speaks[0])
+    //     }
+    //     item.mouseout = function(){
+    //         cleanAllGuysSaid()
+    //     }
+    //     // 每日任務的那些 guys
+    //     guysContainer.addChild(item)
+    //     guysContainer.addChild(guySayContainer)
+    //     globalGuySprites.push(item)
+    // }
 
     mapContainer.addChild(npcContainer)
-    mapContainer.addChild(guysContainer)
+    // mapContainer.addChild(guysContainer)
 }
 
 function speakRandomly(el){
