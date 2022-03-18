@@ -15,6 +15,7 @@ const vm = new Vue({
             say: ""
         },
         dailyTrashes: [],
+        dailyGuys: [],
         adoptable: false,
         program: undefined,
         showProgram: false,
@@ -142,6 +143,11 @@ const vm = new Vue({
         if (recorddailyTrashes){
             this.dailyTrashes = recorddailyTrashes
         }
+        // dailyGuys storage
+        let recorddailyGuys = JSON.parse(localStorage.getItem('dailyGuys'))
+        if (recorddailyGuys){
+            this.dailyGuys = recorddailyGuys
+        }
     },
     mounted() {
         console.log("vue completed load")
@@ -208,7 +214,14 @@ const vm = new Vue({
                 let d = JSON.stringify(newValue)
                 this.storageData('judges', d)
             }
-        }
+        },
+        'dailyGuys': {
+            handler: function (newValue, oldValue) {
+                console.log("每日Guys總量有變動，開始儲存")
+                let d = JSON.stringify(newValue)
+                this.storageData('dailyGuys', d)
+            }
+        },
     },
     methods: {
         switchPopup() {

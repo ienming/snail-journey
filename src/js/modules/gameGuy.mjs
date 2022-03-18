@@ -8,6 +8,7 @@ let guyPositions = []
 
 // 計時每日評價任務
 function startDailyJudge(){
+    showGuyJudgeTools()
     createGuys()
     let nowTime = new Date().getMinutes()
     window.setInterval(()=>{
@@ -44,24 +45,37 @@ function createGuys(){
     ]
     let waitGuys = async()=>{
         let res = await fetchGuys()
-        if (vm.$data.user.judges){ //只要畫出還沒評價的就好
-            let recordJudges = vm.$data.user.judges
-            if (res){
-                globalGuys = [...res]
-                for (let i=0; i<recordJudges.length; i++){
-                    globalGuys.splice(globalGuys.findIndex(el=>el.name == recordJudges[i]), 1)
-                }
-                if (globalGuys.length == 0){
-                    console.log("今天的評價已經結束了")
-                }
+        let recordJudges = vm.$data.user.judges // 已經被評價的
+        if (recordJudges.length > 0){ //只要畫出還沒評價的就好
+            console.log("有被評價的guys")
+            globalGuys = [...vm.$data.dailyGuys]
+            for (let i=0; i<recordJudges.length; i++){
+                globalGuys.splice(globalGuys.findIndex(el=>el.name == recordJudges[i]), 1)
+            }
+            if (globalGuys.length == 0){
+                console.log("今天的評價已經結束了")
             }
         }else{
-            globalGuys = res // 如果沒有紀錄的資料，就全部畫出來
+            // 如果沒有紀錄的資料，就重新隨機抓取
+            console.log("重新抓取要出現的guys")
+            vm.$data.dailyGuys = [] //刷新題目
+            let todayGuysNum = getRandom(0,res.length-1)
+            for (let i=0; i<todayGuysNum; i++){
+                let todayGuyId = getRandom(0,res.length-1)
+                let todayGuy = res.splice(todayGuyId, 1)[0]
+                res.splice(todayGuyId, 1)
+                globalGuys.push(todayGuy)
+                // 記錄今天出現的 guys
+                vm.$data.dailyGuys.push(todayGuy.name)
+            }
         }
-        for (let i=0; i<globalGuys.length; i++){
-            drawGuy(globalGuys[i])
+        if (globalGuys.length == 0){
+            return
+        }else{
+            for (let i=0; i<globalGuys.length; i++){
+                drawGuy(globalGuys[i])
+            }
         }
-        showGuyJudgeTools()
     }
     waitGuys()
 }
@@ -74,8 +88,6 @@ function drawGuy(el){
     sp.name = el.name
     sp.x = guyPositions[posId].x*scale
     sp.y = guyPositions[posId].y*scale
-    // sp.x = el.x*scale
-    // sp.y = el.y*scale
     sp.scale.set(scale)
     sp.anchor.set(0.5)
     if (el.interactive !== false){
