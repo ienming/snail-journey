@@ -1,7 +1,7 @@
 import {scale, getRandom } from './global.mjs'
 import {clickSoundEffect} from './sound.mjs'
 import {fetchNPC, normalHouses} from './data.mjs'
-import {initMission} from './gameExplore.mjs'
+import { initMission } from './gameExplore.mjs'
 import { npcContainer } from './global.mjs'
 import { mapContainer } from './global.mjs'
 import { distDefined } from './map.mjs'
@@ -49,7 +49,6 @@ function createItem(el){
                 console.log("now dragging map")
             }else{
                 vm.$data.interaction.nowClicked = true
-                vm.$data.itemSpeak = el.name
                 vm.$data.nowNPC = el
                 vm.$data.showMissionBtn = undefined //初始化關閉選項
                 if (el.house){
@@ -58,6 +57,7 @@ function createItem(el){
                     vm.$data.interaction.houseName = el.name
                 }else{
                     vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
+                    vm.$data.itemSpeak = el.name
                     // 抽籤決定 NPC 要講哪一句話
                     if (el.speaks){
                         speakRandomly(el)
@@ -65,11 +65,11 @@ function createItem(el){
                         vm.$data.nowSpeak = undefined
                     }
                     // 決定要不要放動畫的角色
-                    if (el.animated == 1){
-                        vm.$data.animatedSpriteSpeak = true
-                    }else {
-                        vm.$data.animatedSpriteSpeak = false
-                    }
+                    // if (el.animated == 1){
+                    //     vm.$data.animatedSpriteSpeak = true
+                    // }else {
+                    //     vm.$data.animatedSpriteSpeak = false
+                    // }
                     if (el.gameSpeaks){
                         initMission(el) // 主線探索遊戲邏輯
                     }else{

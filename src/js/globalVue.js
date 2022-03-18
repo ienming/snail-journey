@@ -306,13 +306,25 @@ const vm = new Vue({
                     } else if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) { //正要結束
                         this.user.missions[`mission${this.nowNPC.mission}`].push('finished') //記錄結束
                         this.switchPopup()
-                        this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                        if (this.nowNPC.name.indexOf("_house") == -1){
+                            this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                        }else{
+                            let id = this.nowNPC.name.indexOf("_house")
+                            this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name.slice(0,id))
+                        }
                         this.checkBlockFinished()
                     }
                 } else this.switchPopup()
             } else { //廢話黨
-                if (this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.nowNPC.name) == -1) {
-                    this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+                let preparedName
+                if (this.nowNPC.name.indexOf("_house") == -1){ //路人NPC
+                    preparedName = this.nowNPC.name
+                }else{ //在家裡講話的NPC
+                    let id = this.nowNPC.name.indexOf("_house")
+                    preparedName = this.nowNPC.name.slice(0,id)
+                }
+                if (this.user.achievements[`block${this.nowNPC.mission}`].indexOf(preparedName) == -1) {
+                    this.user.achievements[`block${this.nowNPC.mission}`].push(preparedName)
                     // 判斷對話完後自己這區有沒有完成
                     this.checkBlockFinished()
                 }

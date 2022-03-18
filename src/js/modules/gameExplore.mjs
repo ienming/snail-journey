@@ -1,5 +1,3 @@
-import { npcsG } from "./npc.mjs"
-
 // 主線探索遊戲邏輯
 function initMission(el){
     let nowUserMissionProgress = vm.$data.user.missions[`mission${el.mission}`]
