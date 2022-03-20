@@ -3571,7 +3571,8 @@ footer {
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   position: relative;
   padding: 32px;
-  width: 350px; }
+  width: 350px;
+  max-width: 85vw; }
 
 .mock {
   background-color: rgba(0, 0, 0, 0.6);
@@ -3596,7 +3597,8 @@ footer {
   left: 50%;
   transform: translate(-50%, -50%); }
   .wrapper .speak-img {
-    max-width: 300px; }
+    max-width: 40vw;
+    width: 300px; }
 
 .close {
   position: absolute;

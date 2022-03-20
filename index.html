@@ -54,8 +54,8 @@
         <!-- popup 對話框 -->
         <transition name="fade">
             <div class="mock" v-show="interaction.showPopup">
-                <div class="wrapper" :style="showProgram ? 'align-items: flex-end' : ''">
-                    <div class="mr-2 speak-img">
+                <div class="wrapper flex-column flex-md-row" :style="showProgram ? 'align-items: flex-end' : ''">
+                    <div class="mb-2 mb-md-0 mr-md-2 speak-img">
                         <img :src="itemSpeakImgSrc" alt="">
                     </div>
                     <!-- 一般對話 -->

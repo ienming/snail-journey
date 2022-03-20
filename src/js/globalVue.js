@@ -9,8 +9,7 @@ const vm = new Vue({
             showHouse: false,
             houseName: '',
             showMsg: false,
-            nowAns: true,
-            // cursorImg: 'src/img/icons/menu.png'
+            nowAns: true
         },
         sys: {
             popup: false,
