@@ -27,7 +27,7 @@ const House = {
     },
     async mounted(){
         let d = await this.fetchData()
-        this.items = d.filter(el=>el.hostName == this.hostName)
+        this.items = d.filter(el=>el.hostName == this.hostName) //過濾不是這間房間的資料
         this.init()
     },
     methods: {
@@ -84,8 +84,8 @@ const House = {
             house.scale.set(houseScale)
             this.pixi.app.stage.addChild(house)
             // 
-            // this.pixi.badgesContainer = new PIXI.Container()
-            // this.pixi.app.stage.addChild(this.pixi.badgesContainer)
+            this.pixi.itemsContainer = new PIXI.Container()
+            this.pixi.app.stage.addChild(this.pixi.itemsContainer)
             // this.pixi.achievesContainer = new PIXI.Container()
             // this.pixi.app.stage.addChild(this.pixi.achievesContainer)
             // this.pixi.furnituresContainer = new PIXI.Container()
@@ -105,14 +105,29 @@ const House = {
             const loader = PIXI.Loader.shared
             this.items.forEach((item)=>{
                 loader.add(item.name, `./src/img/${item.name}.jpg`)
-                this.sprites[item.name] = null
+                let obj = {
+                    sp: undefined,
+                    x: item.x,
+                    y: item.y
+                }
+                this.sprites[item.name] = obj
             })
-            // loader.load((loader, resources)=>{
-            //     this.sprite.commentBoard = new PIXI.Sprite(resources.commentBoard.texture)
-            // })
-            // loader.onComplete.add(()=>{
-            //     console.log(loader)
-            // })
+            loader.load((loader, resources)=>{
+                let sp = new PIXI.Sprite(resources.commentBoard.texture)
+                this.sprites.commentBoard.sp = sp
+                sp.x = this.sprites.commentBoard.x
+                sp.y = this.sprites.commentBoard.y
+                // this.sprites.displayShelf = new PIXI.Sprite(resources.displayShelf.texture)
+            })
+            loader.onComplete.add(()=>{
+                // draw all sprites
+                // for (prop in this.sprites){
+                    //     let sp = this.sprites[prop].sp
+                    //     this.pixi.itemsContainer.addChild(sp)
+                    // }
+                this.drawItems()
+            })
+            this.pixi.itemsContainer.addChild(sp)
         },
         drawSnail(){
             let el = this.npc
