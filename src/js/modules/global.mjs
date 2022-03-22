@@ -53,6 +53,15 @@ function collisionDetect(a, b){
             aBox.y < bBox.y + bBox.height
 }
 
+// call Vue methods
+function callVueSys(str, abs='', imgUrl='', coinsNum=''){
+    vm.$data.sys.popup = true
+    vm.$data.sys.say = str
+    vm.$data.sys.abs = abs
+    vm.$data.sys.img = imgUrl
+    vm.$data.user.coins += coinsNum
+}
+
 // from PIXI
 function onDragStart(event) {
     this.data = event.data;
@@ -75,4 +84,4 @@ function onDragMove() {
 }
 export {canvasContainer, canvasWidth, canvasHeight, app, scale, mapContainer, 
     npcContainer, guysContainer, npcContainerIsClicking, getRandom, arrayEquals, collisionDetect,
-    onDragStart, onDragMove, onDragEnd}
+    callVueSys, onDragStart, onDragMove, onDragEnd}

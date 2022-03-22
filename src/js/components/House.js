@@ -14,7 +14,9 @@ const House = {
                 app: undefined,
                 houseScale: 0,
                 originScale: 0.349375 //(719-80*2)/1600 macBook 螢幕大小作為原點
-            }
+            },
+            items: undefined,
+            sprites: {}
         }
     },
     computed: {
@@ -23,10 +25,46 @@ const House = {
             return this.npc.name.slice(0, id)
         }
     },
-    mounted(){
+    async mounted(){
+        let d = await this.fetchData()
+        this.items = d.filter(el=>el.hostName == this.hostName)
         this.init()
     },
     methods: {
+        fetchData: async() => {
+            let response;
+            try {
+                response = await axios
+                    .get("src/data/data_house.csv", {})
+                    console.log("async completed get House data")
+            } catch (e) {
+                throw new Error(e.message)
+            }
+
+            if (response.data){
+                let rows = response.data.split("\n")
+                let output = [];
+                let keyMap = {};
+                for (let i =0; i<rows[0].length; i++){
+                    if (rows[0].split(",")[i] !== undefined){
+                        keyMap[rows[0].split(",")[i].trim()] = i
+                        // console.log("key: "+rows[0].split(",")[i])
+                    }
+                }
+                rows.shift()
+                rows.forEach(el=>{
+                    let d = el.split(",");
+                    let obj = {
+                        name: d[keyMap.name],
+                        hostName: d[keyMap.host_name],
+                        x: d[keyMap.x],
+                        y: d[keyMap.y],
+                    };
+                    output.push(obj)
+                })
+                return output
+            }
+        },
         init(){
             let paddingY = 80
             let houseScale = (window.innerHeight-paddingY*2)/1600
@@ -57,10 +95,24 @@ const House = {
         draw(){
             this.showName()
             this.drawSnail()
+            this.drawItems()
         },
         showName(){
             let txt = new PIXI.Text(`歡迎來到${this.hostName}的家`)
             this.pixi.app.stage.addChild(txt)
+        },
+        drawItems(){
+            const loader = PIXI.Loader.shared
+            this.items.forEach((item)=>{
+                loader.add(item.name, `./src/img/${item.name}.jpg`)
+                this.sprites[item.name] = null
+            })
+            // loader.load((loader, resources)=>{
+            //     this.sprite.commentBoard = new PIXI.Sprite(resources.commentBoard.texture)
+            // })
+            // loader.onComplete.add(()=>{
+            //     console.log(loader)
+            // })
         },
         drawSnail(){
             let el = this.npc

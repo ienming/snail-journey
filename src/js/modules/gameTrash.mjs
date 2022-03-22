@@ -1,4 +1,5 @@
 import { trashes } from "./data.mjs"
+import { callVueSys } from "./global.mjs"
 import { getRandom } from "./global.mjs"
 import { mapContainer} from "./global.mjs"
 
@@ -95,8 +96,10 @@ function drawTrash(trash){
         // 判斷是否完成每日撿垃圾任務
         if (vm.$data.user.gotTrashes.length == vm.$data.dailyTrashes.length){
             let str = "謝謝你幫忙清理街道上的垃圾！因為有你，蝸牛綠洲變得更清新了。"
-            vm.$data.sys.popup = true
-            vm.$data.sys.say = str
+            let imgUrl = "./src/img/coin.png"
+            let num = 5
+            let abs = `獲得${num}個蝸牛幣`
+            callVueSys(str, abs, imgUrl, num)
         }
     })
     trashSp.mouseover = function(){ //hover時的放大效果

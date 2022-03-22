@@ -7,15 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蝸牛綠洲 Snail Oasis</title>
     <link rel="stylesheet" href="dist/main.css">
-    <style>
-        #userState {
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 97;
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -25,17 +16,7 @@
         <!-- Header -->
         <my-header @switch-personalpage="switchPersonalPage"></my-header>
         <!-- 測試使用者狀態 -->
-        <div id="userState">
-            <h3>User State:</h3>
-            <ul>
-                <li v-for="(el,idx) of user.missions"><span>{{idx}}: </span> {{ el }}</li>
-            </ul>
-            <ul>
-                <p>Achievements</p>
-                <li v-for="(el, idx) of user.achievements"><span>{{idx}}: </span>{{el}}</li>
-                <span>{{userGotAchievements}}</span>
-            </ul>
-        </div>
+        <user-state :badges="userGotBadges" :achievements="user.achievements" :user-achieved="userGotAchievements"></user-state>
         <!-- 進場動畫 -->
         <enter :loading="interaction.nowLoading" @start-game="startGame"></enter>
         <!-- 主要遊戲畫面 -->
@@ -120,9 +101,11 @@
         <transition name="fade">
             <div class="mock" v-if="sys.popup">
                 <div class="wrapper">
-                    <div class="popup">
+                    <div class="popup t-a-c">
+                        <img :src="sys.img" alt="" v-if="sys.img" style="max-width: 40px;">
+                        <p class="t-c-g t-w-5 mb-1">{{sys.abs}}</p>
                         <p>{{sys.say}}</p>
-                        <div class="t-a-r">
+                        <div class="t-a-c mt-1">
                             <button @click="sys.popup = !sys.popup" class="my-btn" style="margin: 0 8px;">確定</button>
                         </div>
                     </div>
@@ -147,6 +130,8 @@
     <!-- Vue -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- Axios -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.js' integrity='sha512-MNW6IbpNuZZ2VH9ngFhzh6cUt8L/0rSVa60F8L22K1H72ro4Ki3M/816eSDLnhICu7vwH/+/yb8oB3BtBLhMsA==' crossorigin='anonymous'></script>
     <!-- PIXI -->
     <script src="https://pixijs.download/release/pixi.js"></script>
     <script src="https://unpkg.com/@pixi/sound/dist/pixi-sound.js"></script>
@@ -159,6 +144,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Custom -->
     <script type="module" src="dist/main.js"></script>
+    <script src="src/js/components/UserState.js"></script>
     <script src="src/js/components/PersonalPage.js"></script>
     <script src="src/js/components/House.js"></script>
     <script src="src/js/components/Parts.js"></script>

@@ -1,4 +1,5 @@
 import { fetchGuys } from './data.mjs'
+import { callVueSys } from './global.mjs'
 import { app, scale, collisionDetect, guysContainer, getRandom, mapContainer } from './global.mjs'
 import { onDragStart, onDragMove, onDragEnd} from './global.mjs'
 import { globalGuySprites } from './npc.mjs'
@@ -240,13 +241,17 @@ function checkJudged(tool){
                 // 在這裡判斷是否要給獎勵
                 guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被讚了！`)
                 if (beingJudged.indexOf("good") !== -1){
-                    alert("被你讚美的他很開心，之後也一定會持續替綠洲做好事的～")
+                    let str = "被你讚美的他很開心，之後也一定會持續替綠洲做好事的～"
+                    let num = 5
+                    callVueSys(str, `獲得${num}個蝸牛幣`, "./src/img/coin.png", num)
                 }
                 break;
             case 'bad':
                 guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被罵了......`)
                 if (beingJudged.indexOf("bad") !== -1){
-                    alert("給臭傢伙一點教訓了！哇哈哈")
+                    let str = "給臭傢伙一點教訓了！哇哈哈"
+                    let num = 5
+                    callVueSys(str, `獲得${num}個蝸牛幣`, "./src/img/coin.png", num)
                 }
                 break;
         }

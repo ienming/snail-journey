@@ -229,8 +229,8 @@ const vm = new Vue({
             this.interaction.showPopup = !this.interaction.showPopup
             this.npcShowLink = {}
             //如果點到講廢話的NPC然後關閉視窗
-            if (this.nowNPC.enterGame !== 1 && this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.nowNPC.name) == -1) {
-                this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
+            if (this.nowNPC.enterGame !== 1 && this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.itemSpeak) == -1) {
+                this.user.achievements[`block${this.nowNPC.mission}`].push(this.itemSpeak)
             }
             //如果遊戲講話到一半的NPC被關閉
             if (this.nowNPC.enterGame == 1 && this.finishedProgress + 1 < this.nowNPC.gameSpeaks.length) {
@@ -305,25 +305,15 @@ const vm = new Vue({
                     } else if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) { //正要結束
                         this.user.missions[`mission${this.nowNPC.mission}`].push('finished') //記錄結束
                         this.switchPopup()
-                        if (this.nowNPC.name.indexOf("_house") == -1){
-                            this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name)
-                        }else{
-                            let id = this.nowNPC.name.indexOf("_house")
-                            this.user.achievements[`block${this.nowNPC.mission}`].push(this.nowNPC.name.slice(0,id))
-                        }
+                        this.user.achievements[`block${this.nowNPC.mission}`].push(this.itemSpeak)
                         this.checkBlockFinished()
                     }
                 } else this.switchPopup()
             } else { //廢話黨
-                let preparedName
-                if (this.nowNPC.name.indexOf("_house") == -1){ //路人NPC
-                    preparedName = this.nowNPC.name
-                }else{ //在家裡講話的NPC
-                    let id = this.nowNPC.name.indexOf("_house")
-                    preparedName = this.nowNPC.name.slice(0,id)
-                }
+                let preparedName = this.itemSpeak
                 if (this.user.achievements[`block${this.nowNPC.mission}`].indexOf(preparedName) == -1) {
                     this.user.achievements[`block${this.nowNPC.mission}`].push(preparedName)
+                    console.log("HI, now preparedName is: "+preparedName)
                     // 判斷對話完後自己這區有沒有完成
                     this.checkBlockFinished()
                 }
