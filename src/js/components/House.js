@@ -102,32 +102,18 @@ const House = {
             this.pixi.app.stage.addChild(txt)
         },
         drawItems(){
-            const loader = PIXI.Loader.shared
-            this.items.forEach((item)=>{
-                loader.add(item.name, `./src/img/${item.name}.jpg`)
-                let obj = {
-                    sp: undefined,
-                    x: item.x,
-                    y: item.y
-                }
-                this.sprites[item.name] = obj
+            this.items.forEach(item=>{
+                let texture = new PIXI.Texture.from(`./src/img/${item.name}.jpg`)
+                let sp = new PIXI.Sprite(texture)
+                sp.x = item.x
+                sp.y = item.y
+                // 增加互動
+                this.sprites[item.name] = sp
             })
-            loader.load((loader, resources)=>{
-                let sp = new PIXI.Sprite(resources.commentBoard.texture)
-                this.sprites.commentBoard.sp = sp
-                sp.x = this.sprites.commentBoard.x
-                sp.y = this.sprites.commentBoard.y
-                // this.sprites.displayShelf = new PIXI.Sprite(resources.displayShelf.texture)
-            })
-            loader.onComplete.add(()=>{
-                // draw all sprites
-                // for (prop in this.sprites){
-                    //     let sp = this.sprites[prop].sp
-                    //     this.pixi.itemsContainer.addChild(sp)
-                    // }
-                this.drawItems()
-            })
-            this.pixi.itemsContainer.addChild(sp)
+
+            for (prop in this.sprites){
+                this.pixi.itemsContainer.addChild(this.sprites[prop])
+            }
         },
         drawSnail(){
             let el = this.npc
