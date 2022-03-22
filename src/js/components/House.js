@@ -86,10 +86,6 @@ const House = {
             // 
             this.pixi.itemsContainer = new PIXI.Container()
             this.pixi.app.stage.addChild(this.pixi.itemsContainer)
-            // this.pixi.achievesContainer = new PIXI.Container()
-            // this.pixi.app.stage.addChild(this.pixi.achievesContainer)
-            // this.pixi.furnituresContainer = new PIXI.Container()
-            // this.pixi.app.stage.addChild(this.pixi.furnituresContainer)
             this.draw() //初始化房間
         },
         draw(){
