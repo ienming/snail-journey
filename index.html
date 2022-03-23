@@ -41,7 +41,7 @@
                     </div>
                     <!-- 一般對話 -->
                     <div v-if="!showProgram" key="dialogue" class="d-flex">
-                        <div class="popup">
+                        <div class="popup dialogue">
                             <!-- 不管怎樣都會有的見面招呼語 -->
                             <div>
                                 <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">
@@ -82,16 +82,14 @@
                                 </div>
                             </template>
                             <!-- Close Button -->
-                            <close-btn :outer-show-popup="interaction.showPopup" @switch-popup="switchPopup">
-                            </close-btn>
+                            <close-btn now-show="popup" @switch-popup="switchPopup"></close-btn>
                         </div>
                     </div>
                     <!-- 跳轉到行動案的視窗 -->
                     <div v-else key="adoption-dialogue" class="d-flex ain">
                         <div class="por">
                             <adoption :program="program" @adopted="showSysTxt"></adoption>
-                            <close-btn :outer-show-popup="interaction.showPopup" @switch-popup="switchPopup">
-                            </close-btn>
+                            <close-btn now-show="popup" @switch-popup="switchPopup"></close-btn>
                         </div>
                     </div>
                 </div>
@@ -101,7 +99,7 @@
         <transition name="fade">
             <div class="mock" v-if="sys.popup">
                 <div class="wrapper">
-                    <div class="popup t-a-c">
+                    <div class="popup t-a-c dialogue">
                         <img :src="sys.img" alt="" v-if="sys.img" style="max-width: 40px;">
                         <p class="t-c-g t-w-5 mb-1">{{sys.abs}}</p>
                         <p>{{sys.say}}</p>
@@ -113,7 +111,7 @@
             </div>
         </transition>
         <!-- 留言板測試 -->
-        <transition name="fade">
+        <!-- <transition name="fade">
             <div class="mock" v-show="showMsgBoard">
                 <div class="wrapper">
                     <div class="popup" style="width: unset;">
@@ -124,7 +122,7 @@
                     </div>
                 </div>
             </div>
-        </transition>
+        </transition> -->
     </div>
 
     <!-- Vue -->

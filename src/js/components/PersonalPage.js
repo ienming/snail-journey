@@ -5,10 +5,10 @@ const PersonalPage = {
             <div class="room-page">
                 <div id="roomCanvasContainer"></div>
                 <personal-coin @switch-furnitures="switchFurnitures" :coins="userCoins"></personal-coin>
-                <img src="./src/img/icons/exit.png" alt="離開房間" @click="switchPersonalPage" class="game-ui icon" />
+                <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-personal-page')" class="game-ui icon" />
             </div>
             <template name="fade">
-            <furnitures-page v-if="furnitureHasShown" :user-got-furnitures="userGotFurnitures" :outer-show-furnitures="furnitureHasShown" @show-confirm="showConfirm" @switch-furnitures="switchFurnitures"></furnitures-page>
+            <furnitures-page v-if="furnitureHasShown" :user-got-furnitures="userGotFurnitures" @show-confirm="showConfirm" @switch-furnitures="switchFurnitures"></furnitures-page>
             </template>
         </div>
         <template name="fade">
@@ -53,9 +53,6 @@ const PersonalPage = {
         }
     },
     methods: {
-        switchPersonalPage(){
-            this.$emit("switch-personal-page")
-        },
         init(){
             let paddingY = 80
             let roomScale = (window.innerHeight-paddingY*2)/1600
@@ -87,6 +84,7 @@ const PersonalPage = {
             // this.drawBadges()
             // this.drawAchievements()
             this.drawFurnitures()
+            this.drawDisplayShelf()
         },
         drawBadges(){
             while(this.pixi.badgesContainer.children.length > 0){
@@ -115,6 +113,20 @@ const PersonalPage = {
                     pY += 50
                 }
             }
+        },
+        drawDisplayShelf(){
+            let texture = new PIXI.Texture.from('./src/img/displayShelf.jpg')
+            let sp = new PIXI.Sprite(texture)
+            sp.interactive = true
+            sp.buttonMode = true
+            sp.x = 300*this.pixi.roomScale/this.pixi.originScale
+            sp.y = 300*this.pixi.roomScale/this.pixi.originScale
+            sp.scale.set(this.pixi.roomScale)
+            sp
+                .on("pointerdown", ()=>{
+                    console.log("打開展示櫃")
+                })
+            this.pixi.app.stage.addChild(sp)
         },
         drawFurnitures(){
             while(this.pixi.furnituresContainer.children.length > 0){
@@ -195,15 +207,14 @@ const Furnitures = {
                         </div>
                     </div>
                 </div>
-                <close-btn :outer-show-furnitures="outerShowFurnitures" @switch-furnitures="switchFurnitures"></close-btn>
+                <close-btn now-show="furnitures" @switch-furnitures="$emit('switch-furnitures')"></close-btn>
             </div>
         </transition>
     `,
     props: {
         userGotFurnitures: {
             type: Array
-        },
-        outerShowFurnitures: Boolean
+        }
     },
     data(){
         return {
@@ -236,9 +247,6 @@ const Furnitures = {
             console.log(item)
             // emit 給確認購買的 component
             this.$emit("show-confirm", item)
-        },
-        switchFurnitures(){
-            this.$emit("switch-furnitures")
         }
     }
 }

@@ -4,24 +4,15 @@ const CloseBtn = {
         <img src="src/img/icons/close.svg" alt="">
     </div>`,
     props: {
-        outerShowPopup: Boolean,
-        outerShowPersonalPage: Boolean,
-        outerShowFurnitures: Boolean,
-        outerShowMsg: Boolean
+        nowShow: String
     },
     data(){
         return {}
     },
     methods: {
         switchPage(){
-            if (this.outerShowPopup){
-                this.$emit(`switch-popup`)
-            }else if (this.outerShowPersonalPage){
-                this.$emit(`switch-personal-page`)
-            }else if (this.outerShowMsg){
-                this.$emit(`switch-msg`)
-            }else if (this.outerShowFurnitures){
-                this.$emit(`switch-furnitures`)
+            if (this.nowShow){
+                this.$emit(`switch-${this.nowShow}`)
             }
         }
     }
@@ -148,6 +139,73 @@ const CTA = {
 }
 
 Vue.component('cta', CTA)
+
+const InputText = {
+    template: `
+    <label :for="id" class="my-inpt-container d-flex flex-column">
+        <span class="aid" style="text-align: left;" v-if="labelTitle"><span v-show="required">＊</span>{{labelTitle}}</span>
+        <input :value="value" @input="$emit('input', $event.target.value)" :id="id" :name="name" :type="type" :placeholder="placeholder" :required="required" :pattern="pattern ? regExp : false" :title="patternInstruct" class="my-inpt"/>
+        <transition name="fade">
+            <img class="clear-data icon" src="./src/img/icons/close_dark.svg" @click="clearData" v-show="value !== ''" />
+        </transition>
+    </label>
+    `,
+    props: {
+        value: {
+            type: String,
+        },
+        labelTitle: {
+            type: String,
+            default: ""
+        },
+        placeholder: {
+            type: String,
+            default: "內容說明文字"
+        },
+        id: {
+            type: String,
+            default: "inputText1"
+        },
+        name: {
+            type: String,
+            default: "testInputText"
+        },
+        type: {
+            type: String,
+            default: "text"
+        },
+        required: {
+            type: Boolean,
+            default: true
+        },
+        regExp: {
+            type: String
+        },
+        patternInstruct: {
+            type: String
+        }
+    },
+    computed: {
+        pattern(){
+            if (this.regExp){
+                return true
+            }else {
+                return false
+            }
+        }
+    },
+    data(){
+        return {
+        }
+    },
+    methods: {
+        clearData(){
+            this.$emit('input', '')
+        }
+    }
+}
+
+Vue.component('input-text', InputText)
 
 
 const Adoption = {

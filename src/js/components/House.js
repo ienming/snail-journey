@@ -3,8 +3,9 @@ const House = {
     <section class="mock room">
         <div class="room-page">
             <div id="houseCnvsContainer"></div>
-            <img src="./src/img/icons/exit.png" alt="離開房間" @click="switchHousePage" class="game-ui icon" />
+            <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-house-page')" class="game-ui icon" />
         </div>
+        <comment-board :program="npc.program" :name="npc.name" v-if="commentHasShown" @switch-comment-board="switchCommentBoard"></comment-board>
     </section>
     `,
     props: ['npc'],
@@ -16,7 +17,8 @@ const House = {
                 originScale: 0.349375 //(719-80*2)/1600 macBook 螢幕大小作為原點
             },
             items: undefined,
-            sprites: {}
+            sprites: {},
+            commentHasShown: false
         }
     },
     computed: {
@@ -89,20 +91,23 @@ const House = {
             this.draw() //初始化房間
         },
         draw(){
-            this.showName()
             this.drawSnail()
             this.drawItems()
-        },
-        showName(){
-            let txt = new PIXI.Text(`歡迎來到${this.hostName}的家`)
-            this.pixi.app.stage.addChild(txt)
         },
         drawItems(){
             this.items.forEach(item=>{
                 let texture = new PIXI.Texture.from(`./src/img/${item.name}.jpg`)
                 let sp = new PIXI.Sprite(texture)
-                sp.x = item.x
-                sp.y = item.y
+                sp.name = item.name
+                sp.interactive = true
+                sp.buttonMode = true
+                sp
+                    .on("pointerdown", ()=>{
+                        this.checkWhomClicked(sp.name)
+                    })
+                sp.x = item.x*this.pixi.houseScale/this.pixi.originScale
+                sp.y = item.y*this.pixi.houseScale/this.pixi.originScale
+                sp.scale.set(this.pixi.houseScale)
                 // 增加互動
                 this.sprites[item.name] = sp
             })
@@ -147,6 +152,13 @@ const House = {
             })
             this.pixi.app.stage.addChild(sp)
         },
+        checkWhomClicked(name){
+            if (name == "commentBoard"){
+                this.commentHasShown = !this.commentHasShown
+            }else{
+                console.log(`與${name}互動`)
+            }
+        },
         speakRandomly(el){
             let randomSentenceNum = this.getRandom(0, el.speaks.length-1)
             vm.$data.nowSpeak = el.speaks[randomSentenceNum]
@@ -176,10 +188,86 @@ const House = {
                 console.log(`任務${el.mission}結束，講一下廢話`)
             }
         },
-        switchHousePage(){
-            this.$emit("switch-house-page")
+        switchCommentBoard(){
+            this.commentHasShown = !this.commentHasShown
         }
     }
 }
-
 Vue.component('house', House)
+
+// 有房產 NPC 家裡的留言板
+const CommentBoard = {
+    template: `
+        <transition name="fade">
+            <div class="mock">
+                <div class="wrapper">
+                    <div class="popup t-a-c w-50">
+                        <h2>{{program.title}}</h2>
+                        <p>留言板討論認養議題區</p>
+                        <form>
+                            <div class="comment">
+                                <div class="avatar">
+                                    <img src="./src/img/snail_oasis.png" />
+                                </div>
+                                <div class="message input">
+                                    <input-text v-model="message" class="w-100" placeholder="留言......" :id="commentInputId" :name="commentInputId"></input-text>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="comment-lists">
+                            <div class="comment" v-for="comment of comments">
+                                <div class="avatar">
+                                    <img src="./src/img/snail_oasis.png" />
+                                </div>
+                                <div class="message">
+                                    <p class="t-w-6">{{comment.id}}</p>
+                                    <p>{{comment.message}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <close-btn now-show="comment-board" @switch-comment-board="$emit('switch-comment-board')"></close-btn>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    `,
+    props: ['program', 'name'],
+    computed: {
+        commentInputId(){
+            return this.name + '_message'
+        }
+    },
+    data(){
+        return {
+            message: "",
+            comments: [
+                {
+                    id: "路人甲",
+                    message: "Hi"
+                },{
+                    id: "路人乙",
+                    message: "HI"
+                },{
+                    id: "路人丙",
+                    message: "Hi~"
+                },{
+                    id: "路人丙",
+                    message: "Hi~"
+                },{
+                    id: "路人丙",
+                    message: "Hi~"
+                },{
+                    id: "路人丙",
+                    message: "Hi~"
+                },{
+                    id: "路人丙",
+                    message: "Hi~"
+                },{
+                    id: "路人丙",
+                    message: "Hi~"
+                },
+            ]
+        }
+    }
+}
+Vue.component('comment-board', CommentBoard)

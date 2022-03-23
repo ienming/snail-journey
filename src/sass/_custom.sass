@@ -29,8 +29,9 @@
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     position: relative
     padding: 32px
-    width: 350px
     max-width: 85vw
+    &.dialogue
+        width: 350px
 
 .mock
     background-color: rgba(0,0,0,.6)
@@ -191,3 +192,29 @@
             border-radius: 50%
             overflow: hidden
             border: 1px solid #000
+
+// 留言板
+.comment-lists
+    display: flex
+    flex-direction: column
+    max-height: 50vh
+    overflow: scroll
+    padding-top: 16px
+.comment
+    display: flex
+    align-items: start
+    padding-bottom: 8px
+    margin-bottom: 16px
+    text-align: left
+    img
+        border-radius: 50%
+        max-width: 40px
+    .message
+        margin-left: 8px
+        width: 100%
+        padding: 12px
+        border-radius: 8px
+        &:not(.input)
+            background-color: #e5e1ce
+.my-inpt
+    background-color: $lightBg
