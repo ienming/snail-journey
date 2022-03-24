@@ -3557,7 +3557,7 @@ footer {
 #userState {
   position: fixed;
   left: 0;
-  top: 0;
+  bottom: 0;
   z-index: 97; }
 
 .game-ui.icon {
@@ -3765,15 +3765,16 @@ footer {
     flex-shrink: 0;
     transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
     #furnitureContainer .furniture:hover {
-      opacity: 0.5; }
+      opacity: 0.8; }
     #furnitureContainer .furniture.bought {
       pointer-events: none;
       opacity: .3;
       color: green; }
     #furnitureContainer .furniture.locked {
       pointer-events: none;
-      opacity: .5;
-      color: #333333; }
+      opacity: .8;
+      color: #333333;
+      filter: grayscale(80%); }
 
 #buyConfirm {
   position: fixed;

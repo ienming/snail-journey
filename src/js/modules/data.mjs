@@ -271,8 +271,8 @@ function fetchAchievements(){
                 let block = d[keyMap.block]
                 let descrip = d[keyMap.descrip]
                 vm.$data.achievement.descrips[`block${block}`] = descrip
-                // let maps = d[keyMap.map].split("^")
-                // vm.$data.achievement.map[`block${block}`] = maps
+                let maps = d[keyMap.map].split('^')
+                vm.$data.achievement.map[`block${block}`] = maps
             })
         })
         .catch(err=>{

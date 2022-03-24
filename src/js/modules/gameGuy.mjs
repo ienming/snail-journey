@@ -258,7 +258,7 @@ function checkJudged(tool){
         window.setTimeout(()=>{
             cleanAllGuysSaid()
             // 只要互動過了就消失
-            gsap.to(respondSp, .5, {
+            gsap.to(respondSp, .1, {
                 pixi: {
                     scale: 0
                 },
