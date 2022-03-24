@@ -201,7 +201,7 @@ const CommentBoard = {
         <transition name="fade">
             <div class="mock">
                 <div class="wrapper">
-                    <div class="popup t-a-c w-50">
+                    <div class="popup t-a-c w-md-50">
                         <h2>{{program.title}}</h2>
                         <p>留言板討論認養議題區</p>
                         <form>

@@ -8,7 +8,11 @@ const PersonalPage = {
                 <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-personal-page')" class="game-ui icon" />
             </div>
             <template name="fade">
-            <furnitures-page v-if="furnitureHasShown" :user-got-furnitures="userGotFurnitures" @show-confirm="showConfirm" @switch-furnitures="switchFurnitures"></furnitures-page>
+            <furnitures-page v-if="furnitureHasShown" 
+                :user-got-furnitures="userGotFurnitures"
+                :user-got-achievements="userGotAchievements"
+                @show-confirm="showConfirm"
+                @switch-furnitures="switchFurnitures"></furnitures-page>
             </template>
         </div>
         <template name="fade">
@@ -16,13 +20,7 @@ const PersonalPage = {
         </template>
     </div>
     `,
-    props: {
-        outerShowPersonalPage: Boolean,
-        userGotBadges: Object,
-        userGotAchievements: Object,
-        userCoins: Number,
-        userGotFurnitures: Array
-    },
+    props: ['outerShowPersonalPage','userGotBadges','userGotAchievements','userCoins','userGotFurnitures'],
     mounted(){
         this.init()
     },
@@ -196,11 +194,15 @@ const Furnitures = {
         <transition name="fade">
             <div id="furnitureContainer">
                 <div class="d-flex furnitures">
-                    <div class="furniture" :class="item.bought ? 'bought' : ''" v-for="item of allFurnituresState" @click="buyFurniture(item)">
+                    <div class="furniture"
+                        v-for="item of allFurnituresState"
+                        :class="{ bought: item.bought, locked: locked['block'+item.block] }"
+                        @click="buyFurniture(item)">
                         <div class="img-container">
                             <img :src="item.imgSrc" alt="" />
                         </div>
                         <div class="txt-container">
+                            <p>{{ item.blockName }}</p>
                             <p>{{ item.name }}</p>
                             <p>{{ item.txt }}</p>
                             <p class="price">{{ item.price }}</p>
@@ -211,19 +213,28 @@ const Furnitures = {
             </div>
         </transition>
     `,
-    props: {
-        userGotFurnitures: {
-            type: Array
-        }
-    },
+    props: ['userGotFurnitures', 'userGotAchievements'],
     data(){
         return {
-            allFurnitures: []
+            allFurnitures: undefined
         }
     },
     computed: {
         allFurnituresState(){
-            let lists = [...this.allFurnitures]
+            let lists = this.allFurnitures
+            // 對應區塊名稱
+            lists.forEach(el=>{
+                let blockName = ""
+                switch(el.block*1){
+                    case 1:
+                        blockName = "文藝生活區"
+                        break;
+                    case 2:
+                        blockName = "慢活甜點區"
+                        break;
+                }
+                el.blockName = blockName
+            })
             if (this.userGotFurnitures){
                 // 比較已經有的家具和所有家具
                 this.userGotFurnitures.forEach(gotItem=>{
@@ -232,16 +243,23 @@ const Furnitures = {
                 })
             }
             return lists
+        },
+        locked(){
+            let lockMap = {}
+            for (prop in this.userGotAchievements){
+                if (this.userGotAchievements[prop].indexOf("finished") !== -1){
+                    lockMap[prop] = false
+                }else{
+                    lockMap[prop] = true
+                }
+            }
+            return lockMap
         }
     },
     created(){
-        this.init()
+        this.allFurnitures = [...vm.$data.allFurnitures]
     },
     methods: {
-        init(){
-            // fetch all furnitures data
-            this.allFurnitures = vm.$data.allFurnitures
-        },
         buyFurniture(item){
             console.log(`準備購買${item}`)
             console.log(item)

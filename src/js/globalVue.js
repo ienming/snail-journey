@@ -8,7 +8,6 @@ const vm = new Vue({
             showPersonalPage: false,
             showHouse: false,
             houseName: '',
-            showMsg: false,
             nowAns: true
         },
         sys: {
@@ -120,12 +119,6 @@ const vm = new Vue({
                 })
                 return arr
             } else return
-        },
-        showMsgBoard(){
-            // if (this.itemSpeak && this.itemSpeak == "board"){
-            //     return true
-            // }else return false
-            //還是不要跟npc混在一起好了
         }
     },
     created() {
@@ -323,9 +316,17 @@ const vm = new Vue({
         storageData(key, value) {
             localStorage.setItem(key, value)
         },
-        showSysTxt(txt) {
+        showSysTxt(txt, abs, imgUrl) {
             this.sys.popup = true
             this.sys.say = txt
+            this.sys.abs = abs
+            this.sys.img = imgUrl
+        },
+        closeSysTxt(){
+            this.sys.popup = false
+            this.sys.say = ""
+            this.sys.img = ""
+            this.sys.abs = ""
         },
         checkBlockFinished() {
             if (this.userGotAchievements[`block${this.nowNPC.mission}`].indexOf("finished") !== -1) {
@@ -340,7 +341,7 @@ const vm = new Vue({
                             output = "慢活甜點區"
                             break;
                     }
-                    this.showSysTxt(`探索完${output}了！`)
+                    this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '解鎖家具')
                 }, 800)
             }
         }

@@ -101,10 +101,10 @@
                 <div class="wrapper">
                     <div class="popup t-a-c dialogue">
                         <img :src="sys.img" alt="" v-if="sys.img" style="max-width: 40px;">
-                        <p class="t-c-g t-w-5 mb-1">{{sys.abs}}</p>
+                        <p class="t-c-g t-w-5 mb-1" v-if="sys.abs">{{sys.abs}}</p>
                         <p>{{sys.say}}</p>
                         <div class="t-a-c mt-1">
-                            <button @click="sys.popup = !sys.popup" class="my-btn" style="margin: 0 8px;">確定</button>
+                            <button @click="closeSysTxt" class="my-btn" style="margin: 0 8px;">確定</button>
                         </div>
                     </div>
                 </div>

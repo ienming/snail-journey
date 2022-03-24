@@ -3730,6 +3730,10 @@ footer {
       pointer-events: none;
       opacity: .3;
       color: green; }
+    #furnitureContainer .furniture.locked {
+      pointer-events: none;
+      opacity: .5;
+      color: #333333; }
 
 #buyConfirm {
   position: fixed;

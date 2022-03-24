@@ -239,6 +239,7 @@ function fetchFurnitures(){
                 let obj = {
                     name: d[keyMap.name],
                     id: d[keyMap.id],
+                    block: d[keyMap.block],
                     x: d[keyMap.x],
                     y: d[keyMap.y],
                     txt: d[keyMap.txt],
