@@ -246,7 +246,6 @@ const Furnitures = {
     },
     created(){
         this.allFurnitures = [...vm.$data.allFurnitures]
-        alert(this.allFurnitures === vm.$data.allFurnitures)
     },
     methods: {
         buyFurniture(item){
@@ -336,9 +335,19 @@ const DisplayShelf = {
             <div class="mock">
                 <div class="wrapper">
                     <div class="popup t-a-c w-md-50">
-                        <p>個人成就、認養展示櫃</p>
                         <section>
-                            <h3>探索區域徽章</h3>
+                            <h3 class="mb-1">探索區域徽章</h3>
+                            <div class="d-flex jcc">
+                                <div class="img-container badge"
+                                    :class="{ locked: !el.achieved }"
+                                    :data-descrip="el.descrip"
+                                    v-for="el of userAchieved">
+                                    <img src="./src/img/board.png" alt="" />
+                                </div>
+                            </div>
+                        </section>
+                        <section class="mt-2">
+                            <h3 class="mb-1">認養蝸牛綠洲議題</h3>
                             <div class="d-flex jcc">
                                 <div class="img-container badge"
                                     :class="{ locked: !el.achieved }"
