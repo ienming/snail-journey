@@ -16,14 +16,14 @@
         <!-- Header -->
         <my-header @switch-personalpage="switchPersonalPage"></my-header>
         <!-- 測試使用者狀態 -->
-        <user-state :badges="userGotBadges" :achievements="user.achievements" :user-achieved="userGotAchievements"></user-state>
+        <user-state :achievements="user.achievements" :user-achieved="userGotAchievements"></user-state>
         <!-- 進場動畫 -->
         <enter :loading="interaction.nowLoading" @start-game="startGame"></enter>
         <!-- 主要遊戲畫面 -->
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
         <transition name="fade">
-            <personal-page v-if="interaction.showPersonalPage" :user-got-badges="userGotBadges"
+            <personal-page v-if="interaction.showPersonalPage"
                 :user-got-achievements="userGotAchievements" :user-coins="user.coins"
                 :user-got-furnitures="user.furnitures" :outer-show-personal-page="interaction.showPersonalPage"
                 @switch-personal-page="switchPersonalPage"></personal-page>

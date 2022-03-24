@@ -25,10 +25,14 @@ const vm = new Vue({
         itemSpeak: undefined,
         nowNPC: undefined,
         npcShowLink: {},
-        achievementMap: {
-            block1: ['snail_mryeh', 'snail_oasis', 'snail_text', 'snail_book', 'snail_paint'],
-            block2: ['snail_cinnamon', 'snail_scone', 'snail_dorayaki', 'snail_greenbean'],
-            block3: ['board', 'bike'],
+        achievement: {
+            map: {
+                block1: ['snail_mryeh', 'snail_oasis', 'snail_text', 'snail_book', 'snail_paint'],
+                block2: ['snail_cinnamon', 'snail_scone', 'snail_dorayaki', 'snail_greenbean'],
+                block3: ['board', 'bike'],
+            },
+            // map: {},
+            descrips: {}
         },
         user: {
             missions: {
@@ -60,27 +64,27 @@ const vm = new Vue({
                 return this.user.missions[`mission${this.nowNPC.mission}`].length
             } else return
         },
-        userGotBadges() {
-            let badges = {
-                mission1: false,
-                mission2: false,
-                mission3: false
-            }
-            for (let prop in this.user.missions) {
-                if (this.user.missions[prop].indexOf('finished') !== -1) {
-                    badges[prop] = true
-                }
-            }
-            return badges
-        },
+        // userGotBadges() {
+        //     let badges = {
+        //         mission1: false,
+        //         mission2: false,
+        //         mission3: false
+        //     }
+        //     for (let prop in this.user.missions) {
+        //         if (this.user.missions[prop].indexOf('finished') !== -1) {
+        //             badges[prop] = true
+        //         }
+        //     }
+        //     return badges
+        // },
         userGotAchievements() {
             let output = {}
             let maps = 0
-            for (prop in this.achievementMap) {
+            for (prop in this.achievement.map) {
                 maps++
             }
             for (let i = 0; i < maps; i++) {
-                let map = this.achievementMap[`block${i + 1}`]
+                let map = this.achievement.map[`block${i + 1}`]
                 let userGotArr = this.user.achievements[`block${i + 1}`]
                 if (userGotArr.length > 0) {
                     if (map.length == userGotArr.length && map.every(val => userGotArr.includes(val))) {

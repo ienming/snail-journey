@@ -254,4 +254,30 @@ function fetchFurnitures(){
         })
 }
 
-export { fetchNPC, normalHouses, fetchFurnitures, trashes, fetchGuys };
+//fetch achievements data
+function fetchAchievements(){
+    axios.get("src/data/data_achievements.csv")
+        .then(res=>{
+            let rows = res.data.split("\n")
+            let keyMap = {};
+            for (let i =0; i<rows[0].length; i++){
+                if (rows[0].split(",")[i] !== undefined){
+                    keyMap[rows[0].split(",")[i].trim()] = i
+                }
+            }
+            rows.shift()
+            rows.forEach(el=>{
+                let d = el.split(",");
+                let block = d[keyMap.block]
+                let descrip = d[keyMap.descrip]
+                vm.$data.achievement.descrips[`block${block}`] = descrip
+                // let maps = d[keyMap.map].split("^")
+                // vm.$data.achievement.map[`block${block}`] = maps
+            })
+        })
+        .catch(err=>{
+            throw(err)
+        })
+}
+
+export { fetchNPC, normalHouses, fetchFurnitures, trashes, fetchGuys, fetchAchievements };

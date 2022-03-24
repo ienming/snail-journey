@@ -11,7 +11,7 @@ import {
     createNPC,
     createNormalHouse,
 } from "./js/modules/npc.mjs";
-import { fetchFurnitures } from './js/modules/data.mjs';
+import { fetchFurnitures, fetchAchievements } from './js/modules/data.mjs';
 import { startDailyTrash } from './js/modules/gameTrash.mjs';
 import { startDailyJudge } from './js/modules/gameGuy.mjs'
 
@@ -23,6 +23,7 @@ window.setTimeout(()=>{
     startDailyJudge();
 }, 500)
 fetchFurnitures();
+fetchAchievements();
 
 // create cursor following
 // let cursorTexture = new PIXI.Texture.from(vm.$data.interaction.cursorImg)

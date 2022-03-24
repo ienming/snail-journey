@@ -3,9 +3,6 @@ const UserState = {
     <div id="userState">
         <h3>User State:</h3>
         <ul>
-            <li v-for="(el,idx) of badges"><span>{{idx}}: </span> {{ el }}</li>
-        </ul>
-        <ul>
             <p>Achievements</p>
             <li v-for="(el, idx) of achievements"><span>{{idx}}: </span>{{el}}</li>
             <span>{{userAchieved}}</span>
@@ -13,7 +10,7 @@ const UserState = {
         
     </div>
     `,
-    props: ['badges', 'achievements', 'userAchieved'],
+    props: ['achievements', 'userAchieved'],
     data(){
         return {}
     }

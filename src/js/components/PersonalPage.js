@@ -18,9 +18,12 @@ const PersonalPage = {
         <template name="fade">
         <buy-confirm v-show="confirmHasShown" :furniture="nowAddFurniture" @close-confirm="closeConfirm"></buy-confirm>
         </template>
+        <display-shelf v-if="displayShelfHasShown"
+            :userGotAchievements="userGotAchievements"
+            @switch-display-shelf="displayShelfHasShown = !displayShelfHasShown"></display-shelf>
     </div>
     `,
-    props: ['outerShowPersonalPage','userGotBadges','userGotAchievements','userCoins','userGotFurnitures'],
+    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures'],
     mounted(){
         this.init()
     },
@@ -33,14 +36,15 @@ const PersonalPage = {
             },
             furnitureHasShown: false,
             confirmHasShown: false,
+            displayShelfHasShown: false,
             nowAddFurniture: undefined,
         }
     },
     watch: {
-        'userGotBadges': {
+        'userGotAchievements': {
             handler: function(newValue, oldValue){
-                console.log("使用者徽章有變，重畫徽章")
-                this.drawBadges()
+                console.log("使用者區域探索成就有變，重畫")
+                this.drawAchievements()
             }
         },
         'userGotFurnitures': {
@@ -70,8 +74,6 @@ const PersonalPage = {
             room.scale.set(roomScale)
             this.pixi.app.stage.addChild(room)
             // 
-            this.pixi.badgesContainer = new PIXI.Container()
-            this.pixi.app.stage.addChild(this.pixi.badgesContainer)
             this.pixi.achievesContainer = new PIXI.Container()
             this.pixi.app.stage.addChild(this.pixi.achievesContainer)
             this.pixi.furnituresContainer = new PIXI.Container()
@@ -79,24 +81,9 @@ const PersonalPage = {
             this.draw() //初始化房間
         },
         draw(){
-            // this.drawBadges()
             // this.drawAchievements()
             this.drawFurnitures()
             this.drawDisplayShelf()
-        },
-        drawBadges(){
-            while(this.pixi.badgesContainer.children.length > 0){
-                this.pixi.badgesContainer.removeChild(this.pixi.badgesContainer.children[0])
-            }
-            let pY = 0
-            for (prop in this.userGotBadges){
-                if (this.userGotBadges[prop]){
-                    let txt = new PIXI.Text(`目前有的蝸牛，${prop}: ${this.userGotBadges[prop]}`)
-                    txt.position.y = pY
-                    this.pixi.badgesContainer.addChild(txt)
-                    pY += 50
-                }
-            }
         },
         drawAchievements(){
             while(this.pixi.achievesContainer.children.length > 0){
@@ -122,7 +109,7 @@ const PersonalPage = {
             sp.scale.set(this.pixi.roomScale)
             sp
                 .on("pointerdown", ()=>{
-                    console.log("打開展示櫃")
+                    this.displayShelfHasShown = true
                 })
             this.pixi.app.stage.addChild(sp)
         },
@@ -199,11 +186,11 @@ const Furnitures = {
                         :class="{ bought: item.bought, locked: locked['block'+item.block] }"
                         @click="buyFurniture(item)">
                         <div class="img-container">
-                            <img :src="item.imgSrc" alt="" />
+                        <img :src="item.imgSrc" alt="" />
                         </div>
                         <div class="txt-container">
-                            <p>{{ item.blockName }}</p>
-                            <p>{{ item.name }}</p>
+                            <p class="t-w-5">{{ item.name }}</p>
+                            <p class="t-z-1" style="margin-bottom: 8px">{{ item.blockName }}</p>
                             <p>{{ item.txt }}</p>
                             <p class="price">{{ item.price }}</p>
                         </div>
@@ -234,6 +221,7 @@ const Furnitures = {
                         break;
                 }
                 el.blockName = blockName
+                el.imgSrc = `./src/img/fur_${el.id}.png`
             })
             if (this.userGotFurnitures){
                 // 比較已經有的家具和所有家具
@@ -258,6 +246,7 @@ const Furnitures = {
     },
     created(){
         this.allFurnitures = [...vm.$data.allFurnitures]
+        alert(this.allFurnitures === vm.$data.allFurnitures)
     },
     methods: {
         buyFurniture(item){
@@ -337,3 +326,57 @@ const BuyConfirm = {
     }
 }
 Vue.component("buy-confirm", BuyConfirm)
+
+// 
+// 
+// 個人展示櫃
+const DisplayShelf = {
+    template: `
+        <transition name="fade">
+            <div class="mock">
+                <div class="wrapper">
+                    <div class="popup t-a-c w-md-50">
+                        <p>個人成就、認養展示櫃</p>
+                        <section>
+                            <h3>探索區域徽章</h3>
+                            <div class="d-flex jcc">
+                                <div class="img-container badge"
+                                    :class="{ locked: !el.achieved }"
+                                    :data-descrip="el.descrip"
+                                    v-for="el of userAchieved">
+                                    <img src="./src/img/board.png" alt="" />
+                                </div>
+                            </div>
+                        </section>
+                        <close-btn now-show="display-shelf" @switch-display-shelf="$emit('switch-display-shelf')"></close-btn>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    `,
+    props: ['userGotAchievements'],
+    created(){
+        this.allAchievements = {...vm.$data.achievement.descrips}
+    },
+    data(){
+        return {
+            allAchievements: {}
+        }
+    },
+    computed: {
+        userAchieved(){
+            let obj = {...this.userGotAchievements}
+            for (prop in obj){
+                obj[prop] = {}
+                if (this.userGotAchievements[prop].indexOf('finished') !== -1){
+                    obj[prop].achieved = true
+                }else{
+                    obj[prop].achieved = false
+                }
+                obj[prop].descrip = this.allAchievements[prop]
+            }
+            return obj
+        }
+    }
+}
+Vue.component("display-shelf", DisplayShelf)
