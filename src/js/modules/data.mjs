@@ -47,30 +47,33 @@ let fetchNPC = async () => {
                 obj.program = {
                     title: d[keyMap.program_title],
                     intro: d[keyMap.program_intro],
+                    descrip: d[keyMap.program_descrip],
+                    linkName: d[keyMap.program_linkName],
+                    link: d[keyMap.program_link]
                 }
-                if (d[keyMap.program_subtitle]){
-                    obj.program.subTitle = d[keyMap.program_subtitle]
-                }
-                if (d[keyMap.program_goal]){
-                    obj.program.goal = d[keyMap.program_goal]
-                }
-                if (d[keyMap.program_keywords]){
-                    let keywords = d[keyMap.program_keywords].trim().split("^")
-                    obj.program.keywords = keywords
-                }
-                // actions
-                if (d[keyMap.action_titles]){
-                    let actions = []
-                    for (let i=0; i<d[keyMap.action_titles].trim().split("^").length; i++){
-                        let action = {
-                            imgSrc: `./src/img/${d[keyMap.action_imgs].trim().split("^")[i]}.png`,
-                            title: d[keyMap.action_titles].trim().split("^")[i],
-                            intro: d[keyMap.action_intros].trim().split("^")[i]
-                        }
-                        actions.push(action)
-                    }
-                    obj.program.actions = actions
-                }
+                // if (d[keyMap.program_subtitle]){
+                //     obj.program.subTitle = d[keyMap.program_subtitle]
+                // }
+                // if (d[keyMap.program_goal]){
+                //     obj.program.goal = d[keyMap.program_goal]
+                // }
+                // if (d[keyMap.program_keywords]){
+                //     let keywords = d[keyMap.program_keywords].trim().split("^")
+                //     obj.program.keywords = keywords
+                // }
+                // // actions
+                // if (d[keyMap.action_titles]){
+                //     let actions = []
+                //     for (let i=0; i<d[keyMap.action_titles].trim().split("^").length; i++){
+                //         let action = {
+                //             imgSrc: `./src/img/${d[keyMap.action_imgs].trim().split("^")[i]}.png`,
+                //             title: d[keyMap.action_titles].trim().split("^")[i],
+                //             intro: d[keyMap.action_intros].trim().split("^")[i]
+                //         }
+                //         actions.push(action)
+                //     }
+                //     obj.program.actions = actions
+                // }
             }
             // NPC 遊戲中要講的話
             if (d[keyMap.game_speaks]){

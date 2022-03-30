@@ -76,7 +76,6 @@ function createItem(el){
                         // 是否有可以認養的按鈕
                         if (el.adoptable){
                             vm.$data.adoptable = true
-                            vm.$data.program = el.program
                             vm.$data.btnTxt = undefined
                         }else{
                             vm.$data.adoptable = false

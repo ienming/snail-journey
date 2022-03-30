@@ -35,13 +35,13 @@
         <!-- popup 對話框 -->
         <transition name="fade">
             <div class="mock" v-show="interaction.showPopup">
-                <div class="wrapper flex-column flex-md-row" :style="showProgram ? 'align-items: flex-end' : ''">
+                <div class="wrapper flex-column flex-md-row">
                     <div class="mb-2 mb-md-0 mr-md-2 speak-img">
                         <img :src="itemSpeakImgSrc" alt="">
                     </div>
                     <!-- 一般對話 -->
-                    <div v-if="!showProgram" key="dialogue" class="d-flex">
-                        <div class="popup dialogue">
+                    <div key="dialogue" class="d-flex">
+                        <div class="popup" :class="{ dialogue: !showProgram }">
                             <!-- 不管怎樣都會有的見面招呼語 -->
                             <div>
                                 <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">
@@ -54,12 +54,20 @@
                                             class="my-btn" style="margin: 8px;">{{btn.option}}</button>
                                     </div>
                                     <div v-else>
-                                        <p>
-                                        <p>{{ nowSpeak }}</p>
+                                        <p v-html="nowSpeak"></p>
                                         <p v-if="npcShowLink.url">
                                             <basic-link :title="npcShowLink.name" :url="npcShowLink.url"></basic-link>
                                         </p>
-                                        </p>
+                                        <!-- 有認養行動案就顯示 -->
+                                        <span v-if="adoptable && !showProgram" @click="switchProgram" class="t-z-1 t-c-g">認養任務</span>
+                                        <template v-if="showProgram">
+                                            <div class="mt-1">
+                                                任務獎勵：
+                                                <p>???</p>
+                                            </div>
+                                            <basic-link class="mt-1" :title="nowNPC.program.linkName" :url="nowNPC.program.link"></basic-link>
+                                        </template>
+                                        <!-- 關閉對話 -->
                                         <div class="t-a-r">
                                             <button @click="pureNext" v-show="btnTxt"
                                                 class="my-btn mt-1 outline">{{btnTxt}}</button>
@@ -67,28 +75,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- 有認養行動案就顯示 -->
-                            <template v-if="adoptable">
-                                <hr class="mt-1" />
-                                <p class="t-w-5 t-z-2 mb-1">加入認養行動：</p>
-                                <div class="my-cta-container">
-                                    <button @click="switchProgram" class="my-cta w-100 small gradient">
-                                        <span>{{program.title}}</span>
-                                        <div class="icon-container">
-                                            <img src="./src/img/icons/arrow_rightLong_ht.svg" alt="" />
-                                            <img src="./src/img/icons/arrow_rightLong_ht.svg" alt="" />
-                                        </div>
-                                    </button>
-                                </div>
-                            </template>
                             <!-- Close Button -->
-                            <close-btn now-show="popup" @switch-popup="switchPopup"></close-btn>
-                        </div>
-                    </div>
-                    <!-- 跳轉到行動案的視窗 -->
-                    <div v-else key="adoption-dialogue" class="d-flex ain">
-                        <div class="por">
-                            <adoption :program="program" @adopted="showSysTxt"></adoption>
                             <close-btn now-show="popup" @switch-popup="switchPopup"></close-btn>
                         </div>
                     </div>

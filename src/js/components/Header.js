@@ -17,6 +17,8 @@ const Header = {
                 name: "personalpage",
                 src: "./src/img/icons/menu.png"
             },{
+                name: "toggleBgMusic"
+            },{
                 name: "clearData"
             }
         ]

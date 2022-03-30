@@ -17,7 +17,6 @@ const vm = new Vue({
         dailyTrashes: [],
         dailyGuys: [],
         adoptable: false,
-        program: undefined,
         showProgram: false,
         showMissionBtn: false,
         btnTxt: "關閉",
@@ -149,6 +148,7 @@ const vm = new Vue({
     },
     mounted() {
         console.log("vue completed load")
+        this.autoBgMusic()
     },
     watch: {
         'user.missions': {
@@ -222,6 +222,13 @@ const vm = new Vue({
         },
     },
     methods: {
+        autoBgMusic(){
+            PIXI.sound.Sound.from({
+                url: 'src/sounds/examples_resources_loops_loop3.mp3',
+                autoPlay: true,
+                loop: true
+            });
+        },
         switchPopup() {
             this.interaction.showPopup = !this.interaction.showPopup
             this.npcShowLink = {}
@@ -248,6 +255,7 @@ const vm = new Vue({
         },
         switchProgram() {
             this.showProgram = true
+            this.nowSpeak = this.nowNPC.program.descrip
         },
         startGame() {
             this.interaction.nowLoading = false
