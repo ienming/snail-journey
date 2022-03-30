@@ -46,11 +46,16 @@ let fetchNPC = async () => {
                 obj.adoptable = d[keyMap.adoptable]*1
                 obj.program = {
                     title: d[keyMap.program_title],
-                    intro: d[keyMap.program_intro],
                     descrip: d[keyMap.program_descrip],
                     linkName: d[keyMap.program_linkName],
                     link: d[keyMap.program_link]
                 }
+                // 給 global all atoptions 這些資料，用來產生徽章
+                let adoptionObj = {}
+                adoptionObj.title = d[keyMap.program_title]
+                adoptionObj.intro = "認養徽章說明"
+                vm.$data.adoptions.push(adoptionObj)
+                //
                 // if (d[keyMap.program_subtitle]){
                 //     obj.program.subTitle = d[keyMap.program_subtitle]
                 // }
@@ -257,7 +262,7 @@ function fetchFurnitures(){
         })
 }
 
-//fetch achievements data
+//fetch all achievements data
 function fetchAchievements(){
     axios.get("src/data/data_achievements.csv")
         .then(res=>{

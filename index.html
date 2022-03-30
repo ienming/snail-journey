@@ -24,6 +24,7 @@
         <!-- Personal Page -->
         <transition name="fade">
             <personal-page v-if="interaction.showPersonalPage"
+                :user-adoptions="user.adoptions"
                 :user-got-achievements="userGotAchievements" :user-coins="user.coins"
                 :user-got-furnitures="user.furnitures" :outer-show-personal-page="interaction.showPersonalPage"
                 @switch-personal-page="switchPersonalPage"></personal-page>
@@ -40,45 +41,47 @@
                         <img :src="itemSpeakImgSrc" alt="">
                     </div>
                     <!-- 一般對話 -->
-                    <div key="dialogue" class="d-flex">
-                        <div class="popup" :class="{ dialogue: !showProgram }">
-                            <!-- 不管怎樣都會有的見面招呼語 -->
-                            <div>
-                                <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">
-                                    This is {{ itemSpeak }} speaking
-                                </p>
-                                <div class="game-ui">
-                                    <!-- 有選項時的按鈕 -->
-                                    <div v-if="showMissionBtn">
-                                        <button v-for="btn of missionBtns" @click="checkAns(btn.correct);"
-                                            class="my-btn" style="margin: 8px;">{{btn.option}}</button>
-                                    </div>
-                                    <div v-else>
-                                        <p v-html="nowSpeak"></p>
-                                        <p v-if="npcShowLink.url">
-                                            <basic-link :title="npcShowLink.name" :url="npcShowLink.url"></basic-link>
-                                        </p>
-                                        <!-- 有認養行動案就顯示 -->
-                                        <span v-if="adoptable && !showProgram" @click="switchProgram" class="t-z-1 t-c-g">認養任務</span>
-                                        <template v-if="showProgram">
-                                            <div class="mt-1">
-                                                任務獎勵：
-                                                <p>???</p>
+                    <template v-if="!showProgram">
+                        <div key="dialogue" class="d-flex">
+                            <div class="popup dialogue">
+                                <!-- 不管怎樣都會有的見面招呼語 -->
+                                <div>
+                                    <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">
+                                        This is {{ itemSpeak }} speaking
+                                    </p>
+                                    <div class="game-ui">
+                                        <!-- 有選項時的按鈕 -->
+                                        <div v-if="showMissionBtn">
+                                            <button v-for="btn of missionBtns" @click="checkAns(btn.correct);"
+                                                class="my-btn" style="margin: 8px;">{{btn.option}}</button>
+                                        </div>
+                                        <div v-else>
+                                            <p v-html="nowSpeak"></p>
+                                            <p v-if="npcShowLink.url">
+                                                <basic-link :title="npcShowLink.name" :url="npcShowLink.url"></basic-link>
+                                            </p>
+                                            <!-- 有認養行動案就顯示 -->
+                                            <span v-if="adoptable" @click="switchProgram" class="t-z-1 t-c-g">認養任務</span>
+                                            <!-- 關閉對話 -->
+                                            <div class="t-a-r">
+                                                <button @click="pureNext" v-show="btnTxt"
+                                                    class="my-btn mt-1 outline">{{btnTxt}}</button>
                                             </div>
-                                            <basic-link class="mt-1" :title="nowNPC.program.linkName" :url="nowNPC.program.link"></basic-link>
-                                        </template>
-                                        <!-- 關閉對話 -->
-                                        <div class="t-a-r">
-                                            <button @click="pureNext" v-show="btnTxt"
-                                                class="my-btn mt-1 outline">{{btnTxt}}</button>
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Close Button -->
+                                <close-btn now-show="popup" @switch-popup="switchPopup"></close-btn>
                             </div>
-                            <!-- Close Button -->
+                        </div>
+                    </template>
+                    <!-- 認養視窗 -->
+                    <template v-else>
+                        <div class="por">
+                            <adoption :program="nowNPC.program" @adopted="showSysTxt"></adoption>
                             <close-btn now-show="popup" @switch-popup="switchPopup"></close-btn>
                         </div>
-                    </div>
+                    </template>
                 </div>
             </div>
         </transition>
@@ -132,6 +135,7 @@
     <script src="src/js/components/UserState.js"></script>
     <script src="src/js/components/PersonalPage.js"></script>
     <script src="src/js/components/House.js"></script>
+    <script src="src/js/components/Adoption.js"></script>
     <script src="src/js/components/Parts.js"></script>
     <script src="src/js/components/Enter.js"></script>
     <script src="src/js/components/Header.js"></script>

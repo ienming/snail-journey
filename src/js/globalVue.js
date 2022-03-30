@@ -7,7 +7,7 @@ const vm = new Vue({
             showPopup: false,
             showPersonalPage: false,
             showHouse: false,
-            houseName: '',
+            houseName: "",
             nowAns: true
         },
         sys: {
@@ -31,9 +31,9 @@ const vm = new Vue({
                 block2: ['snail_cinnamon', 'snail_scone', 'snail_dorayaki', 'snail_greenbean'],
                 block3: ['board', 'bike'],
             },
-            // map: {},
             descrips: {}
         },
+        adoptions: [],
         user: {
             missions: {
                 mission1: [],
@@ -257,7 +257,6 @@ const vm = new Vue({
         },
         switchProgram() {
             this.showProgram = true
-            this.nowSpeak = this.nowNPC.program.descrip
         },
         startGame() {
             this.interaction.nowLoading = false
@@ -330,7 +329,7 @@ const vm = new Vue({
         storageData(key, value) {
             localStorage.setItem(key, value)
         },
-        showSysTxt(txt, abs, imgUrl) {
+        showSysTxt(txt, abs='', imgUrl='') {
             this.sys.popup = true
             this.sys.say = txt
             this.sys.abs = abs

@@ -20,10 +20,11 @@ const PersonalPage = {
         </template>
         <display-shelf v-if="displayShelfHasShown"
             :userGotAchievements="userGotAchievements"
+            :userAdoptions="userAdoptions"
             @switch-display-shelf="displayShelfHasShown = !displayShelfHasShown"></display-shelf>
     </div>
     `,
-    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures'],
+    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions'],
     mounted(){
         this.init()
     },
@@ -336,8 +337,9 @@ const DisplayShelf = {
                 <div class="wrapper">
                     <div class="popup t-a-c w-md-50">
                         <section>
-                            <h3 class="mb-1">探索區域徽章</h3>
-                            <div class="d-flex jcc">
+                            <h3>探索區域徽章</h3>
+                            <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有探索完的區域喔。</br>快去找蝸牛們聊天、認識一下蝸牛綠洲吧！</p>
+                            <div class="d-flex jcc mt-1">
                                 <div class="img-container badge"
                                     :class="{ locked: !el.achieved }"
                                     :data-descrip="el.descrip"
@@ -347,12 +349,13 @@ const DisplayShelf = {
                             </div>
                         </section>
                         <section class="mt-2">
-                            <h3 class="mb-1">認養蝸牛綠洲議題</h3>
-                            <div class="d-flex jcc">
+                            <h3>認養蝸牛綠洲議題</h3>
+                            <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
+                            <div class="d-flex jcc mt-1">
                                 <div class="img-container badge"
-                                    :class="{ locked: !el.achieved }"
-                                    :data-descrip="el.descrip"
-                                    v-for="el of userAchieved">
+                                    :class="{ locked: !el.adopted }"
+                                    :data-descrip="el.intro"
+                                    v-for="el of userAdopted">
                                     <img src="./src/img/board.png" alt="" />
                                 </div>
                             </div>
@@ -363,13 +366,17 @@ const DisplayShelf = {
             </div>
         </transition>
     `,
-    props: ['userGotAchievements'],
+    props: ['userGotAchievements','userAdoptions'],
     created(){
         this.allAchievements = {...vm.$data.achievement.descrips}
+        this.allAdoptions = [...vm.$data.adoptions]
     },
     data(){
         return {
-            allAchievements: {}
+            allAchievements: {},
+            allAdoptions: [],
+            achievedNum: 0,
+            adoptedNum: 0
         }
     },
     computed: {
@@ -379,12 +386,30 @@ const DisplayShelf = {
                 obj[prop] = {}
                 if (this.userGotAchievements[prop].indexOf('finished') !== -1){
                     obj[prop].achieved = true
+                    this.achievedNum ++
                 }else{
                     obj[prop].achieved = false
                 }
                 obj[prop].descrip = this.allAchievements[prop]
             }
             return obj
+        },
+        userAdopted(){
+            let arr = [...this.allAdoptions]
+            arr.forEach(el=>{
+                if (this.userAdoptions.findIndex(adp=>el.title == adp) !== -1){
+                    el.adopted = true
+                    this.adoptedNum ++
+                }else{
+                    el.adopted = false
+                }
+            })
+            return arr
+        },
+        achievedEmpty(){
+            if (this.achievedNum !== 0){
+                return false
+            }else return true
         }
     }
 }

@@ -3571,7 +3571,7 @@ footer {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: 999;
   background-color: #a87561; }
   #loading button {
     cursor: pointer; }
@@ -3628,7 +3628,7 @@ footer {
     max-width: 80%; }
   .img-container.locked {
     opacity: 0.8;
-    filter: grayscale(80%); }
+    filter: grayscale(100%); }
 
 .badge {
   position: relative; }
@@ -3774,7 +3774,7 @@ footer {
       pointer-events: none;
       opacity: .8;
       color: #333333;
-      filter: grayscale(80%); }
+      filter: grayscale(100%); }
 
 #buyConfirm {
   position: fixed;

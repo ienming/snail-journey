@@ -1,3 +1,40 @@
+const Adoption = {
+    template: `
+        <div class="popup adoption">
+            <p v-html="program.descrip"></p>
+            <div class="mt-1">
+            任務獎勵：
+            <p>???</p>
+            </div>
+            <basic-link class="mt-1" :title="program.linkName" :url="program.link"></basic-link>
+            <div @click="adopt" class="mt-2 my-btn">認養任務！</div>
+        </div>
+    `,
+    props: ['program'],
+    data(){
+        return {}
+    },
+    methods: {
+        adopt(){
+            //判斷是否已經認養過
+            if (vm.$data.user.adoptions.every(val => val !== this.program.title)){
+                if (this.program.subTitle){
+                    //打事件到vm 呼叫 showsys()
+                    this.$emit(`adopted`, `已認養方案：「${this.program.subTitle}：${this.program.title}」`)
+                }
+                else{
+                    this.$emit(`adopted`, `已認養方案：「${this.program.title}」`)
+                }
+                //把認養的資料儲存
+                vm.$data.user.adoptions.push(this.program.title)
+            }else{
+                this.$emit(`adopted`, `已經認養過方案：「${this.program.title}」囉～`)
+            }
+        },
+    }
+}
+Vue.component('adoption', Adoption)
+
 // const Adoption = {
 //     template: `
 //         <div class="popup adoption">
