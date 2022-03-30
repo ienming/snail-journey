@@ -4,7 +4,7 @@ const Enter = {
             <div id="loading" v-if="loading">
                 <div class="wrapper">
                     <button>
-                        <h1 @click="$emit('start-game')">
+                        <h1 @click="startGame">
                             START
                         </h1>
                     </button>
@@ -12,11 +12,15 @@ const Enter = {
             </div>
         </transition>
     `,
-    props: {
-        loading: Boolean
-    },
+    props: ['loading', 'bgSound'],
     data(){
         return {}
+    },
+    methods: {
+        startGame(){
+            this.$emit('start-game')
+            this.bgSound.play()
+        }
     }
 }
 Vue.component("enter", Enter)

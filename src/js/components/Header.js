@@ -11,6 +11,7 @@ const Header = {
             </nav>
         </header>
     `,
+    props: ['bgSound'],
     data(){
         let pages = [
             {
@@ -32,6 +33,13 @@ const Header = {
             if (name == 'clearData'){
                 localStorage.clear()
                 window.location.reload()
+            }
+            if (name == 'toggleBgMusic'){
+                if(this.bgSound.isPlaying){
+                    this.bgSound.stop()
+                }else{
+                    this.bgSound.play()
+                }
             }
         }
     }

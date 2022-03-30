@@ -14,6 +14,7 @@ const vm = new Vue({
             popup: false,
             say: ""
         },
+        bgSound: undefined,
         dailyTrashes: [],
         dailyGuys: [],
         adoptable: false,
@@ -223,11 +224,12 @@ const vm = new Vue({
     },
     methods: {
         autoBgMusic(){
-            PIXI.sound.Sound.from({
+            let sound = PIXI.sound.Sound.from({
                 url: 'src/sounds/examples_resources_loops_loop3.mp3',
-                autoPlay: true,
+                autoPlay: false,
                 loop: true
             });
+            this.bgSound = sound
         },
         switchPopup() {
             this.interaction.showPopup = !this.interaction.showPopup

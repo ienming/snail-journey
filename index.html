@@ -14,11 +14,11 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v13.0&appId=405617263518270&autoLogAppEvents=1" nonce="PtvRz5Pa"></script>
     <div id="app">
         <!-- Header -->
-        <my-header @switch-personalpage="switchPersonalPage"></my-header>
+        <my-header @switch-personalpage="switchPersonalPage" :bg-sound="bgSound"></my-header>
         <!-- 測試使用者狀態 -->
         <user-state :achievements="user.achievements" :user-achieved="userGotAchievements"></user-state>
         <!-- 進場動畫 -->
-        <enter :loading="interaction.nowLoading" @start-game="startGame"></enter>
+        <enter :loading="interaction.nowLoading" :bg-sound="bgSound" @start-game="startGame"></enter>
         <!-- 主要遊戲畫面 -->
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
