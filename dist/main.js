@@ -432,7 +432,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"clickSoundEffect\": () => (/* binding */ clickSoundEffect)\n/* harmony export */ });\nfunction clickSoundEffect(){\n    PIXI.sound.Sound.from({\n        url: 'src/sounds/examples_resources_bird.mp3',\n        preload: true,\n        loaded: function(err, sound){\n            sound.play()\n        }\n    })\n}\n\n\n\n//# sourceURL=webpack:///./src/js/modules/sound.mjs?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"clickSoundEffect\": () => (/* binding */ clickSoundEffect)\n/* harmony export */ });\nlet soundEffect\nPIXI.sound.Sound.from({\n    url: 'src/sounds/examples_resources_bird.mp3',\n    preload: true,\n    loaded: function(err, sound){\n        // sound.play()\n        soundEffect = sound\n    }\n})\n\nfunction clickSoundEffect(){\n    soundEffect.play()\n}\n\n\n\n//# sourceURL=webpack:///./src/js/modules/sound.mjs?");
 
 /***/ })
 
