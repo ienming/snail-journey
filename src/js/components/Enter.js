@@ -38,6 +38,10 @@ const NoviceTeach = {
                                 <p>{{teach.content}}</p>
                             </div>
                         </transition-group>
+                        <div class="d-flex jcb mt-1">
+                            <button class="small t-c t-w-6" @click="moveStep('prev')">前一個</button>
+                            <button class="small t-c t-w-6" @click="moveStep('next')">下一個</button>
+                        </div>
                         <nav>
                             <ul class="carousel-lids">
                                 <li v-for="(num,id) of teaches" :class="id == nowStep ? 'active' : '' " @click="changeStep(id)"></li>
@@ -73,6 +77,21 @@ const NoviceTeach = {
         },
         changeStep(id){
             this.nowStep = id
+        },
+        moveStep(str){
+            if (str == 'prev'){
+                if (this.nowStep > 0){
+                    this.nowStep --
+                }else{
+                    this.nowStep = this.teaches.length-1
+                }
+            }else if (str == 'next'){
+                if (this.nowStep < this.teaches.length-1){
+                    this.nowStep ++
+                }else{
+                    this.nowStep = 0
+                }
+            }
         }
     }
 }

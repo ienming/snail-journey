@@ -350,7 +350,7 @@ const DisplayShelf = {
                         </section>
                         <section class="mt-2">
                             <h3>認養蝸牛綠洲議題</h3>
-                            <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
+                            <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
                             <div class="d-flex jcc mt-1">
                                 <div class="img-container badge"
                                     :class="{ locked: !el.adopted }"
@@ -408,6 +408,11 @@ const DisplayShelf = {
         },
         achievedEmpty(){
             if (this.achievedNum !== 0){
+                return false
+            }else return true
+        },
+        adoptedEmpty(){
+            if (this.adoptedNum !== 0){
                 return false
             }else return true
         }
