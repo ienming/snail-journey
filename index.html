@@ -19,6 +19,8 @@
         <user-state :achievements="user.achievements" :user-achieved="userGotAchievements"></user-state>
         <!-- 進場動畫 -->
         <enter :loading="interaction.nowLoading" :bg-sound="bgSound" @start-game="startGame"></enter>
+        <!-- 新手教學 -->
+        <novice-teach v-if="noviceShouldShow"></novice-teach>
         <!-- 主要遊戲畫面 -->
         <div id="canvasContainer"></div>
         <!-- Personal Page -->

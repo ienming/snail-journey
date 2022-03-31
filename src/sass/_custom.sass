@@ -262,3 +262,20 @@
             background-color: #e5e1ce
 .my-inpt
     background-color: $lightBg
+
+// 導引卡片
+ul.carousel-lids
+    display: flex
+    justify-content: center
+    gap: 8px
+    li
+        +size(12px)
+        border-radius: 50%
+        background-color: $tertiaryGrey
+        +basicTransition()
+        &:hover
+            background-color: $darkGrey
+        &.active
+            background-color: $accent
+        &.active:hover
+            background-color: $accentDark

@@ -263,8 +263,8 @@ function checkJudged(tool){
                     scale: 0
                 },
                 onComplete(){
-                    respondSp.destroy()
                     globalGuySprites.splice(globalGuySprites.findIndex(el=>el.name == beingJudged), 1) //把用來比對撞擊的資料也清除
+                    respondSp.destroy()
                 }
             })
         }, 1500)

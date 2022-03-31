@@ -54,6 +54,16 @@ const vm = new Vue({
         userRecord: {}
     },
     computed: {
+        noviceShouldShow(){
+            if (Object.values(this.userRecord).length <= 2){
+                Object.values(this.userRecord).forEach(el => {
+                    if (el.length !== 0){
+                        return false
+                    }
+                })
+                return true
+            }else return false
+        },
         itemSpeakImgSrc() {
             if (this.itemSpeak !== undefined) {
                 return `src/img/${this.itemSpeak}.png`
