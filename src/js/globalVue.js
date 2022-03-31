@@ -245,7 +245,7 @@ const vm = new Vue({
             this.interaction.showPopup = !this.interaction.showPopup
             this.npcShowLink = {}
             //如果點到講廢話的NPC然後關閉視窗
-            if (this.nowNPC.enterGame !== 1 && this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.itemSpeak) == -1) {
+            if (this.nowNPC.enterGame !== 1 && this.nowNPC.mission && this.user.achievements[`block${this.nowNPC.mission}`].indexOf(this.itemSpeak) == -1) {
                 this.user.achievements[`block${this.nowNPC.mission}`].push(this.itemSpeak)
             }
             //如果遊戲講話到一半的NPC被關閉
@@ -325,7 +325,7 @@ const vm = new Vue({
                         this.checkBlockFinished()
                     }
                 } else this.switchPopup()
-            } else { //廢話黨
+            } else if (this.nowNPC.mission) { //廢話黨
                 let preparedName = this.itemSpeak
                 if (this.user.achievements[`block${this.nowNPC.mission}`].indexOf(preparedName) == -1) {
                     this.user.achievements[`block${this.nowNPC.mission}`].push(preparedName)
@@ -333,6 +333,9 @@ const vm = new Vue({
                     // 判斷對話完後自己這區有沒有完成
                     this.checkBlockFinished()
                 }
+                this.switchPopup()
+            } else {
+                // 沒有加入探索的蝸牛們
                 this.switchPopup()
             }
         },

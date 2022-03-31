@@ -1,6 +1,6 @@
 import {scale, getRandom } from './global.mjs'
 import {clickSoundEffect} from './sound.mjs'
-import {fetchNPC, normalHouses} from './data.mjs'
+import {fetchNPC, normalHouses, fetchInfo} from './data.mjs'
 import { initMission } from './gameExplore.mjs'
 import { npcContainer } from './global.mjs'
 import { mapContainer } from './global.mjs'
@@ -17,6 +17,24 @@ function createNPC(){
         }
     }
     waitNPC()
+}
+
+function createInfo(){
+    let res, infoObj
+    // create Info object
+    infoObj = {
+        name: 'snail_info',
+        x: -1000,
+        y: 0,
+        func: true,
+        speaks: ['我是資訊蝸牛，有什麼問題想問的嗎？']
+    }
+    let waitInfo = async ()=>{
+        res = await fetchInfo()
+        infoObj.qas = res
+        createItem(infoObj)
+    }
+    waitInfo()
 }
 
 function createNormalHouse(){
@@ -126,4 +144,4 @@ function speakRandomly(el){
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
 }
 
-export {createNPC, createNormalHouse, createItem, globalGuySprites}
+export {createNPC, createNormalHouse, createItem, createInfo, globalGuySprites}

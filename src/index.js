@@ -14,9 +14,11 @@ import {
 import { fetchFurnitures, fetchAchievements } from './js/modules/data.mjs';
 import { startDailyTrash } from './js/modules/gameTrash.mjs';
 import { startDailyJudge } from './js/modules/gameGuy.mjs'
+import { createInfo } from './js/modules/npc.mjs';
 
 createMap();
 createNPC();
+createInfo();
 window.setTimeout(()=>{
     createNormalHouse();
     startDailyTrash();

@@ -47,7 +47,7 @@
                     <!-- 一般對話 -->
                     <template v-if="!showProgram">
                         <div key="dialogue" class="d-flex">
-                            <div class="popup dialogue">
+                            <div class="popup dialogue" :style="nowNPC && nowNPC.func ? { width: '40vw' } : ''">
                                 <!-- 不管怎樣都會有的見面招呼語 -->
                                 <div>
                                     <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">
@@ -64,6 +64,10 @@
                                             <p v-if="npcShowLink.url">
                                                 <basic-link :title="npcShowLink.name" :url="npcShowLink.url"></basic-link>
                                             </p>
+                                            <!-- 資訊蝸牛 -->
+                                            <div v-if="nowNPC && nowNPC.name == 'snail_info'">
+                                                <accordion :accordions="nowNPC.qas" class="pt-1"></accordion>
+                                            </div>
                                             <!-- 有認養行動案就顯示 -->
                                             <span v-if="adoptable" @click="switchProgram" class="t-z-1 t-c-g">認養任務</span>
                                             <!-- 關閉對話 -->

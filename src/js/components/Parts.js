@@ -206,3 +206,39 @@ const InputText = {
 }
 
 Vue.component('input-text', InputText)
+
+const Accordion = {
+    template: `
+        <section class="scroll">
+            <div class="my-accordion" v-for="(accordion, idx) of accordions" @click="switchAccordion(idx, $event)">
+                <div class="accordion-header d-flex jcb aic">
+                    <h4>{{accordion.title}}</h4>
+                    <div class="plus-icon"><span></span><span></span></div>
+                </div>
+                <div class="accordion-body" @click.stop>
+                    <p v-html="accordion.content"></p>
+                </div>
+            </div>
+        </section>
+    `,
+    props: ['accordions'],
+    data(){
+        return {}
+    },
+    methods: {
+        switchAccordion: function(id, evt){
+            let el = evt.currentTarget
+            let contentDiv = el.querySelector(".accordion-body")
+            let content = contentDiv.querySelector("p")
+            let resultHeight = content.clientHeight
+            if (el.classList.contains("is-open")){
+                el.classList.remove("is-open")
+                contentDiv.style.height = '0px'
+            }else{
+                el.classList.add("is-open")
+                contentDiv.style.height = resultHeight+'px'
+            }
+        }
+    }
+}
+Vue.component('accordion', Accordion)

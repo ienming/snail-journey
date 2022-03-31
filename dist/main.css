@@ -3806,8 +3806,6 @@ footer {
 .comment-lists {
   display: flex;
   flex-direction: column;
-  max-height: 50vh;
-  overflow: scroll;
   padding-top: 16px; }
 
 .comment {
@@ -3847,6 +3845,10 @@ ul.carousel-lids {
       background-color: #c09079; }
     ul.carousel-lids li.active:hover {
       background-color: #a87561; }
+
+.scroll {
+  max-height: 50vh;
+  overflow: scroll; }
 
 html, body {
   width: 100%;

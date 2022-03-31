@@ -214,7 +214,7 @@ const CommentBoard = {
                                 </div>
                             </div>
                         </form>
-                        <div class="comment-lists">
+                        <div class="comment-lists scroll">
                             <div class="comment" v-for="comment of comments">
                                 <div class="avatar">
                                     <img src="./src/img/snail_oasis.png" />

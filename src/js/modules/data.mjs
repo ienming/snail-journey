@@ -228,6 +228,42 @@ let trashes = [
     }
 ]
 
+//info data
+let fetchInfo = async ()=>{
+    let response;
+
+    try {
+        response = await axios
+            .get("src/data/data_info_npc.csv", {})
+            console.log("async completed get INFO data")
+    } catch (e) {
+        // catch error
+        throw new Error(e.message)
+    }
+
+    if (response.data){
+        let rows = response.data.split("\n");
+        let output = [];
+        let keyMap = {};
+        for (let i =0; i<rows[0].length; i++){
+            if (rows[0].split(",")[i] !== undefined){
+                keyMap[rows[0].split(",")[i].trim()] = i
+            }
+        }
+        rows.shift();
+        rows.forEach((el) => {
+            let d = el.split(",");
+            let obj = {
+                title: d[keyMap.title],
+                content: d[keyMap.content]
+            };
+            output.push(obj)
+        })
+        return output
+    }else return
+}
+
+
 //all furnitures
 function fetchFurnitures(){
     let response = [];
@@ -288,4 +324,4 @@ function fetchAchievements(){
         })
 }
 
-export { fetchNPC, normalHouses, fetchFurnitures, trashes, fetchGuys, fetchAchievements };
+export { fetchNPC, normalHouses, fetchFurnitures, trashes, fetchGuys, fetchAchievements, fetchInfo };
