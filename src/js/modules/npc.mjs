@@ -1,6 +1,6 @@
-import {scale, getRandom } from './global.mjs'
-import {clickSoundEffect} from './sound.mjs'
-import {fetchNPC, normalHouses, fetchInfo} from './data.mjs'
+import { scale, getRandom } from './global.mjs'
+import { clickSoundEffect } from './sound.mjs'
+import { fetchNPC, normalHouses, fetchInfo } from './data.mjs'
 import { initMission } from './gameExplore.mjs'
 import { npcContainer } from './global.mjs'
 import { mapContainer } from './global.mjs'
@@ -73,7 +73,9 @@ function createItem(el){
                     // 把是誰的房子這個資料傳出去，準備給 component 接進去
                     vm.$data.interaction.showHouse = true
                     vm.$data.interaction.houseName = el.name
-                }else{
+                } else if (el.personal){
+                    vm.$data.interaction.showPersonalPage = true
+                } else {
                     vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
                     vm.$data.itemSpeak = el.name
                     // 抽籤決定 NPC 要講哪一句話

@@ -37,6 +37,10 @@ let fetchNPC = async () => {
             if (d[keyMap.game_speak_n]){
                 obj.gameSpeakN = d[keyMap.game_speak_n]
             }
+            // 是自己的家裡
+            if (d[keyMap.personal]){
+                obj.personal = true
+            }
             // 有房子可以進去
             if (d[keyMap.house]){
                 obj.house = d[keyMap.house]
