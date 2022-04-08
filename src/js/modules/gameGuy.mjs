@@ -139,13 +139,45 @@ function guySay(guy, x, y, txt = '沒有說話'){
     while(guySayContainer.children.length > 0){
         guySayContainer.removeChild(guySayContainer.children[0])
     }
+    // 說話的內容
+    let arr = [], step = 10, line = 0, padding = 12, fz = 16, r=16
+    for (let i=0; i<txt.length; i+=step){
+        arr.push(txt.slice(i, i+step))
+        line ++
+    }
+    let str = arr.join("\n")
     const style = new PIXI.TextStyle({
-        fontSize: 16
+        fontSize: fz
     })
-    let said = new PIXI.Text(txt, style)
-    said.x = x
-    said.y = y
+    let said = new PIXI.Text(str, style)
+    said.x = padding
+    said.y = padding
+    // 對話框
+    let rect = new PIXI.Graphics()
+    let w, h
+    if (line == 1){
+        w = fz*txt.length+padding*2
+    }else {
+        w = fz*step+padding*2
+    }
+    h = line*(fz*1.25)+padding*2
+    rect.beginFill(0xffffff)
+    rect.drawRoundedRect(0, 0, w, h, r)
+    rect.endFill()
+    guySayContainer.addChild(rect)
     guySayContainer.addChild(said)
+    // 動畫
+    guySayContainer.x = x
+    guySayContainer.y = y
+    guySayContainer.alpha = 0
+    guySayContainer.scale = 0
+    guySayContainer.pivot.set(-20, 5)
+    gsap.to(guySayContainer, .5, {
+        pixi: {
+            scale: 1,
+            alpha: 1,
+        }
+    })
 }
 
 function cleanAllGuysSaid(){
@@ -213,7 +245,7 @@ function checkJudged(tool){
         }
     }
     if (beingJudged !== ''){
-        console.log(`給${beingJudged +' '+ tool.name}的評價了`)
+        // console.log(`給${beingJudged +' '+ tool.name}的評價了`)
         // 儲存資料給 Vue watch 記錄今天的 judges 已經結束了
         vm.$data.user.judges.push(beingJudged)
         gsap.to(tool, .5, {
@@ -239,7 +271,7 @@ function checkJudged(tool){
         switch (tool.name){
             case 'great':
                 // 在這裡判斷是否要給獎勵
-                guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被讚了！`)
+                // guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被讚了！`)
                 if (beingJudged.indexOf("good") !== -1){
                     let str = "被你讚美的他很開心，之後也一定會持續替綠洲做好事的～"
                     let num = 5
@@ -247,7 +279,7 @@ function checkJudged(tool){
                 }
                 break;
             case 'bad':
-                guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被罵了......`)
+                // guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被罵了......`)
                 if (beingJudged.indexOf("bad") !== -1){
                     let str = "給臭傢伙一點教訓了！哇哈哈"
                     let num = 5

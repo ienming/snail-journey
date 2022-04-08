@@ -1,6 +1,7 @@
 ﻿name,x,y,mission,personal,house,adoptable,program_descrip,program_linkName,program_link,program_subtitle,program_title,program_intro,program_goal,program_keywords,action_imgs,action_titles,action_intros,enter_game,game_speaks,game_option,game_img,game_speak_n,link_show,link_names,links,speaks
-bike,-650,-300,3,1,,,,,,,,,,,,,,,,,,,,,,腳踏車腳踏車^啊哈！
-board,-900,100,3,,,,,,,,,,,,,,,,,,,,,,,
+house_personal,-650,-300,,1,,,,,,,,,,,,,,,,,,,,,,我的房間
+bike,-1000,-300,,,,,,,,,,,,,,,,,,,,,,,,
+board,-900,100,,,,,,,,,,,,,,,,,,,,,,,,
 snail_mryeh_house,850,-200,1,,1,,,,,,,,,,,,,,,,,,,,,這是個適於人們，做夢、幹活、戀愛、結婚、悠然過日子的好地方
 snail_book,600,-360,1,,,,,,,,,,,,,,,,,,,,,,,每個人都在這裡寫故事，好看得很哩
 snail_oasis,-210,-320,1,,,,,,,,,,,,,,,1,你知道蝸牛巷的由來嗎？^ 因為很多蝸牛！+ 葉石濤的《往事如雲》Y^台灣文學地景——就是蝸牛巷！原來如此！^那和綠洲又有什麼關係？^車子開不進來+空間位置鬧中取靜，我們的心也是Y^哇～超放鬆的，哪裡能有更多「當地體驗＋知識補給」？^旁邊的愛意特點心店有超Q的展覽、或徒步6分鐘到台灣文學館，一起展開台南深度藝文之旅！,0^1^0^0^1^0^0,,不對噢......,0^0^0^0^0^0^1,葉石濤文學紀念館,https://ystlmm-culture.tainan.gov.tw/,喧囂城市中心的寧靜巷弄，這裡就像是城中的心靈綠洲

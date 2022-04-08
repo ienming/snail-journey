@@ -15,9 +15,6 @@ const Header = {
     data(){
         let pages = [
             {
-                name: "personalpage",
-                src: "./src/img/icons/menu.png"
-            },{
                 name: "toggleBgMusic"
             },{
                 name: "clearData"
