@@ -1,6 +1,7 @@
 const Header = {
     template: `
         <header class="my-header">
+            <img src="./src/img/landmark.png" class="logo"/>
             <nav>
                 <ul>
                     <li v-for="page of pages" @click="switchPage(page.name)">

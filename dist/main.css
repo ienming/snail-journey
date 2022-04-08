@@ -3128,6 +3128,8 @@ footer {
     .my-header {
       top: 0; } }
   .my-header ul {
+    position: absolute;
+    right: 0;
     display: flex;
     justify-content: flex-end; }
   .my-header li {
@@ -3137,6 +3139,11 @@ footer {
     margin: 0 24px; }
     .my-header li:hover {
       cursor: pointer; }
+  .my-header .logo {
+    max-width: 150px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); }
 
 /* table  */
 .my-table-container {

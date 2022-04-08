@@ -27,9 +27,9 @@ const vm = new Vue({
         npcShowLink: {},
         achievement: {
             map: {
-                block1: ['snail_mryeh', 'snail_oasis', 'snail_text', 'snail_book', 'snail_paint'],
-                block2: ['snail_cinnamon', 'snail_scone', 'snail_dorayaki', 'snail_greenbean'],
-                block3: ['board', 'bike'],
+                block1: [],
+                block2: [],
+                block3: [],
             },
             descrips: {}
         },
@@ -105,6 +105,9 @@ const vm = new Vue({
                                 break;
                             case 2:
                                 blockName = "慢活甜點區"
+                                break;
+                            case 3:
+                                blockName = "職人區"
                                 break;
                         }
                         output[`block${i + 1}`] = `${blockName}finished！`
@@ -366,6 +369,8 @@ const vm = new Vue({
                         case 2:
                             output = "慢活甜點區"
                             break;
+                        case 3:
+                            output = "職人區"
                     }
                     this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '解鎖家具')
                 }, 800)
