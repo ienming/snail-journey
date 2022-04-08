@@ -97,8 +97,8 @@ let fetchNPC = async () => {
                 obj.gameOptions = gameOptionArr.map(el=>el*1)
             }
             // NPC 遊戲對應的圖片顯示
-            if (d[keyMap.game_img]){
-                let gameImgArr = d[keyMap.game_img].trim().split("^")
+            if (d[keyMap.img_show]){
+                let gameImgArr = d[keyMap.img_show].trim().split("^")
                 obj.gameImgs = gameImgArr.map(el=>el*1)
             }
             // NPC 講的廢話

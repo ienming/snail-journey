@@ -8,6 +8,7 @@ let trashContainer = new PIXI.Container()
 trashContainer.name = 'trashesContainer'
 trashContainer.x = -window.innerWidth/2
 trashContainer.y = -window.innerHeight/2
+let trashesMap = ['trash_bottle', 'trash_paper', 'trash_pet']
 function startDailyTrash(){
     // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
     let recordTrashes = vm.$data.userRecord.gotTrashes
@@ -71,7 +72,8 @@ function generateTrash(){
 }
 
 function drawTrash(trash){
-    let trashTexture = new PIXI.Texture.from("./src/img/board.png")
+    let trashName = trashesMap[getRandom(0,trashesMap.length-1)]
+    let trashTexture = new PIXI.Texture.from(`./src/img/${trashName}.png`)
     let trashSp = new PIXI.Sprite(trashTexture)
     let scale = .1;
     trashSp.x = trash.x
@@ -79,6 +81,14 @@ function drawTrash(trash){
     trashSp.scale.set(scale)
     trashSp.interactive = true
     trashSp.buttonMode = true
+    gsap.to(trashSp, 1, {
+        pixi: {
+            y: trash.y-10
+        },
+        yoyo: true,
+        repeat: -1,
+        delay: Math.random()
+    })
     trashSp.on("pointerdown", (el)=>{
         console.log("撿到垃圾了")
         vm.$data.user.gotTrashes.push(trash.id) //讓 Vue watch 撿垃圾的資料

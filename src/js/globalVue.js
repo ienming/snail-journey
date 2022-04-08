@@ -302,7 +302,8 @@ const vm = new Vue({
                             this.nowSpeak = this.nowNPC.gameSpeaks[this.finishedProgress]
                             this.showMissionBtn = undefined
                         }
-                        if (this.nowNPC.link.shows && this.nowNPC.link.shows[this.finishedProgress]) { // 判斷是不是有連結要顯示
+                        // 判斷是不是有連結要顯示
+                        if (this.nowNPC.link.shows && this.nowNPC.link.shows[this.finishedProgress]) {
                             let linkNum = 0
                             for (let i = 0; i < this.finishedProgress; i++) {
                                 if (this.nowNPC.link.shows[i] == 1) {
@@ -318,7 +319,20 @@ const vm = new Vue({
                         } else {
                             this.npcShowLink = {} //關閉顯示外部連結
                         }
-                        if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) {// 判斷是不是倒數
+                        // 判斷是否要換說話的圖片
+                        if (this.nowNPC.gameImgs && this.nowNPC.gameImgs[this.finishedProgress]){
+                            this.itemSpeak = "snail_hito"
+                        }else{
+                            let origin
+                            if (this.nowNPC.name.indexOf('house') !== -1){
+                                origin = this.nowNPC.name.slice(0,-6)
+                            }else {
+                                origin = this.nowNPC.name
+                            }
+                            this.itemSpeak = origin
+                        }
+                        // 判斷是不是倒數
+                        if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) {
                             this.btnTxt = "關閉"
                         }
                     } else if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) { //正要結束
