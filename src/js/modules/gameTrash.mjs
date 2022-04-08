@@ -90,7 +90,7 @@ function drawTrash(trash){
         delay: Math.random()
     })
     trashSp.on("pointerdown", (el)=>{
-        console.log("撿到垃圾了")
+        // console.log("撿到垃圾了")
         vm.$data.user.gotTrashes.push(trash.id) //讓 Vue watch 撿垃圾的資料
         //做動畫變小消失
         // gsap.to(el.target, .2, {

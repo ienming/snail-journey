@@ -3,18 +3,25 @@ const Enter = {
         <transition name="fade">
             <div id="loading" v-if="loading">
                 <div class="wrapper">
-                    <button>
-                        <h1 @click="startGame">
-                            START
-                        </h1>
-                    </button>
+                    <div class="d-flex flex-column">
+                        <img src="./src/img/landmark.png" class="logo"/>
+                        <div v-if="loaded == false" class="t-a-c mt-2">
+                            <img src="./src/img/icons/loading.png" class="icon"/>
+                            <h4>???%</h4>
+                        </div>
+                        <button v-else class="mt-2" @click="startGame">
+                            <h1>進入綠洲</h1>
+                        </button>
+                    </div>
                 </div>
             </div>
         </transition>
     `,
     props: ['loading', 'bgSound'],
     data(){
-        return {}
+        return {
+            loaded: true
+        }
     },
     methods: {
         startGame(){

@@ -3122,6 +3122,7 @@ footer {
   position: fixed;
   top: 0;
   z-index: 98;
+  padding: 32px;
   width: 100vw;
   transition: 1s cubic-bezier(0.22, 1, 0.36, 1); }
   @media (min-width: 768px) {
@@ -3580,6 +3581,8 @@ footer {
   background-color: #a87561; }
   #loading button {
     cursor: pointer; }
+  #loading .logo {
+    max-width: 250px; }
 
 .popup {
   background-color: #f3f1e8;
