@@ -140,7 +140,7 @@ function guySay(guy, x, y, txt = '沒有說話'){
         guySayContainer.removeChild(guySayContainer.children[0])
     }
     // 說話的內容
-    let arr = [], step = 10, line = 0, padding = 12, fz = 16, r=16
+    let arr = [], step = 12, line = 0, padding = 12, fz = 16, r=16
     for (let i=0; i<txt.length; i+=step){
         arr.push(txt.slice(i, i+step))
         line ++
@@ -161,7 +161,7 @@ function guySay(guy, x, y, txt = '沒有說話'){
         w = fz*step+padding*2
     }
     h = line*(fz*1.25)+padding*2
-    rect.beginFill(0xffffff)
+    rect.beginFill(0xf4f3ed)
     rect.drawRoundedRect(0, 0, w, h, r)
     rect.endFill()
     guySayContainer.addChild(rect)
@@ -172,7 +172,7 @@ function guySay(guy, x, y, txt = '沒有說話'){
     guySayContainer.alpha = 0
     guySayContainer.scale = 0
     guySayContainer.pivot.set(-20, 5)
-    gsap.to(guySayContainer, .5, {
+    gsap.to(guySayContainer, .4, {
         pixi: {
             scale: 1,
             alpha: 1,
