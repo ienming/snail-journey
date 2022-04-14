@@ -7,7 +7,33 @@
 
 // header
 .my-header
+    li
+        position: relative
+        cursor: pointer
+        &::after
+            content: attr(data-text)
+            display: block
+            position: absolute
+            bottom: -36px
+            left: 50%
+            transform: translateX(-50%)
+            background-color: $darkYellowGreen
+            color: $lightBg
+            padding: .25rem .75rem
+            border-radius: 50px
+            opacity: 0
+            transition: .3s ease
+            pointer-events: none
+            font-size: 14px
+            width: max-content
+            +basicTransition()
+        &:hover
+            .icon
+                transform: scale(1.2) rotate(15deg)
+            &::after
+                opacity: 1
     .icon
+        +basicTransition()
         width: 36px
 
 // global game UI

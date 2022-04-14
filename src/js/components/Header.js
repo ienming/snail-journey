@@ -4,7 +4,7 @@ const Header = {
             <img src="./src/img/landmark.png" class="logo"/>
             <nav>
                 <ul>
-                    <li v-for="page of pages" @click="switchPage(page.name)">
+                    <li v-for="page of pages" @click="switchPage(page.name)" :data-text="page.seudo">
                         <img :src="page.src" class="icon"/>
                         <span v-if="!page.src">{{page.name}}</span>
                     </li>
@@ -17,9 +17,11 @@ const Header = {
         let pages = [
             {
                 src: "./src/img/icons/sound_ban.png",
-                name: "toggleMusic"
+                name: "toggleMusic",
+                seudo: "切換背景音樂"
             },{
-                name: "clearData"
+                name: "clearData",
+                seudo: "清除資料（測試用）"
             }
         ]
         return {
