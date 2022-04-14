@@ -4,7 +4,12 @@ const Adoption = {
             <p v-html="program.descrip"></p>
             <div class="mt-1">
             任務獎勵：
-            <p>???</p>
+            <div class="d-flex mission-rwd">
+                <figure>
+                    <img src="./src/img/coin.png" />
+                    <p>???</p>
+                </figure>
+            </div>
             </div>
             <basic-link class="mt-1" :title="program.linkName" :url="program.link"></basic-link>
             <div @click="adopt" class="mt-2 my-btn">認養任務！</div>

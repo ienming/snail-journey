@@ -24,8 +24,8 @@ function createInfo(){
     // create Info object
     infoObj = {
         name: 'snail_info',
-        x: -1000,
-        y: 0,
+        x: -1500,
+        y: -800,
         func: true,
         speaks: ['我是資訊蝸牛，有什麼問題想問的嗎？']
     }

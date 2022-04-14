@@ -3565,6 +3565,9 @@ footer {
   bottom: 0;
   z-index: 97; }
 
+.my-header .icon {
+  width: 36px; }
+
 .game-ui.icon {
   width: 60px;
   cursor: pointer;
@@ -3812,6 +3815,9 @@ footer {
       border-radius: 50%;
       overflow: hidden;
       border: 1px solid #000; }
+
+.mission-rwd img {
+  width: 68px; }
 
 .comment-lists {
   display: flex;

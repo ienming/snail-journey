@@ -6,7 +6,7 @@ const Header = {
                 <ul>
                     <li v-for="page of pages" @click="switchPage(page.name)">
                         <img :src="page.src" class="icon"/>
-                        <span>{{page.name}}</span>
+                        <span v-if="!page.src">{{page.name}}</span>
                     </li>
                 </ul>
             </nav>
@@ -16,13 +16,15 @@ const Header = {
     data(){
         let pages = [
             {
-                name: "toggleBgMusic"
+                src: "./src/img/icons/sound_ban.png",
+                name: "toggleMusic"
             },{
                 name: "clearData"
             }
         ]
         return {
-            pages: pages
+            pages: pages,
+            bgOn: false
         }
     },
     methods: {
@@ -32,11 +34,17 @@ const Header = {
                 localStorage.clear()
                 window.location.reload()
             }
-            if (name == 'toggleBgMusic'){
+            if (name == 'toggleMusic'){
                 if(this.bgSound.isPlaying){
                     this.bgSound.stop()
+                    this.bgOn = false
+                    let id = this.pages.findIndex(el => el.name == 'toggleMusic')
+                    this.pages[id].src = "./src/img/icons/sound_ban.png"
                 }else{
                     this.bgSound.play()
+                    this.bgOn = true
+                    let id = this.pages.findIndex(el => el.name == 'toggleMusic')
+                    this.pages[id].src = "./src/img/icons/sound.png"
                 }
             }
         }

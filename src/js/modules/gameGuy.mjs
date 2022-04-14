@@ -261,8 +261,7 @@ function checkJudged(tool){
                         y: toolsData[toolId].y,
                         scale: scale,
                         alpha: 1
-                    },
-                    delay: .5
+                    }
                 })
             }
         })

@@ -8,7 +8,7 @@ let trashContainer = new PIXI.Container()
 trashContainer.name = 'trashesContainer'
 trashContainer.x = -window.innerWidth/2
 trashContainer.y = -window.innerHeight/2
-let trashesMap = ['trash_bottle', 'trash_paper', 'trash_pet']
+let trashesMap = ['trash_bottle', 'trash_paper', 'trash_pet', 'trash_tabaco']
 function startDailyTrash(){
     // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
     let recordTrashes = vm.$data.userRecord.gotTrashes
