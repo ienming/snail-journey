@@ -138,7 +138,7 @@ function drawTrash(trash){
             }else {
                 num = 5
             }
-            let abs = `獲得${num}個蝸牛幣`
+            let abs = `獲得 ${num} 個蝸牛幣`
             callVueSys(str, abs, imgUrl, num)
         }
     })

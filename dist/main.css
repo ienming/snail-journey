@@ -3589,7 +3589,8 @@ footer {
   position: fixed;
   left: 0;
   bottom: 0;
-  z-index: 97; }
+  z-index: 97;
+  padding: 24px; }
 
 .narrative {
   background-color: #000000;

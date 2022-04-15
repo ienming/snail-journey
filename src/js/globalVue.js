@@ -384,18 +384,21 @@ const vm = new Vue({
             if (this.userGotAchievements[`block${this.nowNPC.mission}`].indexOf("finished") !== -1) {
                 blockFinished = this.nowNPC.mission
                 window.setTimeout(() => {
-                    let output
+                    let output, badgeURl
                     switch (blockFinished) {
                         case 1:
-                            output = "文藝生活區"
+                            output = "文藝生活區",
+                            badgeURl = "badge_lit"
                             break;
                         case 2:
-                            output = "慢活甜點區"
+                            output = "慢活甜點區",
+                            badgeURl = "badge_des"
                             break;
                         case 3:
-                            output = "職人區"
+                            output = "職人區",
+                            badgeURl = "badge_tra"
                     }
-                    this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '解鎖家具')
+                    this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '區域探索完成！', `./src/img/${badgeURl}.png`)
                 }, 800)
             }
         }
