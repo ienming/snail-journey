@@ -14,7 +14,7 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v13.0&appId=405617263518270&autoLogAppEvents=1" nonce="PtvRz5Pa"></script>
     <div id="app">
         <!-- Header -->
-        <my-header @switch-personalpage="switchPersonalPage" :bg-sound="bgSound"></my-header>
+        <my-header @switch-personalpage="switchPersonalPage" @switch-bg="switchBg" :bg-sound="bgSound" :bg-is-playing="bgIsPlaying"></my-header>
         <!-- 測試使用者狀態 -->
         <user-state :achievements="user.achievements" :user-achieved="userGotAchievements"
                     :daily-trashes="dailyTrashes" :user-got-trashes="user.gotTrashes"

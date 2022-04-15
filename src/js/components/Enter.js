@@ -1,11 +1,11 @@
 const Enter = {
     template: `
-        <transition name="fade">
-            <div id="loading" v-if="loading">
+        <transition name="fade" v-if="loadingShouldShown">
+            <div id="loading">
                 <div class="wrapper">
                     <div class="d-flex flex-column">
                         <img src="./src/img/landmark.png" class="logo"/>
-                        <div v-if="loaded == false" class="t-a-c mt-2">
+                        <div v-if="loading" class="t-a-c mt-2">
                             <img src="./src/img/icons/loading.png" class="icon"/>
                             <h4>???%</h4>
                         </div>
@@ -20,12 +20,13 @@ const Enter = {
     props: ['loading', 'bgSound'],
     data(){
         return {
-            loaded: true
+            loadingShouldShown: true
         }
     },
     methods: {
         startGame(){
             this.$emit('start-game')
+            this.loadingShouldShown = false
             // this.bgSound.play()
         }
     }
@@ -110,9 +111,9 @@ const Narrative = {
     <transition name="fade">
         <div class="wrapper narrative" @click="nxt" v-if="narrativeHasShown">
             <transition-group name="fade-right">
-                <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name">
+                <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column">
                     <img :src=cut.src />
-                    <p>分鏡測試</p>
+                    <p>點擊畫面任何地方繼續</p>
                 </section>
             </transition-group>
         </div>

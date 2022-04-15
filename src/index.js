@@ -23,21 +23,12 @@ window.setTimeout(()=>{
     createNormalHouse();
     startDailyTrash();
     startDailyJudge();
+    window.setTimeout(()=>{
+        console.log("原則上都畫好了")
+        vm.$data.interaction.nowLoading = false
+    }, 800)
 }, 500)
 fetchFurnitures();
 fetchAchievements();
-
-// create cursor following
-// let cursorTexture = new PIXI.Texture.from(vm.$data.interaction.cursorImg)
-// let cursorSprite = new PIXI.Sprite(cursorTexture)
-// cursorSprite.anchor.set(0.5)
-// window.addEventListener("mousemove", (evt)=>{
-//     console.log(evt)
-//     cursorSprite.x = evt.clientX
-//     cursorSprite.y = evt.clientY
-// })
-// window.setTimeout(()=>{
-//     mapContainer.addChild(cursorSprite)
-// }, 1500)
 
 app.stage.addChild(mapContainer);

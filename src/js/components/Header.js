@@ -12,21 +12,19 @@ const Header = {
             </nav>
         </header>
     `,
-    props: ['bgSound'],
+    props: ['bgSound', 'bgIsPlaying'],
     data(){
-        let pages = [
-            {
-                src: "./src/img/icons/sound_ban.png",
-                name: "toggleMusic",
-                seudo: "切換背景音樂"
-            },{
-                name: "clearData",
-                seudo: "清除資料（測試用）"
-            }
-        ]
         return {
-            pages: pages,
-            bgOn: false
+            pages: [
+                {
+                    src: "./src/img/icons/sound_ban.png",
+                    name: "toggleMusic",
+                    seudo: "切換背景音樂"
+                },{
+                    name: "clearData",
+                    seudo: "清除資料（測試用）"
+                }
+            ]
         }
     },
     methods: {
@@ -39,12 +37,12 @@ const Header = {
             if (name == 'toggleMusic'){
                 if(this.bgSound.isPlaying){
                     this.bgSound.stop()
-                    this.bgOn = false
+                    this.$emit('switch-bg', false)
                     let id = this.pages.findIndex(el => el.name == 'toggleMusic')
                     this.pages[id].src = "./src/img/icons/sound_ban.png"
                 }else{
                     this.bgSound.play()
-                    this.bgOn = true
+                    this.$emit('switch-bg', true)
                     let id = this.pages.findIndex(el => el.name == 'toggleMusic')
                     this.pages[id].src = "./src/img/icons/sound.png"
                 }

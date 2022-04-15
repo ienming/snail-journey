@@ -57,6 +57,9 @@ function createItem(el){
     item.y = el.y*scale
     item.scale.set(scale)
     item.anchor.set(0.5)
+    if (el.name.indexOf("snail") !== -1 && el.name.indexOf("house") == -1){
+        snailMove(item)
+    }
     if (el.interactive !== false){
         item.interactive = true
         item.buttonMode = true
@@ -144,6 +147,25 @@ function createItem(el){
 function speakRandomly(el){
     let randomSentenceNum = getRandom(0, el.speaks.length-1)
     vm.$data.nowSpeak = el.speaks[randomSentenceNum]
+}
+
+function snailMove(item){
+    gsap.to(item, 5, {
+        pixi: {
+            x: item.x - getRandom(10, 20),
+        },
+        yoyo: true,
+        repeat: -1,
+        delay: getRandom(0, 10)
+    })
+    gsap.to(item, 1.5, {
+        pixi: {
+            scaleX: scale*1.08,
+            scaleY: scale*0.96
+        },
+        yoyo: true,
+        repeat: -1
+    })
 }
 
 export {createNPC, createNormalHouse, createItem, createInfo, globalGuySprites}

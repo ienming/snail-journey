@@ -15,6 +15,7 @@ const vm = new Vue({
             say: ""
         },
         bgSound: undefined,
+        bgIsPlaying: false,
         dailyTrashes: [],
         dailyGuys: [],
         adoptable: false,
@@ -265,6 +266,9 @@ const vm = new Vue({
         switchHousePage() {
             this.interaction.showHouse = !this.interaction.showHouse
         },
+        switchBg(value){
+            this.bgIsPlaying = value
+        },
         switchMsg(){
             console.log("關閉留言板")
         },
@@ -273,6 +277,7 @@ const vm = new Vue({
         },
         startGame() {
             this.interaction.nowLoading = false
+            // this.bgIsPlaying = true
         },
         checkAns(correct) {
             if (correct) {

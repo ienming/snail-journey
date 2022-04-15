@@ -3598,7 +3598,8 @@ footer {
   height: 100vh;
   position: relative;
   left: 0;
-  z-index: 998; }
+  z-index: 998;
+  color: #ffffff; }
 
 .my-header li {
   position: relative;
