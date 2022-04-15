@@ -21,8 +21,10 @@
                     :daily-guys="dailyGuys" :user-judges="user.judges"></user-state>
         <!-- 進場動畫 -->
         <enter :loading="interaction.nowLoading" :bg-sound="bgSound" @start-game="startGame"></enter>
+        <!-- 分鏡敘事 -->
+        <narrative v-if="firstShouldShow"></narrative>
         <!-- 新手教學 -->
-        <novice-teach v-if="noviceShouldShow"></novice-teach>
+        <novice-teach v-if="firstShouldShow"></novice-teach>
         <!-- 主要遊戲畫面 -->
         <div id="canvasContainer"></div>
         <!-- Personal Page -->

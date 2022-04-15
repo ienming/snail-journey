@@ -103,3 +103,48 @@ const NoviceTeach = {
     }
 }
 Vue.component("novice-teach", NoviceTeach)
+
+// 背景劇情說明
+const Narrative = {
+    template: `
+    <transition name="fade">
+        <div class="wrapper narrative" @click="nxt" v-if="narrativeHasShown">
+            <transition-group name="fade-right">
+                <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name">
+                    <img :src=cut.src />
+                    <p>分鏡測試</p>
+                </section>
+            </transition-group>
+        </div>
+    </transition>
+    `,
+    props: [],
+    data(){
+        return {
+            narrativeHasShown: true,
+            nowCut: 1,
+            cuts: [
+                {
+                    name: 1,
+                    src: './src/img/open/cut_1.jpg'
+                },{
+                    name: 2,
+                    src: './src/img/open/cut_2.jpg'
+                },{
+                    name: 3,
+                    src: './src/img/open/cut_3.jpg'
+                }
+            ]
+        }
+    },
+    methods: {
+        nxt(){
+            if (this.nowCut == this.cuts.length){
+                this.narrativeHasShown = false
+            }else{
+                this.nowCut ++
+            }
+        }
+    }
+}
+Vue.component("narrative", Narrative)

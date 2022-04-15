@@ -54,7 +54,7 @@ const vm = new Vue({
         userRecord: {}
     },
     computed: {
-        noviceShouldShow(){
+        firstShouldShow(){
             if (Object.values(this.userRecord).length <= 2){
                 Object.values(this.userRecord).forEach(el => {
                     if (el.length !== 0){
@@ -334,6 +334,10 @@ const vm = new Vue({
                         // 判斷是不是倒數
                         if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) {
                             this.btnTxt = "關閉"
+                            // 判斷是不是有認養方案
+                            if (this.nowNPC.adoptable){
+                                this.adoptable = true
+                            }
                         }
                     } else if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) { //正要結束
                         this.user.missions[`mission${this.nowNPC.mission}`].push('finished') //記錄結束
