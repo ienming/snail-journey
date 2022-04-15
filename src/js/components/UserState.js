@@ -4,7 +4,6 @@ const UserState = {
         <h3>User State:</h3>
         <ul>
             <p>Achievements</p>
-            <li v-for="(el, idx) of achievements"><span>{{idx}}: </span>{{el}}</li>
             <span>{{userAchieved}}</span>
         </ul>
         <h4>今天已撿起垃圾：{{userGotTrashes.length}}/{{dailyTrashes.length}}</h4>

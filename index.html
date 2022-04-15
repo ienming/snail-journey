@@ -71,7 +71,7 @@
                                                 <accordion :accordions="nowNPC.qas" class="pt-1"></accordion>
                                             </div>
                                             <!-- 有認養行動案就顯示 -->
-                                            <span v-if="adoptable" @click="switchProgram" class="t-z-1 t-c-g">認養任務</span>
+                                            <button v-if="adoptable" @click="switchProgram" class="my-btn t-z-1 t-c-g">認養任務</button>
                                             <!-- 關閉對話 -->
                                             <div class="t-a-r">
                                                 <button @click="pureNext" v-show="btnTxt"

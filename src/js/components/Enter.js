@@ -5,13 +5,15 @@ const Enter = {
                 <div class="wrapper">
                     <div class="d-flex flex-column">
                         <img src="./src/img/landmark.png" class="logo"/>
-                        <div v-if="loading" class="t-a-c mt-2">
-                            <img src="./src/img/icons/loading.png" class="icon"/>
-                            <h4>???%</h4>
-                        </div>
-                        <button v-else class="mt-2" @click="startGame">
-                            <h1>進入綠洲</h1>
-                        </button>
+                        <transition name="fade">
+                            <div v-if="loading" class="t-a-c mt-2">
+                                <img src="./src/img/icons/loading.png" class="icon"/>
+                                <h4>???%</h4>
+                            </div>
+                            <button v-else class="mt-2" @click="startGame">
+                                <h1>進入綠洲</h1>
+                            </button>
+                        </transition>
                     </div>
                 </div>
             </div>

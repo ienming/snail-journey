@@ -76,20 +76,43 @@ function drawTrash(trash){
     let trashTexture = new PIXI.Texture.from(`./src/img/${trashName}.png`)
     let trashSp = new PIXI.Sprite(trashTexture)
     let scale = .1;
-    trashSp.x = trash.x
-    trashSp.y = trash.y
+    trashSp.x = 0
+    trashSp.y = 0
     trashSp.scale.set(scale)
-    trashSp.interactive = true
-    trashSp.buttonMode = true
+    trashSp.anchor.set(0.5)
+    let animDelay = Math.random()
     gsap.to(trashSp, 1, {
         pixi: {
-            y: trash.y-10
+            y: -10
         },
         yoyo: true,
         repeat: -1,
-        delay: Math.random()
+        delay: animDelay
     })
-    trashSp.on("pointerdown", (el)=>{
+    // 垃圾影子
+    let trashShadowTex = new PIXI.Texture.from(`./src/img/trashes_shadow.png`)
+    let trashShdw = new PIXI.Sprite(trashShadowTex)
+    trashShdw.x = 0
+    trashShdw.y = 10
+    trashShdw.scale.set(scale)
+    trashShdw.anchor.set(0.5)
+    gsap.to(trashShdw, 1, {
+        pixi: {
+            scale: scale*0.5
+        },
+        yoyo: true,
+        repeat: -1,
+        delay: animDelay
+    })
+    // 
+    let eachTrshCont = new PIXI.Container()
+    eachTrshCont.x = trash.x
+    eachTrshCont.y = trash.y
+    eachTrshCont.addChild(trashShdw)
+    eachTrshCont.addChild(trashSp)
+    eachTrshCont.interactive = true
+    eachTrshCont.buttonMode = true
+    eachTrshCont.on("pointerdown", (el)=>{
         // console.log("撿到垃圾了")
         vm.$data.user.gotTrashes.push(trash.id) //讓 Vue watch 撿垃圾的資料
         //做動畫變小消失
@@ -107,7 +130,14 @@ function drawTrash(trash){
         if (vm.$data.user.gotTrashes.length == vm.$data.dailyTrashes.length){
             let str = "謝謝你幫忙清理街道上的垃圾！因為有你，蝸牛綠洲變得更清新了。"
             let imgUrl = "./src/img/coin.png"
-            let num = 5
+            let num = 0
+            if (vm.$data.dailyTrashes.length < 3){
+                num = vm.$data.dailyTrashes.length
+            }else if (vm.$data.dailyTrashes.length > 3 && vm.$data.dailyTrashes.length < 7){
+                num = 4
+            }else {
+                num = 5
+            }
             let abs = `獲得${num}個蝸牛幣`
             callVueSys(str, abs, imgUrl, num)
         }
@@ -124,7 +154,7 @@ function drawTrash(trash){
             }
         })
     }
-    trashContainer.addChild(trashSp)
+    trashContainer.addChild(eachTrshCont)
 }
 
 export {startDailyTrash}

@@ -2522,7 +2522,7 @@ section.container {
 .fade-right-leave {
   opacity: 0; }
 
-.fade-right-leave-active {
+.fade-right-leave-active, .fade-leave-active {
   position: absolute; }
 
 .fade-right-enter, .fade-right-leave-to {
