@@ -3586,10 +3586,13 @@ footer {
 #userState {
   position: fixed;
   right: 20px;
-  bottom: 0;
+  bottom: 20px;
   z-index: 97;
   padding: 24px;
-  text-align: right; }
+  text-align: right;
+  background-color: #f3f0e7;
+  border-radius: 1rem;
+  box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.5); }
   #userState .d-flex {
     justify-content: flex-end; }
 
