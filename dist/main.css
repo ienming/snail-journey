@@ -3142,9 +3142,7 @@ footer {
       cursor: pointer; }
   .my-header .logo {
     max-width: 150px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%); }
+    position: absolute; }
 
 /* table  */
 .my-table-container {
@@ -3587,10 +3585,13 @@ footer {
 
 #userState {
   position: fixed;
-  left: 0;
+  right: 20px;
   bottom: 0;
   z-index: 97;
-  padding: 24px; }
+  padding: 24px;
+  text-align: right; }
+  #userState .d-flex {
+    justify-content: flex-end; }
 
 .narrative {
   background-color: #000000;

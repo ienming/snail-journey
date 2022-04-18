@@ -231,8 +231,8 @@ function showGuyJudgeTools(){
     tools.forEach(tool=>{
         judgeToolsContainer.addChild(tool)
     })
-    judgeToolsContainer.x = 80*scale
-    judgeToolsContainer.y = 100*scale
+    judgeToolsContainer.x = 150*scale
+    judgeToolsContainer.y = window.innerHeight*0.8
     app.stage.addChild(judgeToolsContainer)
 }
 
