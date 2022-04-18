@@ -186,14 +186,16 @@ const Furnitures = {
                         v-for="item of allFurnituresState"
                         :class="{ bought: item.bought, locked: locked['block'+item.block] }"
                         @click="buyFurniture(item)">
-                        <div class="img-container">
-                        <img :src="item.imgSrc" alt="" />
+                        <div class="mr-1">
+                            <div class="img-container">
+                                <img :src="item.imgSrc" alt="" />
+                            </div>
+                            <p class="t-z-1 t-a-c" style="margin-bottom: 8px">{{ item.blockName }}</p>
                         </div>
                         <div class="txt-container">
                             <p class="t-w-5">{{ item.name }}</p>
-                            <p class="t-z-1" style="margin-bottom: 8px">{{ item.blockName }}</p>
-                            <p>{{ item.txt }}</p>
-                            <p class="price">{{ item.price }}</p>
+                            <p class="price">$ {{ item.price }}</p>
+                            <p class="t-z-2">{{ item.txt }}</p>
                         </div>
                     </div>
                 </div>
@@ -344,7 +346,7 @@ const DisplayShelf = {
                                     :class="{ locked: !el.achieved }"
                                     :data-descrip="el.descrip"
                                     v-for="el of userAchieved">
-                                    <img src="./src/img/board.png" alt="" />
+                                    <img :src="el.imgSrc" />
                                 </div>
                             </div>
                         </section>
@@ -391,6 +393,18 @@ const DisplayShelf = {
                     obj[prop].achieved = false
                 }
                 obj[prop].descrip = this.allAchievements[prop]
+                switch (prop){
+                    case 'block1':
+                        obj[prop].badgeName = 'badge_lit'
+                        break;
+                    case 'block2':
+                        obj[prop].badgeName = 'badge_des'
+                        break;
+                    case 'block3':
+                        obj[prop].badgeName = 'badge_tra'
+                        break;
+                }
+                obj[prop].imgSrc = `./src/img/${obj[prop].badgeName}.png`
             }
             return obj
         },

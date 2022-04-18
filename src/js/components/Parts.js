@@ -230,7 +230,7 @@ const Accordion = {
             let el = evt.currentTarget
             let contentDiv = el.querySelector(".accordion-body")
             let content = contentDiv.querySelector("p")
-            let resultHeight = content.clientHeight
+            let resultHeight = content.clientHeight + 8
             if (el.classList.contains("is-open")){
                 el.classList.remove("is-open")
                 contentDiv.style.height = '0px'

@@ -68,7 +68,7 @@
                                             </p>
                                             <!-- 資訊蝸牛 -->
                                             <div v-if="nowNPC && nowNPC.name == 'snail_info'">
-                                                <accordion :accordions="nowNPC.qas" class="pt-1"></accordion>
+                                                <accordion :accordions="nowNPC.qas" class="pt-2"></accordion>
                                             </div>
                                             <!-- 有認養行動案就顯示 -->
                                             <button v-if="adoptable" @click="switchProgram" class="my-btn t-z-1 t-c-g">認養任務</button>

@@ -45,6 +45,7 @@ const NoviceTeach = {
                         <transition-group name="fade-right">
                             <div v-for="(teach,idx) of teaches" :key="teach.title" v-show="idx == nowStep" class="t-a-c fade-right-item">
                                 <h2 class="t-z-4 mb-1">{{teach.title}}</h2>
+                                <img :src="teach.img" />
                                 <p>{{teach.content}}</p>
                             </div>
                         </transition-group>
@@ -68,14 +69,21 @@ const NoviceTeach = {
             noviceHasShown: true,
             teaches: [
                 {
-                    title: "新手說明1",
+                    title: "探索綠洲",
                     content: "說明1內容",
+                    img: ""
                 },{
-                    title: "新手說明2",
+                    title: "清掃街道維護秩序",
                     content: "說明2內容",
+                    img: ""
                 },{
-                    title: "新手說明3",
+                    title: "佈置自己的房間",
                     content: "說明3內容",
+                    img: ""
+                },{
+                    title: "認養行動案",
+                    content: "說明4內容",
+                    img: ""
                 }
             ],
             nowStep: 0

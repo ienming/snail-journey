@@ -27,7 +27,7 @@ function createInfo(){
         x: -1500,
         y: -800,
         func: true,
-        speaks: ['我是資訊蝸牛，有什麼問題想問的嗎？']
+        speaks: ['咳咳，我是 Mr.Question，已經在這裡住很久了，有什麼問題就來找我吧......']
     }
     let waitInfo = async ()=>{
         res = await fetchInfo()
