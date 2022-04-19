@@ -30,13 +30,28 @@
     right: 20px
     bottom: 20px
     z-index: 97
-    padding: 24px
+    padding: 16px
     text-align: right
     background-color: $lightBg
     border-radius: 1rem
-    box-shadow: 0 0 20px 3px rgba(0,0,0,.5)
+    box-shadow: 0 0 20px 3px rgba(0,0,0,.1)
+    transition: 1.25s $easeOutQuint
+    &.hide
+        transform: translateX(100%)
+        opacity: 0.5
     .d-flex
         justify-content: flex-end
+    >.icon
+        position: absolute
+        left: -26px
+        top: 16px
+        width: 34px
+        padding: 6px
+        border-radius: 8px
+        background-color: $lightBg
+        cursor: pointer
+        img
+            display: inherit
 
 // 分鏡敘事
 .narrative

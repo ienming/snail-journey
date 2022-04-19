@@ -6,8 +6,6 @@ import { mapContainer} from "./global.mjs"
 // 撿垃圾
 let trashContainer = new PIXI.Container()
 trashContainer.name = 'trashesContainer'
-trashContainer.x = -window.innerWidth/2
-trashContainer.y = -window.innerHeight/2
 let trashesMap = ['trash_bottle', 'trash_paper', 'trash_pet', 'trash_tabaco']
 function startDailyTrash(){
     // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
@@ -59,7 +57,8 @@ function startDailyTrash(){
 }
 
 function generateTrash(){
-    let todayTrashNum = getRandom(0,10)
+    // let todayTrashNum = getRandom(0,10)
+    let todayTrashNum = 10
     let readyTrashes = [...trashes]
     for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)

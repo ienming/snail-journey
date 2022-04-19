@@ -37,11 +37,14 @@ fetchAchievements();
 
 //測試
 function createBgHouses(){
-    let texture = new PIXI.Texture.from('./src/img/Layer 23.png')
+    let texture = new PIXI.Texture.from('./src/img/BG.png')
     let sp = new PIXI.Sprite(texture)
     sp.name = "bgHouses"
     sp.anchor.set(0.5)
     sp.scale.set(scale)
+    sp.pivot.x = 30
+    sp.pivot.y = 30
+    sp.alpha = 0.5
     mapContainer.addChild(sp)
 }
 

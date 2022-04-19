@@ -10,7 +10,7 @@ autoResize: true
 app.renderer.resize(window.innerWidth, window.innerHeight);
 canvasContainer.appendChild(app.view)
 // PIXI size for resizing
-let scale = 0.3;
+let scale = window.innerWidth/3840*0.7;
 
 app.renderer.autoResize = true; //隨視窗改變大小
 app.renderer.resize(window.innerWidth, window.innerHeight); //全螢幕
@@ -23,6 +23,15 @@ mapContainer.name = 'mapContainer'
 let npcContainerIsClicking = false
 let npcContainer = new PIXI.Container()
 npcContainer.name = 'npcContainer'
+// test
+let graphic = new PIXI.Graphics()
+graphic.beginFill(0x000000)
+graphic.drawRoundedRect(0, 0, 30, 30, 0)
+graphic.endFill()
+graphic.x = 0
+graphic.y = 0
+npcContainer.addChild(graphic)
+// 
 npcContainer.on("pointer", ()=>{
     npcContainerIsClicking = true
 })

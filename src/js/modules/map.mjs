@@ -1,4 +1,3 @@
-import { npcContainerIsClicking } from './global.mjs';
 import { scale, mapContainer} from './global.mjs'
 
 // Drag & Drop
@@ -50,6 +49,7 @@ function createMap(){
     // draw Map
     let mapTexture = new PIXI.Texture.from('./src/img/roads.png')
     let map = new PIXI.Sprite(mapTexture)
+    console.log(map.width)
     // set the transform origin and anchor point of the image which will effect the starting point of the image
     map.anchor.set(0.5) //center center
     map.scale.set(scale)

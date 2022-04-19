@@ -3528,7 +3528,7 @@ footer {
     overflow: hidden;
     list-style: none;
     transition: all .5s ease-in-out;
-    padding-left: 30px; }
+    padding-left: 16px; }
     .my-accordion .accordion-body li {
       margin-bottom: 24px;
       position: relative;
@@ -3588,13 +3588,28 @@ footer {
   right: 20px;
   bottom: 20px;
   z-index: 97;
-  padding: 24px;
+  padding: 16px;
   text-align: right;
   background-color: #f3f0e7;
   border-radius: 1rem;
-  box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.5); }
+  box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.1);
+  transition: 1.25s cubic-bezier(0.22, 1, 0.36, 1); }
+  #userState.hide {
+    transform: translateX(100%);
+    opacity: 0.5; }
   #userState .d-flex {
     justify-content: flex-end; }
+  #userState > .icon {
+    position: absolute;
+    left: -26px;
+    top: 16px;
+    width: 34px;
+    padding: 6px;
+    border-radius: 8px;
+    background-color: #f3f0e7;
+    cursor: pointer; }
+    #userState > .icon img {
+      display: inherit; }
 
 .narrative {
   background-color: #000000;

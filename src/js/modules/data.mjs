@@ -178,12 +178,12 @@ let fetchGuys = async ()=>{
 //static houses (background)
 let normalHouses = [
     {
-        x: 700,
-        y: 560,
+        x: 2386,
+        y: 1449,
     },
     {
-        x: 890,
-        y: 650,
+        x: 2570,
+        y: 1529,
     },
 ];
 

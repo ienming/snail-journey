@@ -123,7 +123,7 @@ const House = {
             sp.name = this.hostName
             sp.x = 800*this.pixi.houseScale
             sp.y = 1200*this.pixi.houseScale
-            sp.scale.set(this.pixi.houseScale)
+            sp.scale.set(this.pixi.houseScale*2)
             sp.anchor.set(0.5)
             sp.interactive = true
             sp.buttonMode = true
