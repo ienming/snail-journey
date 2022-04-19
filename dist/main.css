@@ -3142,7 +3142,9 @@ footer {
       cursor: pointer; }
   .my-header .logo {
     max-width: 150px;
-    position: absolute; }
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); }
 
 /* table  */
 .my-table-container {

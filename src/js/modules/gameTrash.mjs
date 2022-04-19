@@ -1,11 +1,11 @@
 import { trashes } from "./data.mjs"
-import { callVueSys } from "./global.mjs"
-import { getRandom } from "./global.mjs"
+import { callVueSys, getRandom, scale } from "./global.mjs"
 import { mapContainer} from "./global.mjs"
 
 // 撿垃圾
 let trashContainer = new PIXI.Container()
 trashContainer.name = 'trashesContainer'
+trashContainer.scale.set(scale)
 let trashesMap = ['trash_bottle', 'trash_paper', 'trash_pet', 'trash_tabaco']
 function startDailyTrash(){
     // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
@@ -74,10 +74,6 @@ function drawTrash(trash){
     let trashName = trashesMap[getRandom(0,trashesMap.length-1)]
     let trashTexture = new PIXI.Texture.from(`./src/img/${trashName}.png`)
     let trashSp = new PIXI.Sprite(trashTexture)
-    let scale = .1;
-    trashSp.x = 0
-    trashSp.y = 0
-    trashSp.scale.set(scale)
     trashSp.anchor.set(0.5)
     let animDelay = Math.random()
     gsap.to(trashSp, 1, {
@@ -91,13 +87,12 @@ function drawTrash(trash){
     // 垃圾影子
     let trashShadowTex = new PIXI.Texture.from(`./src/img/trashes_shadow.png`)
     let trashShdw = new PIXI.Sprite(trashShadowTex)
-    trashShdw.x = 0
-    trashShdw.y = 10
-    trashShdw.scale.set(scale)
+    trashShdw.y = 160
+    trashShdw.alpha = 0.5
     trashShdw.anchor.set(0.5)
     gsap.to(trashShdw, 1, {
         pixi: {
-            scale: scale*0.5
+            scale: 0.5
         },
         yoyo: true,
         repeat: -1,
@@ -107,6 +102,7 @@ function drawTrash(trash){
     let eachTrshCont = new PIXI.Container()
     eachTrshCont.x = trash.x
     eachTrshCont.y = trash.y
+    eachTrshCont.scale.set(scale)
     eachTrshCont.addChild(trashShdw)
     eachTrshCont.addChild(trashSp)
     eachTrshCont.interactive = true
@@ -141,18 +137,19 @@ function drawTrash(trash){
             callVueSys(str, abs, imgUrl, num)
         }
     })
-    trashSp.mouseover = function(){ //hover時的放大效果
-        gsap.to(this, .2, {
+    eachTrshCont.on("mouseover", ()=>{ //hover 放大
+        console.log(eachTrshCont)
+        gsap.to(eachTrshCont, .2, {
             pixi: {
                 scaleX: scale*1.18,
             },
             yoyo: true,
             repeat: 2,
             onComplete: function(){
-                trashSp.scale.set(scale)
+                eachTrshCont.scale.set(scale)
             }
         })
-    }
+    })
     trashContainer.addChild(eachTrshCont)
 }
 

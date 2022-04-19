@@ -24,8 +24,8 @@ function createInfo(){
     // create Info object
     infoObj = {
         name: 'snail_info',
-        x: 363,
-        y: 157,
+        x: -1446,
+        y: -805,
         func: true,
         speaks: ['咳咳，我是 Mr.Question，已經在這裡住很久了，有什麼問題就來找我吧......']
     }
@@ -53,9 +53,8 @@ function createItem(el){
     let texture = new PIXI.Texture.from(`./src/img/${el.name}.png`)
     let item = new PIXI.Sprite(texture)
     item.name = el.name
-    item.x = el.x*scale
-    item.y = el.y*scale
-    item.scale.set(scale)
+    item.x = el.x
+    item.y = el.y
     item.anchor.set(0.5)
     if (el.name.indexOf("snail") !== -1 && el.name.indexOf("house") == -1){
         snailMove(item)
@@ -116,12 +115,12 @@ function createItem(el){
     item.mouseover = function(){ //hover時的放大效果
         gsap.to(this, .2, {
             pixi: {
-                scaleX: scale*1.18,
+                scaleX: 1.18,
             },
             yoyo: true,
             repeat: 2,
             onComplete: function(){
-                item.scale.set(scale)
+                item.scale.set(1)
             }
         })
     }
@@ -160,8 +159,8 @@ function snailMove(item){
     })
     gsap.to(item, 1.5, {
         pixi: {
-            scaleX: scale*1.08,
-            scaleY: scale*0.96
+            scaleX: 1.08,
+            scaleY: 0.96
         },
         yoyo: true,
         repeat: -1
