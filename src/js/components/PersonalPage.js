@@ -80,6 +80,15 @@ const PersonalPage = {
             this.pixi.furnituresContainer = new PIXI.Container()
             this.pixi.app.stage.addChild(this.pixi.furnituresContainer)
             this.draw() //初始化房間
+            // 動畫移動
+            window.setTimeout(()=>{
+                // let roomCnvs = roomCanvasContainer.querySelector("canvas")
+                let value = roomCanvasContainer.offsetWidth/2
+                roomCanvasContainer.scroll({
+                    left: value,
+                    behavior: 'smooth'
+                })
+            }, 300)
         },
         draw(){
             // this.drawAchievements()

@@ -2986,7 +2986,7 @@ input.invalid {
   width: 24px;
   height: 24px;
   margin-right: 0.5rem;
-  background: url(91f26f0c498dbc5cc083.svg);
+  background: url(a2258eab49cc1e03bff6.svg);
   background-size: 0;
   background-position: center center;
   background-repeat: no-repeat;
@@ -3773,7 +3773,7 @@ footer {
         .room-page .game-ui:hover {
           transform: translateX(10px); } }
 
-#roomCanvasContainer {
+#roomCanvasContainer, #houseCnvsContainer {
   max-width: 90vw;
   overflow: scroll; }
 

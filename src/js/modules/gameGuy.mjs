@@ -47,6 +47,12 @@ function createGuys(){
         },{
             x: 1163,
             y: 522
+        },{
+            x: 578,
+            y: 744
+        },{
+            x: -860,
+            y: 400
         }
     ]
     globalGuys = []

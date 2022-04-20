@@ -11,7 +11,7 @@ const UserState = {
         <section>
             <p class="t-z-2 t-w-5">綠洲散步</p>
             <div v-for="el of explors" class="d-flex">
-                <img :src="el.finished ? './src/img/icons/checked.svg' : './src/img/icons/checked_hover.svg'" class="icon mr-1 d-inline-block"/>
+                <img :src="el.finished ? './src/img/icons/checked.svg' : './src/img/icons/checked_notyet.svg'" class="icon mr-1 d-inline-block"/>
                 <span v-if="el.finished" class="t-z-2">走遍{{el.name}}了！</span>
                 <span v-else class="t-z-2">{{el.name}}還有沒認識的鄰居喔</span>
             </div>

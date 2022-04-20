@@ -49,7 +49,7 @@ function createMap(){
     // draw Map
     let mapTexture = new PIXI.Texture.from('./src/img/roads.png')
     let map = new PIXI.Sprite(mapTexture)
-    console.log(map.width)
+    map.name = 'roads'
     // set the transform origin and anchor point of the image which will effect the starting point of the image
     map.anchor.set(0.5) //center center
     map.scale.set(scale)
@@ -57,7 +57,18 @@ function createMap(){
     mapContainer.addChild(map)
 }
 
-export { createMap, dist, distDefined }
+function createBgHouses(name){
+    let texture = new PIXI.Texture.from(`./src/img/${name}.png`)
+    let sp = new PIXI.Sprite(texture)
+    sp.name = name
+    sp.anchor.set(0.5)
+    sp.scale.set(scale)
+    sp.pivot.x = 60
+    sp.alpha = 0.5
+    mapContainer.addChild(sp)
+}
+
+export { createMap, createBgHouses, dist, distDefined }
 
 // scroll on canvas for zomming
 canvasContainer.addEventListener('wheel',(e)=>{
