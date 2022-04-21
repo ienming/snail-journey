@@ -128,7 +128,6 @@
 
 .img-container
     +size(100%)
-    background-color: $mainDark
     border-radius: 50%
     display: flex
     align-items: center
@@ -261,7 +260,10 @@
     .furnitures
         overflow: scroll
         gap: 12px
+        // flex-wrap: wrap
+        // max-height: 100px
     .furniture
+        position: relative
         background-color: $main
         border-radius: 1rem
         padding: 1rem
@@ -271,20 +273,34 @@
         flex-shrink: 0
         +basicTransition()
         +rwd(md)
-            width: 40%
+            width: 30%
         &:hover
             opacity: 0.8
         &.bought
             pointer-events: none
-            opacity: .3
-            color: green
+            opacity: .6
         &.locked
             pointer-events: none
             opacity: .8
             color: $darkGrey
             filter: grayscale(100%)
-        .img-container + p
+        .cate
             margin-top: 8px
+            margin-bottom: 8px
+            position: absolute
+            bottom: 10px
+            left: 0
+            padding: .25rem .75rem
+            &.lit
+                background-color: $accent
+            &.des
+                background-color: $accentSub
+            &.tra
+                background-color: $accentTer
+        img
+            max-height: 150px
+        >div
+            flex: 1
     .price
         font-size: 20px
         margin-bottom: 4px

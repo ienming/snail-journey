@@ -213,7 +213,7 @@ const Furnitures = {
                             <div class="img-container">
                                 <img :src="item.imgSrc" alt="" />
                             </div>
-                            <p class="t-z-1 t-a-c" style="margin-bottom: 8px">{{ item.blockName }}</p>
+                            <p class="t-z-1 t-a-c cate" :class="item.cate">{{ item.blockName }}</p>
                         </div>
                         <div class="txt-container">
                             <p class="t-w-5">{{ item.name }}</p>
@@ -237,16 +237,23 @@ const Furnitures = {
             let lists = this.allFurnitures
             // 對應區塊名稱
             lists.forEach(el=>{
-                let blockName = ""
+                let blockName = "", cate=""
                 switch(el.block*1){
                     case 1:
-                        blockName = "文藝生活區"
+                        blockName = "文藝生活區",
+                        cate = "lit"
                         break;
                     case 2:
-                        blockName = "慢活甜點區"
+                        blockName = "慢活甜點區",
+                        cate = "des"
+                        break;
+                    case 3:
+                        blockName = "職人區",
+                        cate = "tra"
                         break;
                 }
                 el.blockName = blockName
+                el.cate = cate
                 el.imgSrc = `./src/img/furnitures/fur_${el.id}.png`
             })
             if (this.userGotFurnitures){
