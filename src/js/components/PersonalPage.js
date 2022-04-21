@@ -70,7 +70,7 @@ const PersonalPage = {
 
             this.pixi.app = personalCanvasApp //把 PIXI app 丟到 component 資料裡面變成元件的全域變數
             // 初始化房間背景
-            let roomTexture = new PIXI.Texture.from(`./src/img/room.jpg`)
+            let roomTexture = new PIXI.Texture.from(`./src/img/room/room_personal.jpg`)
             let room = new PIXI.Sprite(roomTexture)
             room.scale.set(roomScale)
             this.pixi.app.stage.addChild(room)
@@ -110,16 +110,30 @@ const PersonalPage = {
             }
         },
         drawDisplayShelf(){
-            let texture = new PIXI.Texture.from('./src/img/displayShelf.jpg')
+            let texture = new PIXI.Texture.from('./src/img/room/triumph.png')
             let sp = new PIXI.Sprite(texture)
             sp.interactive = true
             sp.buttonMode = true
-            sp.x = 300*this.pixi.roomScale/this.pixi.originScale
-            sp.y = 300*this.pixi.roomScale/this.pixi.originScale
+            sp.x = 460*this.pixi.roomScale/this.pixi.originScale
+            sp.y = 145*this.pixi.roomScale/this.pixi.originScale
             sp.scale.set(this.pixi.roomScale)
+            sp.anchor.set(0.5)
+            let sc = this.pixi.roomScale
             sp
                 .on("pointerdown", ()=>{
                     this.displayShelfHasShown = true
+                })
+                .on("mouseover", ()=>{ //hover時的放大效果
+                    gsap.to(sp, .2, {
+                        pixi: {
+                            scaleX: sc*0.8,
+                        },
+                        yoyo: true,
+                        repeat: 2,
+                        onComplete: function(){
+                            sp.scale.set(sc)
+                        }
+                    })
                 })
             this.pixi.app.stage.addChild(sp)
         },
@@ -128,7 +142,7 @@ const PersonalPage = {
                 this.pixi.furnituresContainer.removeChild(this.pixi.furnituresContainer.children[0])
             }
             this.userGotFurnitures.forEach(el =>{
-                let texture = new PIXI.Texture.from(`./src/img/fur_${el.id}.png`)
+                let texture = new PIXI.Texture.from(`./src/img/furnitures/fur_${el.id}.png`)
                 let furniture = new PIXI.Sprite(texture)
                 furniture.x = el.x*this.pixi.roomScale/this.pixi.originScale
                 furniture.y = el.y*this.pixi.roomScale/this.pixi.originScale
@@ -233,7 +247,7 @@ const Furnitures = {
                         break;
                 }
                 el.blockName = blockName
-                el.imgSrc = `./src/img/fur_${el.id}.png`
+                el.imgSrc = `./src/img/furnitures/fur_${el.id}.png`
             })
             if (this.userGotFurnitures){
                 // 比較已經有的家具和所有家具

@@ -81,7 +81,7 @@ const House = {
 
             this.pixi.app = houseApp //把 PIXI app 丟到 component 資料裡面變成元件的全域變數
             // 初始化房間背景
-            let houseTexture = new PIXI.Texture.from(`./src/img/room.jpg`)
+            let houseTexture = new PIXI.Texture.from(`./src/img/room/room_personal.jpg`)
             let house = new PIXI.Sprite(houseTexture)
             house.scale.set(houseScale)
             this.pixi.app.stage.addChild(house)
