@@ -143,8 +143,8 @@ Vue.component('cta', CTA)
 const InputText = {
     template: `
     <label :for="id" class="my-inpt-container d-flex flex-column">
-        <span class="aid" style="text-align: left;" v-if="labelTitle"><span v-show="required">＊</span>{{labelTitle}}</span>
-        <input :value="value" @input="$emit('input', $event.target.value)" :id="id" :name="name" :type="type" :placeholder="placeholder" :required="required" :pattern="pattern ? regExp : false" :title="patternInstruct" class="my-inpt"/>
+        <span class="aid" style="text-align: left;" v-if="labelTitle"><span v-show="required">＊</span>{{labelTitle}}<img v-if="type == 'password'" @click="switchPwdType" :src="showPwdUrl" class="icon" style="margin-left: 8px" /></span>
+        <input :value="value" @input="$emit('input', $event.target.value)" :id="id" :name="name" :type="computedType" :placeholder="placeholder" :required="required" :pattern="pattern ? regExp : false" :title="patternInstruct" class="my-inpt"/>
         <transition name="fade">
             <img class="clear-data icon" src="./src/img/icons/close_dark.svg" @click="clearData" v-show="value !== ''" />
         </transition>
@@ -192,15 +192,31 @@ const InputText = {
             }else {
                 return false
             }
+        },
+        computedType(){
+            if (this.type == 'password'){
+                if (this.showPwd){
+                    this.showPwdUrl = './src/img/icons/pwd_show.svg' //張開眼睛
+                    return "text"
+                }else{
+                    this.showPwdUrl = './src/img/icons/pwd_hide.svg' //閉上眼睛
+                    return "password"
+                }
+            }else return this.type
         }
     },
     data(){
         return {
+            showPwd: false,
+            showPwdUrl: ''
         }
     },
     methods: {
         clearData(){
             this.$emit('input', '')
+        },
+        switchPwdType(){
+            this.showPwd = !this.showPwd
         }
     }
 }

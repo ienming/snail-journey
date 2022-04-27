@@ -2,7 +2,7 @@ const Enter = {
     template: `
         <transition name="fade" v-if="loadingShouldShown">
             <div id="loading">
-                <div class="wrapper">
+                <div class="wrapper jcr">
                     <div class="d-flex flex-column">
                         <img src="./src/img/landmark.png" class="logo"/>
                         <transition name="fade">
@@ -10,11 +10,9 @@ const Enter = {
                                 <img src="./src/img/icons/loading.png" class="icon"/>
                                 <h4>???%</h4>
                             </div>
-                            <button v-else class="mt-2" @click="startGame">
-                                <h1>進入綠洲</h1>
-                            </button>
                         </transition>
                     </div>
+                    <log-in @log-in="startGame"></log-in>
                 </div>
             </div>
         </transition>
