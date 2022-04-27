@@ -3681,6 +3681,17 @@ footer {
     cursor: pointer; }
   #loading .logo {
     max-width: 250px; }
+  #loading .wrapper {
+    flex-direction: column;
+    width: 100%; }
+    @media (min-width: 768px) {
+      #loading .wrapper {
+        flex-direction: row;
+        justify-content: space-around; } }
+    @media (min-width: 992px) {
+      #loading .wrapper {
+        width: 80vw;
+        max-width: 1150px; } }
 
 .popup {
   background-color: #f3f1e8;

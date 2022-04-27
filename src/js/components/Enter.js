@@ -2,7 +2,7 @@ const Enter = {
     template: `
         <transition name="fade" v-if="loadingShouldShown">
             <div id="loading">
-                <div class="wrapper jcr">
+                <div class="wrapper">
                     <div class="d-flex flex-column">
                         <img src="./src/img/landmark.png" class="logo"/>
                         <transition name="fade">

@@ -113,6 +113,15 @@
         cursor: pointer
     .logo
         max-width: 250px
+    .wrapper
+        flex-direction: column
+        width: 100%
+        +rwd(md)
+            flex-direction: row
+            justify-content: space-around
+        +rwd(lg)
+            width: 80vw
+            max-width: 1150px
 
 .popup
     background-color: lighten($main, 10%)
