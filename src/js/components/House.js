@@ -220,8 +220,9 @@ const CommentBoard = {
                                     <img src="./src/img/snail_oasis.png" />
                                 </div>
                                 <div class="message">
-                                    <p class="t-w-6">{{comment.id}}</p>
+                                    <p class="t-w-6">{{comment.nickName}}</p>
                                     <p>{{comment.message}}</p>
+                                    <p class="t-z-1 t-c-g mt-1">{{comment.time}}</p>
                                 </div>
                             </div>
                         </div>
@@ -242,30 +243,14 @@ const CommentBoard = {
             message: "",
             comments: [
                 {
-                    id: "路人甲",
-                    message: "Hi"
+                    nickName: "路人甲",
+                    message: "Hi",
+                    time: "1996-07-26"
                 },{
-                    id: "路人乙",
-                    message: "HI"
-                },{
-                    id: "路人丙",
-                    message: "Hi~"
-                },{
-                    id: "路人丙",
-                    message: "Hi~"
-                },{
-                    id: "路人丙",
-                    message: "Hi~"
-                },{
-                    id: "路人丙",
-                    message: "Hi~"
-                },{
-                    id: "路人丙",
-                    message: "Hi~"
-                },{
-                    id: "路人丙",
-                    message: "Hi~"
-                },
+                    nickName: "路人乙",
+                    message: "HI",
+                    time: "2022-04-28"
+                }
             ]
         }
     }
