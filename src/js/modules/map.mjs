@@ -1,4 +1,4 @@
-import { scale, mapContainer} from './global.mjs'
+import { app, scale, mapContainer} from './global.mjs'
 
 // Drag & Drop
 let dist = {x:0, y:0} //initialize the distance between event x,y and current map x,y
@@ -68,7 +68,7 @@ function createBgHouses(name){
     mapContainer.addChild(sp)
 }
 
-export { createMap, createBgHouses, dist, distDefined }
+export { createMap, createBgHouses, dist, distDefined, createCompass }
 
 // scroll on canvas for zomming
 canvasContainer.addEventListener('wheel',(e)=>{
@@ -87,4 +87,35 @@ canvasContainer.addEventListener('wheel',(e)=>{
             }
         })
     }
+})
+
+// rotating the compass
+let deg = 0, cmps
+let cmpsX = 100*scale, cmpsY = window.innerHeight*0.75
+function createCompass(){
+    let container = new PIXI.Container()
+    container.name = "compassContainer"
+    container.x = cmpsX
+    container.y = cmpsY
+    let compassTexture = new PIXI.Texture.from('./src/img/compass.png')
+    cmps = new PIXI.Sprite(compassTexture)
+    cmps.scale.set(scale)
+    container.addChild(cmps)
+    // 指針
+    let pointerTexture = new PIXI.Texture.from('./src/img/compass_pointer.png')
+    let pointer = new PIXI.Sprite(pointerTexture)
+    pointer.scale.set(scale)
+    pointer.anchor.set(0.1, 0.5)
+    pointer.x = 45
+    pointer.y = 45
+    container.addChild(pointer)
+    app.stage.addChild(container)
+    app.ticker.add((delta)=>{
+        pointer.rotation = deg
+    })
+}
+
+canvasContainer.addEventListener('mousemove', (e)=>{
+    let hD = e.x - cmpsX, vD = e.y - cmpsY
+    deg = Math.atan2(vD, hD)
 })
