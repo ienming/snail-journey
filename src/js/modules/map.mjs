@@ -64,7 +64,7 @@ function createBgHouses(name){
     sp.anchor.set(0.5)
     sp.scale.set(scale)
     sp.pivot.x = 60
-    sp.alpha = 0.5
+    sp.alpha = 0.8
     mapContainer.addChild(sp)
 }
 
