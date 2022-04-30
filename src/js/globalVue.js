@@ -239,9 +239,10 @@ const vm = new Vue({
     methods: {
         autoBgMusic(){
             let sound = PIXI.sound.Sound.from({
-                url: 'src/sounds/examples_resources_loops_loop3.mp3',
+                url: 'src/sounds/bgm_clip.m4a',
                 autoPlay: false,
-                loop: true
+                loop: true,
+                preload: true,
             });
             this.bgSound = sound
         },

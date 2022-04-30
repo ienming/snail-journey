@@ -17,7 +17,7 @@ const Header = {
         return {
             pages: [
                 {
-                    src: "./src/img/icons/sound_ban.png",
+                    src: "./src/img/icons/sound.png",
                     name: "toggleMusic",
                     seudo: "切換背景音樂"
                 },{

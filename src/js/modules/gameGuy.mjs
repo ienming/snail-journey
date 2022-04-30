@@ -229,6 +229,7 @@ function showGuyJudgeTools(){
             .on('pointerup', onDragEnd)
             .on('pointerupoutside', onDragEnd)
             .on('pointerup', ()=>{
+                console.log("from pointerup to checkJudged")
                 checkJudged(tool)
             })
             .on('pointerupoutside', ()=>{
@@ -249,6 +250,8 @@ function checkJudged(tool){
     let beingJudged = ''
     let toolId = toolsData.findIndex( el => el.name == tool.name )
     for (let i=0; i<globalGuySprites.length; i++){
+        console.log('globalGuySprites[i] name:')
+        console.log(globalGuySprites[i].name)
         if (collisionDetect(tool, globalGuySprites[i])){
             beingJudged = globalGuySprites[i].name
         }
@@ -298,7 +301,7 @@ function checkJudged(tool){
         window.setTimeout(()=>{
             cleanAllGuysSaid()
             // 只要互動過了就消失
-            gsap.to(respondSp, .1, {
+            gsap.to(respondSp, .4, {
                 pixi: {
                     scale: 0
                 },

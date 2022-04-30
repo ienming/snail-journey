@@ -9,8 +9,9 @@ const Enter = {
                             <div v-if="loading" class="t-a-c mt-2">
                                 <img src="./src/img/icons/loading.png" class="icon"/>
                                 <h4>???%</h4>
-                            </div>
+                                </div>
                         </transition>
+                        <p class="t-a-c my-1">請注意音量～</p>
                     </div>
                     <log-in @log-in="startGame"></log-in>
                 </div>
