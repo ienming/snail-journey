@@ -269,6 +269,11 @@ const vm = new Vue({
         },
         switchBg(value){
             this.bgIsPlaying = value
+            if (value){
+                this.bgSound.play()
+            }else{
+                this.bgSound.stop()
+            }
         },
         switchMsg(){
             console.log("關閉留言板")

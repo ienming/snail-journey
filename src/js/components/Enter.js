@@ -27,8 +27,8 @@ const Enter = {
     methods: {
         startGame(){
             this.$emit('start-game')
+            this.$emit('switch-bg', false)
             this.loadingShouldShown = false
-            // this.bgSound.play()
         }
     }
 }
@@ -137,7 +137,7 @@ const Narrative = {
             cuts: [
                 {
                     name: 1,
-                    src: './src/img/open/cut_1.jpg',
+                    src: './src/img/open/shot1.png',
                     descrip: ""
                 },{
                     name: 2,

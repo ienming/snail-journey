@@ -5,8 +5,8 @@ const Header = {
             <nav>
                 <ul>
                     <li v-for="page of pages" @click="switchPage(page.name)" :data-text="page.seudo">
-                        <img :src="page.src" class="icon"/>
-                        <span v-if="!page.src">{{page.name}}</span>
+                        <img v-if="page.icon" :src="bgIsPlaying ? './src/img/icons/sound.png' : './src/img/icons/sound_ban.png'" class="icon"/>
+                        <span v-else>{{page.name}}</span>
                     </li>
                 </ul>
             </nav>
@@ -17,9 +17,9 @@ const Header = {
         return {
             pages: [
                 {
-                    src: "./src/img/icons/sound.png",
                     name: "toggleMusic",
-                    seudo: "切換背景音樂"
+                    seudo: "切換背景音樂",
+                    icon: true
                 },{
                     name: "clearData",
                     seudo: "清除資料（測試用）"
@@ -36,15 +36,9 @@ const Header = {
             }
             if (name == 'toggleMusic'){
                 if(this.bgSound.isPlaying){
-                    this.bgSound.stop()
                     this.$emit('switch-bg', false)
-                    let id = this.pages.findIndex(el => el.name == 'toggleMusic')
-                    this.pages[id].src = "./src/img/icons/sound_ban.png"
                 }else{
-                    this.bgSound.play()
                     this.$emit('switch-bg', true)
-                    let id = this.pages.findIndex(el => el.name == 'toggleMusic')
-                    this.pages[id].src = "./src/img/icons/sound.png"
                 }
             }
         }
