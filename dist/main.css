@@ -3630,7 +3630,10 @@ footer {
   position: relative;
   left: 0;
   z-index: 998;
-  color: #ffffff; }
+  color: #ffffff;
+  text-align: center; }
+  .narrative img {
+    max-width: 80%; }
 
 .my-header li {
   position: relative;

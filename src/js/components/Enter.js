@@ -120,8 +120,9 @@ const Narrative = {
     <transition name="fade">
         <div class="wrapper narrative" @click="nxt" v-if="narrativeHasShown">
             <transition-group name="fade-right">
-                <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column">
+                <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column aic">
                     <img :src=cut.src />
+                    <p>{{ cut.descrip }}</p>
                     <p>點擊畫面任何地方繼續</p>
                 </section>
             </transition-group>
@@ -136,13 +137,16 @@ const Narrative = {
             cuts: [
                 {
                     name: 1,
-                    src: './src/img/open/cut_1.jpg'
+                    src: './src/img/open/cut_1.jpg',
+                    descrip: ""
                 },{
                     name: 2,
-                    src: './src/img/open/cut_2.jpg'
+                    src: './src/img/open/shot2.png',
+                    descrip: ""
                 },{
                     name: 3,
-                    src: './src/img/open/cut_3.jpg'
+                    src: './src/img/open/shot3.png',
+                    descrip: ""
                 }
             ]
         }
