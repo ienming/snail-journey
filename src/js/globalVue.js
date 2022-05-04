@@ -47,6 +47,7 @@ const vm = new Vue({
                 block3: [],
             },
             gotTrashes: [],
+            gotSpecial: false,
             coins: 9999,
             furnitures: [],
             adoptions: [],
@@ -212,6 +213,13 @@ const vm = new Vue({
                 console.log("每日撿垃圾資料有變動，開始儲存")
                 let d = JSON.stringify(newValue)
                 this.storageData('gotTrashes', d)
+            }
+        },
+        'user.gotSpecial': {
+            handler: function (newValue, oldValue) {
+                console.log("特殊蝸牛資料變動，開始儲存")
+                let d = JSON.stringify(newValue)
+                this.storageData('gotSpecial', d)
             }
         },
         'dailyTrashes': {

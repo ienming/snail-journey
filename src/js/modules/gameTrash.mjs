@@ -1,6 +1,7 @@
 import { trashes } from "./data.mjs"
 import { callVueSys, getRandom, scale } from "./global.mjs"
 import { mapContainer} from "./global.mjs"
+import { playPickTrashSE } from "./sound.mjs"
 
 // 撿垃圾
 let trashContainer = new PIXI.Container()
@@ -135,6 +136,8 @@ function drawTrash(trash){
             let abs = `獲得 ${num} 個蝸牛幣`
             callVueSys(str, abs, imgUrl, num)
         }
+        // 播放音效
+        playPickTrashSE()
     })
     eachTrshCont.on("mouseover", ()=>{ //hover 放大
         console.log(eachTrshCont)

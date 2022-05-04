@@ -18,6 +18,7 @@ import { startDailyTrash } from './js/modules/gameTrash.mjs';
 import { startDailyJudge } from './js/modules/gameGuy.mjs'
 import { createInfo } from './js/modules/npc.mjs';
 import { createCompass } from './js/modules/map.mjs';
+import { generateSpecial } from './js/modules/gameSpecial.mjs';
 
 createMap();
 // 測試
@@ -35,6 +36,7 @@ window.setTimeout(()=>{
         vm.$data.interaction.nowLoading = false
     }, 800)
 }, 500)
+generateSpecial();
 fetchFurnitures();
 fetchAchievements();
 
