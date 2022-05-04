@@ -4,29 +4,31 @@ let specialContainer = new PIXI.Container()
 specialContainer.name = 'specialContainer'
 specialContainer.scale.set(scale)
 
-let poses = [
-    {
-        x: 1800,
-        y: 700
-    }, {
-        x: 1000,
-        y: 800
-    }, {
-        x: 1500,
-        y: 1000
-    }, {
-        x: 0,
-        y: 1050
-    }
+let areas = [
+    [
+        {
+            x: 1800,
+            y: 700
+        }, {
+            x: 1800,
+            y: 500
+        }, {
+            x: 1500,
+            y: 500
+        }, {
+            x: 1800,
+            y: 700
+        }
+    ]
 ]
-let posId = 0, sp, spIsClear = false
+let areaId = 0, sp, spIsClear = false
 function generateSpecial(){
     // 判斷每日更新
     // let nowTime = new Date().getMinutes()
     // let recordGotSpecial = vm.$data.userRecord.gotSpecial
     // if (!recordGotSpecial && nowTime%2 == 0){
     //     drawSpecial()
-    //     updatePos()
+    //     updateArea()
     // }else{
     //     console.log("今天已經抓到特殊蝸牛了")
     // }
@@ -39,32 +41,34 @@ function generateSpecial(){
     //             specialContainer.removeChild(specialContainer.children[0])
     //         }
     //         drawSpecial()
-    //         updatePos()
+    //         updateArea()
     //         vm.$data.user.gotSpecial = false
     //     }
     // }, 1000)
-    drawSpecial()
-    updatePos()
+    drawSpecial(areaId)
+    // updateArea()
 }
 
-function updatePos(){
-    let timer  = window.setInterval(()=>{
-        if (spIsClear == false){
-            posId = getRandom(0, poses.length-1)
-            fastMove(posId)
-        }else {
-            clearInterval(timer)
-        }
-    }, 800)
-}
+// function updateArea(){
+//     let timer  = window.setInterval(()=>{
+//         if (spIsClear == false){
+//             areaId = getRandom(0, areas.length -1)
+//             fastMove(areaId)
+//         }else {
+//             clearInterval(timer)
+//         }
+//     }, 3000)
+// }
 
-function drawSpecial(){
+function drawSpecial(areaId){
     let texture = new PIXI.Texture.from("./src/img/snail_special.png")
     sp = new PIXI.Sprite(texture)
     sp.name = "special"
     sp.anchor.set(0.5)
     sp.interactive = true
     sp.buttonMode = true
+    sp.x = areas[areaId][0].x,
+    sp.y = areas[areaId][0].y,
     gsap.to(sp, .3, { //抖動
         pixi: {
             scaleX: 1.1,
@@ -73,6 +77,7 @@ function drawSpecial(){
         yoyo: true,
         repeat: -1
     })
+    fastMove(areaId)
     sp.on("pointerdown", (el)=>{
         vm.$data.user.gotSpecial = true
         el.target.destroy()
@@ -99,11 +104,30 @@ function drawSpecial(){
     mapContainer.addChild(specialContainer)
 }
 
-function fastMove(posId){
-    gsap.to(sp, .5, {
+function fastMove(areaId){
+    let tl = gsap.timeline({repeat: -1})
+    tl.to(sp, .5, {
         pixi: {
-            x: poses[posId].x,
-            y: poses[posId].y,
+            x: areas[areaId][0].x,
+            y: areas[areaId][0].y,
+        }
+    })
+    tl.to(sp, .5, {
+        pixi: {
+            x: areas[areaId][1].x,
+            y: areas[areaId][1].y,
+        }
+    })
+    tl.to(sp, .5, {
+        pixi: {
+            x: areas[areaId][2].x,
+            y: areas[areaId][2].y,
+        }
+    })
+    tl.to(sp, .5, {
+        pixi: {
+            x: areas[areaId][3].x,
+            y: areas[areaId][3].y,
         }
     })
 }
