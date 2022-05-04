@@ -203,7 +203,7 @@ let toolsData = [
         y: 100
     },{
         name: 'bad',
-        x: 50,
+        x: 70,
         y: 100
     }
 ]
@@ -220,7 +220,7 @@ function showGuyJudgeTools(){
         tool.interactive = true
         tool.buttonMode = true
         tool.anchor.set(0.5)
-        tool.scale.set(scale)
+        tool.scale.set(scale*0.8)
         tool.x = toolsData[i].x
         tool.y = toolsData[i].y
         tool
@@ -271,7 +271,7 @@ function checkJudged(tool){
                     pixi: {
                         x: toolsData[toolId].x,
                         y: toolsData[toolId].y,
-                        scale: scale,
+                        scale: scale*0.8,
                         alpha: 1
                     }
                 })
@@ -301,14 +301,14 @@ function checkJudged(tool){
         window.setTimeout(()=>{
             cleanAllGuysSaid()
             // 只要互動過了就消失
+            globalGuySprites.splice(globalGuySprites.findIndex(el=>el.name == beingJudged), 1) //把用來比對撞擊的資料也清除
             gsap.to(respondSp, .4, {
                 pixi: {
                     scale: 0
                 },
-                onComplete(){
-                    globalGuySprites.splice(globalGuySprites.findIndex(el=>el.name == beingJudged), 1) //把用來比對撞擊的資料也清除
-                    respondSp.destroy()
-                }
+                // onComplete(){
+                    // respondSp.destroy()
+                // }
             })
         }, 1500)
     }else{
@@ -317,7 +317,7 @@ function checkJudged(tool){
             pixi: {
                 x: toolsData[toolId].x,
                 y: toolsData[toolId].y,
-                scale: scale
+                scale: scale*0.8
             }
         })
     }
