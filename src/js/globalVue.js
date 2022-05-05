@@ -72,7 +72,7 @@ const vm = new Vue({
             }
         },
         finishedProgress() {
-            if (this.nowNPC) {
+            if (this.nowNPC && this.missions) {
                 return this.user.missions[`mission${this.nowNPC.mission}`].length
             } else return
         },
