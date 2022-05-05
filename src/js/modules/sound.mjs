@@ -1,4 +1,4 @@
-let soundEffect, pickTrashSE
+let soundEffect, pickTrashSE, judgeSE
 PIXI.sound.Sound.from({
     url: 'src/sounds/examples_resources_bird.mp3',
     preload: true,
@@ -15,6 +15,14 @@ PIXI.sound.Sound.from({
     }
 })
 
+PIXI.sound.Sound.from({
+    url: 'src/sounds/pop.mp3',
+    preload: true,
+    loaded: function(err, sound){
+        judgeSE = sound
+    }
+})
+
 function clickSoundEffect(){
     soundEffect.play()
 }
@@ -23,4 +31,8 @@ function playPickTrashSE(){
     pickTrashSE.play()
 }
 
-export {clickSoundEffect, playPickTrashSE}
+function playJudgeSE(){
+    judgeSE.play()
+}
+
+export {clickSoundEffect, playPickTrashSE, playJudgeSE}

@@ -6,8 +6,8 @@ const UserState = {
         </div>
         <h3>蝸牛探險家</h3>
         <p class="t-z-1 mb-1 t-c-g">連續登入：X天</p>
-        <p class="t-z-2 t-w-5">每日街道清掃：{{userGotTrashes.length}}/{{dailyTrashes.length}}</p>
-        <p class="t-z-2 t-w-5">街道環境維護：{{userJudges.length}}/{{dailyGuys.length}}</p>
+        <p class="t-z-2 t-w-5">每日環境清潔：{{userGotTrashes.length}}/{{dailyTrashes.length}}</p>
+        <p class="t-z-2 t-w-5">巷弄秩序維護：{{userJudges.length}}/{{dailyGuys.length}}</p>
         <section>
             <p class="t-z-2 t-w-5">綠洲散步</p>
             <div v-for="el of explors" class="d-flex">

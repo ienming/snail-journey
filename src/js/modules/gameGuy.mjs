@@ -3,6 +3,7 @@ import { callVueSys } from './global.mjs'
 import { app, scale, collisionDetect, guysContainer, getRandom, mapContainer } from './global.mjs'
 import { onDragStart, onDragMove, onDragEnd} from './global.mjs'
 import { globalGuySprites } from './npc.mjs'
+import { playJudgeSE } from './sound.mjs'
 
 // 所有 guys 可能出現的位置
 let guyPositions = []
@@ -311,6 +312,8 @@ function checkJudged(tool){
                 // }
             })
         }, 1500)
+        // 音效
+        playJudgeSE()
     }else{
         console.log("什麼事也沒有")
         gsap.to(tool, .5, {

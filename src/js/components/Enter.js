@@ -147,6 +147,10 @@ const Narrative = {
                     name: 3,
                     src: './src/img/open/shot3.png',
                     descrip: ""
+                },{
+                    name: 4,
+                    src: './src/img/open/shot4.png',
+                    descrip: ""
                 }
             ]
         }
