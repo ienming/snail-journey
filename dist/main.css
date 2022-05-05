@@ -3707,6 +3707,11 @@ footer {
   max-height: 80vh; }
   .popup.dialogue {
     width: 350px; }
+  .popup.dialogue.func {
+    width: 100%; }
+    @media (min-width: 768px) {
+      .popup.dialogue.func {
+        width: 40vw; } }
 
 .img-container {
   width: 100%;
@@ -3744,6 +3749,7 @@ footer {
     padding: 1rem;
     border-radius: 1.5rem;
     width: 350px;
+    max-width: 60vw;
     opacity: 0;
     transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     cursor: pointer;
@@ -3912,9 +3918,12 @@ footer {
   border-radius: 8px; }
 
 .adoption {
-  width: 40vw;
-  max-height: 80vh;
-  overflow: scroll; }
+  overflow: scroll;
+  max-height: 70vh; }
+  @media (min-width: 768px) {
+    .adoption {
+      max-height: 80vh;
+      width: 40vw; } }
   .adoption .keyword {
     border-radius: 50px;
     background-color: #3e856c;
@@ -3975,8 +3984,11 @@ ul.carousel-lids {
       background-color: #a87561; }
 
 .scroll {
-  max-height: 50vh;
-  overflow: scroll; }
+  max-height: 90vh;
+  overflow-y: scroll; }
+  @media (min-width: 768px) {
+    .scroll {
+      max-height: 60vh; } }
 
 html, body {
   width: 100%;

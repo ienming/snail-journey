@@ -137,6 +137,10 @@
     max-height: 80vh
     &.dialogue
         width: 350px
+    &.dialogue.func
+        width: 100%
+        +rwd(md)
+            width: 40vw
 
 .img-container
     +size(100%)
@@ -171,6 +175,7 @@
         padding: 1rem
         border-radius: 1.5rem
         width: 350px
+        max-width: 60vw
         opacity: 0
         +basicTransition()
         transform: translateX(-50%) translateY(20px)
@@ -328,9 +333,11 @@
 
 //認養介面
 .adoption
-    width: 40vw
-    max-height: 80vh
     overflow: scroll
+    max-height: 70vh
+    +rwd(md)
+        max-height: 80vh
+        width: 40vw
     .keyword
         border-radius: 50px
         background-color: $accentSubDark
@@ -390,5 +397,7 @@ ul.carousel-lids
             
 // 滾動
 .scroll
-    max-height: 50vh
-    overflow: scroll
+    max-height: 90vh
+    overflow-y: scroll
+    +rwd(md)
+        max-height: 60vh

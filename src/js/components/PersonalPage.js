@@ -367,11 +367,11 @@ const DisplayShelf = {
         <transition name="fade">
             <div class="mock">
                 <div class="wrapper">
-                    <div class="popup t-a-c w-md-50">
+                    <div class="popup scroll t-a-c w-md-50">
                         <section>
                             <h3>探索區域徽章</h3>
                             <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有探索完的區域喔。</br>快去找蝸牛們聊天、認識一下蝸牛綠洲吧！</p>
-                            <div class="d-flex jcc mt-1">
+                            <div class="d-flex jcc mt-1 flex-column flex-md-row">
                                 <div class="img-container badge"
                                     :class="{ locked: !el.achieved }"
                                     :data-descrip="el.descrip"
@@ -383,14 +383,12 @@ const DisplayShelf = {
                         <section class="mt-2">
                             <h3>認養蝸牛綠洲議題</h3>
                             <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
-                            <div class="d-flex jcc mt-1">
-                                <div class="img-container badge"
-                                    :class="{ locked: !el.adopted }"
-                                    :data-descrip="el.intro"
-                                    v-for="el of userAdopted">
-                                    <img src="./src/img/board.png" alt="" />
-                                </div>
-                            </div>
+                            <ul class="d-flex jcc mt-1" v-else>
+                                <li v-for="el of userAdopted" class="d-flex">
+                                    <p class="mr-1">{{ el.title }}</p>
+                                    <p>{{ el.intro }}</p>
+                                </li>
+                            </ul>
                         </section>
                         <close-btn now-show="display-shelf" @switch-display-shelf="$emit('switch-display-shelf')"></close-btn>
                     </div>

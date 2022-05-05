@@ -11,8 +11,8 @@ const Adoption = {
                 </figure>
             </div>
             </div>
-            <basic-link class="mt-1" :title="program.linkName" :url="program.link"></basic-link>
-            <div @click="adopt" class="mt-2 my-btn">認養任務！</div>
+            <basic-link class="mt-1" title="認養方案詳細說明" :url="program.link"></basic-link>
+            <div @click="adopt" class="mt-2 my-btn p-2 t-a-c">{{ program.linkName }}</div>
         </div>
     `,
     props: ['program'],

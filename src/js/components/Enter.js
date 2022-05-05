@@ -123,7 +123,8 @@ const Narrative = {
                 <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column aic">
                     <img :src=cut.src />
                     <p>{{ cut.descrip }}</p>
-                    <p>點擊畫面任何地方繼續</p>
+                    <p class="mt-2 t-z-1" style="opacity: 0.7" v-if="cut.name !== 4">（點擊畫面任何地方繼續）</p>
+                    <p class="mt-2 t-z-1" style="opacity: 0.7" v-else>（進入蝸牛綠洲！）</p>
                 </section>
             </transition-group>
         </div>

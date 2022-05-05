@@ -49,7 +49,7 @@
                     <!-- 一般對話 -->
                     <template v-if="!showProgram">
                         <div key="dialogue" class="d-flex">
-                            <div class="popup dialogue" :style="nowNPC && nowNPC.func ? { width: '40vw' } : ''">
+                            <div class="popup dialogue" :class="nowNPC && nowNPC.func ? 'func' : ''">
                                 <!-- 不管怎樣都會有的見面招呼語 -->
                                 <div>
                                     <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">
