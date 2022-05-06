@@ -141,16 +141,23 @@ const vm = new Vue({
         }
     },
     created() {
+        // prepare for recording token
+        Vue.prototype.$bus = new Vue()
+        this.$bus.$on('record-token', (token)=>{
+            this.storageData('token', token)
+        })
         // fetch data from localStorage
-        for (prop in this.user) {
-            let record = JSON.parse(localStorage.getItem(prop))
-            if (record) {
-                this.userRecord[prop] = record
-                this.user[prop] = record
-            } else {
-                console.log(`no record of ${prop}`)
-            }
-        }
+        // for (prop in this.user) {
+        //     let record = JSON.parse(localStorage.getItem(prop))
+        //     if (record) {
+        //         this.userRecord[prop] = record
+        //         this.user[prop] = record
+        //     } else {
+        //         console.log(`no record of ${prop}`)
+        //     }
+        // }
+        // fetch data from API
+        this.doGetUser()
         // dailyTrashes storage
         let recorddailyTrashes = JSON.parse(localStorage.getItem('dailyTrashes'))
         if (recorddailyTrashes){
@@ -165,6 +172,10 @@ const vm = new Vue({
     mounted() {
         console.log("vue completed load")
         this.autoBgMusic()
+        // 定時儲存
+        window.setInterval(()=>{
+            this.doPostUser()
+        }, 30000)
     },
     watch: {
         'user.missions': {
@@ -222,18 +233,18 @@ const vm = new Vue({
                 this.storageData('gotSpecial', d)
             }
         },
-        'dailyTrashes': {
-            handler: function (newValue, oldValue) {
-                console.log("每日垃圾總量有變動，開始儲存")
-                let d = JSON.stringify(newValue)
-                this.storageData('dailyTrashes', d)
-            }
-        },
         'user.judges': {
             handler: function (newValue, oldValue) {
                 console.log("評價好壞的資料有變動，開始儲存")
                 let d = JSON.stringify(newValue)
                 this.storageData('judges', d)
+            }
+        },
+        'dailyTrashes': {
+            handler: function (newValue, oldValue) {
+                console.log("每日垃圾總量有變動，開始儲存")
+                let d = JSON.stringify(newValue)
+                this.storageData('dailyTrashes', d)
             }
         },
         'dailyGuys': {
@@ -415,6 +426,52 @@ const vm = new Vue({
                     this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '區域探索完成！', `./src/img/${badgeURl}.png`)
                 }, 800)
             }
-        }
+        },
+        doPostUser() {
+            console.log(`Bearer ${localStorage.token}`)
+            axios({
+                method: "POST",
+                url: "http://localhost:8000/user",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                    authorization: `Bearer ${localStorage.token}`,
+                    // "Access-Control-Allow-Origin": "*",
+                },
+                data: {
+                    record: this.user
+                }
+            }).then((response) => {
+                console.log(response.status);
+                console.log(response);
+            });
+        },
+        doGetUser() {
+            axios({
+                method: "GET",
+                url: "http://localhost:8000/user",
+                headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                authorization: `Bearer ${localStorage.token}`,
+                // "Access-Control-Allow-Origin": "*",
+                }
+            }).then((response) => {
+                console.log(response.status);
+                console.log(response);
+                for (prop in this.user) {
+                    let record = response.data[prop]
+                    if (record) {
+                        this.userRecord[prop] = record
+                        this.user[prop] = record
+                    } else {
+                        console.log(`no record of ${prop}`)
+                    }
+                }
+            });
+        },
+    },
+    beforeDestroy: function() {
+        this.$bus.$off('record-token');
     }
 })

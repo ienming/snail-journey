@@ -3,7 +3,7 @@ const Enter = {
         <transition name="fade" v-if="loadingShouldShown">
             <div id="loading">
                 <div class="wrapper">
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column mb-2 mb-md-0">
                         <img src="./src/img/landmark.png" class="logo"/>
                         <transition name="fade">
                             <div v-if="loading" class="t-a-c mt-2">
