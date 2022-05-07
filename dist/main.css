@@ -2659,6 +2659,12 @@ section.container {
   100% {
     transform: translateY(10%); } }
 
+@keyframes background-move-left {
+  0% {
+    background-position-x: 0; }
+  100% {
+    background-position-x: 1000%; } }
+
 .my-btn {
   font-size: 14px;
   line-height: 1.5;
@@ -3679,7 +3685,10 @@ footer {
   top: 0;
   left: 0;
   z-index: 999;
-  background-color: #a87561; }
+  background-color: #a87561;
+  background: url(a6cf0f04ac133d546ad8.jpg);
+  background-size: cover;
+  animation: background-move-left 900s linear infinite; }
   #loading button {
     cursor: pointer; }
   #loading .logo {

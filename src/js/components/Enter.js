@@ -1,7 +1,7 @@
 const Enter = {
     template: `
         <transition name="fade" v-if="loadingShouldShown">
-            <div id="loading">
+            <div id="loading" style="background-position-x: 0">
                 <div class="wrapper">
                     <div class="d-flex flex-column mb-2 mb-md-0">
                         <img src="./src/img/landmark.png" class="logo"/>
@@ -29,7 +29,7 @@ const Enter = {
             this.$emit('start-game')
             this.$emit('switch-bg', false)
             this.loadingShouldShown = false
-        }
+        },
     }
 }
 Vue.component("enter", Enter)
