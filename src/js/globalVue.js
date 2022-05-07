@@ -72,7 +72,7 @@ const vm = new Vue({
             }
         },
         finishedProgress() {
-            if (this.nowNPC && this.missions) {
+            if (this.nowNPC) {
                 return this.user.missions[`mission${this.nowNPC.mission}`].length
             } else return
         },
@@ -147,17 +147,17 @@ const vm = new Vue({
             this.storageData('token', token)
         })
         // fetch data from localStorage
-        // for (prop in this.user) {
-        //     let record = JSON.parse(localStorage.getItem(prop))
-        //     if (record) {
-        //         this.userRecord[prop] = record
-        //         this.user[prop] = record
-        //     } else {
-        //         console.log(`no record of ${prop}`)
-        //     }
-        // }
+        for (prop in this.user) {
+            let record = JSON.parse(localStorage.getItem(prop))
+            if (record) {
+                this.userRecord[prop] = record
+                this.user[prop] = record
+            } else {
+                console.log(`no record of ${prop}`)
+            }
+        }
         // fetch data from API
-        this.doGetUser()
+        // this.doGetUser()
         // dailyTrashes storage
         let recorddailyTrashes = JSON.parse(localStorage.getItem('dailyTrashes'))
         if (recorddailyTrashes){
@@ -173,9 +173,9 @@ const vm = new Vue({
         console.log("vue completed load")
         this.autoBgMusic()
         // 定時儲存
-        window.setInterval(()=>{
-            this.doPostUser()
-        }, 30000)
+        // window.setInterval(()=>{
+        //     this.doPostUser()
+        // }, 30000)
     },
     watch: {
         'user.missions': {

@@ -10,8 +10,6 @@
 </head>
 
 <body>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v13.0&appId=405617263518270&autoLogAppEvents=1" nonce="PtvRz5Pa"></script>
     <div id="app">
         <!-- Header -->
         <my-header @switch-personalpage="switchPersonalPage" @switch-bg="switchBg" :bg-sound="bgSound" :bg-is-playing="bgIsPlaying"></my-header>
@@ -110,19 +108,6 @@
                 </div>
             </div>
         </transition>
-        <!-- 留言板測試 -->
-        <!-- <transition name="fade">
-            <div class="mock" v-show="showMsgBoard">
-                <div class="wrapper">
-                    <div class="popup" style="width: unset;">
-                        <h3 class="mb-2">蝸牛村留言版</h3>
-                        <div class="fb-comments" data-href="https://ienming.github.io/snail-journey/" data-width="" data-numposts="5"></div>
-                        <close-btn :outer-show-msg="showMsgBoard" @switch-msg="switchMsg">
-                        </close-btn>
-                    </div>
-                </div>
-            </div>
-        </transition> -->
     </div>
 
     <!-- Vue -->

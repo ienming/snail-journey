@@ -1,7 +1,7 @@
 const Enter = {
     template: `
-        <transition name="fade" v-if="loadingShouldShown">
-            <div id="loading" style="background-position-x: 0">
+        <transition name="fade" :duration="{ leave: 800 }" v-if="loadingShouldShown">
+            <div id="loading">
                 <div class="wrapper">
                     <div class="d-flex flex-column mb-2 mb-md-0">
                         <img src="./src/img/landmark.png" class="logo"/>
