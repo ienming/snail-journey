@@ -2,7 +2,6 @@ import './sass/style.sass'
 
 import {
     app,
-    scale,
     mapContainer,
 } from "./js/modules/global.mjs";
 import {
@@ -34,7 +33,7 @@ window.setTimeout(()=>{
     window.setTimeout(()=>{
         console.log("原則上都畫好了")
         vm.$data.interaction.nowLoading = false
-    }, 800)
+    }, 1500)
 }, 500)
 generateSpecial();
 fetchFurnitures();

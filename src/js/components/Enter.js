@@ -4,7 +4,7 @@ const Enter = {
             <div id="loading">
                 <div class="wrapper">
                     <div class="d-flex flex-column mb-2 mb-md-0">
-                        <img src="./src/img/landmark.png" class="logo"/>
+                        <img src="./src/img/logo.png" class="logo"/>
                         <transition name="fade">
                             <div v-if="loading" class="t-a-c mt-2">
                                 <img src="./src/img/icons/loading.png" class="icon"/>
@@ -13,12 +13,15 @@ const Enter = {
                         </transition>
                         <p class="t-a-c my-1">請注意音量～</p>
                     </div>
-                    <log-in @log-in="startGame"></log-in>
+                    <transition name="fade">
+                        <log-in @log-in="startGame" v-if="!loading"></log-in>
+                    </transition>
                 </div>
+                <toggle-bg-music :bg-is-playing="bgIsPlaying" @switch-bg-music="switchBgMusic" style="position: absolute; right: 24px; top: 24px;"></toggle-bg-music>
             </div>
         </transition>
     `,
-    props: ['loading', 'bgSound'],
+    props: ['loading', 'bgIsPlaying'],
     data(){
         return {
             loadingShouldShown: true
@@ -27,9 +30,15 @@ const Enter = {
     methods: {
         startGame(){
             this.$emit('start-game')
-            this.$emit('switch-bg', false)
             this.loadingShouldShown = false
         },
+        switchBgMusic(v){
+            if (v == 'play'){
+                this.$emit('switch-bg', true)
+            }else{
+                this.$emit('switch-bg', false)
+            }
+        }
     }
 }
 Vue.component("enter", Enter)

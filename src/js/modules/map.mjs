@@ -1,4 +1,4 @@
-import { app, scale, mapContainer} from './global.mjs'
+import { app, scale, mapContainer, rwds} from './global.mjs'
 
 // Drag & Drop
 let dist = {x:0, y:0} //initialize the distance between event x,y and current map x,y
@@ -95,19 +95,32 @@ let cmpsX = 100*scale, cmpsY = window.innerHeight*0.75
 function createCompass(){
     let container = new PIXI.Container()
     container.name = "compassContainer"
-    container.x = cmpsX
-    container.y = cmpsY
     let compassTexture = new PIXI.Texture.from('./src/img/compass.png')
     cmps = new PIXI.Sprite(compassTexture)
-    cmps.scale.set(scale)
+    let cmpsScale
+    let rwd = window.innerWidth
+    if (rwd < rwds.sm){
+        cmpsScale = scale*0.5
+        cmpsX = 70*scale
+        cmpsY = 70*scale
+    }else if (rwd > rwds.sm && rwd < rwds.md){
+        cmpsScale = scale*0.8
+        cmpsX = 70*scale
+        cmpsY = 70*scale
+    }else if (rwd > rwds.md){
+        cmpsScale = scale
+    }
+    container.x = cmpsX
+    container.y = cmpsY
+    cmps.scale.set(cmpsScale)
     container.addChild(cmps)
     // 指針
     let pointerTexture = new PIXI.Texture.from('./src/img/compass_pointer.png')
     let pointer = new PIXI.Sprite(pointerTexture)
-    pointer.scale.set(scale)
+    pointer.scale.set(cmpsScale)
     pointer.anchor.set(0.1, 0.5)
-    pointer.x = 45
-    pointer.y = 45
+    pointer.x = 45*(cmpsScale/scale)
+    pointer.y = 45*(cmpsScale/scale)
     container.addChild(pointer)
     app.stage.addChild(container)
     app.ticker.add((delta)=>{

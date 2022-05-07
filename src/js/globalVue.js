@@ -254,12 +254,21 @@ const vm = new Vue({
                 this.storageData('dailyGuys', d)
             }
         },
+        'bgIsPlaying': {
+            handler: function (newValue, oldValue) {
+                if (!newValue){
+                    this.bgSound.stop()
+                }else{
+                    this.bgSound.play()
+                }
+            }
+        }
     },
     methods: {
         autoBgMusic(){
             let sound = PIXI.sound.Sound.from({
                 url: 'src/sounds/bgm_clip.m4a',
-                autoPlay: false,
+                autoPlay: this.bgIsPlaying,
                 loop: true,
                 preload: true,
             });
@@ -288,11 +297,6 @@ const vm = new Vue({
         },
         switchBg(value){
             this.bgIsPlaying = value
-            if (value){
-                this.bgSound.play()
-            }else{
-                this.bgSound.stop()
-            }
         },
         switchMsg(){
             console.log("關閉留言板")
@@ -302,7 +306,6 @@ const vm = new Vue({
         },
         startGame() {
             this.interaction.nowLoading = false
-            // this.bgIsPlaying = true
         },
         checkAns(correct) {
             if (correct) {

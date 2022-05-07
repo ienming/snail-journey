@@ -1,11 +1,11 @@
 const Header = {
     template: `
         <header class="my-header">
-            <img src="./src/img/landmark.png" class="logo"/>
+            <img src="./src/img/logo.png" class="logo"/>
             <nav>
                 <ul>
                     <li v-for="page of pages" @click="switchPage(page.name)" :data-text="page.seudo">
-                        <img v-if="page.icon" :src="bgIsPlaying ? './src/img/icons/sound.png' : './src/img/icons/sound_ban.png'" class="icon"/>
+                        <toggle-bg-music :bg-is-playing="bgIsPlaying" v-if="page.icon" @switch-bg-music="switchBgMusic"></toggle-bg-music>
                         <span v-else>{{page.name}}</span>
                     </li>
                 </ul>
@@ -34,12 +34,19 @@ const Header = {
                 localStorage.clear()
                 window.location.reload()
             }
-            if (name == 'toggleMusic'){
-                if(this.bgSound.isPlaying){
-                    this.$emit('switch-bg', false)
-                }else{
-                    this.$emit('switch-bg', true)
-                }
+            // if (name == 'toggleMusic'){
+            //     if(this.bgSound.isPlaying){
+            //         this.$emit('switch-bg', false)
+            //     }else{
+            //         this.$emit('switch-bg', true)
+            //     }
+            // }
+        },
+        switchBgMusic(v){
+            if (v == 'play'){
+                this.$emit('switch-bg', true)
+            }else{
+                this.$emit('switch-bg', false)
             }
         }
     }

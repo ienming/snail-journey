@@ -1,6 +1,12 @@
 let canvasContainer = document.querySelector("#canvasContainer"),
 canvasWidth = canvasContainer.offsetWidth,
 canvasHeight = canvasContainer.offsetHeight
+
+let rwds = {
+    sm: 576,
+    md: 992
+}
+
 // PIXI init
 let app = new PIXI.Application({
 backgroundColor: 0xe2dcc6,
@@ -85,4 +91,4 @@ function onDragMove() {
 }
 export {canvasContainer, canvasWidth, canvasHeight, app, scale, mapContainer, 
     npcContainer, guysContainer, npcContainerIsClicking, getRandom, arrayEquals, collisionDetect,
-    callVueSys, onDragStart, onDragMove, onDragEnd}
+    callVueSys, onDragStart, onDragMove, onDragEnd, rwds}

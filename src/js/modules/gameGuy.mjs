@@ -1,7 +1,7 @@
 import { fetchGuys } from './data.mjs'
 import { callVueSys } from './global.mjs'
 import { app, scale, collisionDetect, guysContainer, getRandom, mapContainer } from './global.mjs'
-import { onDragStart, onDragMove, onDragEnd} from './global.mjs'
+import { onDragStart, onDragMove, onDragEnd, rwds} from './global.mjs'
 import { globalGuySprites } from './npc.mjs'
 import { playJudgeSE } from './sound.mjs'
 
@@ -221,9 +221,17 @@ function showGuyJudgeTools(){
         tool.interactive = true
         tool.buttonMode = true
         tool.anchor.set(0.5)
-        tool.scale.set(scale*0.8)
-        tool.x = toolsData[i].x
-        tool.y = toolsData[i].y
+        let toolScale, toolX = toolsData[i].x , toolY = toolsData[i].y
+        let rwd = window.innerWidth
+        if (rwd < rwds.md){
+            toolScale = scale*0.6
+            toolX = toolsData[i].x * 0.7
+        }else if (rwd > rwds.md){
+            toolScale = scale*0.8
+        }
+        tool.scale.set(toolScale)
+        tool.x = toolX
+        tool.y = toolY
         tool
             .on('pointerdown', onDragStart)
             .on('pointermove', onDragMove)
@@ -242,8 +250,13 @@ function showGuyJudgeTools(){
     tools.forEach(tool=>{
         judgeToolsContainer.addChild(tool)
     })
-    judgeToolsContainer.x = 150*scale
-    judgeToolsContainer.y = window.innerHeight*0.8
+    let rwd = window.innerWidth, toolsContainerX = 150*scale, toolsContainerY = window.innerHeight*0.8
+    if (rwd < rwds.md){
+        toolsContainerX = 100*scale
+        toolsContainerY = window.innerHeight*0.65
+    }
+    judgeToolsContainer.x = toolsContainerX
+    judgeToolsContainer.y = toolsContainerY
     app.stage.addChild(judgeToolsContainer)
 }
 

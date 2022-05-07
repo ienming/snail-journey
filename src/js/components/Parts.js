@@ -1,3 +1,23 @@
+const ToggleBGMusic = {
+    template: `
+        <img :src="bgIsPlaying ? './src/img/icons/sound.png' : './src/img/icons/sound_ban.png'" class="toggle-sound-icon" @click="switchBgMusic"/>
+    `,
+    props: ['bgIsPlaying'],
+    data(){
+        return {}
+    },
+    methods: {
+        switchBgMusic(){
+            let value = 'play'
+            if (this.bgIsPlaying){
+                value = 'stop'
+            }
+            this.$emit('switch-bg-music', value)
+        }
+    }
+}
+Vue.component('toggle-bg-music', ToggleBGMusic)
+
 const CloseBtn = {
     template:
     `<div class="close" @click="switchPage">
