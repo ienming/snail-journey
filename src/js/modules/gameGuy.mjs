@@ -118,8 +118,6 @@ function drawGuy(el){
     let sp = new PIXI.Sprite(texture)
     let posId = getRandom(0,guyPositions.length-1)
     sp.name = el.name
-    sp.x = guyPositions[posId].x*scale
-    sp.y = guyPositions[posId].y*scale
     sp.scale.set(scale)
     sp.anchor.set(0.5)
     if (el.interactive !== false){
@@ -132,8 +130,30 @@ function drawGuy(el){
     sp.mouseout = function(){
         cleanAllGuysSaid()
     }
+    // guy icon
+    let iconTexture = new PIXI.Texture.from('./src/img/guy_icon.png')
+    let icon = new PIXI.Sprite(iconTexture)
+    icon.name = 'guysicon'
+    icon.x = 20
+    icon.y = -50
+    icon.scale.set(scale)
+    let animDelay = Math.random()
+    gsap.to(icon, .5, {
+        pixi: {
+            y: -55
+        },
+        yoyo: true,
+        repeat: -1,
+        delay: animDelay
+    })
+    let eachGuyContainer = new PIXI.Container()
+    eachGuyContainer.name = el.name
+    eachGuyContainer.x = guyPositions[posId].x*scale
+    eachGuyContainer.y = guyPositions[posId].y*scale
+    eachGuyContainer.addChild(sp)
+    eachGuyContainer.addChild(icon)
     // 放進去 container
-    guysContainer.addChild(sp)
+    guysContainer.addChild(eachGuyContainer)
     guysContainer.addChild(guySayContainer)
     console.log(`把${sp.name}放進去guysContainer`)
     globalGuySprites.push(sp)

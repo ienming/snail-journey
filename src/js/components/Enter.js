@@ -53,13 +53,14 @@ const NoviceTeach = {
                         <transition-group name="fade-right">
                             <div v-for="(teach,idx) of teaches" :key="teach.title" v-show="idx == nowStep" class="t-a-c fade-right-item">
                                 <h2 class="t-z-4 mb-1">{{teach.title}}</h2>
-                                <img :src="teach.img" />
+                                <img :src="teach.img" style="max-width: 60%;"/>
                                 <p>{{teach.content}}</p>
                             </div>
                         </transition-group>
                         <div class="d-flex jcb mt-1">
                             <button class="small t-c t-w-6" @click="moveStep('prev')">前一個</button>
-                            <button class="small t-c t-w-6" @click="moveStep('next')">下一個</button>
+                            <button class="small t-c t-w-6" @click="moveStep('next')" v-if="nowStep !== teaches.length-1">下一個</button>
+                            <button class="small t-c t-w-6" @click="switchNovice()" v-else>完成</button>
                         </div>
                         <nav>
                             <ul class="carousel-lids">
@@ -78,19 +79,23 @@ const NoviceTeach = {
             teaches: [
                 {
                     title: "探索綠洲",
-                    content: "說明1內容",
+                    content: "拖曳地圖、到處看看，和蝸牛村民聊聊天。蝸牛綠洲，慢慢行！",
                     img: ""
                 },{
-                    title: "清掃街道維護秩序",
-                    content: "說明2內容",
-                    img: ""
+                    title: "維護秩序",
+                    content: "街區裡有時會出現進行活動的人，拖拉右下角的圖案到有「對話圖標」的人身上，守護蝸牛綠洲的秩序、獲得蝸牛幣吧！",
+                    img: "./src/img/teach_guy.png"
+                },{
+                    title: "清掃街道",
+                    content: "有人亂丟垃圾！請你幫忙把垃圾撿起來，一起保持巷弄的乾淨整潔。",
+                    img: "./src/img/teach_trash.png"
                 },{
                     title: "佈置自己的房間",
-                    content: "說明3內容",
-                    img: ""
+                    content: "和蝸牛們聊天、認識街區，用「蝸牛幣」把家具放到自己家裡吧！打造舒服的小天地！",
+                    img: "./src/img/teach_furniture.png"
                 },{
                     title: "認養行動案",
-                    content: "說明4內容",
+                    content: "店裡的蝸牛村民似乎有什麼計劃正在進行，有興趣加入、成為這裡的一份子嗎？認養行動案，成為蝸牛綠洲的 VIP 吧！",
                     img: ""
                 }
             ],
