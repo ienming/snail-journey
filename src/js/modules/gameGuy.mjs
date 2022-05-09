@@ -117,21 +117,12 @@ function drawGuy(el){
     let texture = new PIXI.Texture.from(`./src/img/${el.name}.png`)
     let sp = new PIXI.Sprite(texture)
     let posId = getRandom(0,guyPositions.length-1)
+    let [guyPosX, guyPosY] = [guyPositions[posId].x*scale, guyPositions[posId].y*scale]
     sp.name = el.name
     sp.scale.set(scale)
     sp.anchor.set(0.5)
-    if (el.interactive !== false){
-        sp.interactive = true
-        sp.buttonMode = true
-    }
-    sp.mouseover = function(){
-        guySay(el, sp.x, sp.y, el.speaks[0])
-    }
-    sp.mouseout = function(){
-        cleanAllGuysSaid()
-    }
     // guy icon
-    let iconTexture = new PIXI.Texture.from('./src/img/guy_icon.png')
+    let iconTexture = new PIXI.Texture.from('./src/img/speak_icon.png')
     let icon = new PIXI.Sprite(iconTexture)
     icon.name = 'guysicon'
     icon.x = 20
@@ -148,8 +139,18 @@ function drawGuy(el){
     })
     let eachGuyContainer = new PIXI.Container()
     eachGuyContainer.name = el.name
-    eachGuyContainer.x = guyPositions[posId].x*scale
-    eachGuyContainer.y = guyPositions[posId].y*scale
+    eachGuyContainer.x = guyPosX
+    eachGuyContainer.y = guyPosY
+    if (el.interactive !== false){
+        eachGuyContainer.interactive = true
+        eachGuyContainer.buttonMode = true
+    }
+    eachGuyContainer.mouseover = function(){
+        guySay(el, guyPosX, guyPosY, el.speaks[0])
+    }
+    eachGuyContainer.mouseout = function(){
+        cleanAllGuysSaid()
+    }
     eachGuyContainer.addChild(sp)
     eachGuyContainer.addChild(icon)
     // 放進去 container

@@ -110,16 +110,18 @@ const PersonalPage = {
             }
         },
         drawDisplayShelf(){
+            let container = new PIXI.Container()
+            container.name = 'triumph'
+            container.interactive = true
+            container.buttonMode = true
             let texture = new PIXI.Texture.from('./src/img/room/triumph.png')
             let sp = new PIXI.Sprite(texture)
-            sp.interactive = true
-            sp.buttonMode = true
-            sp.x = 460*this.pixi.roomScale/this.pixi.originScale
-            sp.y = 145*this.pixi.roomScale/this.pixi.originScale
+            // sp.x = 460*this.pixi.roomScale/this.pixi.originScale
+            // sp.y = 145*this.pixi.roomScale/this.pixi.originScale
             sp.scale.set(this.pixi.roomScale)
             sp.anchor.set(0.5)
             let sc = this.pixi.roomScale
-            sp
+            container
                 .on("pointerdown", ()=>{
                     this.displayShelfHasShown = true
                 })
@@ -135,7 +137,27 @@ const PersonalPage = {
                         }
                     })
                 })
-            this.pixi.app.stage.addChild(sp)
+            // icon
+            let iconTexture = new PIXI.Texture.from('./src/img/speak_icon.png')
+            let icon = new PIXI.Sprite(iconTexture)
+            icon.name = 'interactiveIcon'
+            icon.x = 20
+            icon.y = -50
+            icon.scale.set(this.pixi.roomScale)
+            let animDelay = Math.random()
+            gsap.to(icon, .5, {
+                pixi: {
+                    y: -55
+                },
+                yoyo: true,
+                repeat: -1,
+                delay: animDelay
+            })
+            container.x = 460*this.pixi.roomScale/this.pixi.originScale
+            container.y = 145*this.pixi.roomScale/this.pixi.originScale
+            container.addChild(sp)
+            container.addChild(icon)
+            this.pixi.app.stage.addChild(container)
         },
         drawFurnitures(){
             while(this.pixi.furnituresContainer.children.length > 0){
