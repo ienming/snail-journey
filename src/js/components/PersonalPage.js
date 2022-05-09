@@ -116,8 +116,6 @@ const PersonalPage = {
             container.buttonMode = true
             let texture = new PIXI.Texture.from('./src/img/room/triumph.png')
             let sp = new PIXI.Sprite(texture)
-            // sp.x = 460*this.pixi.roomScale/this.pixi.originScale
-            // sp.y = 145*this.pixi.roomScale/this.pixi.originScale
             sp.scale.set(this.pixi.roomScale)
             sp.anchor.set(0.5)
             let sc = this.pixi.roomScale
@@ -138,20 +136,18 @@ const PersonalPage = {
                     })
                 })
             // icon
-            let iconTexture = new PIXI.Texture.from('./src/img/speak_icon.png')
+            let iconTexture = new PIXI.Texture.from('./src/img/icons/magnify.png')
             let icon = new PIXI.Sprite(iconTexture)
             icon.name = 'interactiveIcon'
-            icon.x = 20
-            icon.y = -50
+            icon.x = 0
+            icon.y = -30
             icon.scale.set(this.pixi.roomScale)
-            let animDelay = Math.random()
             gsap.to(icon, .5, {
                 pixi: {
-                    y: -55
+                    y: -35
                 },
                 yoyo: true,
                 repeat: -1,
-                delay: animDelay
             })
             container.x = 460*this.pixi.roomScale/this.pixi.originScale
             container.y = 145*this.pixi.roomScale/this.pixi.originScale
@@ -389,29 +385,32 @@ const DisplayShelf = {
         <transition name="fade">
             <div class="mock">
                 <div class="wrapper">
-                    <div class="popup scroll t-a-c w-md-50">
-                        <section>
-                            <h3>探索區域徽章</h3>
-                            <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有探索完的區域喔。</br>快去找蝸牛們聊天、認識一下蝸牛綠洲吧！</p>
-                            <div class="d-flex jcc mt-1 flex-column flex-md-row">
-                                <div class="img-container badge"
-                                    :class="{ locked: !el.achieved }"
-                                    :data-descrip="el.descrip"
-                                    v-for="el of userAchieved">
-                                    <img :src="el.imgSrc" />
+                    <div class="popup t-a-c w-md-50">
+                        <div class="scroll sm-only">
+                            <section>
+                                <h3>探索區域徽章</h3>
+                                <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有探索完的區域喔。</br>快去找蝸牛們聊天、認識一下蝸牛綠洲吧！</p>
+                                <div class="d-flex jcc mt-1 flex-column flex-md-row">
+                                    <div class="badge col-md-4"
+                                        :class="{ locked: !el.achieved }"
+                                        v-for="el of userAchieved">
+                                        <img :src="el.imgSrc" />
+                                        <p class="mt-1 t-z-2">{{el.descrip}}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </section>
-                        <section class="mt-2">
-                            <h3>認養蝸牛綠洲議題</h3>
-                            <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
-                            <ul class="d-flex jcc mt-1" v-else>
-                                <li v-for="el of userAdopted" class="d-flex">
-                                    <p class="mr-1">{{ el.title }}</p>
-                                    <p>{{ el.intro }}</p>
-                                </li>
-                            </ul>
-                        </section>
+                            </section>
+                            <section class="mt-2">
+                                <h3>認養蝸牛綠洲議題</h3>
+                                <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
+                                <ul class="d-flex jcc mt-1 adoption-lists" v-else>
+                                    <li v-for="el of userAdopted" class="d-flex aic">
+                                        <img src="./src/img/icons/checked.svg" class="icon" />
+                                        <p class="mx-1">{{ el.title }}</p>
+                                        <p class="t-z-2">{{ el.intro }}</p>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
                         <close-btn now-show="display-shelf" @switch-display-shelf="$emit('switch-display-shelf')"></close-btn>
                     </div>
                 </div>
@@ -476,7 +475,7 @@ const DisplayShelf = {
             }else return true
         },
         adoptedEmpty(){
-            if (this.adoptedNum !== 0){
+            if (this.userAdoptions.length > 0){
                 return false
             }else return true
         }

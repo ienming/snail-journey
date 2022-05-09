@@ -11,7 +11,6 @@ const Enter = {
                                 <h4>???%</h4>
                                 </div>
                         </transition>
-                        <p class="t-a-c my-1">請注意音量～</p>
                     </div>
                     <transition name="fade">
                         <log-in @log-in="startGame" v-if="!loading"></log-in>

@@ -1,6 +1,5 @@
 ﻿name,host_name,x,y
-commentBoard,snail_mryeh,50,50
 something,snail_mryeh,50,200
-commentBoard,snail_cinnamon,100,100
-something,snail_greenbean,100,150
-commentBoard,snail_greenbean,200,180
+commentBoard,snail_cinnamon,200,280
+something,snail_bookstore,100,150
+commentBoard,snail_bookstore,200,180

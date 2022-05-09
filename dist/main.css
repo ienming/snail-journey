@@ -3743,40 +3743,21 @@ footer {
   flex-shrink: 0; }
   .img-container > img {
     max-width: 80%; }
-  .img-container.locked {
-    opacity: 0.8;
-    filter: grayscale(100%); }
 
 .badge {
   position: relative;
-  margin: 8px; }
+  margin: 8px;
+  max-width: 75%;
+  flex-direction: column; }
   .badge img {
     max-width: 100%; }
-  @media (min-width: 768px) {
-    .badge {
-      width: 135px;
-      height: 135px; } }
-  .badge::after {
-    content: attr(data-descrip);
-    display: block;
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    z-index: 1;
-    background-color: #3e856c;
-    color: #ffffff;
-    padding: 1rem;
-    border-radius: 1.5rem;
-    width: 350px;
-    max-width: 60vw;
-    opacity: 0;
-    transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    cursor: pointer;
-    transform: translateX(-50%) translateY(20px);
-    pointer-events: none; }
-  .badge:hover::after {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0); }
+    @media (min-width: 768px) {
+      .badge img {
+        width: 135px;
+        height: 135px; } }
+  .badge.locked {
+    opacity: 0.8;
+    filter: grayscale(100%); }
 
 .close {
   position: absolute;
@@ -3870,10 +3851,11 @@ footer {
   position: absolute;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   padding: 1.5rem;
-  bottom: 0;
+  top: 0;
   max-width: 90vw; }
   @media (min-width: 768px) {
     #furnitureContainer {
+      top: unset;
       bottom: -20px;
       left: 50%;
       width: 60vw;
@@ -3881,7 +3863,13 @@ footer {
       transform: translateX(-50%); } }
   #furnitureContainer .furnitures {
     overflow: scroll;
+    max-height: 70vh;
+    flex-direction: column;
     gap: 12px; }
+    @media (min-width: 768px) {
+      #furnitureContainer .furnitures {
+        flex-direction: row;
+        max-height: unset; } }
   #furnitureContainer .furniture {
     position: relative;
     background-color: #e2dcc6;
@@ -3959,6 +3947,11 @@ footer {
 .mission-rwd img {
   width: 68px; }
 
+.adoption-lists li {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #787878;
+  text-align: left; }
+
 .comment-lists {
   display: flex;
   flex-direction: column;
@@ -4003,11 +3996,12 @@ ul.carousel-lids {
       background-color: #a87561; }
 
 .scroll {
-  max-height: 90vh;
+  max-height: 55vh;
   overflow-y: scroll; }
   @media (min-width: 768px) {
-    .scroll {
-      max-height: 60vh; } }
+    .scroll.sm-only {
+      max-height: unset;
+      overflow: initial; } }
 
 html, body {
   width: 100%;

@@ -54,10 +54,10 @@ let fetchNPC = async () => {
                     linkName: d[keyMap.program_linkName],
                     link: d[keyMap.program_link]
                 }
-                // 給 global all atoptions 這些資料，用來產生徽章
+                // 給 global all adoptions 這些資料，用來產生認養列表
                 let adoptionObj = {}
                 adoptionObj.title = d[keyMap.program_title]
-                adoptionObj.intro = "認養徽章說明"
+                adoptionObj.intro = d[keyMap.program_goal]
                 vm.$data.adoptions.push(adoptionObj)
                 //
                 // if (d[keyMap.program_subtitle]){

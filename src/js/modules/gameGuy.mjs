@@ -122,7 +122,7 @@ function drawGuy(el){
     sp.scale.set(scale)
     sp.anchor.set(0.5)
     // guy icon
-    let iconTexture = new PIXI.Texture.from('./src/img/speak_icon.png')
+    let iconTexture = new PIXI.Texture.from('./src/img/icons/speak_icon.png')
     let icon = new PIXI.Sprite(iconTexture)
     icon.name = 'guysicon'
     icon.x = 20

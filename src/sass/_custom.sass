@@ -163,37 +163,39 @@
     flex-shrink: 0
     >img
         max-width: 80%
-    &.locked
-        opacity: 0.8
-        filter: grayscale(100%)
 
 .badge
     position: relative
     margin: 8px
+    max-width: 75%
+    flex-direction: column
     img
         max-width: 100%
-    +rwd(md)
-        +size(135px)
-    &::after
-        content: attr(data-descrip)
-        display: block
-        position: absolute
-        top: 90%
-        left: 50%
-        z-index: 1
-        background-color: $accentSubDark
-        color: $white
-        padding: 1rem
-        border-radius: 1.5rem
-        width: 350px
-        max-width: 60vw
-        opacity: 0
-        +basicTransition()
-        transform: translateX(-50%) translateY(20px)
-        pointer-events: none
-    &:hover::after
-        opacity: 1
-        transform: translateX(-50%) translateY(0)
+        +rwd(md)
+            +size(135px)
+    &.locked
+        opacity: 0.8
+        filter: grayscale(100%)
+    // &::after
+    //     content: attr(data-descrip)
+    //     display: block
+    //     position: absolute
+    //     top: 90%
+    //     left: 50%
+    //     z-index: 1
+    //     background-color: $accentSubDark
+    //     color: $white
+    //     padding: 1rem
+    //     border-radius: 1.5rem
+    //     width: 350px
+    //     max-width: 60vw
+    //     opacity: 0
+    //     +basicTransition()
+    //     transform: translateX(-50%) translateY(20px)
+    //     pointer-events: none
+    // &:hover::after
+    //     opacity: 1
+    //     transform: translateX(-50%) translateY(0)
 
 .close
     position: absolute
@@ -277,9 +279,10 @@
     position: absolute
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     padding: 1.5rem
-    bottom: 0
+    top: 0
     max-width: 90vw
     +rwd(md)
+        top: unset
         bottom: -20px
         left: 50%
         width: 60vw
@@ -287,9 +290,13 @@
         transform: translateX(-50%)
     .furnitures
         overflow: scroll
+        max-height: 70vh
+        flex-direction: column
         gap: 12px
+        +rwd(md)
+            flex-direction: row
+            max-height: unset
         // flex-wrap: wrap
-        // max-height: 100px
     .furniture
         position: relative
         background-color: $main
@@ -365,6 +372,12 @@
     img
         width: 68px
 
+.adoption-lists
+    li
+        padding-bottom: 1rem
+        border-bottom: 1px solid $secondaryGrey
+        text-align: left
+
 // 留言板
 .comment-lists
     display: flex
@@ -408,7 +421,11 @@ ul.carousel-lids
             
 // 滾動
 .scroll
-    max-height: 90vh
+    max-height: 55vh
     overflow-y: scroll
-    +rwd(md)
-        max-height: 60vh
+    // +rwd(md)
+    //     max-height: 60vh
+    &.sm-only
+        +rwd(md)
+            max-height: unset
+            overflow: initial

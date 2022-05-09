@@ -97,25 +97,35 @@ const House = {
         },
         drawItems(){
             this.items.forEach(item=>{
-                let texture = new PIXI.Texture.from(`./src/img/${item.name}.jpg`)
-                let sp = new PIXI.Sprite(texture)
-                sp.name = item.name
-                sp.interactive = true
-                sp.buttonMode = true
-                sp
+                // icon
+                let iconTexture = new PIXI.Texture.from('./src/img/icons/magnify.png')
+                let icon = new PIXI.Sprite(iconTexture)
+                icon.name = `${item.name}_icon`
+                icon.x = 20
+                icon.y = 5
+                icon.scale.set(this.pixi.houseScale)
+                gsap.to(icon, .5, {
+                    pixi: {
+                        y: -5
+                    },
+                    yoyo: true,
+                    repeat: -1,
+                })
+                // container
+                let container = new PIXI.Container()
+                container.name = item.name
+                container.interactive = true
+                container.buttonMode = true
+                container
                     .on("pointerdown", ()=>{
-                        this.checkWhomClicked(sp.name)
+                        this.checkWhomClicked(container.name)
                     })
-                sp.x = item.x*this.pixi.houseScale/this.pixi.originScale
-                sp.y = item.y*this.pixi.houseScale/this.pixi.originScale
-                sp.scale.set(this.pixi.houseScale)
+                container.x = item.x*this.pixi.houseScale/this.pixi.originScale
+                container.y = item.y*this.pixi.houseScale/this.pixi.originScale
+                container.addChild(icon)
                 // 增加互動
-                this.sprites[item.name] = sp
+                this.pixi.itemsContainer.addChild(container)
             })
-
-            for (prop in this.sprites){
-                this.pixi.itemsContainer.addChild(this.sprites[prop])
-            }
         },
         drawSnail(){
             let el = this.npc
