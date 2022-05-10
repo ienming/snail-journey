@@ -46,9 +46,7 @@ const LogIn = {
     methods: {
         logIn() {
             if (this.acc && this.pwd) {
-                // this.doLogin()
-                //test
-                this.$emit('log-in')
+                this.doLogin()
             } else if (!this.acc) {
                 this.errMsg = "帳號不能為空！"
             } else if (!this.pwd) {
