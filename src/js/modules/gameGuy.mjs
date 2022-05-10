@@ -5,8 +5,14 @@ import { onDragStart, onDragMove, onDragEnd, rwds} from './global.mjs'
 import { globalGuySprites } from './npc.mjs'
 import { playJudgeSE } from './sound.mjs'
 
-// 所有 guys 可能出現的位置
+// GV
 let guyPositions = []
+let toolScale = scale*0.8
+let rwd = window.innerWidth
+// RWD
+if (rwd < rwds.md){ //mobile
+    toolScale = scale*0.6
+}
 
 // 計時每日評價任務
 function startDailyJudge(){
@@ -222,11 +228,19 @@ let toolsData = [
     {
         name: 'great',
         x: 0,
-        y: 100
+        y: 100,
+        sm: {
+            x: 20,
+            y: 100
+        }
     },{
         name: 'bad',
         x: 70,
-        y: 100
+        y: 100,
+        sm: {
+            x: 20,
+            y: 190
+        }
     }
 ]
 let judgeToolsContainer = new PIXI.Container()
@@ -234,6 +248,34 @@ judgeToolsContainer.name = 'judgeToolsContainer'
 
 function showGuyJudgeTools(){
     let tools = []
+    let toolsContainerX = 200*scale, toolsContainerY = window.innerHeight*0.77
+    let judgeCase = new PIXI.Graphics()
+    let jc = {
+        sm: {
+            p: 10,
+            h: 125,
+            r: 200
+        },
+        md: {
+            p: 14,
+            h: 80,
+            r: 200
+        }
+    }
+    judgeCase.beginFill(0x7C8590)
+    judgeCase.alpha = 0.6
+    // RWD
+    if (rwd < rwds.md){ //mobile
+        toolsContainerX = 100*scale
+        toolsContainerY = window.innerHeight - 220
+        // judgeCase
+        judgeCase.drawRoundedRect(20-(340*toolScale/2)-jc.sm.p/2, 50-jc.sm.p, 230*toolScale+jc.sm.p*2, jc.sm.h, jc.sm.r)
+        judgeCase.endFill()
+    }else if (rwd > rwds.md){
+        judgeCase.drawRoundedRect(0-(230*toolScale/2)-jc.md.p, 100-(230*toolScale/2)-jc.md.p, 500*toolScale+jc.md.p*2, jc.md.h, jc.md.r)
+        judgeCase.endFill()
+    }
+    judgeToolsContainer.addChild(judgeCase)
 
     for (let i=0; i<toolsData.length; i++){
         let texture = new PIXI.Texture.from(`./src/img/icons/${toolsData[i].name}.png`)
@@ -242,13 +284,11 @@ function showGuyJudgeTools(){
         tool.interactive = true
         tool.buttonMode = true
         tool.anchor.set(0.5)
-        let toolScale, toolX = toolsData[i].x , toolY = toolsData[i].y
-        let rwd = window.innerWidth
-        if (rwd < rwds.md){
-            toolScale = scale*0.6
-            toolX = toolsData[i].x * 0.7
-        }else if (rwd > rwds.md){
-            toolScale = scale*0.8
+        // RWD
+        let toolX = toolsData[i].x , toolY = toolsData[i].y
+        if (rwd < rwds.md){ //mobile
+            toolX = toolsData[i].sm.x * 0.7
+            toolY = toolsData[i].sm.y * 0.7
         }
         tool.scale.set(toolScale)
         tool.x = toolX
@@ -271,11 +311,7 @@ function showGuyJudgeTools(){
     tools.forEach(tool=>{
         judgeToolsContainer.addChild(tool)
     })
-    let rwd = window.innerWidth, toolsContainerX = 150*scale, toolsContainerY = window.innerHeight*0.8
-    if (rwd < rwds.md){
-        toolsContainerX = 100*scale
-        toolsContainerY = window.innerHeight*0.65
-    }
+
     judgeToolsContainer.x = toolsContainerX
     judgeToolsContainer.y = toolsContainerY
     app.stage.addChild(judgeToolsContainer)
@@ -302,14 +338,25 @@ function checkJudged(tool){
             },
             onComplete: function(){
                 // tools 要縮小飛回去
-                gsap.to(tool, .5, {
-                    pixi: {
-                        x: toolsData[toolId].x,
-                        y: toolsData[toolId].y,
-                        scale: scale*0.8,
-                        alpha: 1
-                    }
-                })
+                if (rwd < rwds.md){
+                    gsap.to(tool, .5, {
+                        pixi: {
+                            x: toolsData[toolId].sm.x*0.7,
+                            y: toolsData[toolId].sm.y*0.7,
+                            scale: toolScale,
+                            alpha: 1
+                        }
+                    })
+                }else if (rwd > rwds.md){
+                    gsap.to(tool, .5, {
+                        pixi: {
+                            x: toolsData[toolId].x,
+                            y: toolsData[toolId].y,
+                            scale: toolScale,
+                            alpha: 1
+                        }
+                    })
+                }
             }
         })
         let respondGuy = globalGuys[globalGuys.findIndex( el => el.name == beingJudged)]
@@ -350,13 +397,26 @@ function checkJudged(tool){
         playJudgeSE()
     }else{
         console.log("什麼事也沒有")
-        gsap.to(tool, .5, {
-            pixi: {
-                x: toolsData[toolId].x,
-                y: toolsData[toolId].y,
-                scale: scale*0.8
-            }
-        })
+        // tools 要縮小飛回去
+        if (rwd < rwds.md){
+            gsap.to(tool, .5, {
+                pixi: {
+                    x: toolsData[toolId].sm.x*0.7,
+                    y: toolsData[toolId].sm.y*0.7,
+                    scale: toolScale,
+                    alpha: 1
+                }
+            })
+        }else if (rwd > rwds.md){
+            gsap.to(tool, .5, {
+                pixi: {
+                    x: toolsData[toolId].x,
+                    y: toolsData[toolId].y,
+                    scale: toolScale,
+                    alpha: 1
+                }
+            })
+        }
     }
 }
 

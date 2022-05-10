@@ -91,7 +91,7 @@ canvasContainer.addEventListener('wheel',(e)=>{
 
 // rotating the compass
 let deg = 0, cmps
-let cmpsX = 100*scale, cmpsY = window.innerHeight*0.75
+let cmpsX = 100*scale, cmpsY = window.innerHeight*0.7
 function createCompass(){
     let container = new PIXI.Container()
     container.name = "compassContainer"
