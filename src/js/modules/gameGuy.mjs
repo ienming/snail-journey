@@ -262,7 +262,7 @@ function showGuyJudgeTools(){
             r: 200
         }
     }
-    judgeCase.beginFill(0x7C8590)
+    judgeCase.beginFill(0xa09776)
     judgeCase.alpha = 0.6
     // RWD
     if (rwd < rwds.md){ //mobile
