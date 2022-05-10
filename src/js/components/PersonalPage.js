@@ -403,11 +403,15 @@ const DisplayShelf = {
                                 <h3>認養蝸牛綠洲議題</h3>
                                 <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
                                 <ul class="d-flex jcc mt-1 adoption-lists" v-else>
-                                    <li v-for="el of userAdopted" class="d-flex aic">
-                                        <img src="./src/img/icons/checked.svg" class="icon" />
-                                        <p class="mx-1">{{ el.title }}</p>
-                                        <p class="t-z-2">{{ el.intro }}</p>
-                                    </li>
+                                    <a :href="el.link" target="_blank" v-for="el of userAdopted">
+                                        <li class="d-flex aic">
+                                                <img src="./src/img/icons/checked.svg" class="icon" />
+                                                <p class="mx-1">{{ el.title }}</p>
+                                                <p class="t-z-2">
+                                                    {{ el.intro }}
+                                                </p>
+                                        </li>
+                                    </a>
                                 </ul>
                             </section>
                         </div>

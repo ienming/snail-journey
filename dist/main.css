@@ -3615,6 +3615,9 @@ footer {
   #userState.hide {
     transform: translateX(110%);
     opacity: 0.5; }
+    @media (min-width: 768px) {
+      #userState.hide {
+        transform: translateX(100%); } }
   #userState .d-flex {
     justify-content: flex-end; }
   #userState > .icon {

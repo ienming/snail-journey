@@ -58,6 +58,7 @@ let fetchNPC = async () => {
                 let adoptionObj = {}
                 adoptionObj.title = d[keyMap.program_title]
                 adoptionObj.intro = d[keyMap.program_goal]
+                adoptionObj.link = d[keyMap.program_link]
                 vm.$data.adoptions.push(adoptionObj)
                 //
                 // if (d[keyMap.program_subtitle]){
