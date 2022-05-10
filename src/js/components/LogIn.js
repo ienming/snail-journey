@@ -39,7 +39,7 @@ const LogIn = {
     computed: {
         error(){
             if (this.errMsg){
-                return ture
+                return true
             }else return false
         }
     },
