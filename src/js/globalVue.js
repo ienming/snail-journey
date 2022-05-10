@@ -4,6 +4,7 @@ const vm = new Vue({
         interaction: {
             nowClicked: false,
             nowLoading: true,
+            nowPlaying: false,
             showPopup: false,
             showPersonalPage: false,
             showHouse: false,
@@ -147,15 +148,15 @@ const vm = new Vue({
             this.storageData('token', token)
         })
         // fetch data from localStorage
-        for (prop in this.user) {
-            let record = JSON.parse(localStorage.getItem(prop))
-            if (record) {
-                this.userRecord[prop] = record
-                this.user[prop] = record
-            } else {
-                console.log(`no record of ${prop}`)
-            }
-        }
+        // for (prop in this.user) {
+        //     let record = JSON.parse(localStorage.getItem(prop))
+        //     if (record) {
+        //         this.userRecord[prop] = record
+        //         this.user[prop] = record
+        //     } else {
+        //         console.log(`no record of ${prop}`)
+        //     }
+        // }
         // fetch data from API
         // this.doGetUser()
         // dailyTrashes storage
@@ -173,73 +174,84 @@ const vm = new Vue({
         console.log("vue completed load")
         this.autoBgMusic()
         // 定時儲存
-        // window.setInterval(()=>{
-        //     this.doPostUser()
-        // }, 30000)
+        window.setInterval(()=>{
+            if (this.interaction.nowPlaying){
+                this.doPostUser()
+            }
+        }, 30000)
     },
     watch: {
-        'user.missions': {
-            handler: function (newValue, oldValue) {
-                for (prop in newValue) {
-                    if (newValue[prop].join().indexOf("finished") !== -1) {
-                        console.log("任務資料完成的變動，開始儲存")
-                        let d = JSON.stringify(newValue)
-                        this.storageData('missions', d)
-                    }
+        'user': {
+            handler: function (newValue, oldValue){
+                if (this.interaction.nowPlaying){
+                    console.log("定量 watch user 變動")
+                    this.doPostUser()
                 }
             },
             deep: true
         },
-        'user.achievements': {
-            handler: function (newValue, oldValue) {
-                console.log("區塊發現資料有變動，開始儲存")
-                let d = JSON.stringify(newValue)
-                this.storageData('achievements', d)
-            },
-            deep: true
-        },
-        'user.furnitures': {
-            handler: function (newValue, oldValue) {
-                console.log("家具資料有變動，開始儲存")
-                let d = JSON.stringify(newValue)
-                this.storageData('furnitures', d)
-            }
-        },
-        'user.coins': {
-            handler: function (newValue, oldValue) {
-                console.log("蝸牛幣資料有變動，開始儲存")
-                let d = JSON.stringify(newValue)
-                this.storageData('coins', d)
-            }
-        },
-        'user.adoptions': {
-            handler: function (newValue, oldValue) {
-                console.log("認養資料有變動，開始儲存")
-                let d = JSON.stringify(newValue)
-                this.storageData('adoptions', d)
-            }
-        },
-        'user.gotTrashes': {
-            handler: function (newValue, oldValue) {
-                console.log("每日撿垃圾資料有變動，開始儲存")
-                let d = JSON.stringify(newValue)
-                this.storageData('gotTrashes', d)
-            }
-        },
-        'user.gotSpecial': {
-            handler: function (newValue, oldValue) {
-                console.log("特殊蝸牛資料變動，開始儲存")
-                let d = JSON.stringify(newValue)
-                this.storageData('gotSpecial', d)
-            }
-        },
-        'user.judges': {
-            handler: function (newValue, oldValue) {
-                console.log("評價好壞的資料有變動，開始儲存")
-                let d = JSON.stringify(newValue)
-                this.storageData('judges', d)
-            }
-        },
+        // 'user.missions': {
+        //     handler: function (newValue, oldValue) {
+        //         for (prop in newValue) {
+        //             if (newValue[prop].join().indexOf("finished") !== -1) {
+        //                 console.log("任務資料完成的變動，開始儲存")
+        //                 let d = JSON.stringify(newValue)
+        //                 this.storageData('missions', d)
+        //             }
+        //         }
+        //     },
+        //     deep: true
+        // },
+        // 'user.achievements': {
+        //     handler: function (newValue, oldValue) {
+        //         console.log("區塊發現資料有變動，開始儲存")
+        //         let d = JSON.stringify(newValue)
+        //         this.storageData('achievements', d)
+        //     },
+        //     deep: true
+        // },
+        // 'user.furnitures': {
+        //     handler: function (newValue, oldValue) {
+        //         console.log("家具資料有變動，開始儲存")
+        //         let d = JSON.stringify(newValue)
+        //         this.storageData('furnitures', d)
+        //     }
+        // },
+        // 'user.coins': {
+        //     handler: function (newValue, oldValue) {
+        //         console.log("蝸牛幣資料有變動，開始儲存")
+        //         let d = JSON.stringify(newValue)
+        //         this.storageData('coins', d)
+        //     }
+        // },
+        // 'user.adoptions': {
+        //     handler: function (newValue, oldValue) {
+        //         console.log("認養資料有變動，開始儲存")
+        //         let d = JSON.stringify(newValue)
+        //         this.storageData('adoptions', d)
+        //     }
+        // },
+        // 'user.gotTrashes': {
+        //     handler: function (newValue, oldValue) {
+        //         console.log("每日撿垃圾資料有變動，開始儲存")
+        //         let d = JSON.stringify(newValue)
+        //         this.storageData('gotTrashes', d)
+        //     }
+        // },
+        // 'user.gotSpecial': {
+        //     handler: function (newValue, oldValue) {
+        //         console.log("特殊蝸牛資料變動，開始儲存")
+        //         let d = JSON.stringify(newValue)
+        //         this.storageData('gotSpecial', d)
+        //     }
+        // },
+        // 'user.judges': {
+        //     handler: function (newValue, oldValue) {
+        //         console.log("評價好壞的資料有變動，開始儲存")
+        //         let d = JSON.stringify(newValue)
+        //         this.storageData('judges', d)
+        //     }
+        // },
         'dailyTrashes': {
             handler: function (newValue, oldValue) {
                 console.log("每日垃圾總量有變動，開始儲存")
@@ -306,6 +318,9 @@ const vm = new Vue({
         },
         startGame() {
             this.interaction.nowLoading = false
+            this.interaction.nowPlaying = true
+            // fetch data from API
+            this.doGetUser()
         },
         checkAns(correct) {
             if (correct) {
@@ -462,14 +477,9 @@ const vm = new Vue({
             }).then((response) => {
                 console.log(response.status);
                 console.log(response);
-                for (prop in this.user) {
-                    let record = response.data[prop]
-                    if (record) {
-                        this.userRecord[prop] = record
-                        this.user[prop] = record
-                    } else {
-                        console.log(`no record of ${prop}`)
-                    }
+                if (response.data.record){
+                    this.userRecord = response.data.record
+                    this.user = response.data.record
                 }
             });
         },

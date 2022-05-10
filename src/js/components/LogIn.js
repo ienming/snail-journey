@@ -8,7 +8,7 @@ const LogIn = {
             <input-text v-model="pwd" class="w-100 mb-1" label-title="密碼" type="password" placeholder="輸入密碼" id="pwd" name="pwd"></input-text>
             <a class="t-a-r my-link small" @click="toSignUp" v-if="nowPage == 'logIn'">還沒有加入綠洲嗎？申請門牌</a>
             <a class="t-a-r my-link small" @click="toLogIn" v-else>回到登入</a>
-            <p class="t-c mt-1" v-if="error">{{ errMsg }}</p>
+            <p class="t-c mt-1 t-z-2 t-w-6" v-if="error">{{ errMsg }}</p>
             <transition name="fade-right">
                 <button class="mt-2 my-btn w-100" @click="logIn" v-if="nowPage == 'logIn'">
                     進入綠洲
@@ -55,9 +55,11 @@ const LogIn = {
         },
         toLogIn() {
             this.nowPage = "logIn"
+            this.errMsg = ""
         },
         toSignUp() {
             this.nowPage = "signUp"
+            this.errMsg = ""
         },
         signUp() {
             if (this.acc && this.pwd && this.nickName) {
@@ -117,6 +119,10 @@ const LogIn = {
                 console.log(response);
                 if (response.data.status == 1){
                     vm.$bus.$emit("record-token", response.data.token)
+                    this.errMsg = "註冊成功！歡迎光臨蝸牛綠洲！"
+                    window.setTimeout(()=>{
+                        this.$emit('log-in')
+                    }, 1000)
                 }else {
                     console.log(response.data.msg)
                     this.errMsg = "註冊失敗！已有重複帳號"

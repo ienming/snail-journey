@@ -21,8 +21,8 @@ const Header = {
                     seudo: "切換背景音樂",
                     icon: true
                 },{
-                    name: "clearData",
-                    seudo: "清除資料（測試用）"
+                    name: "logOut",
+                    seudo: "登出"
                 }
             ]
         }
@@ -30,8 +30,9 @@ const Header = {
     methods: {
         switchPage(name){
             this.$emit(`switch-${name}`)
-            if (name == 'clearData'){
-                localStorage.clear()
+            if (name == 'logOut'){
+                // localStorage.clear()
+                localStorage.token = ""
                 window.location.reload()
             }
             // if (name == 'toggleMusic'){
