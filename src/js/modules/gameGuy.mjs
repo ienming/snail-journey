@@ -293,6 +293,7 @@ function showGuyJudgeTools(){
         tool.scale.set(toolScale)
         tool.x = toolX
         tool.y = toolY
+        tool.cursor = "url('./src/img/icons/cursor_pick.png'),auto"
         tool
             .on('pointerdown', onDragStart)
             .on('pointermove', onDragMove)

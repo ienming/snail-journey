@@ -67,6 +67,7 @@ function drawSpecial(areaId){
     sp.anchor.set(0.5)
     sp.interactive = true
     sp.buttonMode = true
+    sp.cursor = "url('./src/img/icons/cursor_pick.png'),auto"
     sp.x = areas[areaId][0].x,
     sp.y = areas[areaId][0].y,
     gsap.to(sp, .3, { //抖動

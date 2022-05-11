@@ -79,7 +79,7 @@ const NoviceTeach = {
                 {
                     title: "探索綠洲",
                     content: "拖曳地圖、到處看看，和蝸牛村民聊聊天。蝸牛綠洲，慢慢行！",
-                    img: ""
+                    img: "./src/img/teach_explore.png"
                 },{
                     title: "維護秩序",
                     content: "街區裡有時會出現進行活動的人，拖拉右下角的圖案到有「對話圖標」的人身上，守護蝸牛綠洲的秩序、獲得蝸牛幣吧！",

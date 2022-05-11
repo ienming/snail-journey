@@ -63,6 +63,7 @@ function createItem(el){
         item.interactive = true
         item.buttonMode = true
     }
+    item.cursor = "url('./src/img/icons/cursor_speak.png'),auto"
     item
         .on("pointerup", ()=>{
             if (distDefined){

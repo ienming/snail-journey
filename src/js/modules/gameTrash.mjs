@@ -58,8 +58,7 @@ function startDailyTrash(){
 }
 
 function generateTrash(){
-    // let todayTrashNum = getRandom(0,10)
-    let todayTrashNum = 10
+    let todayTrashNum = getRandom(0,10)
     let readyTrashes = [...trashes]
     for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)
@@ -108,6 +107,7 @@ function drawTrash(trash){
     eachTrshCont.addChild(trashSp)
     eachTrshCont.interactive = true
     eachTrshCont.buttonMode = true
+    eachTrshCont.cursor = "url('./src/img/icons/cursor_pick.png'),auto"
     eachTrshCont.on("pointerdown", (el)=>{
         // console.log("撿到垃圾了")
         vm.$data.user.gotTrashes.push(trash.id) //讓 Vue watch 撿垃圾的資料
@@ -116,15 +116,6 @@ function drawTrash(trash){
         let left = vm.$data.dailyTrashes.length - vm.$data.user.gotTrashes.length
         hint.say = `撿到垃圾了，還剩下${left}個`
         vm.$data.sys.hints.push(hint)
-        //做動畫變小消失
-        // gsap.to(el.target, .2, {
-        //     pixi: {
-        //         scale: 0
-        //     },
-        //     onComplete(){
-        //         //確定動畫完成後destroy
-        //     }
-        // })
         //增加蝸牛幣、計算總共撿了多少垃圾？
         el.target.destroy()
         // 判斷是否完成每日撿垃圾任務
@@ -146,7 +137,7 @@ function drawTrash(trash){
         playPickTrashSE()
     })
     eachTrshCont.on("mouseover", ()=>{ //hover 放大
-        console.log(eachTrshCont)
+        // console.log(eachTrshCont)
         gsap.to(eachTrshCont, .2, {
             pixi: {
                 scaleX: scale*1.18,

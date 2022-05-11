@@ -39,6 +39,7 @@ function createMap(){
     // set mapContainer (as map) for dragging
     mapContainer.interactive = true
     mapContainer.buttonMode = true
+    mapContainer.cursor = "url('./src/img/icons/cursor_move.png'),auto"
     mapContainer
     .on('pointerdown', mapDragStart)
     .on('pointerup', mapDragEnd)
