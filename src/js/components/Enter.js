@@ -82,7 +82,7 @@ const NoviceTeach = {
                     img: "./src/img/teach_explore.png"
                 },{
                     title: "維護秩序",
-                    content: "街區裡有時會出現進行活動的人，拖拉右下角的圖案到有「對話圖標」的人身上，守護蝸牛綠洲的秩序、獲得蝸牛幣吧！",
+                    content: "街區裡有時會出現進行活動的人，拖拉左下角的圖案到有「按讚圖標」的人身上，守護蝸牛綠洲的秩序、獲得蝸牛幣吧！",
                     img: "./src/img/teach_guy.png"
                 },{
                     title: "清掃街道",

@@ -128,12 +128,12 @@ function drawGuy(el){
     sp.scale.set(scale)
     sp.anchor.set(0.5)
     // guy icon
-    let iconTexture = new PIXI.Texture.from('./src/img/icons/speak_icon.png')
+    let iconTexture = new PIXI.Texture.from('./src/img/icons/judge.png')
     let icon = new PIXI.Sprite(iconTexture)
     icon.name = 'guysicon'
     icon.x = 20
     icon.y = -50
-    icon.scale.set(scale)
+    icon.scale.set(scale*1.4)
     let animDelay = Math.random()
     gsap.to(icon, .5, {
         pixi: {

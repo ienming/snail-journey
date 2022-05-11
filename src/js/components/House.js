@@ -137,7 +137,7 @@ const House = {
             sp.scale.set(this.pixi.houseScale*2)
             sp.anchor.set(0.5)
             sp.interactive = true
-            sp.buttonMode = true
+            sp.cursor = "url('./src/img/icons/cursor_speak.png'),auto"
             sp.on("pointerdown", ()=>{
                 vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
                 vm.$data.itemSpeak = this.hostName
