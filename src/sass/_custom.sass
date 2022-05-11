@@ -222,7 +222,6 @@
             flex-direction: row
 .room-page
     border-radius: 8px
-    box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     position: relative
     .game-ui //exit icon
         width: 100px
@@ -353,6 +352,9 @@
     background-color: $lightBg
     padding: 2rem
     border-radius: 8px
+    width: 80vw
+    +rwd(md)
+        width: unset
 
 //認養介面
 .adoption

@@ -3786,7 +3786,6 @@ footer {
 
 .room-page {
   border-radius: 8px;
-  box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   position: relative; }
   .room-page .game-ui {
     width: 100px;
@@ -3928,7 +3927,11 @@ footer {
   transform: translate(-50%, -50%);
   background-color: #f3f0e7;
   padding: 2rem;
-  border-radius: 8px; }
+  border-radius: 8px;
+  width: 80vw; }
+  @media (min-width: 768px) {
+    #buyConfirm {
+      width: unset; } }
 
 .adoption {
   overflow: scroll;
