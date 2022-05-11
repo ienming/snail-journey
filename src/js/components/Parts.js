@@ -3,13 +3,13 @@ const ToggleBGMusic = {
         <img :src="bgIsPlaying ? './src/img/icons/sound.png' : './src/img/icons/sound_ban.png'" class="toggle-sound-icon" @click="switchBgMusic"/>
     `,
     props: ['bgIsPlaying'],
-    data(){
+    data() {
         return {}
     },
     methods: {
-        switchBgMusic(){
+        switchBgMusic() {
             let value = 'play'
-            if (this.bgIsPlaying){
+            if (this.bgIsPlaying) {
                 value = 'stop'
             }
             this.$emit('switch-bg-music', value)
@@ -20,18 +20,18 @@ Vue.component('toggle-bg-music', ToggleBGMusic)
 
 const CloseBtn = {
     template:
-    `<div class="close" @click="switchPage">
+        `<div class="close" @click="switchPage">
         <img src="src/img/icons/close.svg" alt="">
     </div>`,
     props: {
         nowShow: String
     },
-    data(){
+    data() {
         return {}
     },
     methods: {
-        switchPage(){
-            if (this.nowShow){
+        switchPage() {
+            if (this.nowShow) {
                 this.$emit(`switch-${this.nowShow}`)
             }
         }
@@ -64,24 +64,24 @@ const Link = {
             default: true
         },
         full: {
-            type: Boolean, 
+            type: Boolean,
             default: false
         },
         highlight: {
-            type: Boolean, 
+            type: Boolean,
             default: false
         }
     },
-    data(){
+    data() {
         let display = "none"
-        if(this.hasIcon){
+        if (this.hasIcon) {
             display = "inline-block"
         }
         let iconUrl = "src/img/icons/arrow_rightTop.svg"
-        if(this.highlight){
+        if (this.highlight) {
             iconUrl = "src/img/icons/arrow_rightTop_ht.svg"
         }
-        return{
+        return {
             styleObj: {
                 display: display
             },
@@ -121,7 +121,7 @@ const CTA = {
             default: "加入認養"
         },
         large: {
-            type: Boolean, 
+            type: Boolean,
             default: false
         },
         fill: {
@@ -138,14 +138,14 @@ const CTA = {
         }
     },
     computed: {
-        childFill(){
+        childFill() {
             let state = this.fill
             if (this.large) {
                 state = true
             }
             return state
         },
-        iconUrl(){
+        iconUrl() {
             let iconUrl = "/src/img/icons/arrow_rightLong_ht.svg"
             // if (this.childFill){
             //     iconUrl = "/assets/img/icons/arrow_rightLong_ht.svg"
@@ -153,7 +153,7 @@ const CTA = {
             return iconUrl
         }
     },
-    data(){
+    data() {
         return {}
     }
 }
@@ -206,36 +206,36 @@ const InputText = {
         }
     },
     computed: {
-        pattern(){
-            if (this.regExp){
+        pattern() {
+            if (this.regExp) {
                 return true
-            }else {
+            } else {
                 return false
             }
         },
-        computedType(){
-            if (this.type == 'password'){
-                if (this.showPwd){
+        computedType() {
+            if (this.type == 'password') {
+                if (this.showPwd) {
                     this.showPwdUrl = './src/img/icons/pwd_show.svg' //張開眼睛
                     return "text"
-                }else{
+                } else {
                     this.showPwdUrl = './src/img/icons/pwd_hide.svg' //閉上眼睛
                     return "password"
                 }
-            }else return this.type
+            } else return this.type
         }
     },
-    data(){
+    data() {
         return {
             showPwd: false,
             showPwdUrl: ''
         }
     },
     methods: {
-        clearData(){
+        clearData() {
             this.$emit('input', '')
         },
-        switchPwdType(){
+        switchPwdType() {
             this.showPwd = !this.showPwd
         }
     }
@@ -258,23 +258,53 @@ const Accordion = {
         </section>
     `,
     props: ['accordions'],
-    data(){
+    data() {
         return {}
     },
     methods: {
-        switchAccordion: function(id, evt){
+        switchAccordion: function (id, evt) {
             let el = evt.currentTarget
             let contentDiv = el.querySelector(".accordion-body")
             let content = contentDiv.querySelector("p")
             let resultHeight = content.clientHeight + 8
-            if (el.classList.contains("is-open")){
+            if (el.classList.contains("is-open")) {
                 el.classList.remove("is-open")
                 contentDiv.style.height = '0px'
-            }else{
+            } else {
                 el.classList.add("is-open")
-                contentDiv.style.height = resultHeight+'px'
+                contentDiv.style.height = resultHeight + 'px'
             }
         }
     }
 }
 Vue.component('accordion', Accordion)
+
+const ProgressHint = {
+    template: `
+    <ul class="progress-hint-lists">
+        <transition-group name="fade" class="d-flex flex-column">
+            <div class="progress-hint" :class="hint.hide ? 'hide' : ''" v-for="hint of hints" :key="hint.id">
+                <p class="t-z-2">{{hint.say}}</p>
+            </div>
+        </transition-group>
+    </ul>
+    `,
+    props: ['hints'],
+    data() {
+        return {
+            timer: null
+        }
+    },
+    mounted() {
+        this.timer = setInterval(() => {
+            if (this.hints.length > 0) {
+                this.$emit(`hint-hide`)
+            }
+        }, 2500)
+    },
+    beforeDestroy() {
+        clearInterval(this.timer)
+        this.timer = null;
+    }
+}
+Vue.component('progress-hint', ProgressHint)

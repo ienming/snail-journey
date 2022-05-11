@@ -58,7 +58,8 @@ function startDailyTrash(){
 }
 
 function generateTrash(){
-    let todayTrashNum = getRandom(0,10)
+    // let todayTrashNum = getRandom(0,10)
+    let todayTrashNum = 10
     let readyTrashes = [...trashes]
     for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)
@@ -110,6 +111,11 @@ function drawTrash(trash){
     eachTrshCont.on("pointerdown", (el)=>{
         // console.log("撿到垃圾了")
         vm.$data.user.gotTrashes.push(trash.id) //讓 Vue watch 撿垃圾的資料
+        let hint = {}
+        hint.id = trash.id
+        let left = vm.$data.dailyTrashes.length - vm.$data.user.gotTrashes.length
+        hint.say = `撿到垃圾了，還剩下${left}個`
+        vm.$data.sys.hints.push(hint)
         //做動畫變小消失
         // gsap.to(el.target, .2, {
         //     pixi: {

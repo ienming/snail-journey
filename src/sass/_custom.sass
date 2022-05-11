@@ -434,3 +434,27 @@ ul.carousel-lids
         +rwd(md)
             max-height: unset
             overflow: initial
+
+// 側邊進度
+.progress-hint-lists
+    position: fixed
+    left: 20px
+    top: 80px
+    width: 50vw
+    pointer-events: none
+    +rwd(md)
+        top: 10vh
+
+.progress-hint
+    display: inline-block
+    margin-bottom: .8rem
+    +basicTransition()
+    &.hide
+        opacity: 0
+        transform: translateX(-100%)
+    >p
+        display: inline
+        background-color: $lightBg
+        padding: .25rem .65rem
+        border-radius: 1rem
+        +basicShadow()

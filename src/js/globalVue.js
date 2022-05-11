@@ -12,7 +12,8 @@ const vm = new Vue({
         },
         sys: {
             popup: false,
-            say: ""
+            say: "",
+            hints: []
         },
         bgSound: undefined,
         bgIsPlaying: false,
@@ -429,6 +430,12 @@ const vm = new Vue({
                     this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '區域探索完成！', `./src/img/${badgeURl}.png`)
                 }, 800)
             }
+        },
+        shiftHint(){
+            this.sys.hints[0].hide = true
+            window.setTimeout(()=>{
+                this.sys.hints.shift()
+            }, 800)
         },
         doPostUser() {
             console.log(`Bearer ${localStorage.token}`)
