@@ -192,7 +192,7 @@ const PersonalCoin = {
     template: `
         <div id="coinContainer">
             <img src="./src/img/coin.png" alt="蝸牛幣icon" id="coin" />
-            <span style="font-size: 24px;">{{ coins }}</span>
+            <span style="font-size: 24px;">$ {{coins}}</span>
             <img src="./src/img/icons/plus.png" class="icon" alt="plus icon" @click="switchFurniture"/>
         </div>
     `,
@@ -404,7 +404,7 @@ const DisplayShelf = {
                                 <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
                                 <ul class="d-flex jcc mt-1 adoption-lists" v-else>
                                     <a :href="el.link" target="_blank" v-for="el of userAdopted">
-                                        <li class="d-flex aic">
+                                        <li class="d-flex aic descrip-lid" data-lid="前往詳細方案內容">
                                                 <img src="./src/img/icons/checked.svg" class="icon" />
                                                 <p class="mx-1">{{ el.title }}</p>
                                                 <p class="t-z-2">

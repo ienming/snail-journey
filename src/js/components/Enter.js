@@ -5,12 +5,6 @@ const Enter = {
                 <div class="wrapper">
                     <div class="d-flex flex-column mb-2 mb-md-0">
                         <img src="./src/img/logo.png" class="logo"/>
-                        <transition name="fade">
-                            <div v-if="loading" class="t-a-c mt-2">
-                                <img src="./src/img/icons/loading.png" class="icon"/>
-                                <h4>???%</h4>
-                                </div>
-                        </transition>
                     </div>
                     <transition name="fade">
                         <log-in @log-in="startGame" v-if="!loading"></log-in>
@@ -52,7 +46,7 @@ const NoviceTeach = {
                         <transition-group name="fade-right">
                             <div v-for="(teach,idx) of teaches" :key="teach.title" v-show="idx == nowStep" class="t-a-c fade-right-item">
                                 <h2 class="t-z-4 mb-1">{{teach.title}}</h2>
-                                <img :src="teach.img" style="max-width: 60%;"/>
+                                <img :src="teach.img" style="max-height: 100px;"/>
                                 <p>{{teach.content}}</p>
                             </div>
                         </transition-group>
@@ -88,6 +82,10 @@ const NoviceTeach = {
                     title: "清掃街道",
                     content: "有人亂丟垃圾！請你幫忙把垃圾撿起來，一起保持巷弄的乾淨整潔。",
                     img: "./src/img/teach_trash.png"
+                },{
+                    title: "蒐集蝸牛幣",
+                    content: "守護街區的秩序並維持環境整潔，就能獲得蝸牛幣，可以用在佈置家裡的房間，或是到實體合作店家換取折扣喔！",
+                    img: "./src/img/teach_coin.png"
                 },{
                     title: "佈置自己的房間",
                     content: "和蝸牛們聊天、認識街區，用「蝸牛幣」把家具放到自己家裡吧！打造舒服的小天地！",

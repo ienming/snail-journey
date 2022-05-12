@@ -1,6 +1,7 @@
 const vm = new Vue({
     el: "#app",
     data: {
+        app: {},
         interaction: {
             nowClicked: false,
             nowLoading: true,
@@ -272,6 +273,7 @@ const vm = new Vue({
                 autoPlay: this.bgIsPlaying,
                 loop: true,
                 preload: true,
+                volume: 0.25
             });
             this.bgSound = sound
         },
@@ -307,6 +309,15 @@ const vm = new Vue({
         },
         startGame() {
             this.interaction.nowLoading = false
+            // Enter Animation
+            window.setTimeout(()=>{
+                gsap.to(this.app.map, 5, {
+                    pixi: {
+                        scale: 1,
+                        alpha: 1
+                    }
+                })
+            }, 300)
         },
         checkAns(correct) {
             if (correct) {

@@ -1,6 +1,6 @@
 const Adoption = {
     template: `
-        <div class="popup adoption">
+        <div class="popup scroll">
             <p v-html="program.descrip"></p>
             <div class="mt-1">
             任務獎勵：
@@ -12,7 +12,7 @@ const Adoption = {
             </div>
             </div>
             <basic-link class="mt-1" title="認養方案詳細說明" :url="program.link"></basic-link>
-            <div @click="adopt" class="mt-2 my-btn p-2 t-a-c">{{ program.linkName }}</div>
+            <div @click="adopt" class="mt-2 my-btn p-2 t-a-c adopt-btn">{{ program.linkName }}</div>
         </div>
     `,
     props: ['program'],

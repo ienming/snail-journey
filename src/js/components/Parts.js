@@ -245,7 +245,7 @@ Vue.component('input-text', InputText)
 
 const Accordion = {
     template: `
-        <section class="scroll">
+        <section>
             <div class="my-accordion" v-for="(accordion, idx) of accordions" @click="switchAccordion(idx, $event)">
                 <div class="accordion-header d-flex jcb aic">
                     <h4>{{accordion.title}}</h4>

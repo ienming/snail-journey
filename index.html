@@ -48,7 +48,7 @@
                     <!-- 一般對話 -->
                     <template v-if="!showProgram">
                         <div key="dialogue" class="d-flex">
-                            <div class="popup dialogue" :class="nowNPC && nowNPC.func ? 'func' : ''">
+                            <div class="popup dialogue scroll" :class="nowNPC && nowNPC.func ? 'func' : ''">
                                 <!-- 不管怎樣都會有的見面招呼語 -->
                                 <div>
                                     <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">
@@ -70,7 +70,13 @@
                                                 <accordion :accordions="nowNPC.qas" class="pt-2"></accordion>
                                             </div>
                                             <!-- 有認養行動案就顯示 -->
-                                            <button v-if="adoptable" @click="switchProgram" class="my-btn t-z-1 t-c-g">認養任務</button>
+                                            <div v-if="adoptable" class="mt-1">
+                                                <button @click="switchProgram" class="my-btn t-z-1 t-c-g adopt-btn">社區方案啟動中～加入認養！</button>
+                                                <div class="d-flex aic mt-1 info-btn" @click="showSysTxt('蝸牛綠洲邀請你一起和在地的居民、商家共同維護這裡的美好，商家能自由提出替街區共好的方案，以折扣、禮盒、工作坊等方式邀請民眾加入。你也能藉此和蝸牛巷有更深的連結，快來成為一份子吧！', '認養行動案')">
+                                                    <img src="./src/img/icons/pwd_show.svg" class="icon" />
+                                                    <button>什麼是認養？</button>
+                                                </div>
+                                            </div>
                                             <!-- 關閉對話 -->
                                             <div class="t-a-r">
                                                 <button @click="pureNext" v-show="btnTxt"

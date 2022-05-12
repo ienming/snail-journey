@@ -71,35 +71,35 @@
 
 // header
 .my-header
-    li
-        position: relative
-        cursor: pointer
-        &::after
-            content: attr(data-text)
-            display: block
-            position: absolute
-            bottom: -36px
-            left: 50%
-            transform: translateX(-50%)
-            background-color: $darkYellowGreen
-            color: $lightBg
-            padding: .25rem .75rem
-            border-radius: 50px
-            opacity: 0
-            transition: .3s ease
-            pointer-events: none
-            font-size: 14px
-            width: max-content
-            +basicTransition()
-        &:hover
-            .icon
-                transform: scale(1.2) rotate(15deg)
-            &::after
-                opacity: 1
+    li:hover
+        .icon
+            transform: scale(1.2) rotate(15deg)
     .logo
         max-width: 100px
         +rwd(md)
             max-width: 150px
+
+.descrip-lid
+    position: relative
+    cursor: pointer
+    &::after
+        content: attr(data-lid)
+        display: block
+        position: absolute
+        right: 0
+        top: -30px
+        background-color: $darkYellowGreen
+        color: $lightBg
+        padding: .25rem .75rem
+        border-radius: 50px
+        opacity: 0
+        transition: .3s ease
+        pointer-events: none
+        font-size: 14px
+        width: max-content
+        +basicTransition()
+    &:hover::after
+        opacity: 1
             
 // sound icon
 .toggle-sound-icon
@@ -107,10 +107,11 @@
     width: 36px
 
 // global game UI
-.game-ui.icon
-    width: 60px
-    cursor: pointer
-    +basicTransition()
+.game-ui
+    &.icon
+        width: 60px
+        cursor: pointer
+        +basicTransition()
 
 // 進場動畫
 #loading
@@ -132,12 +133,21 @@
     .wrapper
         flex-direction: column
         width: 100%
+        top: 44%
+        +rwd(sm)
+            top: 50%
         +rwd(md)
             flex-direction: row
             justify-content: space-around
         +rwd(lg)
             width: 80vw
             max-width: 1150px
+    .card
+        max-height: 50vh
+        overflow: scroll
+        +rwd(md)
+            max-height: unset
+            overflow: initial
 
 .popup
     background-color: lighten($main, 10%)
@@ -150,6 +160,7 @@
     max-height: 80vh
     &.dialogue
         width: 350px
+        max-height: 55vh
     &.dialogue.func
         width: 100%
         +rwd(md)
@@ -260,8 +271,10 @@
         width: 32px
         transform: translateY(-50%)
         +basicTransition()
+        left: -70px
         +rwd(md)
             right: 10px
+            left: unset
             bottom: -32px
         &:hover
             transform: translateY(-50%) scale(1.35)
@@ -291,9 +304,11 @@
         transform: translateX(-50%)
     .furnitures
         overflow: scroll
-        max-height: 70vh
+        max-height: 55vh
         flex-direction: column
         gap: 12px
+        +rwd(sm)
+            max-height: 70vh
         +rwd(md)
             flex-direction: row
             max-height: unset
@@ -357,9 +372,11 @@
         width: unset
 
 //認養介面
+.adopt-btn
+    background-color: $accentDark
+    padding: .5rem
+    cursor: pointer
 .adoption
-    overflow: scroll
-    max-height: 70vh
     +rwd(md)
         max-height: 80vh
         width: 40vw
