@@ -107,7 +107,7 @@ function drawTrash(trash){
     eachTrshCont.addChild(trashSp)
     eachTrshCont.interactive = true
     eachTrshCont.buttonMode = true
-    eachTrshCont.cursor = "url('./src/img/icons/cursor_pick.png'),auto"
+    eachTrshCont.cursor = "url('./src/img/icons/cursor_recycle.png'),auto"
     eachTrshCont.on("pointerdown", (el)=>{
         // console.log("撿到垃圾了")
         vm.$data.user.gotTrashes.push(trash.id) //讓 Vue watch 撿垃圾的資料

@@ -42,7 +42,7 @@ const NoviceTeach = {
         <transition name="fade">
             <div class="mock" v-if="noviceHasShown">
                 <div class="wrapper">
-                    <div class="popup dialogue">
+                    <div class="popup dialogue novice">
                         <transition-group name="fade-right">
                             <div v-for="(teach,idx) of teaches" :key="teach.title" v-show="idx == nowStep" class="t-a-c fade-right-item">
                                 <h2 class="t-z-4 mb-1">{{teach.title}}</h2>
@@ -51,9 +51,9 @@ const NoviceTeach = {
                             </div>
                         </transition-group>
                         <div class="d-flex jcb mt-1">
-                            <button class="small t-c t-w-6" @click="moveStep('prev')">前一個</button>
-                            <button class="small t-c t-w-6" @click="moveStep('next')" v-if="nowStep !== teaches.length-1">下一個</button>
-                            <button class="small t-c t-w-6" @click="switchNovice()" v-else>完成</button>
+                            <button class="small t-w-6" @click="moveStep('prev')">前一個</button>
+                            <button class="small t-w-6" @click="moveStep('next')" v-if="nowStep !== teaches.length-1">下一個</button>
+                            <button class="small t-w-6" @click="switchNovice()" v-else>完成</button>
                         </div>
                         <nav>
                             <ul class="carousel-lids">

@@ -439,9 +439,9 @@ ul.carousel-lids
         &:hover
             background-color: $darkGrey
         &.active
-            background-color: $accent
-        &.active:hover
             background-color: $accentDark
+        &.active:hover
+            background-color: $accent
             
 // 滾動
 .scroll
@@ -477,3 +477,18 @@ ul.carousel-lids
         padding: .25rem .65rem
         border-radius: 1rem
         +basicShadow()
+
+// 新手
+.novice
+    background-color: $lightBg
+    background: url("../img/letter_bg.png")
+    background-size: 100% 100%
+    background-position-x: center
+    background-repeat: no-repeat
+    max-height: unset !important
+    box-shadow: none
+    padding: 80px 50px
+    +rwd(md)
+        padding: 80px 60px
+    button
+        color: $accentDark
