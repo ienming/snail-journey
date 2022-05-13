@@ -124,11 +124,11 @@ function drawTrash(trash){
             let imgUrl = "./src/img/coin.png"
             let num = 0
             if (vm.$data.dailyTrashes.length < 3){
-                num = vm.$data.dailyTrashes.length
+                num = 10
             }else if (vm.$data.dailyTrashes.length > 3 && vm.$data.dailyTrashes.length < 7){
-                num = 4
+                num = 20
             }else {
-                num = 5
+                num = 30
             }
             let abs = `獲得 ${num} 個蝸牛幣`
             callVueSys(str, abs, imgUrl, num)

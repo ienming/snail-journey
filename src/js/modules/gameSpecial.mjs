@@ -130,7 +130,8 @@ function updateArea(){
 }
 
 function drawSpecial(areaId){
-    let texture = new PIXI.Texture.from("./src/img/snail_special.png")
+    let no = getRandom(1,2)
+    let texture = new PIXI.Texture.from(`./src/img/snail_special_${no}.png`)
     sp = new PIXI.Sprite(texture)
     sp.name = "special"
     sp.anchor.set(0.5)
@@ -175,46 +176,46 @@ function drawSpecial(areaId){
 
 function fastMove(areaId){
     let tl = gsap.timeline({repeat: 0, onComplete: updateArea})
-    tl.to(sp, .75, {
+    tl.to(sp, 1.75, {
         pixi: {
             x: areas[areaId][0].x,
             y: areas[areaId][0].y,
         }
     })
-    tl.to(sp, .75, {
+    tl.to(sp, 1.75, {
         pixi: {
             x: areas[areaId][1].x,
             y: areas[areaId][1].y,
             alpha: 1
         }
     })
-    tl.to(sp, .75, {
+    tl.to(sp, 1.75, {
         pixi: {
             x: areas[areaId][2].x,
             y: areas[areaId][2].y,
         }
     })
-    tl.to(sp, .75, {
+    tl.to(sp, 1.75, {
         pixi: {
             x: areas[areaId][3].x,
             y: areas[areaId][3].y,
             alpha: 0
         }
     })
-    tl.to(sp, .75, {
+    tl.to(sp, 1.75, {
         pixi: {
             x: areas[areaId][4].x,
             y: areas[areaId][4].y,
         }
     })
-    tl.to(sp, .75, {
+    tl.to(sp, 1.75, {
         pixi: {
             x: areas[areaId][5].x,
             y: areas[areaId][5].y,
             alpha: 1
         }
     })
-    tl.to(sp, .5, {
+    tl.to(sp, 1.5, {
         pixi: {
             x: areas[areaId][6].x,
             y: areas[areaId][6].y,

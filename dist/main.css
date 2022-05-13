@@ -2665,6 +2665,18 @@ section.container {
   100% {
     background-position-x: 1000%; } }
 
+@keyframes hint-right {
+  0% {
+    right: 0px; }
+  100% {
+    right: 15px; } }
+
+@keyframes hint-down {
+  0% {
+    bottom: 0px; }
+  100% {
+    bottom: 15px; } }
+
 .my-btn {
   font-size: 14px;
   line-height: 1.5;
@@ -3796,6 +3808,12 @@ footer {
     .room .container {
       flex-direction: row; } }
 
+.room .card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
 .room-page {
   border-radius: 8px;
   position: relative; }
@@ -3867,8 +3885,16 @@ footer {
   position: absolute;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   padding: 1.5rem;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
   max-width: 90vw; }
+  #furnitureContainer .icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+    animation: hint-down .5s ease-in alternate infinite; }
   @media (min-width: 768px) {
     #furnitureContainer {
       top: unset;
@@ -3876,7 +3902,13 @@ footer {
       left: 50%;
       width: 60vw;
       max-width: unset;
-      transform: translateX(-50%); } }
+      transform: translateX(-50%); }
+      #furnitureContainer .icon {
+        left: unset;
+        bottom: unset;
+        top: 50%;
+        transform: translateY(-50%);
+        animation: hint-right .5s ease-in alternate infinite; } }
   #furnitureContainer .furnitures {
     overflow: scroll;
     max-height: 55vh;

@@ -14,6 +14,10 @@ const PersonalPage = {
                 @show-confirm="showConfirm"
                 @switch-furnitures="switchFurnitures"></furnitures-page>
             </template>
+            <div v-if="firstShouldShow" class="card">
+                這是首次打開
+                <close-btn now-show="first" @switch-first="switchFirst"></close-btn>
+            </div>
         </div>
         <template name="fade">
         <buy-confirm v-show="confirmHasShown" :furniture="nowAddFurniture" @close-confirm="closeConfirm"></buy-confirm>
@@ -24,7 +28,7 @@ const PersonalPage = {
             @switch-display-shelf="displayShelfHasShown = !displayShelfHasShown"></display-shelf>
     </div>
     `,
-    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions'],
+    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions', 'firstShouldShow'],
     mounted(){
         this.init()
     },
@@ -39,6 +43,15 @@ const PersonalPage = {
             confirmHasShown: false,
             displayShelfHasShown: false,
             nowAddFurniture: undefined,
+        }
+    },
+    computed: {
+        firstHasShown:{
+            get(){
+                if (this.firstShouldShow){
+                    return true
+                }else return false
+            }
         }
     },
     watch: {
@@ -181,6 +194,9 @@ const PersonalPage = {
         closeConfirm(){
             this.confirmHasShown = false
         },
+        switchFirst(){
+
+        }
     }
 }
 Vue.component("personal-page", PersonalPage)
@@ -240,6 +256,7 @@ const Furnitures = {
                         </div>
                     </div>
                 </div>
+                <img src="./src/img/icons/move_right.png" class="icon" />
                 <close-btn now-show="furnitures" @switch-furnitures="$emit('switch-furnitures')"></close-btn>
             </div>
         </transition>
@@ -323,7 +340,7 @@ const BuyConfirm = {
                 <p>已將「{{ furniture.name }}」加入房間！</p>
             </template>
             <template v-else>
-                <p>錢不夠買不起><</p>
+                <p>蝸牛幣似乎不夠喔......常常來維護環境或是加入認養行動，獲取蝸牛幣吧！</p>
             </template>
             <div class="mt-1 t-a-c">
                 <template v-if="buyable == 'able'">

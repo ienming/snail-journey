@@ -368,15 +368,15 @@ function checkJudged(tool){
                 // guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被讚了！`)
                 if (beingJudged.indexOf("good") !== -1){
                     let str = "被你讚美的他很開心，之後也一定會持續替綠洲做好事的～"
-                    let num = 5
+                    let num = 10
                     callVueSys(str, `獲得${num}個蝸牛幣`, "./src/img/coin.png", num)
                 }
                 break;
             case 'bad':
                 // guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被罵了......`)
                 if (beingJudged.indexOf("bad") !== -1){
-                    let str = "給臭傢伙一點教訓了！哇哈哈"
-                    let num = 5
+                    let str = "謝謝你幫忙維持秩序！替大家打抱不平！"
+                    let num = 10
                     callVueSys(str, `獲得${num}個蝸牛幣`, "./src/img/coin.png", num)
                 }
                 break;

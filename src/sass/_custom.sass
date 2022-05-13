@@ -231,6 +231,9 @@
         max-height: 100vh
         +rwd(md)
             flex-direction: row
+    .card
+        +poa(50%, 50%)
+        transform: translate(-50%, -50%)
 .room-page
     border-radius: 8px
     position: relative
@@ -293,8 +296,15 @@
     position: absolute
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     padding: 1.5rem
-    top: 0
+    top: 50%
+    transform: translateY(-50%)
     max-width: 90vw
+    .icon
+        +size(30px)
+        position: absolute
+        left: 50%
+        transform: translateX(-50%) rotate(90deg)
+        animation: hint-down .5s ease-in alternate infinite
     +rwd(md)
         top: unset
         bottom: -20px
@@ -302,6 +312,12 @@
         width: 60vw
         max-width: unset
         transform: translateX(-50%)
+        .icon
+            left: unset
+            bottom: unset
+            top: 50%
+            transform: translateY(-50%)
+            animation: hint-right .5s ease-in alternate infinite
     .furnitures
         overflow: scroll
         max-height: 55vh
