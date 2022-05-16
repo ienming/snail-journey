@@ -3,7 +3,7 @@ const PersonalPage = {
     <div class="mock room">
         <div class="container">
             <div class="room-page">
-                <div id="roomCanvasContainer"></div>
+                <div id="roomCanvasContainer" style="overflow: auto;"></div>
                 <personal-coin @switch-furnitures="switchFurnitures" :coins="userCoins"></personal-coin>
                 <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-personal-page')" class="game-ui icon" />
             </div>

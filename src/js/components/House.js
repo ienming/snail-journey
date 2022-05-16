@@ -2,7 +2,7 @@ const House = {
     template: `
     <section class="mock room">
         <div class="room-page">
-            <div id="houseCnvsContainer"></div>
+            <div id="houseCnvsContainer" style="overflow: auto;"></div>
             <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-house-page')" class="game-ui icon" />
         </div>
         <comment-board :program="npc.program" :name="npc.name" v-if="commentHasShown" @switch-comment-board="switchCommentBoard"></comment-board>
