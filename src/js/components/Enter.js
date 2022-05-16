@@ -43,9 +43,10 @@ const NoviceTeach = {
             <div class="mock" v-if="noviceHasShown">
                 <div class="wrapper">
                     <div class="popup dialogue novice">
+                        <h2 class="t-c-g t-a-c mb-1" style="opacity: 0.5">新手導引</h2>
                         <transition-group name="fade-right">
                             <div v-for="(teach,idx) of teaches" :key="teach.title" v-show="idx == nowStep" class="t-a-c fade-right-item">
-                                <h2 class="t-z-4 mb-1">{{teach.title}}</h2>
+                                <h2 class="t-z-4">{{teach.title}}</h2>
                                 <img :src="teach.img" style="max-height: 100px;"/>
                                 <p>{{teach.content}}</p>
                             </div>
@@ -131,11 +132,13 @@ const Narrative = {
     <transition name="fade">
         <div class="wrapper narrative" @click="nxt" v-if="narrativeHasShown">
             <transition-group name="fade-right">
-                <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column aic">
+                <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column flex-md-row aic">
                     <img :src=cut.src />
-                    <p>{{ cut.descrip }}</p>
-                    <p class="mt-2 t-z-1" style="opacity: 0.7" v-if="cut.name !== 4">（點擊畫面任何地方繼續）</p>
-                    <p class="mt-2 t-z-1" style="opacity: 0.7" v-else>（進入蝸牛綠洲！）</p>
+                    <div class="my-2 t-z-2 descrip-container">
+                        <p class="descrip" v-html="cut.descrip"></p>
+                        <p class="t-z-1 mt-1 mt-md-0 mr-md-2" style="opacity: 0.7" v-if="cut.name !== 4">（點擊畫面任何地方繼續）</p>
+                        <p class="t-z-1" style="opacity: 0.7" v-else>（進入蝸牛綠洲！）</p>
+                    </div>
                 </section>
             </transition-group>
         </div>
@@ -150,15 +153,15 @@ const Narrative = {
                 {
                     name: 1,
                     src: './src/img/open/shot1.png',
-                    descrip: ""
+                    descrip: "我住在忙碌的城市裡......</br>看著人來人往川流不息，緊繃而快速的生活步調"
                 },{
                     name: 2,
                     src: './src/img/open/shot2.png',
-                    descrip: ""
+                    descrip: "有時也需要一個地方喘息......</br>這天我接收到一個邀請"
                 },{
                     name: 3,
                     src: './src/img/open/shot3.png',
-                    descrip: ""
+                    descrip: "再見喧囂！</br>我要去度假了！"
                 },{
                     name: 4,
                     src: './src/img/open/shot4.png',
@@ -167,6 +170,9 @@ const Narrative = {
             ]
         }
     },
+    mounted(){
+        this.splitText()
+    },
     methods: {
         nxt(){
             if (this.nowCut == this.cuts.length){
@@ -174,6 +180,21 @@ const Narrative = {
             }else{
                 this.nowCut ++
             }
+        },
+        splitText(){
+            let arr = []
+            document.querySelectorAll(".narrative .descrip").forEach(el => {
+                el.innerText.split("").forEach(t => {
+                    let temp = document.createElement("span")
+                    temp.innerText = t
+                    arr.push(temp)
+                })
+                el.innerText = ""
+                for (let i=0; i<arr.length; i++){
+                    el.appendChild(arr[i])
+                }
+                arr = []
+            })
         }
     }
 }

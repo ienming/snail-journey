@@ -16,6 +16,8 @@ const vm = new Vue({
             say: "",
             hints: []
         },
+        boardHasShown: true,
+        showFirstHint: true,
         bgSound: undefined,
         bgIsPlaying: false,
         dailyTrashes: [],
@@ -66,7 +68,8 @@ const vm = new Vue({
                     }
                 })
                 return true
-            }else return false
+            }
+            else return false
         },
         itemSpeakImgSrc() {
             if (this.itemSpeak !== undefined) {
@@ -306,6 +309,9 @@ const vm = new Vue({
         },
         switchProgram() {
             this.showProgram = true
+        },
+        switchBoard(v){
+            this.boardHasShown = v
         },
         startGame() {
             this.interaction.nowLoading = false

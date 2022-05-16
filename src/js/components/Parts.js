@@ -245,7 +245,7 @@ Vue.component('input-text', InputText)
 
 const Accordion = {
     template: `
-        <section>
+        <section class="scroll">
             <div class="my-accordion" v-for="(accordion, idx) of accordions" @click="switchAccordion(idx, $event)">
                 <div class="accordion-header d-flex jcb aic">
                     <h4>{{accordion.title}}</h4>
@@ -308,3 +308,41 @@ const ProgressHint = {
     }
 }
 Vue.component('progress-hint', ProgressHint)
+
+const BillBoard = {
+    template: `
+        <transition name="fade">
+            <div class="mock" v-if="boardHasShown">
+                <aside class="bill-board card w-100 w-md-un">
+                    <div>
+                        <h3 class="t-a-c">蝸牛綠洲生活公約</h3>
+                        <ul>
+                            <li v-for="rule of rules">{{rule}}</li>
+                        </ul>
+                    </div>
+                    <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
+                </aside>
+            </div>
+        </transition>
+    `,
+    props: ['boardHasShown'],
+    data(){
+        return {
+            rules: [
+                "隨手撿起街道裡的垃圾，維護純淨綠洲",
+                "打抱不平、堤防危害秩序的蛇和青蛙",
+                "敦親睦鄰、和村民聊天親近地方"
+            ]
+        }
+    },
+    methods: {
+        switchBoard(){
+            if (this.boardHasShown){
+                this.$emit('switch-board', false)
+            }else{
+                this.$emit('switch-board', true)
+            }
+        }
+    }
+}
+Vue.component('bill-board', BillBoard)

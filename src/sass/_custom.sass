@@ -68,6 +68,17 @@
     text-align: center
     img
         max-width: 80%
+.descrip-container
+    padding: 0 30px
+    @for $i from 1 through 30
+        span:nth-child(#{$i})
+            position: relative
+            opacity: 0
+            animation: textFadeIn .5s #{$i * .1}s ease-in-out forwards
+    +rwd(md)
+        writing-mode: vertical-rl
+        text-orientation: mixed
+        margin-left: 48px
 
 // header
 .my-header
@@ -461,7 +472,7 @@ ul.carousel-lids
             
 // 滾動
 .scroll
-    max-height: 55vh
+    max-height: 35vh
     overflow-y: scroll
     // +rwd(md)
     //     max-height: 60vh
@@ -475,9 +486,10 @@ ul.carousel-lids
     position: fixed
     left: 20px
     top: 80px
-    width: 50vw
     pointer-events: none
+    width: 75vw
     +rwd(md)
+        width: 50vw
         top: 10vh
 
 .progress-hint
@@ -508,3 +520,21 @@ ul.carousel-lids
         padding: 80px 60px
     button
         color: $accentDark
+
+.bill-board
+    position: fixed
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    background: url("../img/letter_bg.png")
+    background-size: 100% 100%
+    background-position-x: center
+    background-repeat: no-repeat
+    max-height: unset !important
+    box-shadow: none
+    padding: 80px 50px
+    +rwd(md)
+        padding: 80px 60px
+    ul
+        list-style: initial
+        padding-left: 1rem

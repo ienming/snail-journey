@@ -14,10 +14,16 @@ const PersonalPage = {
                 @show-confirm="showConfirm"
                 @switch-furnitures="switchFurnitures"></furnitures-page>
             </template>
-            <div v-if="firstShouldShow" class="card">
-                這是首次打開
-                <close-btn now-show="first" @switch-first="switchFirst"></close-btn>
-            </div>
+            <transition name="fade">
+                <div class="mock" v-if="firstHasShown">
+                    <div class="card t-a-c w-75 w-md-un">
+                        <h3>歡迎來到蝸牛綠洲！</h3>
+                        <p class="my-1">這裡是你在綠洲裡的家，雖然現在還空空蕩蕩的，只要和村民聊天、探索完各個區域，就能從上方的櫃子裡挑選喜歡的家具喔。快來佈置蝸牛綠洲裡的溫馨小窩吧！</p>
+                        <img src="./src/img/icons/plus.png" style="max-height: 60px;" />
+                        <close-btn now-show="first" @switch-first="switchFirst"></close-btn>
+                    </div>
+                </div>
+            </transition>
         </div>
         <template name="fade">
         <buy-confirm v-show="confirmHasShown" :furniture="nowAddFurniture" @close-confirm="closeConfirm"></buy-confirm>
@@ -43,27 +49,19 @@ const PersonalPage = {
             confirmHasShown: false,
             displayShelfHasShown: false,
             nowAddFurniture: undefined,
-        }
-    },
-    computed: {
-        firstHasShown:{
-            get(){
-                if (this.firstShouldShow){
-                    return true
-                }else return false
-            }
+            firstHasShown: this.firstShouldShow,
         }
     },
     watch: {
         'userGotAchievements': {
             handler: function(newValue, oldValue){
-                console.log("使用者區域探索成就有變，重畫")
+                // console.log("使用者區域探索成就有變，重畫")
                 this.drawAchievements()
             }
         },
         'userGotFurnitures': {
             handler: function(newValue, oldValue){
-                console.log("使用者家具有變，重畫家具")
+                // console.log("使用者家具有變，重畫家具")
                 this.drawFurnitures()
             }
         }
@@ -195,7 +193,8 @@ const PersonalPage = {
             this.confirmHasShown = false
         },
         switchFirst(){
-
+            this.firstHasShown = false
+            this.$emit('close-first-hint')
         }
     }
 }

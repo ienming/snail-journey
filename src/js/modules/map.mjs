@@ -53,7 +53,7 @@ function createMap(){
     map.name = 'roads'
     // set the transform origin and anchor point of the image which will effect the starting point of the image
     map.anchor.set(0.5) //center center
-    map.scale.set(scale)
+    map.scale.set(scale*2)
 
     mapContainer.addChild(map)
 }
@@ -63,7 +63,7 @@ function createBgHouses(name){
     let sp = new PIXI.Sprite(texture)
     sp.name = name
     sp.anchor.set(0.5)
-    sp.scale.set(scale)
+    sp.scale.set(scale*2)
     sp.pivot.x = 60
     mapContainer.addChild(sp)
 }

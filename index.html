@@ -13,7 +13,7 @@
 <body>
     <div id="app">
         <!-- Header -->
-        <my-header @switch-personalpage="switchPersonalPage" @switch-bg="switchBg" :bg-sound="bgSound" :bg-is-playing="bgIsPlaying"></my-header>
+        <my-header @switch-personalpage="switchPersonalPage" @switch-bg="switchBg" :bg-sound="bgSound" :bg-is-playing="bgIsPlaying" :board-has-shown="boardHasShown" @switch-board="switchBoard"></my-header>
         <!-- 測試使用者狀態 -->
         <user-state :achievements="user.achievements" :user-achieved="userGotAchievements"
                     :daily-trashes="dailyTrashes" :user-got-trashes="user.gotTrashes"
@@ -22,6 +22,8 @@
         <enter :loading="interaction.nowLoading" :bg-is-playing="bgIsPlaying" @start-game="startGame" @switch-bg="switchBg"></enter>
         <!-- 分鏡敘事 -->
         <narrative v-if="firstShouldShow"></narrative>
+        <!-- 側邊公布欄 -->
+        <bill-board :board-has-shown="boardHasShown" @switch-board="switchBoard"></bill-board>
         <!-- 新手教學 -->
         <novice-teach v-if="firstShouldShow"></novice-teach>
         <!-- 主要遊戲畫面 -->
@@ -32,7 +34,8 @@
                 :user-adoptions="user.adoptions"
                 :user-got-achievements="userGotAchievements" :user-coins="user.coins"
                 :user-got-furnitures="user.furnitures" :outer-show-personal-page="interaction.showPersonalPage"
-                :first-should-show="firstShouldShow"
+                :first-should-show="showFirstHint"
+                @close-first-hint="showFirstHint = false"
                 @switch-personal-page="switchPersonalPage"></personal-page>
         </transition>
         <!-- NPC House -->
@@ -49,7 +52,7 @@
                     <!-- 一般對話 -->
                     <template v-if="!showProgram">
                         <div key="dialogue" class="d-flex">
-                            <div class="popup dialogue scroll" :class="nowNPC && nowNPC.func ? 'func' : ''">
+                            <div class="popup dialogue" :class="nowNPC && nowNPC.func ? 'func' : ''">
                                 <!-- 不管怎樣都會有的見面招呼語 -->
                                 <div>
                                     <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">

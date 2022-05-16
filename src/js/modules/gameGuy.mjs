@@ -362,22 +362,29 @@ function checkJudged(tool){
         })
         let respondGuy = globalGuys[globalGuys.findIndex( el => el.name == beingJudged)]
         let respondSp = guysContainer.children[guysContainer.children.findIndex(el=>el.name == beingJudged)]
+        let str="", num = 0
         switch (tool.name){
             case 'great':
                 // 在這裡判斷是否要給獎勵
                 // guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被讚了！`)
                 if (beingJudged.indexOf("good") !== -1){
-                    let str = "被你讚美的他很開心，之後也一定會持續替綠洲做好事的～"
-                    let num = 10
+                    str = "被你讚美的他很開心，之後也一定會持續替綠洲做好事的～"
+                    num = 10
                     callVueSys(str, `獲得${num}個蝸牛幣`, "./src/img/coin.png", num)
+                }else{
+                    str = "破壞秩序的人繼續任性妄為了"
+                    callVueSys(str, `維持秩序失敗...`)
                 }
                 break;
             case 'bad':
                 // guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被罵了......`)
                 if (beingJudged.indexOf("bad") !== -1){
-                    let str = "謝謝你幫忙維持秩序！替大家打抱不平！"
-                    let num = 10
+                    str = "謝謝你幫忙維持秩序！替大家打抱不平！"
+                    num = 10
                     callVueSys(str, `獲得${num}個蝸牛幣`, "./src/img/coin.png", num)
+                }else{
+                    str = "替綠洲做好事的人覺得很受傷"
+                    callVueSys(str, `維持秩序失敗...`)
                 }
                 break;
         }
