@@ -252,7 +252,10 @@ const Accordion = {
                     <div class="plus-icon"><span></span><span></span></div>
                 </div>
                 <div class="accordion-body" @click.stop>
-                    <p v-html="accordion.content"></p>
+                    <div>
+                        <p v-html="accordion.content"></p>
+                        <img :src="accordion.img" v-if="accordion.img" style="max-height: 100px;"/>
+                    </div>
                 </div>
             </div>
         </section>
@@ -265,7 +268,7 @@ const Accordion = {
         switchAccordion: function (id, evt) {
             let el = evt.currentTarget
             let contentDiv = el.querySelector(".accordion-body")
-            let content = contentDiv.querySelector("p")
+            let content = contentDiv.querySelector("div")
             let resultHeight = content.clientHeight + 8
             if (el.classList.contains("is-open")) {
                 el.classList.remove("is-open")
@@ -314,11 +317,10 @@ const BillBoard = {
         <transition name="fade">
             <div class="mock" v-if="boardHasShown">
                 <aside class="bill-board card w-100 w-md-un">
-                    <div>
-                        <h3 class="t-a-c">蝸牛綠洲生活公約</h3>
-                        <ul>
-                            <li v-for="rule of rules">{{rule}}</li>
-                        </ul>
+                    <div class="px-2">
+                        <h2 class="t-a-c mb-1">蝸牛綠洲生活公約</h2>
+                        <p>歡迎來到「蝸牛綠洲」！作為這個社區的新成員，除了享受慢活的氣氛之外，有什麼問題只要點開畫面右上方的公布欄就能看到囉！</p>
+                        <accordion :accordions="rules" class="pt-2"></accordion>
                     </div>
                     <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
                 </aside>
@@ -329,9 +331,27 @@ const BillBoard = {
     data(){
         return {
             rules: [
-                "隨手撿起街道裡的垃圾，維護純淨綠洲",
-                "打抱不平、堤防危害秩序的蛇和青蛙",
-                "敦親睦鄰、和村民聊天親近地方"
+                {
+                    title: "隨手撿起街道垃圾，維護純淨綠洲",
+                    content: "尋找散落在街道裡的垃圾，當游標變成「垃圾桶」的時候可以撿起垃圾、獲得蝸牛幣！",
+                    img: "./src/img/billboard_trash.png"
+                },{
+                    title: "打抱不平、堤防危害秩序的蛇和青蛙",
+                    content: "拖拉畫面左下方的「讚」和「倒讚」圖標，到蛇、青蛙或清掃街道的人身上吧！",
+                    img: "./src/img/teach_guy.png"
+                },{
+                    title: "敦親睦鄰、和村民聊天親近地方",
+                    content: "當滑鼠游標變成「對話的樣子」時，可以開始和村民聊天、認識地方喔。",
+                    img: "./src/img/teach_explore.png"
+                },{
+                    title: "賺取蝸牛幣，佈置房間",
+                    content: "畫面左方有「房屋」圖標的黃色房子是你的新家，存夠蝸牛幣之後，就能在房間裡透過打開「櫥櫃」圖標添購新的傢俱囉！",
+                    img: "./src/img/teach_furniture.png"
+                },{
+                    title: "加入社區行動案",
+                    content: "當村民頭上出現「燈泡」圖標時，表示有可以加入的社區行動案發布了！有興趣的話，直接和蝸牛巷的居民接洽，一起維護實體環境吧！",
+                    img: "./src/img/teach_adopt.png"
+                }
             ]
         }
     },

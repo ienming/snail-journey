@@ -4225,16 +4225,8 @@ ul.carousel-lids {
 
 .novice {
   background-color: #f3f0e7;
-  background: url(7a0e2d3305ded9a568bf.png);
-  background-size: 100% 100%;
-  background-position-x: center;
   background-repeat: no-repeat;
-  max-height: unset !important;
-  box-shadow: none;
-  padding: 80px 50px; }
-  @media (min-width: 768px) {
-    .novice {
-      padding: 80px 60px; } }
+  max-height: unset !important; }
   .novice button {
     color: #a87561; }
 

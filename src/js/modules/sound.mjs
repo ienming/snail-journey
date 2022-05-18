@@ -2,6 +2,7 @@ let soundEffect, pickTrashSE, judgeSE
 PIXI.sound.Sound.from({
     url: 'src/sounds/examples_resources_bird.mp3',
     preload: true,
+    volume: 0.3,
     loaded: function(err, sound){
         soundEffect = sound
     }
@@ -18,6 +19,7 @@ PIXI.sound.Sound.from({
 PIXI.sound.Sound.from({
     url: 'src/sounds/pop.mp3',
     preload: true,
+    volume: 0.3,
     loaded: function(err, sound){
         judgeSE = sound
     }

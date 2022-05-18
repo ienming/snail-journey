@@ -94,7 +94,7 @@ const NoviceTeach = {
                 },{
                     title: "認養行動案",
                     content: "店裡的蝸牛村民似乎有什麼計劃正在進行，有興趣加入、成為這裡的一份子嗎？認養行動案，成為蝸牛綠洲的 VIP 吧！",
-                    img: ""
+                    img: "./src/img/teach_adopt.png"
                 }
             ],
             nowStep: 0
@@ -137,7 +137,7 @@ const Narrative = {
                     <div class="my-2 t-z-2 descrip-container">
                         <p class="descrip" v-html="cut.descrip"></p>
                         <p class="t-z-1 mt-1 mt-md-0 mr-md-2" style="opacity: 0.7" v-if="cut.name !== 4">（點擊畫面任何地方繼續）</p>
-                        <p class="t-z-1" style="opacity: 0.7" v-else>（進入蝸牛綠洲！）</p>
+                        <p class="t-z-1" style="opacity: 0.7" v-else>（點擊畫面進入蝸牛綠洲）</p>
                     </div>
                 </section>
             </transition-group>
@@ -161,11 +161,11 @@ const Narrative = {
                 },{
                     name: 3,
                     src: './src/img/open/shot3.png',
-                    descrip: "再見喧囂！</br>我要去度假了！"
+                    descrip: "再見喧囂！</br>我要去度假了～"
                 },{
                     name: 4,
                     src: './src/img/open/shot4.png',
-                    descrip: ""
+                    descrip: "來到抓牛綠洲了！"
                 }
             ]
         }

@@ -20,7 +20,7 @@ function startDailyJudge(){
     createGuys()
     let nowTime = new Date().getMinutes()
     window.setInterval(()=>{
-        if (new Date().getMinutes() !== nowTime){
+        if (new Date().getMinutes() !== nowTime && new Date().getMinutes()%5 == 0){
             nowTime = new Date().getMinutes()
             console.log("計時重新產生評價角色")
             while(guysContainer.children.length > 0){

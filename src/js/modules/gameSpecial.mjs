@@ -91,7 +91,7 @@ function generateSpecial(){
         }
     }
     window.setInterval(()=>{
-        if (new Date().getMinutes() !== nowTime && new Date().getMinutes()%2 == 0){
+        if (new Date().getMinutes() !== nowTime && new Date().getMinutes()%10 == 0){
             nowTime = new Date().getMinutes()
             console.log("新日子，重新產生特殊蝸牛")
             vm.$data.user.gotSpecial = false
@@ -152,7 +152,7 @@ function drawSpecial(areaId){
         vm.$data.user.gotSpecial = true
         el.target.destroy()
         spIsClear = true
-        let str = "特殊獎勵！"
+        let str = "抓到神出鬼沒的神秘蝸牛了！"
         let imgUrl = "./src/img/coin.png"
         let num = 30
         let abs = `獲得 ${num} 個蝸牛幣`

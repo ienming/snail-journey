@@ -44,9 +44,10 @@ function startDailyTrash(){
     // 判斷每日更新
     let nowTime = new Date().getMinutes()
     window.setInterval(()=>{
-        if (new Date().getMinutes() !== nowTime){
+        if (new Date().getMinutes() !== nowTime && new Date().getMinutes()%5 == 0){
             nowTime = new Date().getMinutes()
             console.log("計時重新產生垃圾")
+            console.log(nowTime)
             while(trashContainer.children.length > 0){
                 trashContainer.removeChild(trashContainer.children[0])
             }
@@ -58,7 +59,7 @@ function startDailyTrash(){
 }
 
 function generateTrash(){
-    let todayTrashNum = getRandom(0,10)
+    let todayTrashNum = getRandom(1,10)
     let readyTrashes = [...trashes]
     for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)

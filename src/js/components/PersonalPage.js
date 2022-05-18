@@ -34,7 +34,7 @@ const PersonalPage = {
             @switch-display-shelf="displayShelfHasShown = !displayShelfHasShown"></display-shelf>
     </div>
     `,
-    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions', 'firstShouldShow'],
+    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions', 'showFirstHint'],
     mounted(){
         this.init()
     },
@@ -49,7 +49,7 @@ const PersonalPage = {
             confirmHasShown: false,
             displayShelfHasShown: false,
             nowAddFurniture: undefined,
-            firstHasShown: this.firstShouldShow,
+            firstHasShown: this.showFirstHint,
         }
     },
     watch: {
