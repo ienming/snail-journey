@@ -311,6 +311,8 @@ const vm = new Vue({
                     }
                 })
             }, 300)
+            // play bg Music
+            this.switchBg(true)
         },
         checkAns(correct) {
             if (correct) {
