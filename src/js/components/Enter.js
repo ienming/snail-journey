@@ -5,15 +5,10 @@ const Enter = {
                 <div class="wrapper">
                     <div class="d-flex flex-column mb-2 mb-md-0">
                         <img src="./src/img/logo.png" class="logo"/>
-                        <transition name="fade">
-                            <div class="t-a-c" v-if="!loading">
-                                <p class="t-c-g t-z-1">請注意音量</p>
-                                <button class="mt-2 my-btn w-100" @click="startGame">
-                                    進入綠洲
-                                </button>
-                            </div>
-                        </transition>
                     </div>
+                    <transition name="fade">
+                        <log-in @log-in="startGame" v-if="!loading"></log-in>
+                    </transition>
                 </div>
                 <toggle-bg-music :bg-is-playing="bgIsPlaying" @switch-bg-music="switchBgMusic" style="position: absolute; right: 24px; top: 24px;"></toggle-bg-music>
             </div>
