@@ -324,6 +324,8 @@ const vm = new Vue({
                     }
                 })
             }, 300)
+            // start BG
+            this.switchBg(true)
         },
         checkAns(correct) {
             if (correct) {

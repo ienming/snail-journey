@@ -25,10 +25,11 @@ const Header = {
                 {
                     name: "toggleMusic",
                     seudo: "開關背景音樂",
-                },{
-                    name: "clearData",
-                    seudo: "清除資料（測試用）"
                 }
+                // ,{
+                //     name: "clearData",
+                //     seudo: "清除資料（測試用）"
+                // }
             ]
         }
     },

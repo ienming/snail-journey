@@ -5,7 +5,7 @@ const UserState = {
             <img :src="foldImg" />
         </div>
         <h3>蝸牛探險家</h3>
-        <p class="t-z-1 mb-1 t-c-g">連續登入：X天</p>
+        <p class="t-z-1 mb-1 t-c-g">連續登入：365天</p>
         <p class="t-z-2 t-w-5">每日環境清潔：{{userGotTrashes.length}}/{{dailyTrashes.length}}</p>
         <p class="t-z-2 t-w-5">巷弄秩序維護：{{userJudges.length}}/{{dailyGuys.length}}</p>
         <section>
