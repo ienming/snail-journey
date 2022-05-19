@@ -246,7 +246,7 @@ const CommentBoard = {
                     <div class="popup t-a-c w-md-50">
                         <h2>{{program.title}}</h2>
                         <p>留言板討論認養議題區</p>
-                        <p class="t-c-g">*目前留言僅供學術研究測試用，本地商家不會收到資訊*</p>
+                        <p class="t-c-g">*目前留言僅供學術研究測試用，本地商家不會收到資訊，您的留言在網頁重新整理後便會被清除*</p>
                         <section>
                             <div class="comment">
                                 <div class="avatar">

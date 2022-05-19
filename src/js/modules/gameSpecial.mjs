@@ -79,9 +79,9 @@ let areas = [
 let areaId = 0, sp, spIsClear = false
 function generateSpecial(){
     // 判斷每日更新
-    let nowTime = new Date().getMinutes()
+    let nowTime = new Date().getDay()
     let recordGotSpecial = vm.$data.userRecord.gotSpecial
-    if (nowTime%2 == 0){
+    if (nowTime == 0 || nowTime == 5){
         if (recordGotSpecial){
             console.log("今天已經抓到特殊蝸牛了")
             return
@@ -91,9 +91,9 @@ function generateSpecial(){
         }
     }
     window.setInterval(()=>{
-        if (new Date().getMinutes() !== nowTime && new Date().getMinutes()%10 == 0){
-            nowTime = new Date().getMinutes()
-            console.log("新日子，重新產生特殊蝸牛")
+        if (new Date().getDay() !== nowTime && (new Date().getDay() == 5 || new Date().getDay() == 0)){
+            nowTime = new Date().getDay()
+            console.log("週末，重新產生特殊蝸牛")
             vm.$data.user.gotSpecial = false
             while(specialContainer.children.length > 0){
                 specialContainer.removeChild(specialContainer.children[0])

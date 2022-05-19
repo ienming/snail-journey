@@ -266,6 +266,18 @@
             transform: translateY(-10px)
             +rwd(md)
                 transform: translateX(10px)
+    .hint
+        font-size: 14px
+        position: absolute
+        background-color: $lightBg
+        text-align: center
+        padding: .25rem .5rem
+        border-radius: 50px
+        top: 30px
+        left: 50%
+        transform: translateX(-50%)
+        +basicShadow()
+
 #roomCanvasContainer, #houseCnvsContainer
     max-width: 90vw
     overflow: scroll

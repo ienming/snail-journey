@@ -6,9 +6,12 @@ const Enter = {
                     <div class="d-flex flex-column mb-2 mb-md-0">
                         <img src="./src/img/logo.png" class="logo"/>
                         <transition name="fade">
-                            <button class="mt-2 my-btn w-100" @click="startGame" v-if="!loading">
-                                進入綠洲
-                            </button>
+                            <div class="t-a-c" v-if="!loading">
+                                <p class="t-c-g t-z-1">請注意音量</p>
+                                <button class="mt-2 my-btn w-100" @click="startGame">
+                                    進入綠洲
+                                </button>
+                            </div>
                         </transition>
                     </div>
                 </div>

@@ -6,6 +6,9 @@ const PersonalPage = {
                 <div id="roomCanvasContainer" style="overflow: auto;"></div>
                 <personal-coin @switch-furnitures="switchFurnitures" :coins="userCoins"></personal-coin>
                 <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-personal-page')" class="game-ui icon" />
+                <transition name="fade">
+                    <p class="hint" v-if="!explored">找綠洲裡的村民聊天、好好探索這個地方來解鎖家具吧！</p>
+                </transition>
             </div>
             <template name="fade">
             <furnitures-page v-if="furnitureHasShown" 
@@ -49,6 +52,16 @@ const PersonalPage = {
             confirmHasShown: false,
             displayShelfHasShown: false,
             nowAddFurniture: undefined,
+        }
+    },
+    computed: {
+        explored(){
+            for (el in this.userGotAchievements){
+                if (this.userGotAchievements[el].indexOf('finished') !== -1){
+                    return true
+                }
+            }
+            return false
         }
     },
     watch: {
