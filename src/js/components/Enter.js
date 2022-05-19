@@ -179,6 +179,7 @@ const Narrative = {
         nxt(){
             if (this.nowCut == this.cuts.length){
                 this.narrativeHasShown = false
+                this.$emit('enter-oasis')
             }else{
                 this.nowCut ++
             }

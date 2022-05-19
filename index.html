@@ -21,7 +21,7 @@
         <!-- 進場動畫 -->
         <enter :loading="interaction.nowLoading" :bg-is-playing="bgIsPlaying" @start-game="startGame" @switch-bg="switchBg"></enter>
         <!-- 分鏡敘事 -->
-        <narrative v-if="firstShouldShow"></narrative>
+        <narrative v-if="firstShouldShow" @enter-oasis="switchBg(true)"></narrative>
         <!-- 側邊公布欄 -->
         <bill-board :board-has-shown="boardHasShown" @switch-board="switchBoard"></bill-board>
         <!-- 新手教學 -->
