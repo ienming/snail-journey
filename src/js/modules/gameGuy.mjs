@@ -18,10 +18,10 @@ if (rwd < rwds.md){ //mobile
 function startDailyJudge(){
     showGuyJudgeTools()
     createGuys()
-    let nowTime = new Date().getDate()
+    let nowTime = new Date().getHours()
     window.setInterval(()=>{
-        if (new Date().getDate() !== nowTime){
-            nowTime = new Date().getDate()
+        if (new Date().getHours() !== nowTime){
+            nowTime = new Date().getHours()
             console.log("計時重新產生評價角色")
             while(guysContainer.children.length > 0){
                 guysContainer.removeChild(guysContainer.children[0])
@@ -31,7 +31,7 @@ function startDailyJudge(){
             vm.$data.user.judges = []
             createGuys()
         }
-    }, 1000)
+    }, 60000)
 }
 
 // 產生 Guys

@@ -42,10 +42,10 @@ function startDailyTrash(){
         generateTrash()
     }
     // 判斷每日更新
-    let nowTime = new Date().getDate()
+    let nowTime = new Date().getHours()
     window.setInterval(()=>{
-        if (new Date().getDate() !== nowTime){
-            nowTime = new Date().getDate()
+        if (new Date().getHours() !== nowTime){
+            nowTime = new Date().getHours()
             console.log("計時重新產生垃圾")
             console.log(nowTime)
             while(trashContainer.children.length > 0){
@@ -55,7 +55,7 @@ function startDailyTrash(){
             generateTrash()
             vm.$data.user.gotTrashes = []
         }
-    }, 1000)
+    }, 60000)
 }
 
 function generateTrash(){
