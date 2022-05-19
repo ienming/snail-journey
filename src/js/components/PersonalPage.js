@@ -402,7 +402,7 @@ const DisplayShelf = {
             <div class="mock">
                 <div class="wrapper">
                     <div class="popup t-a-c w-md-50">
-                        <div class="scroll sm-only">
+                        <div class="scroll">
                             <section>
                                 <h3>探索區域徽章</h3>
                                 <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有探索完的區域喔。</br>快去找蝸牛們聊天、認識一下蝸牛綠洲吧！</p>
@@ -417,6 +417,7 @@ const DisplayShelf = {
                             </section>
                             <section class="mt-2">
                                 <h3>認養蝸牛綠洲議題</h3>
+                                <p class="t-c-g my-1">*目前認養社區活動僅供學術研究測試用，連結不會通往其他網頁為正常狀況。*</p>
                                 <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
                                 <ul class="d-flex jcc mt-1 adoption-lists" v-else>
                                     <a :href="el.link" target="_blank" v-for="el of userAdopted">

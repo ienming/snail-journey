@@ -3591,6 +3591,9 @@ footer {
   margin-bottom: 8px;
   margin-right: 8px; }
 
+.my-header .icon {
+  width: 36px; }
+
 .mock {
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;
@@ -3882,6 +3885,9 @@ footer {
   padding: 32px;
   max-width: 85vw;
   max-height: 80vh; }
+  @media (min-width: 768px) {
+    .popup {
+      max-width: 40vw; } }
   .popup.dialogue {
     width: 350px;
     max-height: 55vh; }
@@ -4119,6 +4125,12 @@ footer {
   padding: .5rem;
   cursor: pointer; }
 
+.adopt-goal {
+  background-color: #e2dbc5;
+  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #787878; }
+
 @media (min-width: 768px) {
   .adoption {
     max-height: 80vh;
@@ -4192,6 +4204,9 @@ ul.carousel-lids {
 .scroll {
   max-height: 35vh;
   overflow-y: scroll; }
+  @media (min-width: 768px) {
+    .scroll {
+      max-height: 40vh; } }
   @media (min-width: 768px) {
     .scroll.sm-only {
       max-height: unset;

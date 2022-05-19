@@ -54,7 +54,7 @@
                         <div key="dialogue" class="d-flex">
                             <div class="popup dialogue" :class="nowNPC && nowNPC.func ? 'func' : ''">
                                 <!-- 不管怎樣都會有的見面招呼語 -->
-                                <div>
+                                <div class="scroll">
                                     <p v-if="nowSpeak == undefined || nowNPC.speaks[0] == ''">
                                         This is {{ itemSpeak }} speaking
                                     </p>
@@ -97,7 +97,7 @@
                     <!-- 認養視窗 -->
                     <template v-else>
                         <div class="por">
-                            <adoption :program="nowNPC.program" @adopted="showSysTxt"></adoption>
+                            <adoption :program="nowNPC.program" @adopted="showSysTxt" @adopt-reward="showSysTxt"></adoption>
                             <close-btn now-show="popup" @switch-popup="switchPopup"></close-btn>
                         </div>
                     </template>

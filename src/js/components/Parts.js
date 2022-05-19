@@ -245,7 +245,7 @@ Vue.component('input-text', InputText)
 
 const Accordion = {
     template: `
-        <section class="scroll">
+        <section>
             <div class="my-accordion" v-for="(accordion, idx) of accordions" @click="switchAccordion(idx, $event)">
                 <div class="accordion-header d-flex jcb aic">
                     <h4>{{accordion.title}}</h4>
@@ -320,7 +320,7 @@ const BillBoard = {
                     <div class="px-2">
                         <h2 class="t-a-c mb-1">蝸牛綠洲生活公約</h2>
                         <p>歡迎來到「蝸牛綠洲」！作為這個社區的新成員，除了享受慢活的氣氛之外，有什麼問題只要點開畫面右上方的公布欄就能看到囉！</p>
-                        <accordion :accordions="rules" class="pt-2"></accordion>
+                        <accordion :accordions="rules" class="pt-2 scroll"></accordion>
                     </div>
                     <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
                 </aside>

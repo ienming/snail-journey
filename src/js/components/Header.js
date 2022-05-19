@@ -6,7 +6,7 @@ const Header = {
                 <ul>
                     <li v-for="page of pages" @click="switchPage(page.name)" :data-lid="page.seudo" class="descrip-lid">
                         <toggle-bg-music :bg-is-playing="bgIsPlaying" v-if="page.name=='toggleMusic'" @switch-bg-music="switchBgMusic"></toggle-bg-music>
-                        <span v-else>{{page.name}}</span>
+                        <span v-if="page.name=='clearData'">{{page.name}}</span>
                         <img :src="page.icon" class="icon" />
                     </li>
                 </ul>
@@ -20,7 +20,7 @@ const Header = {
                 {
                     name: "showBillBoard",
                     seudo: "綠洲生活公約",
-                    icon: "./src/img/icons/exit.png"
+                    icon: "./src/img/icons/billboard.png"
                 },
                 {
                     name: "toggleMusic",

@@ -1,23 +1,29 @@
 const Adoption = {
     template: `
         <div class="popup scroll">
+            <div class="adopt-goal">
+                <h3 class="mb-1">認養方案目標</h3>
+                <p class="t-z-3 mb-1">{{program.goal}}</p>
+            </div>
             <p v-html="program.descrip"></p>
             <div class="mt-1">
-            任務獎勵：
+            <h3>任務獎勵</h3>
             <div class="d-flex mission-rwd">
-                <figure>
+                <figure class="d-flex aic">
                     <img src="./src/img/coin.png" />
-                    <p>???</p>
+                    <span class="pl-1">$ {{program.reward}}</span>
                 </figure>
             </div>
             </div>
-            <basic-link class="mt-1" title="認養方案詳細說明" :url="program.link"></basic-link>
+            <basic-link class="mt-1" title="認養方案詳細說明"></basic-link>
+            <p class="t-c-g my-1">*目前認養社區活動僅供學術研究測試用，本地商家預計推行之行動計畫尚在籌備中，店家不會收到您所認養的活動資料，請安心使用*</p>
             <div @click="adopt" class="mt-2 my-btn p-2 t-a-c adopt-btn">{{ program.linkName }}</div>
         </div>
     `,
     props: ['program'],
     data(){
-        return {}
+        return {
+        }
     },
     methods: {
         adopt(){
@@ -26,9 +32,11 @@ const Adoption = {
                 if (this.program.subTitle){
                     //打事件到vm 呼叫 showsys()
                     this.$emit(`adopted`, `已認養方案：「${this.program.subTitle}：${this.program.title}」`)
+                    this.getReward()
                 }
                 else{
                     this.$emit(`adopted`, `已認養方案：「${this.program.title}」`)
+                    this.getReward()
                 }
                 //把認養的資料儲存
                 vm.$data.user.adoptions.push(this.program.title)
@@ -36,70 +44,14 @@ const Adoption = {
                 this.$emit(`adopted`, `已經認養過方案：「${this.program.title}」囉～`)
             }
         },
+        getReward(){
+            vm.$data.user.coins += this.program.reward
+            let str = `獲得認養社區行動方案「${this.program.title}」獎勵！`
+            let imgUrl = "./src/img/coin.png"
+            let num = this.program.reward
+            let abs = `獲得 ${num} 個蝸牛幣`
+            this.$emit('adopt-reward', str, abs, imgUrl)
+        }
     }
 }
 Vue.component('adoption', Adoption)
-
-// const Adoption = {
-//     template: `
-//         <div class="popup adoption">
-//             <div class="d-flex justify-between head">
-//                 <div>
-//                     <h3>{{program.subTitle}}</h3>
-//                     <h1>{{program.title}}</h1>
-//                 </div>
-//                 <div class="d-flex flex-column jcc">
-//                     <img src="" alt="" />
-//                     <span></span>
-//                 </div>
-//             </div>
-//             <p class="mt-1">
-//                 <p class="t-w-8 t-z-1">專案目標</p>
-//                 <p class="t-z-2">{{program.goal}}</p>
-//             </p>
-//             <div class="d-flex my-1">
-//                 <div v-for="keyword of program.keywords" class="keyword">
-//                     {{keyword}}
-//                 </div>
-//             </div>
-//             <p class="my-2">{{program.intro}}</p>
-//             <div class="d-flex flex-wrap my-1 action">
-//                 <figure class="m-0 d-flex aic flex-column" v-for="action of program.actions">
-//                     <img :src="action.imgSrc" alt="" />
-//                     <figcaption class="mt-1 t-a-c">
-//                         <h5 class="t-z-2">{{action.title}}</h5>
-//                         <p class="t-z-2">{{action.intro}}</p>
-//                     </figcaption>
-//                 </figure>
-//             </div>
-//             <cta @adopting="adopt"></cta>
-//         </div>
-//     `,
-//     props: {
-//         program: {
-//             type: Object
-//         }
-//     },
-//     data(){
-//         return {}
-//     },
-//     methods: {
-//         adopt(){
-//             //判斷是否已經認養過
-//             if (vm.$data.user.adoptions.every(val => val !== this.program.title)){
-//                 if (this.program.subTitle){
-//                     //打事件到vm 呼叫 showsys()
-//                     this.$emit(`adopted`, `已認養方案：「${this.program.subTitle}：${this.program.title}」`)
-//                 }
-//                 else{
-//                     this.$emit(`adopted`, `已認養方案：「${this.program.title}」`)
-//                 }
-//                 //把認養的資料儲存
-//                 vm.$data.user.adoptions.push(this.program.title)
-//             }else{
-//                 this.$emit(`adopted`, `已經認養過方案：「${this.program.title}」囉～`)
-//             }
-//         },
-//     }
-// }
-// Vue.component('adoption', Adoption)

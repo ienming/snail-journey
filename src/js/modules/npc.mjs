@@ -67,8 +67,11 @@ function createItem(el){
         itemContainer.buttonMode = true
     }
     if (el.adoptable || el.name == 'house_personal'){
-        // 加上燈泡 icon
+        // 加上icon
         let iconTexture = new PIXI.Texture.from('./src/img/icons/lightbulb.png')
+        if (el.name == 'house_personal'){
+            iconTexture =  new PIXI.Texture.from('./src/img/icons/home.png')
+        }
         let icon = new PIXI.Sprite(iconTexture)
         icon.anchor.set(0.5)
         icon.x = 100

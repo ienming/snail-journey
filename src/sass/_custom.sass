@@ -1,3 +1,6 @@
+.my-header .icon
+    width: 36px
+
 .mock
     background-color: rgba(0,0,0,.6)
     position: fixed
@@ -169,6 +172,8 @@
     padding: 32px
     max-width: 85vw
     max-height: 80vh
+    +rwd(md)
+        max-width: 40vw
     &.dialogue
         width: 350px
         max-height: 55vh
@@ -403,6 +408,11 @@
     background-color: $accentDark
     padding: .5rem
     cursor: pointer
+.adopt-goal
+    background-color: darken($lightBg, 10%)
+    margin-bottom: 1rem
+    padding: 1rem 2rem
+    border-bottom: 1px solid $secondaryGrey
 .adoption
     +rwd(md)
         max-height: 80vh
@@ -474,8 +484,8 @@ ul.carousel-lids
 .scroll
     max-height: 35vh
     overflow-y: scroll
-    // +rwd(md)
-    //     max-height: 60vh
+    +rwd(md)
+        max-height: 40vh
     &.sm-only
         +rwd(md)
             max-height: unset
