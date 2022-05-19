@@ -15,7 +15,7 @@ const PersonalPage = {
                 @switch-furnitures="switchFurnitures"></furnitures-page>
             </template>
             <transition name="fade">
-                <div class="mock" v-if="firstHasShown">
+                <div class="mock" v-if="firstShouldShow">
                     <div class="card t-a-c w-75 w-md-un">
                         <h3>歡迎來到蝸牛綠洲！</h3>
                         <p class="my-1">這裡是你在綠洲裡的家，雖然現在還空空蕩蕩的，只要和村民聊天、探索完各個區域，就能從上方的櫃子裡挑選喜歡的家具喔。快來佈置蝸牛綠洲裡的溫馨小窩吧！</p>
@@ -34,7 +34,7 @@ const PersonalPage = {
             @switch-display-shelf="displayShelfHasShown = !displayShelfHasShown"></display-shelf>
     </div>
     `,
-    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions', 'showFirstHint'],
+    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions', 'firstShouldShow'],
     mounted(){
         this.init()
     },
@@ -49,7 +49,6 @@ const PersonalPage = {
             confirmHasShown: false,
             displayShelfHasShown: false,
             nowAddFurniture: undefined,
-            firstHasShown: this.showFirstHint,
         }
     },
     watch: {
@@ -193,7 +192,6 @@ const PersonalPage = {
             this.confirmHasShown = false
         },
         switchFirst(){
-            this.firstHasShown = false
             this.$emit('close-first-hint')
         }
     }

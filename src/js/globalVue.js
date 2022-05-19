@@ -81,19 +81,6 @@ const vm = new Vue({
                 return this.user.missions[`mission${this.nowNPC.mission}`].length
             } else return
         },
-        // userGotBadges() {
-        //     let badges = {
-        //         mission1: false,
-        //         mission2: false,
-        //         mission3: false
-        //     }
-        //     for (let prop in this.user.missions) {
-        //         if (this.user.missions[prop].indexOf('finished') !== -1) {
-        //             badges[prop] = true
-        //         }
-        //     }
-        //     return badges
-        // },
         userGotAchievements() {
             let output = {}
             let maps = 0
