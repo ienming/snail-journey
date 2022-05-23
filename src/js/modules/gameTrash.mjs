@@ -10,29 +10,41 @@ trashContainer.scale.set(scale)
 let trashesMap = ['trash_bottle', 'trash_paper', 'trash_pet', 'trash_tabaco']
 function startDailyTrash(){
     // 這邊 init 要先判斷有沒有已經撿垃圾的資料，如果有那就是產生那幾個而已
+    let nowTime = new Date().getHours()
     let recordTrashes = vm.$data.userRecord.gotTrashes
     let dailyTrashesQues = vm.$data.dailyTrashes
     if (recordTrashes && recordTrashes.length > 0){
-        if (recordTrashes.length < vm.$data.dailyTrashes.length){
-            console.log("依據資料產生垃圾")
-            let notYetIds = [...dailyTrashesQues], notYetGotTrashes = []
-            for (let i=0; i<recordTrashes.length; i++){
-                let removeId = notYetIds.indexOf(recordTrashes[i])
-                notYetIds.splice(removeId, 1)
+        // 判斷紀錄的資料是否過期
+        if (nowTime !== vm.$data.user.lastDailyRecord.trash && vm.$data.user.lastDailyRecord.trash !== -1){
+            console.log("紀錄的資料過期，重新產生垃圾")
+            while(trashContainer.children.length > 0){
+                trashContainer.removeChild(trashContainer.children[0])
             }
-            notYetIds.forEach(nyid=>{
-                trashes.forEach(trash=>{
-                    if (trash.id == nyid){
-                        notYetGotTrashes.push(trash)
-                    }
-                })
-            })
-            notYetGotTrashes.forEach(trash=>{
-                drawTrash(trash)
-            })
-            mapContainer.addChild(trashContainer)
+            vm.$data.dailyTrashes = []
+            generateTrash()
+            vm.$data.user.gotTrashes = []
         }else{
-            console.log("今天的垃圾已經清完了")
+            if (recordTrashes.length < vm.$data.dailyTrashes.length){
+                console.log("依據資料產生還沒撿完的垃圾")
+                let notYetIds = [...dailyTrashesQues], notYetGotTrashes = []
+                for (let i=0; i<recordTrashes.length; i++){
+                    let removeId = notYetIds.indexOf(recordTrashes[i])
+                    notYetIds.splice(removeId, 1)
+                }
+                notYetIds.forEach(nyid=>{
+                    trashes.forEach(trash=>{
+                        if (trash.id == nyid){
+                            notYetGotTrashes.push(trash)
+                        }
+                    })
+                })
+                notYetGotTrashes.forEach(trash=>{
+                    drawTrash(trash)
+                })
+                mapContainer.addChild(trashContainer)
+            }else{
+                console.log("今天的垃圾已經清完了")
+            }
         }
     }else{
         // 如果一切都還沒開始（新玩家）
@@ -42,12 +54,11 @@ function startDailyTrash(){
         generateTrash()
     }
     // 判斷每日更新
-    let nowTime = new Date().getHours()
     window.setInterval(()=>{
         if (new Date().getHours() !== nowTime){
+            console.log(nowTime, new Date().getHours())
             nowTime = new Date().getHours()
             console.log("計時重新產生垃圾")
-            console.log(nowTime)
             while(trashContainer.children.length > 0){
                 trashContainer.removeChild(trashContainer.children[0])
             }
@@ -55,6 +66,7 @@ function startDailyTrash(){
             generateTrash()
             vm.$data.user.gotTrashes = []
         }
+        console.log(nowTime, new Date().getHours())
     }, 60000)
 }
 
@@ -112,6 +124,8 @@ function drawTrash(trash){
     eachTrshCont.on("pointerdown", (el)=>{
         // console.log("撿到垃圾了")
         vm.$data.user.gotTrashes.push(trash.id) //讓 Vue watch 撿垃圾的資料
+        let getTrashTime = new Date().getHours()
+        vm.$data.user.lastDailyRecord.trash = getTrashTime
         let hint = {}
         hint.id = trash.id
         let left = vm.$data.dailyTrashes.length - vm.$data.user.gotTrashes.length

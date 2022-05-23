@@ -55,7 +55,11 @@ const vm = new Vue({
             coins: 100,
             furnitures: [],
             adoptions: [],
-            judges: []
+            judges: [],
+            lastDailyRecord: {
+                trash: -1,
+                guys: -1
+            }
         },
         userRecord: {}
     },
@@ -217,6 +221,14 @@ const vm = new Vue({
                 let d = JSON.stringify(newValue)
                 this.storageData('gotTrashes', d)
             }
+        },
+        'user.lastDailyRecord': {
+            handler: function (newValue, oldValue) {
+                console.log("每日互動資料的時間有更新，開始儲存")
+                let d = JSON.stringify(newValue)
+                this.storageData('lastDailyRecord', d)
+            },
+            deep: true
         },
         'user.gotSpecial': {
             handler: function (newValue, oldValue) {
