@@ -3164,7 +3164,8 @@ footer {
     position: absolute;
     right: 0;
     display: flex;
-    justify-content: flex-end; }
+    justify-content: flex-end;
+    align-items: center; }
   .my-header li {
     display: flex;
     flex-direction: column;
