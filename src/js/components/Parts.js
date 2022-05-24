@@ -21,13 +21,18 @@ Vue.component('toggle-bg-music', ToggleBGMusic)
 const CloseBtn = {
     template:
         `<div class="close" @click="switchPage">
-        <img src="src/img/icons/close.svg" alt="">
-    </div>`,
-    props: {
-        nowShow: String
-    },
+            <img :src="imgSrc" alt="">
+        </div>`,
+    props: ['nowShow', 'highlight'],
     data() {
         return {}
+    },
+    computed:{
+        imgSrc(){
+            if (this.highlight){
+                return 'src/img/icons/close_dark.svg'
+            }else return 'src/img/icons/close.svg'
+        }
     },
     methods: {
         switchPage() {
@@ -321,8 +326,8 @@ const BillBoard = {
                         <h2 class="t-a-c mb-1">蝸牛綠洲生活公約</h2>
                         <p>歡迎來到「蝸牛綠洲」！作為這個社區的新成員，除了享受慢活的氣氛之外，有什麼問題只要點開畫面右上方的公布欄就能看到囉！</p>
                         <accordion :accordions="rules" class="pt-2 scroll"></accordion>
+                        <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
                     </div>
-                    <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
                 </aside>
             </div>
         </transition>

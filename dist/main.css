@@ -4275,6 +4275,15 @@ ul.carousel-lids {
   .bill-board ul {
     list-style: initial;
     padding-left: 1rem; }
+  .bill-board .close {
+    top: -30px;
+    right: 30px; }
+  @media (min-width: 768px) {
+    .bill-board > div {
+      position: relative; }
+    .bill-board .close {
+      top: 0;
+      right: -90px; } }
 
 html, body {
   width: 100%;
