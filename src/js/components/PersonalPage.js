@@ -110,7 +110,7 @@ const PersonalPage = {
                     left: value,
                     behavior: 'smooth'
                 })
-                document.querySelector("#canvasContainer > canvas").style['touch-action'] = 'auto'
+                document.querySelector("#roomCanvasContainer > canvas").style['touch-action'] = 'auto'
             }, 300)
         },
         draw(){
