@@ -209,11 +209,11 @@ button {
   color: #787878; }
 
 p, span, a, ul {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.5; }
   @media (min-width: 768px) {
     p, span, a, ul {
-      font-size: 18px; } }
+      font-size: 16px; } }
 
 /* Grid */
 .row {
@@ -2682,7 +2682,7 @@ section.container {
     bottom: 15px; } }
 
 .my-btn {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.5;
   border-radius: 8px;
   background-color: #3e856c;
@@ -2691,7 +2691,7 @@ section.container {
   transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
   @media (min-width: 768px) {
     .my-btn {
-      font-size: 16px; } }
+      font-size: 14px; } }
   .my-btn:active {
     transform: scale(1.15); }
   .my-btn:hover {
@@ -2703,7 +2703,7 @@ section.container {
     padding: .25rem 1rem; }
     @media (min-width: 768px) {
       .my-btn.small {
-        font-size: 14px; } }
+        font-size: 12px; } }
   .my-btn.w-100 {
     padding-top: .6rem;
     padding-bottom: .6rem; }
@@ -2847,11 +2847,11 @@ section.container {
 
 .my-link {
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.5; }
   @media (min-width: 768px) {
     .my-link {
-      font-size: 16px; } }
+      font-size: 14px; } }
   .my-link::after {
     content: '';
     display: block;

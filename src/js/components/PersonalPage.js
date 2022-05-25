@@ -105,12 +105,12 @@ const PersonalPage = {
             this.draw() //初始化房間
             // 動畫移動
             window.setTimeout(()=>{
-                // let roomCnvs = roomCanvasContainer.querySelector("canvas")
                 let value = roomCanvasContainer.offsetWidth/2
                 roomCanvasContainer.scroll({
                     left: value,
                     behavior: 'smooth'
                 })
+                document.querySelector("#canvasContainer > canvas").style['touch-action'] = 'unset'
             }, 300)
         },
         draw(){
