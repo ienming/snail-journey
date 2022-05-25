@@ -110,7 +110,7 @@ const PersonalPage = {
                     left: value,
                     behavior: 'smooth'
                 })
-                document.querySelector("#canvasContainer > canvas").style['touch-action'] = 'unset'
+                document.querySelector("#canvasContainer > canvas").style['touch-action'] = 'auto'
             }, 300)
         },
         draw(){
