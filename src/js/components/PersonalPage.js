@@ -218,7 +218,7 @@ const PersonalCoin = {
     template: `
         <div id="coinContainer">
             <img src="./src/img/coin.png" alt="蝸牛幣icon" id="coin" />
-            <span style="font-size: 24px;">$ {{coins}}</span>
+            <span>$ {{coins}}</span>
             <img src="./src/img/icons/plus.png" class="icon" alt="plus icon" @click="switchFurniture"/>
         </div>
     `,
@@ -248,7 +248,7 @@ const Furnitures = {
     template: `
         <transition name="fade">
             <div id="furnitureContainer">
-                <div class="d-flex furnitures">
+                <div class="d-flex furnitures scroll">
                     <div class="furniture"
                         v-for="item of allFurnituresState"
                         :class="{ bought: item.bought, locked: locked['block'+item.block] }"
@@ -434,7 +434,7 @@ const DisplayShelf = {
                                     <a :href="el.link" target="_blank" v-for="el of userAdopted">
                                         <li class="d-flex aic descrip-lid" data-lid="前往詳細方案內容">
                                                 <img src="./src/img/icons/checked.svg" class="icon" />
-                                                <p class="mx-1">{{ el.title }}</p>
+                                                <p class="my-1 my-md-0 mx-md-1">{{ el.title }}</p>
                                                 <p class="t-z-2">
                                                     {{ el.intro }}
                                                 </p>

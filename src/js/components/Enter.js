@@ -3,12 +3,12 @@ const Enter = {
         <transition name="fade" :duration="{ leave: 800 }" v-if="loadingShouldShown">
             <div id="loading">
                 <div class="wrapper">
-                    <div class="d-flex flex-column mb-2 mb-md-0">
+                    <div class="d-flex flex-column aic mb-2 mb-md-0">
                         <img src="./src/img/logo.png" class="logo"/>
                         <transition name="fade">
                             <div class="t-a-c" v-if="!loading">
-                                <p class="t-c-g t-z-1">請注意音量</p>
-                                <p class="t-c-g t-z-1" style="padding: 8px 16px; background-color: white; border-radius: 50px;">請使用電腦或筆電開始體驗</p>
+                                <p class="t-c-g t-z-1 mt-1">請注意音量</p>
+                                <p class="t-c-g t-z-1" style="padding: 8px 16px; background-color: white; border-radius: 50px;">建議使用電腦或筆電開始體驗</p>
                                 <button class="mt-2 my-btn w-100" @click="startGame">
                                     進入綠洲
                                 </button>

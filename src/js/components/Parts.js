@@ -322,12 +322,12 @@ const BillBoard = {
         <transition name="fade">
             <div class="mock" v-if="boardHasShown">
                 <aside class="bill-board card w-100 w-md-un">
-                    <div class="px-2">
+                    <div class="px-md-2 scroll">
                         <h2 class="t-a-c mb-1">蝸牛綠洲生活公約</h2>
                         <p>歡迎來到「蝸牛綠洲」！作為這個社區的新成員，除了享受慢活的氣氛之外，有什麼問題只要點開畫面右上方的公布欄就能看到囉！</p>
                         <accordion :accordions="rules" class="pt-2 scroll"></accordion>
-                        <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
                     </div>
+                    <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
                 </aside>
             </div>
         </transition>
