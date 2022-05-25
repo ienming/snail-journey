@@ -12,7 +12,7 @@
         align-items: center
 
 .wrapper
-    width: 80vw
+    width: 100vw
     display: flex
     justify-content: center
     align-items: center
@@ -59,6 +59,7 @@
 .narrative
     background-color: $darkGrey
     transform: unset
+    padding: 30px
     width: 100%
     height: 100vh
     position: relative
@@ -70,6 +71,8 @@
         max-width: 80%
 .descrip-container
     padding: 0 30px
+    span
+        font-size: 13px !important
     @for $i from 1 through 30
         span:nth-child(#{$i})
             position: relative
@@ -170,15 +173,17 @@
 
 .popup
     background-color: lighten($main, 10%)
-    padding: 1rem
     border-radius: 8px
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     position: relative
-    padding: 32px
     max-width: 85vw
     max-height: 80vh
+    padding: 20px
+    margin-top: 1.5rem
     +rwd(md)
         max-width: 40vw
+        padding: 32px
+        margin-top: 0
     &.dialogue
         width: 350px
         max-height: 70vh
@@ -186,6 +191,7 @@
             max-height: 55vh
     &.dialogue.func
         width: 100%
+        margin-top: 0
         +rwd(md)
             width: 40vw
 
@@ -437,22 +443,6 @@
     margin-bottom: 1rem
     padding: 1rem 2rem
     border-bottom: 1px solid $secondaryGrey
-.adoption
-    +rwd(md)
-        max-height: 80vh
-        width: 40vw
-    .keyword
-        border-radius: 50px
-        background-color: $accentSubDark
-        color: $white
-        padding: 6px 12px
-        margin-right: 8px
-    .action
-        gap: 16px
-        img
-            border-radius: 50%
-            overflow: hidden
-            border: 1px solid #000
 .mission-rwd
     img
         width: 68px
@@ -529,7 +519,7 @@ ul.carousel-lids
             overflow: initial
     &::-webkit-scrollbar
         display: none
-    &.furnitures
+    &.furnitures, &.adopt
         max-height: 55vh
 
 // 側邊進度

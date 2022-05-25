@@ -1,6 +1,6 @@
 const Adoption = {
     template: `
-        <div class="popup scroll">
+        <div class="popup scroll adopt">
             <div class="adopt-goal">
                 <h3 class="mb-1">認養方案目標</h3>
                 <p class="t-z-3 mb-1">{{program.goal}}</p>

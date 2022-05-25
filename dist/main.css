@@ -3606,7 +3606,7 @@ footer {
     align-items: center; }
 
 .wrapper {
-  width: 80vw;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3652,6 +3652,7 @@ footer {
 .narrative {
   background-color: #333333;
   transform: unset;
+  padding: 30px;
   width: 100%;
   height: 100vh;
   position: relative;
@@ -3664,6 +3665,8 @@ footer {
 
 .descrip-container {
   padding: 0 30px; }
+  .descrip-container span {
+    font-size: 13px !important; }
   .descrip-container span:nth-child(1) {
     position: relative;
     opacity: 0;
@@ -3887,16 +3890,18 @@ footer {
 
 .popup {
   background-color: #f3f1e8;
-  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 0 25px 5px rgba(0, 0, 0, 0.25);
   position: relative;
-  padding: 32px;
   max-width: 85vw;
-  max-height: 80vh; }
+  max-height: 80vh;
+  padding: 20px;
+  margin-top: 1.5rem; }
   @media (min-width: 768px) {
     .popup {
-      max-width: 40vw; } }
+      max-width: 40vw;
+      padding: 32px;
+      margin-top: 0; } }
   .popup.dialogue {
     width: 350px;
     max-height: 70vh; }
@@ -3904,7 +3909,8 @@ footer {
       .popup.dialogue {
         max-height: 55vh; } }
   .popup.dialogue.func {
-    width: 100%; }
+    width: 100%;
+    margin-top: 0; }
     @media (min-width: 768px) {
       .popup.dialogue.func {
         width: 40vw; } }
@@ -4161,25 +4167,6 @@ footer {
   padding: 1rem 2rem;
   border-bottom: 1px solid #787878; }
 
-@media (min-width: 768px) {
-  .adoption {
-    max-height: 80vh;
-    width: 40vw; } }
-
-.adoption .keyword {
-  border-radius: 50px;
-  background-color: #3e856c;
-  color: #ffffff;
-  padding: 6px 12px;
-  margin-right: 8px; }
-
-.adoption .action {
-  gap: 16px; }
-  .adoption .action img {
-    border-radius: 50%;
-    overflow: hidden;
-    border: 1px solid #000; }
-
 .mission-rwd img {
   width: 68px; }
 
@@ -4259,7 +4246,7 @@ ul.carousel-lids {
       overflow: initial; } }
   .scroll::-webkit-scrollbar {
     display: none; }
-  .scroll.furnitures {
+  .scroll.furnitures, .scroll.adopt {
     max-height: 55vh; }
 
 .progress-hint-lists {

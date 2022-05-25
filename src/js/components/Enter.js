@@ -140,7 +140,7 @@ const Narrative = {
             <transition-group name="fade-right">
                 <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column flex-md-row aic">
                     <img :src=cut.src />
-                    <div class="my-2 t-z-2 descrip-container">
+                    <div class="my-2 descrip-container">
                         <p class="descrip" v-html="cut.descrip"></p>
                         <p class="t-z-1 mt-1 mt-md-0 mr-md-2" style="opacity: 0.7" v-if="cut.name !== 4">（點擊畫面任何地方繼續）</p>
                         <p class="t-z-1" style="opacity: 0.7" v-else>（點擊畫面進入蝸牛綠洲）</p>
@@ -163,7 +163,7 @@ const Narrative = {
                 },{
                     name: 2,
                     src: './src/img/open/shot2.png',
-                    descrip: "有時也需要一個地方喘息......</br>這天我接收到一個邀請"
+                    descrip: "有時也需要一個地方喘息......</br>這天我收到一個邀請"
                 },{
                     name: 3,
                     src: './src/img/open/shot3.png',
@@ -171,7 +171,7 @@ const Narrative = {
                 },{
                     name: 4,
                     src: './src/img/open/shot4.png',
-                    descrip: "來到蝸牛綠洲了！"
+                    descrip: "這裡就是蝸牛綠洲了！"
                 }
             ]
         }
