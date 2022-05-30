@@ -3,9 +3,12 @@ const PersonalPage = {
     <div class="mock room">
         <div class="container">
             <div class="room-page">
-                <div id="roomCanvasContainer"></div>
+                <div id="roomCanvasContainer" style="overflow: auto;"></div>
                 <personal-coin @switch-furnitures="switchFurnitures" :coins="userCoins"></personal-coin>
                 <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-personal-page')" class="game-ui icon" />
+                <transition name="fade">
+                    <p class="hint" v-if="!explored">找綠洲裡的村民聊天、好好探索這個地方來解鎖家具吧！</p>
+                </transition>
             </div>
             <template name="fade">
             <furnitures-page v-if="furnitureHasShown" 
@@ -14,6 +17,16 @@ const PersonalPage = {
                 @show-confirm="showConfirm"
                 @switch-furnitures="switchFurnitures"></furnitures-page>
             </template>
+            <transition name="fade">
+                <div class="mock" v-if="firstShouldShow">
+                    <div class="card t-a-c w-75 w-md-un">
+                        <h3>歡迎來到蝸牛綠洲！</h3>
+                        <p class="my-1">這裡是你在綠洲裡的家，雖然現在還空空蕩蕩的，只要和村民聊天、探索完各個區域，就能從上方的櫃子裡挑選喜歡的家具喔。快來佈置蝸牛綠洲裡的溫馨小窩吧！</p>
+                        <img src="./src/img/icons/plus.png" style="max-height: 60px;" />
+                        <close-btn now-show="first" @switch-first="switchFirst"></close-btn>
+                    </div>
+                </div>
+            </transition>
         </div>
         <template name="fade">
         <buy-confirm v-show="confirmHasShown" :furniture="nowAddFurniture" @close-confirm="closeConfirm"></buy-confirm>
@@ -24,7 +37,7 @@ const PersonalPage = {
             @switch-display-shelf="displayShelfHasShown = !displayShelfHasShown"></display-shelf>
     </div>
     `,
-    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions'],
+    props: ['outerShowPersonalPage','userGotAchievements','userCoins','userGotFurnitures','userAdoptions', 'firstShouldShow'],
     mounted(){
         this.init()
     },
@@ -41,16 +54,26 @@ const PersonalPage = {
             nowAddFurniture: undefined,
         }
     },
+    computed: {
+        explored(){
+            for (el in this.userGotAchievements){
+                if (this.userGotAchievements[el].indexOf('finished') !== -1){
+                    return true
+                }
+            }
+            return false
+        }
+    },
     watch: {
         'userGotAchievements': {
             handler: function(newValue, oldValue){
-                console.log("使用者區域探索成就有變，重畫")
+                // console.log("使用者區域探索成就有變，重畫")
                 this.drawAchievements()
             }
         },
         'userGotFurnitures': {
             handler: function(newValue, oldValue){
-                console.log("使用者家具有變，重畫家具")
+                // console.log("使用者家具有變，重畫家具")
                 this.drawFurnitures()
             }
         }
@@ -181,6 +204,9 @@ const PersonalPage = {
         closeConfirm(){
             this.confirmHasShown = false
         },
+        switchFirst(){
+            this.$emit('close-first-hint')
+        }
     }
 }
 Vue.component("personal-page", PersonalPage)
@@ -192,7 +218,7 @@ const PersonalCoin = {
     template: `
         <div id="coinContainer">
             <img src="./src/img/coin.png" alt="蝸牛幣icon" id="coin" />
-            <span style="font-size: 24px;">{{ coins }}</span>
+            <span style="font-size: 24px;">$ {{coins}}</span>
             <img src="./src/img/icons/plus.png" class="icon" alt="plus icon" @click="switchFurniture"/>
         </div>
     `,
@@ -240,6 +266,7 @@ const Furnitures = {
                         </div>
                     </div>
                 </div>
+                <img src="./src/img/icons/move_right.png" class="icon" />
                 <close-btn now-show="furnitures" @switch-furnitures="$emit('switch-furnitures')"></close-btn>
             </div>
         </transition>
@@ -323,7 +350,7 @@ const BuyConfirm = {
                 <p>已將「{{ furniture.name }}」加入房間！</p>
             </template>
             <template v-else>
-                <p>錢不夠買不起><</p>
+                <p>蝸牛幣似乎不夠喔......常常來維護環境或是加入認養行動，獲取蝸牛幣吧！</p>
             </template>
             <div class="mt-1 t-a-c">
                 <template v-if="buyable == 'able'">
@@ -386,7 +413,7 @@ const DisplayShelf = {
             <div class="mock">
                 <div class="wrapper">
                     <div class="popup t-a-c w-md-50">
-                        <div class="scroll sm-only">
+                        <div class="scroll">
                             <section>
                                 <h3>探索區域徽章</h3>
                                 <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有探索完的區域喔。</br>快去找蝸牛們聊天、認識一下蝸牛綠洲吧！</p>
@@ -401,13 +428,18 @@ const DisplayShelf = {
                             </section>
                             <section class="mt-2">
                                 <h3>認養蝸牛綠洲議題</h3>
+                                <p class="t-c-g my-1">*目前認養社區活動僅供學術研究測試用，連結不會通往其他網頁為正常狀況。*</p>
                                 <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
                                 <ul class="d-flex jcc mt-1 adoption-lists" v-else>
-                                    <li v-for="el of userAdopted" class="d-flex aic">
-                                        <img src="./src/img/icons/checked.svg" class="icon" />
-                                        <p class="mx-1">{{ el.title }}</p>
-                                        <p class="t-z-2">{{ el.intro }}</p>
-                                    </li>
+                                    <a :href="el.link" target="_blank" v-for="el of userAdopted">
+                                        <li class="d-flex aic descrip-lid" data-lid="前往詳細方案內容">
+                                                <img src="./src/img/icons/checked.svg" class="icon" />
+                                                <p class="mx-1">{{ el.title }}</p>
+                                                <p class="t-z-2">
+                                                    {{ el.intro }}
+                                                </p>
+                                        </li>
+                                    </a>
                                 </ul>
                             </section>
                         </div>

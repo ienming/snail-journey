@@ -52,12 +52,15 @@ let fetchNPC = async () => {
                     title: d[keyMap.program_title],
                     descrip: d[keyMap.program_descrip],
                     linkName: d[keyMap.program_linkName],
-                    link: d[keyMap.program_link]
+                    link: d[keyMap.program_link],
+                    reward: d[keyMap.program_reward]*1,
+                    goal: d[keyMap.program_goal]
                 }
                 // 給 global all adoptions 這些資料，用來產生認養列表
                 let adoptionObj = {}
                 adoptionObj.title = d[keyMap.program_title]
                 adoptionObj.intro = d[keyMap.program_goal]
+                adoptionObj.link = d[keyMap.program_link]
                 vm.$data.adoptions.push(adoptionObj)
                 //
                 // if (d[keyMap.program_subtitle]){

@@ -24,6 +24,9 @@ app.renderer.resize(window.innerWidth, window.innerHeight); //全螢幕
 // create container for map
 let mapContainer = new PIXI.Container()
 mapContainer.name = 'mapContainer'
+mapContainer.scale.set(0.35)
+mapContainer.alpha = 0
+vm.$data.app.map = mapContainer
 
 // container for all NPCs (except guys)
 let npcContainerIsClicking = false

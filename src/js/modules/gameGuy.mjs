@@ -18,10 +18,10 @@ if (rwd < rwds.md){ //mobile
 function startDailyJudge(){
     showGuyJudgeTools()
     createGuys()
-    let nowTime = new Date().getMinutes()
+    let nowTime = new Date().getDate()
     window.setInterval(()=>{
-        if (new Date().getMinutes() !== nowTime){
-            nowTime = new Date().getMinutes()
+        if (new Date().getDate() !== nowTime){
+            nowTime = new Date().getDate()
             console.log("計時重新產生評價角色")
             while(guysContainer.children.length > 0){
                 guysContainer.removeChild(guysContainer.children[0])
@@ -128,12 +128,12 @@ function drawGuy(el){
     sp.scale.set(scale)
     sp.anchor.set(0.5)
     // guy icon
-    let iconTexture = new PIXI.Texture.from('./src/img/icons/speak_icon.png')
+    let iconTexture = new PIXI.Texture.from('./src/img/icons/judge.png')
     let icon = new PIXI.Sprite(iconTexture)
     icon.name = 'guysicon'
     icon.x = 20
     icon.y = -50
-    icon.scale.set(scale)
+    icon.scale.set(scale*1.4)
     let animDelay = Math.random()
     gsap.to(icon, .5, {
         pixi: {
@@ -293,6 +293,7 @@ function showGuyJudgeTools(){
         tool.scale.set(toolScale)
         tool.x = toolX
         tool.y = toolY
+        tool.cursor = "url('./src/img/icons/cursor_pick.png'),auto"
         tool
             .on('pointerdown', onDragStart)
             .on('pointermove', onDragMove)
@@ -361,22 +362,29 @@ function checkJudged(tool){
         })
         let respondGuy = globalGuys[globalGuys.findIndex( el => el.name == beingJudged)]
         let respondSp = guysContainer.children[guysContainer.children.findIndex(el=>el.name == beingJudged)]
+        let str="", num = 0
         switch (tool.name){
             case 'great':
                 // 在這裡判斷是否要給獎勵
                 // guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被讚了！`)
                 if (beingJudged.indexOf("good") !== -1){
-                    let str = "被你讚美的他很開心，之後也一定會持續替綠洲做好事的～"
-                    let num = 5
+                    str = "被你讚美的他很開心，之後也一定會持續替綠洲做好事的～"
+                    num = 10
                     callVueSys(str, `獲得${num}個蝸牛幣`, "./src/img/coin.png", num)
+                }else{
+                    str = "破壞秩序的人繼續任性妄為了"
+                    callVueSys(str, `維持秩序失敗...`)
                 }
                 break;
             case 'bad':
                 // guySay(respondGuy, respondSp.x, respondSp.y, `${beingJudged}被罵了......`)
                 if (beingJudged.indexOf("bad") !== -1){
-                    let str = "給臭傢伙一點教訓了！哇哈哈"
-                    let num = 5
+                    str = "謝謝你幫忙維持秩序！替大家打抱不平！"
+                    num = 10
                     callVueSys(str, `獲得${num}個蝸牛幣`, "./src/img/coin.png", num)
+                }else{
+                    str = "替綠洲做好事的人覺得很受傷"
+                    callVueSys(str, `維持秩序失敗...`)
                 }
                 break;
         }

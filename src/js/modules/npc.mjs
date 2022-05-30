@@ -50,20 +50,45 @@ function createNormalHouse(){
 }
 
 function createItem(el){
+    let itemContainer = new PIXI.Container()
+    itemContainer.name = el.name
     let texture = new PIXI.Texture.from(`./src/img/${el.name}.png`)
     let item = new PIXI.Sprite(texture)
     item.name = el.name
-    item.x = el.x
-    item.y = el.y
+    itemContainer.x = el.x
+    itemContainer.y = el.y
     item.anchor.set(0.5)
+    itemContainer.addChild(item)
     if (el.name.indexOf("snail") !== -1 && el.name.indexOf("house") == -1){
         snailMove(item)
     }
     if (el.interactive !== false){
-        item.interactive = true
-        item.buttonMode = true
+        itemContainer.interactive = true
+        itemContainer.buttonMode = true
     }
-    item
+    if (el.adoptable || el.name == 'house_personal'){
+        // 加上icon
+        let iconTexture = new PIXI.Texture.from('./src/img/icons/lightbulb.png')
+        if (el.name == 'house_personal'){
+            iconTexture =  new PIXI.Texture.from('./src/img/icons/home.png')
+        }
+        let icon = new PIXI.Sprite(iconTexture)
+        icon.anchor.set(0.5)
+        icon.x = 100
+        icon.y = -105
+        let animDelay = Math.random()
+        gsap.to(icon, .5, {
+            pixi: {
+                y: -95
+            },
+            yoyo: true,
+            repeat: -1,
+            delay: animDelay
+        })
+        itemContainer.addChild(icon)
+    }
+    itemContainer.cursor = "url('./src/img/icons/cursor_speak.png'),auto"
+    itemContainer
         .on("pointerup", ()=>{
             if (distDefined){
                 console.log("now dragging map")
@@ -112,7 +137,7 @@ function createItem(el){
                 }, 300)
             }
         })
-    item.mouseover = function(){ //hover時的放大效果
+    itemContainer.mouseover = function(){ //hover時的放大效果
         gsap.to(this, .2, {
             pixi: {
                 scaleX: 1.18,
@@ -120,11 +145,11 @@ function createItem(el){
             yoyo: true,
             repeat: 2,
             onComplete: function(){
-                item.scale.set(1)
+                itemContainer.scale.set(1)
             }
         })
     }
-    npcContainer.addChild(item)
+    npcContainer.addChild(itemContainer)
     globalNPCs.push(item)
     // else if (el.group == 'daily'){
     //     item.mouseover = function(){

@@ -39,6 +39,7 @@ function createMap(){
     // set mapContainer (as map) for dragging
     mapContainer.interactive = true
     mapContainer.buttonMode = true
+    mapContainer.cursor = "url('./src/img/icons/cursor_move.png'),auto"
     mapContainer
     .on('pointerdown', mapDragStart)
     .on('pointerup', mapDragEnd)
@@ -52,7 +53,7 @@ function createMap(){
     map.name = 'roads'
     // set the transform origin and anchor point of the image which will effect the starting point of the image
     map.anchor.set(0.5) //center center
-    map.scale.set(scale)
+    map.scale.set(scale*2)
 
     mapContainer.addChild(map)
 }
@@ -62,9 +63,8 @@ function createBgHouses(name){
     let sp = new PIXI.Sprite(texture)
     sp.name = name
     sp.anchor.set(0.5)
-    sp.scale.set(scale)
+    sp.scale.set(scale*2)
     sp.pivot.x = 60
-    sp.alpha = 0.8
     mapContainer.addChild(sp)
 }
 

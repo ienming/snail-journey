@@ -42,11 +42,12 @@ function startDailyTrash(){
         generateTrash()
     }
     // 判斷每日更新
-    let nowTime = new Date().getMinutes()
+    let nowTime = new Date().getDate()
     window.setInterval(()=>{
-        if (new Date().getMinutes() !== nowTime){
-            nowTime = new Date().getMinutes()
+        if (new Date().getDate() !== nowTime){
+            nowTime = new Date().getDate()
             console.log("計時重新產生垃圾")
+            console.log(nowTime)
             while(trashContainer.children.length > 0){
                 trashContainer.removeChild(trashContainer.children[0])
             }
@@ -58,7 +59,7 @@ function startDailyTrash(){
 }
 
 function generateTrash(){
-    let todayTrashNum = getRandom(0,10)
+    let todayTrashNum = getRandom(1,10)
     let readyTrashes = [...trashes]
     for (let i=0; i<todayTrashNum; i++){
         console.log(`製造第${i}個垃圾`)
@@ -107,18 +108,15 @@ function drawTrash(trash){
     eachTrshCont.addChild(trashSp)
     eachTrshCont.interactive = true
     eachTrshCont.buttonMode = true
+    eachTrshCont.cursor = "url('./src/img/icons/cursor_recycle.png'),auto"
     eachTrshCont.on("pointerdown", (el)=>{
         // console.log("撿到垃圾了")
         vm.$data.user.gotTrashes.push(trash.id) //讓 Vue watch 撿垃圾的資料
-        //做動畫變小消失
-        // gsap.to(el.target, .2, {
-        //     pixi: {
-        //         scale: 0
-        //     },
-        //     onComplete(){
-        //         //確定動畫完成後destroy
-        //     }
-        // })
+        let hint = {}
+        hint.id = trash.id
+        let left = vm.$data.dailyTrashes.length - vm.$data.user.gotTrashes.length
+        hint.say = `撿到垃圾了，還剩下${left}個`
+        vm.$data.sys.hints.push(hint)
         //增加蝸牛幣、計算總共撿了多少垃圾？
         el.target.destroy()
         // 判斷是否完成每日撿垃圾任務
@@ -127,11 +125,11 @@ function drawTrash(trash){
             let imgUrl = "./src/img/coin.png"
             let num = 0
             if (vm.$data.dailyTrashes.length < 3){
-                num = vm.$data.dailyTrashes.length
+                num = 10
             }else if (vm.$data.dailyTrashes.length > 3 && vm.$data.dailyTrashes.length < 7){
-                num = 4
+                num = 20
             }else {
-                num = 5
+                num = 30
             }
             let abs = `獲得 ${num} 個蝸牛幣`
             callVueSys(str, abs, imgUrl, num)
@@ -140,7 +138,7 @@ function drawTrash(trash){
         playPickTrashSE()
     })
     eachTrshCont.on("mouseover", ()=>{ //hover 放大
-        console.log(eachTrshCont)
+        // console.log(eachTrshCont)
         gsap.to(eachTrshCont, .2, {
             pixi: {
                 scaleX: scale*1.18,

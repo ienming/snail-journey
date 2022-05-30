@@ -1,6 +1,7 @@
 const vm = new Vue({
     el: "#app",
     data: {
+        app: {},
         interaction: {
             nowClicked: false,
             nowLoading: true,
@@ -13,8 +14,11 @@ const vm = new Vue({
         },
         sys: {
             popup: false,
-            say: ""
+            say: "",
+            hints: []
         },
+        boardHasShown: true,
+        showFirstHint: true,
         bgSound: undefined,
         bgIsPlaying: false,
         dailyTrashes: [],
@@ -49,7 +53,7 @@ const vm = new Vue({
             },
             gotTrashes: [],
             gotSpecial: false,
-            coins: 9999,
+            coins: 100,
             furnitures: [],
             adoptions: [],
             judges: []
@@ -65,7 +69,8 @@ const vm = new Vue({
                     }
                 })
                 return true
-            }else return false
+            }
+            else return false
         },
         itemSpeakImgSrc() {
             if (this.itemSpeak !== undefined) {
@@ -77,19 +82,6 @@ const vm = new Vue({
                 return this.user.missions[`mission${this.nowNPC.mission}`].length
             } else return
         },
-        // userGotBadges() {
-        //     let badges = {
-        //         mission1: false,
-        //         mission2: false,
-        //         mission3: false
-        //     }
-        //     for (let prop in this.user.missions) {
-        //         if (this.user.missions[prop].indexOf('finished') !== -1) {
-        //             badges[prop] = true
-        //         }
-        //     }
-        //     return badges
-        // },
         userGotAchievements() {
             let output = {}
             let maps = 0
@@ -283,6 +275,7 @@ const vm = new Vue({
                 autoPlay: this.bgIsPlaying,
                 loop: true,
                 preload: true,
+                volume: 0.25
             });
             this.bgSound = sound
         },
@@ -316,11 +309,28 @@ const vm = new Vue({
         switchProgram() {
             this.showProgram = true
         },
+        switchBoard(v){
+            this.boardHasShown = v
+        },
         startGame() {
             this.interaction.nowLoading = false
+<<<<<<< HEAD
             this.interaction.nowPlaying = true
             // fetch data from API
             this.doGetUser()
+=======
+            // Enter Animation
+            window.setTimeout(()=>{
+                gsap.to(this.app.map, 5, {
+                    pixi: {
+                        scale: 1,
+                        alpha: 1
+                    }
+                })
+            }, 300)
+            // play bg Music
+            this.switchBg(true)
+>>>>>>> 56e8b8358882653c3d402c5740ca2c71415d9c1b
         },
         checkAns(correct) {
             if (correct) {
@@ -441,9 +451,16 @@ const vm = new Vue({
                             output = "職人區",
                             badgeURl = "badge_tra"
                     }
+                    this.user.coins += 1200
                     this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '區域探索完成！', `./src/img/${badgeURl}.png`)
                 }, 800)
             }
+        },
+        shiftHint(){
+            this.sys.hints[0].hide = true
+            window.setTimeout(()=>{
+                this.sys.hints.shift()
+            }, 800)
         },
         doPostUser() {
             console.log(`Bearer ${localStorage.token}`)

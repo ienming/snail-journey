@@ -1,3 +1,6 @@
+.my-header .icon
+    width: 36px
+
 .mock
     background-color: rgba(0,0,0,.6)
     position: fixed
@@ -39,6 +42,8 @@
     &.hide
         transform: translateX(110%)
         opacity: 0.5
+        +rwd(md)
+            transform: translateX(100%)
     .d-flex
         justify-content: flex-end
     >.icon
@@ -66,38 +71,49 @@
     text-align: center
     img
         max-width: 80%
+.descrip-container
+    padding: 0 30px
+    @for $i from 1 through 30
+        span:nth-child(#{$i})
+            position: relative
+            opacity: 0
+            animation: textFadeIn .5s #{$i * .1}s ease-in-out forwards
+    +rwd(md)
+        writing-mode: vertical-rl
+        text-orientation: mixed
+        margin-left: 48px
 
 // header
 .my-header
-    li
-        position: relative
-        cursor: pointer
-        &::after
-            content: attr(data-text)
-            display: block
-            position: absolute
-            bottom: -36px
-            left: 50%
-            transform: translateX(-50%)
-            background-color: $darkYellowGreen
-            color: $lightBg
-            padding: .25rem .75rem
-            border-radius: 50px
-            opacity: 0
-            transition: .3s ease
-            pointer-events: none
-            font-size: 14px
-            width: max-content
-            +basicTransition()
-        &:hover
-            .icon
-                transform: scale(1.2) rotate(15deg)
-            &::after
-                opacity: 1
+    li:hover
+        .icon
+            transform: scale(1.2) rotate(15deg)
     .logo
         max-width: 100px
         +rwd(md)
             max-width: 150px
+
+.descrip-lid
+    position: relative
+    cursor: pointer
+    &::after
+        content: attr(data-lid)
+        display: block
+        position: absolute
+        right: 0
+        top: -30px
+        background-color: $darkYellowGreen
+        color: $lightBg
+        padding: .25rem .75rem
+        border-radius: 50px
+        opacity: 0
+        transition: .3s ease
+        pointer-events: none
+        font-size: 14px
+        width: max-content
+        +basicTransition()
+    &:hover::after
+        opacity: 1
             
 // sound icon
 .toggle-sound-icon
@@ -105,10 +121,11 @@
     width: 36px
 
 // global game UI
-.game-ui.icon
-    width: 60px
-    cursor: pointer
-    +basicTransition()
+.game-ui
+    &.icon
+        width: 60px
+        cursor: pointer
+        +basicTransition()
 
 // 進場動畫
 #loading
@@ -130,12 +147,21 @@
     .wrapper
         flex-direction: column
         width: 100%
+        top: 44%
+        +rwd(sm)
+            top: 50%
         +rwd(md)
             flex-direction: row
             justify-content: space-around
         +rwd(lg)
             width: 80vw
             max-width: 1150px
+    .card
+        max-height: 50vh
+        overflow: scroll
+        +rwd(md)
+            max-height: unset
+            overflow: initial
 
 .popup
     background-color: lighten($main, 10%)
@@ -146,8 +172,11 @@
     padding: 32px
     max-width: 85vw
     max-height: 80vh
+    +rwd(md)
+        max-width: 40vw
     &.dialogue
         width: 350px
+        max-height: 55vh
     &.dialogue.func
         width: 100%
         +rwd(md)
@@ -218,9 +247,11 @@
         max-height: 100vh
         +rwd(md)
             flex-direction: row
+    .card
+        +poa(50%, 50%)
+        transform: translate(-50%, -50%)
 .room-page
     border-radius: 8px
-    box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     position: relative
     .game-ui //exit icon
         width: 100px
@@ -235,6 +266,18 @@
             transform: translateY(-10px)
             +rwd(md)
                 transform: translateX(10px)
+    .hint
+        font-size: 14px
+        position: absolute
+        background-color: $lightBg
+        text-align: center
+        padding: .25rem .5rem
+        border-radius: 50px
+        top: 30px
+        left: 50%
+        transform: translateX(-50%)
+        +basicShadow()
+
 #roomCanvasContainer, #houseCnvsContainer
     max-width: 90vw
     overflow: scroll
@@ -259,8 +302,10 @@
         width: 32px
         transform: translateY(-50%)
         +basicTransition()
+        left: -70px
         +rwd(md)
             right: 10px
+            left: unset
             bottom: -32px
         &:hover
             transform: translateY(-50%) scale(1.35)
@@ -279,8 +324,15 @@
     position: absolute
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     padding: 1.5rem
-    top: 0
+    top: 50%
+    transform: translateY(-50%)
     max-width: 90vw
+    .icon
+        +size(30px)
+        position: absolute
+        left: 50%
+        transform: translateX(-50%) rotate(90deg)
+        animation: hint-down .5s ease-in alternate infinite
     +rwd(md)
         top: unset
         bottom: -20px
@@ -288,11 +340,19 @@
         width: 60vw
         max-width: unset
         transform: translateX(-50%)
+        .icon
+            left: unset
+            bottom: unset
+            top: 50%
+            transform: translateY(-50%)
+            animation: hint-right .5s ease-in alternate infinite
     .furnitures
         overflow: scroll
-        max-height: 70vh
+        max-height: 55vh
         flex-direction: column
         gap: 12px
+        +rwd(sm)
+            max-height: 70vh
         +rwd(md)
             flex-direction: row
             max-height: unset
@@ -351,11 +411,21 @@
     background-color: $lightBg
     padding: 2rem
     border-radius: 8px
+    width: 80vw
+    +rwd(md)
+        width: unset
 
 //認養介面
+.adopt-btn
+    background-color: $accentDark
+    padding: .5rem
+    cursor: pointer
+.adopt-goal
+    background-color: darken($lightBg, 10%)
+    margin-bottom: 1rem
+    padding: 1rem 2rem
+    border-bottom: 1px solid $secondaryGrey
 .adoption
-    overflow: scroll
-    max-height: 70vh
     +rwd(md)
         max-height: 80vh
         width: 40vw
@@ -418,17 +488,68 @@ ul.carousel-lids
         &:hover
             background-color: $darkGrey
         &.active
-            background-color: $accent
-        &.active:hover
             background-color: $accentDark
+        &.active:hover
+            background-color: $accent
             
 // 滾動
 .scroll
-    max-height: 55vh
+    max-height: 35vh
     overflow-y: scroll
-    // +rwd(md)
-    //     max-height: 60vh
+    +rwd(md)
+        max-height: 40vh
     &.sm-only
         +rwd(md)
             max-height: unset
             overflow: initial
+
+// 側邊進度
+.progress-hint-lists
+    position: fixed
+    left: 20px
+    top: 80px
+    pointer-events: none
+    width: 75vw
+    +rwd(md)
+        width: 50vw
+        top: 10vh
+
+.progress-hint
+    display: inline-block
+    margin-bottom: .8rem
+    +basicTransition()
+    &.hide
+        opacity: 0
+        transform: translateX(-100%)
+    >p
+        display: inline
+        background-color: $lightBg
+        padding: .25rem .65rem
+        border-radius: 1rem
+        +basicShadow()
+
+// 新手
+.novice
+    background-color: $lightBg
+    background-repeat: no-repeat
+    max-height: unset !important
+    button
+        color: $accentDark
+
+.bill-board
+    position: fixed
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    background: url("../img/letter_bg.png")
+    background-size: 100% 100%
+    background-position-x: center
+    background-repeat: no-repeat
+    max-height: unset !important
+    box-shadow: none
+    padding: 80px 50px
+    +rwd(md)
+        padding: 80px 60px
+    ul
+        list-style: initial
+        padding-left: 1rem

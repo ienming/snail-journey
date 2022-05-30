@@ -2,7 +2,7 @@ const House = {
     template: `
     <section class="mock room">
         <div class="room-page">
-            <div id="houseCnvsContainer"></div>
+            <div id="houseCnvsContainer" style="overflow: auto;"></div>
             <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-house-page')" class="game-ui icon" />
         </div>
         <comment-board :program="npc.program" :name="npc.name" v-if="commentHasShown" @switch-comment-board="switchCommentBoard"></comment-board>
@@ -62,6 +62,9 @@ const House = {
                         x: d[keyMap.x],
                         y: d[keyMap.y],
                     };
+                    if (d[keyMap.link]){
+                        obj.link = d[keyMap.link]
+                    }
                     output.push(obj)
                 })
                 return output
@@ -129,16 +132,19 @@ const House = {
         },
         drawSnail(){
             let el = this.npc
+            let snailContainer = new PIXI.Container()
+            snailContainer.name = this.hostNAme
             let texture = new PIXI.Texture.from(`./src/img/${this.hostName}.png`)
             let sp = new PIXI.Sprite(texture)
-            sp.name = this.hostName
-            sp.x = 800*this.pixi.houseScale
-            sp.y = 1200*this.pixi.houseScale
-            sp.scale.set(this.pixi.houseScale*2)
             sp.anchor.set(0.5)
-            sp.interactive = true
-            sp.buttonMode = true
-            sp.on("pointerdown", ()=>{
+            sp.name = this.hostName
+            snailContainer.addChild(sp)
+            snailContainer.x = 800*this.pixi.houseScale
+            snailContainer.y = 1200*this.pixi.houseScale
+            snailContainer.scale.set(this.pixi.houseScale*2)
+            snailContainer.interactive = true
+            snailContainer.cursor = "url('./src/img/icons/cursor_speak.png'),auto"
+            snailContainer.on("pointerdown", ()=>{
                 vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
                 vm.$data.itemSpeak = this.hostName
                 if (el.speaks){
@@ -161,13 +167,38 @@ const House = {
                     console.log("講一下廢話")
                 }
             })
-            this.pixi.app.stage.addChild(sp)
+            if (el.adoptable){
+                // 加上燈泡 icon
+                let iconTexture = new PIXI.Texture.from('./src/img/icons/lightbulb.png')
+                let icon = new PIXI.Sprite(iconTexture)
+                icon.name = "adoptable_icon"
+                icon.anchor.set(0.5)
+                icon.x = 100
+                icon.y = -105
+                let animDelay = Math.random()
+                gsap.to(icon, .5, {
+                    pixi: {
+                        y: -95
+                    },
+                    yoyo: true,
+                    repeat: -1,
+                    delay: animDelay
+                })
+                snailContainer.addChild(icon)
+            }
+            this.pixi.app.stage.addChild(snailContainer)
         },
         checkWhomClicked(name){
             if (name == "commentBoard"){
                 this.commentHasShown = !this.commentHasShown
-            }else{
-                console.log(`與${name}互動`)
+            }else {
+                let url 
+                this.items.forEach(item=>{
+                    if (item.name == name){
+                        url = item.link
+                    }
+                })
+                window.open(url, '_blank').focus()
             }
         },
         speakRandomly(el){
@@ -215,20 +246,22 @@ const CommentBoard = {
                     <div class="popup t-a-c w-md-50">
                         <h2>{{program.title}}</h2>
                         <p>留言板討論認養議題區</p>
-                        <form>
+                        <p class="t-c-g">*目前留言僅供學術研究測試用，本地商家不會收到資訊，您的留言在網頁重新整理後便會被清除*</p>
+                        <section>
                             <div class="comment">
                                 <div class="avatar">
-                                    <img src="./src/img/snail_oasis.png" />
+                                    <img src="./src/img/snail_hito.png" />
                                 </div>
                                 <div class="message input">
                                     <input-text v-model="message" class="w-100" placeholder="留言......" :id="commentInputId" :name="commentInputId"></input-text>
+                                    <button class="my-btn mt-1" @click="sendMsg">送出留言</button>
                                 </div>
                             </div>
-                        </form>
+                        </section>
                         <div class="comment-lists scroll">
                             <div class="comment" v-for="comment of comments">
                                 <div class="avatar">
-                                    <img src="./src/img/snail_oasis.png" />
+                                    <img src="./src/img/snail_hito.png" />
                                 </div>
                                 <div class="message">
                                     <p class="t-w-6">{{comment.nickName}}</p>
@@ -254,15 +287,26 @@ const CommentBoard = {
             message: "",
             comments: [
                 {
-                    nickName: "路人甲",
-                    message: "Hi",
-                    time: "1996-07-26"
+                    nickName: "綠洲蝸牛",
+                    message: "喜歡這個方案！期待可以辦屬於蝸牛巷的文學新詩比賽",
+                    time: "2022-5-26"
                 },{
-                    nickName: "路人乙",
-                    message: "HI",
-                    time: "2022-04-28"
+                    nickName: "小王",
+                    message: "想知道認養之後能幹嘛？",
+                    time: "2022-5-19"
                 }
             ]
+        }
+    },
+    methods: {
+        sendMsg(){
+            if (this.message !== ""){
+                let obj = {}, day = new Date()
+                obj.nickName = "使用者測試"
+                obj.message = this.message
+                obj.time = `${day.getFullYear()}-${day.getMonth()+1}-${day.getDate()}`
+                this.comments.unshift(obj)
+            }
         }
     }
 }

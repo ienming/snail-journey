@@ -3,13 +3,13 @@ const ToggleBGMusic = {
         <img :src="bgIsPlaying ? './src/img/icons/sound.png' : './src/img/icons/sound_ban.png'" class="toggle-sound-icon" @click="switchBgMusic"/>
     `,
     props: ['bgIsPlaying'],
-    data(){
+    data() {
         return {}
     },
     methods: {
-        switchBgMusic(){
+        switchBgMusic() {
             let value = 'play'
-            if (this.bgIsPlaying){
+            if (this.bgIsPlaying) {
                 value = 'stop'
             }
             this.$emit('switch-bg-music', value)
@@ -20,18 +20,18 @@ Vue.component('toggle-bg-music', ToggleBGMusic)
 
 const CloseBtn = {
     template:
-    `<div class="close" @click="switchPage">
+        `<div class="close" @click="switchPage">
         <img src="src/img/icons/close.svg" alt="">
     </div>`,
     props: {
         nowShow: String
     },
-    data(){
+    data() {
         return {}
     },
     methods: {
-        switchPage(){
-            if (this.nowShow){
+        switchPage() {
+            if (this.nowShow) {
                 this.$emit(`switch-${this.nowShow}`)
             }
         }
@@ -64,24 +64,24 @@ const Link = {
             default: true
         },
         full: {
-            type: Boolean, 
+            type: Boolean,
             default: false
         },
         highlight: {
-            type: Boolean, 
+            type: Boolean,
             default: false
         }
     },
-    data(){
+    data() {
         let display = "none"
-        if(this.hasIcon){
+        if (this.hasIcon) {
             display = "inline-block"
         }
         let iconUrl = "src/img/icons/arrow_rightTop.svg"
-        if(this.highlight){
+        if (this.highlight) {
             iconUrl = "src/img/icons/arrow_rightTop_ht.svg"
         }
-        return{
+        return {
             styleObj: {
                 display: display
             },
@@ -121,7 +121,7 @@ const CTA = {
             default: "加入認養"
         },
         large: {
-            type: Boolean, 
+            type: Boolean,
             default: false
         },
         fill: {
@@ -138,14 +138,14 @@ const CTA = {
         }
     },
     computed: {
-        childFill(){
+        childFill() {
             let state = this.fill
             if (this.large) {
                 state = true
             }
             return state
         },
-        iconUrl(){
+        iconUrl() {
             let iconUrl = "/src/img/icons/arrow_rightLong_ht.svg"
             // if (this.childFill){
             //     iconUrl = "/assets/img/icons/arrow_rightLong_ht.svg"
@@ -153,7 +153,7 @@ const CTA = {
             return iconUrl
         }
     },
-    data(){
+    data() {
         return {}
     }
 }
@@ -206,36 +206,36 @@ const InputText = {
         }
     },
     computed: {
-        pattern(){
-            if (this.regExp){
+        pattern() {
+            if (this.regExp) {
                 return true
-            }else {
+            } else {
                 return false
             }
         },
-        computedType(){
-            if (this.type == 'password'){
-                if (this.showPwd){
+        computedType() {
+            if (this.type == 'password') {
+                if (this.showPwd) {
                     this.showPwdUrl = './src/img/icons/pwd_show.svg' //張開眼睛
                     return "text"
-                }else{
+                } else {
                     this.showPwdUrl = './src/img/icons/pwd_hide.svg' //閉上眼睛
                     return "password"
                 }
-            }else return this.type
+            } else return this.type
         }
     },
-    data(){
+    data() {
         return {
             showPwd: false,
             showPwdUrl: ''
         }
     },
     methods: {
-        clearData(){
+        clearData() {
             this.$emit('input', '')
         },
-        switchPwdType(){
+        switchPwdType() {
             this.showPwd = !this.showPwd
         }
     }
@@ -245,36 +245,132 @@ Vue.component('input-text', InputText)
 
 const Accordion = {
     template: `
-        <section class="scroll">
+        <section>
             <div class="my-accordion" v-for="(accordion, idx) of accordions" @click="switchAccordion(idx, $event)">
                 <div class="accordion-header d-flex jcb aic">
                     <h4>{{accordion.title}}</h4>
                     <div class="plus-icon"><span></span><span></span></div>
                 </div>
                 <div class="accordion-body" @click.stop>
-                    <p v-html="accordion.content"></p>
+                    <div>
+                        <p v-html="accordion.content"></p>
+                        <img :src="accordion.img" v-if="accordion.img" style="max-height: 100px;"/>
+                    </div>
                 </div>
             </div>
         </section>
     `,
     props: ['accordions'],
-    data(){
+    data() {
         return {}
     },
     methods: {
-        switchAccordion: function(id, evt){
+        switchAccordion: function (id, evt) {
             let el = evt.currentTarget
             let contentDiv = el.querySelector(".accordion-body")
-            let content = contentDiv.querySelector("p")
+            let content = contentDiv.querySelector("div")
             let resultHeight = content.clientHeight + 8
-            if (el.classList.contains("is-open")){
+            if (el.classList.contains("is-open")) {
                 el.classList.remove("is-open")
                 contentDiv.style.height = '0px'
-            }else{
+            } else {
                 el.classList.add("is-open")
-                contentDiv.style.height = resultHeight+'px'
+                contentDiv.style.height = resultHeight + 'px'
             }
         }
     }
 }
 Vue.component('accordion', Accordion)
+
+const ProgressHint = {
+    template: `
+    <ul class="progress-hint-lists">
+        <transition-group name="fade" class="d-flex flex-column">
+            <div class="progress-hint" :class="hint.hide ? 'hide' : ''" v-for="hint of hints" :key="hint.id">
+                <p class="t-z-2">{{hint.say}}</p>
+            </div>
+        </transition-group>
+    </ul>
+    `,
+    props: ['hints'],
+    data() {
+        return {
+            timer: null
+        }
+    },
+    mounted() {
+        this.timer = setInterval(() => {
+            if (this.hints.length > 0) {
+                this.$emit(`hint-hide`)
+            }
+        }, 2500)
+    },
+    beforeDestroy() {
+        clearInterval(this.timer)
+        this.timer = null;
+    }
+}
+Vue.component('progress-hint', ProgressHint)
+
+const BillBoard = {
+    template: `
+        <transition name="fade">
+            <div class="mock" v-if="boardHasShown">
+                <aside class="bill-board card w-100 w-md-un">
+                    <div class="px-2">
+                        <h2 class="t-a-c mb-1">蝸牛綠洲生活公約</h2>
+                        <p>歡迎來到「蝸牛綠洲」！作為這個社區的新成員，除了享受慢活的氣氛之外，有什麼問題只要點開畫面右上方的公布欄就能看到囉！</p>
+                        <accordion :accordions="rules" class="pt-2 scroll"></accordion>
+                    </div>
+                    <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
+                </aside>
+            </div>
+        </transition>
+    `,
+    props: ['boardHasShown'],
+    data(){
+        return {
+            rules: [
+                {
+                    title: "探索綠洲",
+                    content: "將游標移到地圖上並呈現下圖「有箭號的手」時，按住滑鼠不放可以拖曳整張地圖；或上下滾動滑鼠滾輪以放大縮小地圖。",
+                    img: "./src/img/icons/cursor_move.png"
+                },{
+                    title: "敦親睦鄰、和村民聊天親近地方",
+                    content: "當滑鼠游標變成「對話的樣子」時，可以開始和村民聊天、認識地方喔。",
+                    img: "./src/img/teach_explore.png"
+                },{
+                    title: "賺取蝸牛幣，佈置房間",
+                    content: "畫面左方有「房屋」圖標的黃色房子是你的新家，探索不同區域、清掃垃圾、維持秩序或加入認養行動都可以獲得蝸牛幣。存夠蝸牛幣之後，就能在房間裡透過打開「櫥櫃」圖標添購新的傢俱囉！未來還可能到實體店家換取折扣。",
+                    img: "./src/img/teach_furniture.png"
+                },{
+                    title: "隨手撿起街道垃圾，維護純淨綠洲",
+                    content: "尋找散落在街道裡的垃圾，當游標變成「垃圾桶」的時候可以撿起垃圾、獲得蝸牛幣！",
+                    img: "./src/img/billboard_trash.png"
+                },{
+                    title: "打抱不平、提防危害秩序的蛇和青蛙",
+                    content: "拖拉畫面左下方的「讚」和「倒讚」圖標，到蛇、青蛙或清掃街道的人身上吧！",
+                    img: "./src/img/teach_guy.png"
+                },{
+                    title: "加入社區行動案",
+                    content: "當村民頭上出現「燈泡」圖標時，表示有可以加入的社區行動案發布了！有興趣的話，直接和蝸牛巷的居民接洽，一起維護實體環境吧！",
+                    img: "./src/img/teach_adopt.png"
+                },{
+                    title: "抓住神出鬼沒的神秘蝸牛",
+                    content: "每到週末綠洲中都會出現跑得又急又快的神秘蝸牛，快抓住他吧！",
+                    img: "./src/img/billboard_specials.png"
+                }
+            ]
+        }
+    },
+    methods: {
+        switchBoard(){
+            if (this.boardHasShown){
+                this.$emit('switch-board', false)
+            }else{
+                this.$emit('switch-board', true)
+            }
+        }
+    }
+}
+Vue.component('bill-board', BillBoard)
