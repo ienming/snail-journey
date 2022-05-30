@@ -21,13 +21,18 @@ Vue.component('toggle-bg-music', ToggleBGMusic)
 const CloseBtn = {
     template:
         `<div class="close" @click="switchPage">
-        <img src="src/img/icons/close.svg" alt="">
-    </div>`,
-    props: {
-        nowShow: String
-    },
+            <img :src="imgSrc" alt="">
+        </div>`,
+    props: ['nowShow', 'highlight'],
     data() {
         return {}
+    },
+    computed:{
+        imgSrc(){
+            if (this.highlight){
+                return 'src/img/icons/close_dark.svg'
+            }else return 'src/img/icons/close.svg'
+        }
     },
     methods: {
         switchPage() {
@@ -317,7 +322,7 @@ const BillBoard = {
         <transition name="fade">
             <div class="mock" v-if="boardHasShown">
                 <aside class="bill-board card w-100 w-md-un">
-                    <div class="px-2">
+                    <div class="px-md-2 scroll">
                         <h2 class="t-a-c mb-1">蝸牛綠洲生活公約</h2>
                         <p>歡迎來到「蝸牛綠洲」！作為這個社區的新成員，除了享受慢活的氣氛之外，有什麼問題只要點開畫面右上方的公布欄就能看到囉！</p>
                         <accordion :accordions="rules" class="pt-2 scroll"></accordion>
@@ -345,11 +350,11 @@ const BillBoard = {
                     img: "./src/img/teach_furniture.png"
                 },{
                     title: "隨手撿起街道垃圾，維護純淨綠洲",
-                    content: "尋找散落在街道裡的垃圾，當游標變成「垃圾桶」的時候可以撿起垃圾、獲得蝸牛幣！",
+                    content: "街區的整潔需要每天關照，尋找散落在街道裡的垃圾，當游標變成「垃圾桶」的時候可以撿起垃圾、獲得蝸牛幣！",
                     img: "./src/img/billboard_trash.png"
                 },{
                     title: "打抱不平、提防危害秩序的蛇和青蛙",
-                    content: "拖拉畫面左下方的「讚」和「倒讚」圖標，到蛇、青蛙或清掃街道的人身上吧！",
+                    content: "拖拉畫面左下方的「讚」和「倒讚」圖標，到蛇、青蛙或清掃街道的人身上吧！每小時只會出現一次，常常上來看看有什麼新的社區活動變化吧～",
                     img: "./src/img/teach_guy.png"
                 },{
                     title: "加入社區行動案",

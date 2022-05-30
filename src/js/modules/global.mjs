@@ -64,7 +64,7 @@ function collisionDetect(a, b){
 }
 
 // call Vue methods
-function callVueSys(str, abs='', imgUrl='', coinsNum=''){
+function callVueSys(str, abs='', imgUrl='', coinsNum=0){
     vm.$data.sys.popup = true
     vm.$data.sys.say = str
     vm.$data.sys.abs = abs
