@@ -18,10 +18,10 @@ if (rwd < rwds.md){ //mobile
 function startDailyJudge(){
     showGuyJudgeTools()
     createGuys()
-    let nowTime = new Date().getDate()
+    let nowTime = new Date().getHours()
     window.setInterval(()=>{
-        if (new Date().getDate() !== nowTime){
-            nowTime = new Date().getDate()
+        if (new Date().getHours() !== nowTime){
+            nowTime = new Date().getHours()
             console.log("計時重新產生評價角色")
             while(guysContainer.children.length > 0){
                 guysContainer.removeChild(guysContainer.children[0])
@@ -31,7 +31,7 @@ function startDailyJudge(){
             vm.$data.user.judges = []
             createGuys()
         }
-    }, 1000)
+    }, 60000)
 }
 
 // 產生 Guys
@@ -66,23 +66,46 @@ function createGuys(){
     let waitGuys = async()=>{
         let res = await fetchGuys()
         let arr = [...res]
-        let recordJudges = vm.$data.user.judges // 已經被評價的
-        if (recordJudges.length > 0){ //只要畫出還沒評價的就好
-            console.log("有被評價的guys")
-            globalGuys = [...vm.$data.dailyGuys]
-            for (let i=0; i<recordJudges.length; i++){
-                globalGuys.splice(globalGuys.findIndex(el=>el == recordJudges[i]), 1)
-            }
-            let num  = globalGuys.length, prepareds =[]
-            for (let i=0; i<num; i++){
-                // console.log(globalGuys[i])
-                let guy = arr.filter(el=>el.name == globalGuys[i])[0]
-                prepareds.push(guy)
-            }
-            globalGuys = prepareds
-            // console.log(globalGuys)
-            if (globalGuys.length == 0){
-                console.log("今天的評價已經結束了")
+        let nowTime = new Date().getHours()
+        let recordJudges = vm.$data.user.judges
+        // 如果已經被評價的資料
+        if (recordJudges.length > 0){
+            // 判斷紀錄的資料是否過期
+            if (nowTime !== vm.$data.user.lastDailyRecord.guys && vm.$data.user.lastDailyRecord.guys !== -1){
+                console.log("紀錄的資料過期，重新產生Guys")
+                while(guysContainer.children.length > 0){
+                    guysContainer.removeChild(guysContainer.children[0])
+                }
+                vm.$data.user.judges = []
+                vm.$data.dailyGuys = []
+                let todayGuysNum = getRandom(1,res.length)
+                if (arr){
+                    for (let i=0; i<todayGuysNum; i++){
+                        let todayGuyId = getRandom(0,arr.length-1)
+                        let todayGuy = arr.splice(todayGuyId, 1)[0]
+                        globalGuys.push(todayGuy)
+                        // 記錄新出現的 guys
+                        vm.$data.dailyGuys.push(todayGuy.name)
+                    }
+                }
+            }else{
+                //只要畫出還沒評價的就好
+                console.log("有被評價的guys")
+                globalGuys = [...vm.$data.dailyGuys]
+                for (let i=0; i<recordJudges.length; i++){
+                    globalGuys.splice(globalGuys.findIndex(el=>el == recordJudges[i]), 1)
+                }
+                let num  = globalGuys.length, prepareds =[]
+                for (let i=0; i<num; i++){
+                    // console.log(globalGuys[i])
+                    let guy = arr.filter(el=>el.name == globalGuys[i])[0]
+                    prepareds.push(guy)
+                }
+                globalGuys = prepareds
+                // console.log(globalGuys)
+                if (globalGuys.length == 0){
+                    console.log("今天的評價已經結束了")
+                }
             }
         }else{
             // 如果沒有紀錄的資料，就重新隨機抓取
@@ -91,16 +114,9 @@ function createGuys(){
             let todayGuysNum = getRandom(1,res.length)
             console.log(`今天要抽出的數量為：${todayGuysNum}`)
             if (arr){
-                // console.log("allResponses: ")
-                // console.log(res)
                 for (let i=0; i<todayGuysNum; i++){
                     let todayGuyId = getRandom(0,arr.length-1)
-                    // console.log("todayGuyId: "+todayGuyId)
                     let todayGuy = arr.splice(todayGuyId, 1)[0]
-                    // console.log("todayGuyIs: ")
-                    // console.log(todayGuy)
-                    // console.log("respondArr: ")
-                    // console.log(arr)
                     globalGuys.push(todayGuy)
                     // 記錄今天出現的 guys
                     vm.$data.dailyGuys.push(todayGuy.name)
@@ -332,6 +348,7 @@ function checkJudged(tool){
         // console.log(`給${beingJudged +' '+ tool.name}的評價了`)
         // 儲存資料給 Vue watch 記錄今天的 judges 已經結束了
         vm.$data.user.judges.push(beingJudged)
+        vm.$data.user.lastDailyRecord.guys = new Date().getHours()
         gsap.to(tool, .5, {
             pixi: {
                 scale: scale*2,

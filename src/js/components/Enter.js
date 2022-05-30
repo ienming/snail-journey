@@ -3,11 +3,13 @@ const Enter = {
         <transition name="fade" :duration="{ leave: 800 }" v-if="loadingShouldShown">
             <div id="loading">
                 <div class="wrapper">
-                    <div class="d-flex flex-column mb-2 mb-md-0">
+                    <div class="d-flex flex-column aic mb-2 mb-md-0">
                         <img src="./src/img/logo.png" class="logo"/>
+                        <p class="t-c-g t-z-1 mt-1">請注意音量</p>
+                        <p class="t-c-g t-z-1" style="padding: 8px 16px; background-color: white; border-radius: 50px;">建議使用電腦或筆電開始體驗</p>
                     </div>
                     <transition name="fade">
-                        <log-in @log-in="startGame" v-if="!loading"></log-in>
+                        <log-in @log-in="startGame" v-if="!loading">
                     </transition>
                 </div>
                 <toggle-bg-music :bg-is-playing="bgIsPlaying" @switch-bg-music="switchBgMusic" style="position: absolute; right: 24px; top: 24px;"></toggle-bg-music>
@@ -134,7 +136,7 @@ const Narrative = {
             <transition-group name="fade-right">
                 <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column flex-md-row aic">
                     <img :src=cut.src />
-                    <div class="my-2 t-z-2 descrip-container">
+                    <div class="my-2 descrip-container">
                         <p class="descrip" v-html="cut.descrip"></p>
                         <p class="t-z-1 mt-1 mt-md-0 mr-md-2" style="opacity: 0.7" v-if="cut.name !== 4">（點擊畫面任何地方繼續）</p>
                         <p class="t-z-1" style="opacity: 0.7" v-else>（點擊畫面進入蝸牛綠洲）</p>
@@ -157,7 +159,7 @@ const Narrative = {
                 },{
                     name: 2,
                     src: './src/img/open/shot2.png',
-                    descrip: "有時也需要一個地方喘息......</br>這天我接收到一個邀請"
+                    descrip: "有時也需要一個地方喘息......</br>這天我收到一個邀請"
                 },{
                     name: 3,
                     src: './src/img/open/shot3.png',
@@ -165,7 +167,7 @@ const Narrative = {
                 },{
                     name: 4,
                     src: './src/img/open/shot4.png',
-                    descrip: "來到抓牛綠洲了！"
+                    descrip: "這裡就是蝸牛綠洲了！"
                 }
             ]
         }

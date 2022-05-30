@@ -56,7 +56,11 @@ const vm = new Vue({
             coins: 100,
             furnitures: [],
             adoptions: [],
-            judges: []
+            judges: [],
+            lastDailyRecord: {
+                trash: -1,
+                guys: -1
+            }
         },
         userRecord: {}
     },

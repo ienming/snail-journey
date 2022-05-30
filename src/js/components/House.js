@@ -243,30 +243,32 @@ const CommentBoard = {
         <transition name="fade">
             <div class="mock">
                 <div class="wrapper">
-                    <div class="popup t-a-c w-md-50">
-                        <h2>{{program.title}}</h2>
-                        <p>留言板討論認養議題區</p>
-                        <p class="t-c-g">*目前留言僅供學術研究測試用，本地商家不會收到資訊，您的留言在網頁重新整理後便會被清除*</p>
-                        <section>
-                            <div class="comment">
-                                <div class="avatar">
-                                    <img src="./src/img/snail_hito.png" />
+                    <div class="popup t-a-c w-md-50 comment-board">
+                        <div class="scroll">
+                            <h2>{{program.title}}</h2>
+                            <p>留言板討論認養議題區</p>
+                            <p class="t-c-g">*目前留言僅供學術研究測試用，本地商家不會收到資訊，您的留言在網頁重新整理後便會被清除*</p>
+                            <section>
+                                <div class="comment">
+                                    <div class="avatar">
+                                        <img src="./src/img/snail_hito.png" />
+                                    </div>
+                                    <div class="message input">
+                                        <input-text v-model="message" class="w-100" placeholder="留言......" :id="commentInputId" :name="commentInputId"></input-text>
+                                        <button class="my-btn mt-1" @click="sendMsg">送出留言</button>
+                                    </div>
                                 </div>
-                                <div class="message input">
-                                    <input-text v-model="message" class="w-100" placeholder="留言......" :id="commentInputId" :name="commentInputId"></input-text>
-                                    <button class="my-btn mt-1" @click="sendMsg">送出留言</button>
-                                </div>
-                            </div>
-                        </section>
-                        <div class="comment-lists scroll">
-                            <div class="comment" v-for="comment of comments">
-                                <div class="avatar">
-                                    <img src="./src/img/snail_hito.png" />
-                                </div>
-                                <div class="message">
-                                    <p class="t-w-6">{{comment.nickName}}</p>
-                                    <p>{{comment.message}}</p>
-                                    <p class="t-z-1 t-c-g mt-1">{{comment.time}}</p>
+                            </section>
+                            <div class="comment-lists">
+                                <div class="comment" v-for="comment of comments">
+                                    <div class="avatar">
+                                        <img src="./src/img/snail_hito.png" />
+                                    </div>
+                                    <div class="message">
+                                        <p class="t-w-6">{{comment.nickName}}</p>
+                                        <p>{{comment.message}}</p>
+                                        <p class="t-z-1 t-c-g mt-1">{{comment.time}}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

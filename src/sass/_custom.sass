@@ -1,6 +1,3 @@
-.my-header .icon
-    width: 36px
-
 .mock
     background-color: rgba(0,0,0,.6)
     position: fixed
@@ -15,7 +12,7 @@
         align-items: center
 
 .wrapper
-    width: 80vw
+    width: 100vw
     display: flex
     justify-content: center
     align-items: center
@@ -62,6 +59,7 @@
 .narrative
     background-color: $darkGrey
     transform: unset
+    padding: 30px
     width: 100%
     height: 100vh
     position: relative
@@ -73,6 +71,8 @@
         max-width: 80%
 .descrip-container
     padding: 0 30px
+    span
+        font-size: 13px !important
     @for $i from 1 through 30
         span:nth-child(#{$i})
             position: relative
@@ -92,6 +92,14 @@
         max-width: 100px
         +rwd(md)
             max-width: 150px
+    .icon
+        width: 36px
+    ul
+        flex-direction: column
+        gap: 40px
+        +rwd(md)
+            flex-direction: row
+            gap: 0
 
 .descrip-lid
     position: relative
@@ -165,20 +173,25 @@
 
 .popup
     background-color: lighten($main, 10%)
-    padding: 1rem
     border-radius: 8px
     box-shadow: 0 0 25px 5px rgba(0,0,0,.25)
     position: relative
-    padding: 32px
     max-width: 85vw
     max-height: 80vh
+    padding: 20px
+    margin-top: 1.5rem
     +rwd(md)
         max-width: 40vw
+        padding: 32px
+        margin-top: 0
     &.dialogue
         width: 350px
-        max-height: 55vh
+        max-height: 70vh
+        +rwd(sm)
+            max-height: 55vh
     &.dialogue.func
         width: 100%
+        margin-top: 0
         +rwd(md)
             width: 40vw
 
@@ -258,7 +271,7 @@
         position: absolute
         z-index: -1
         right: 0
-        top: -60px
+        top: -68px
         +rwd(md)
             right: -75px
             top: 30px
@@ -271,12 +284,19 @@
         position: absolute
         background-color: $lightBg
         text-align: center
-        padding: .25rem .5rem
         border-radius: 50px
-        top: 30px
+        padding: .5rem 1.5rem
         left: 50%
+        bottom: -10px
+        width: 80vw
         transform: translateX(-50%)
         +basicShadow()
+        +rwd(md)
+            padding: .25rem .5rem
+            top: 30px
+            bottom: unset
+            width: unset
+
 
 #roomCanvasContainer, #houseCnvsContainer
     max-width: 90vw
@@ -290,23 +310,20 @@
     border-radius: 30px
     cursor: default
     top: -20px
-    left: 50%
-    transform: translateX(-50%)
+    left: 40px
     +rwd(md)
         top: -15px
         left: -15px
-        transform: unset
     .icon
         position: absolute
         cursor: pointer
         width: 32px
         transform: translateY(-50%)
         +basicTransition()
-        left: -70px
+        bottom: -32px
+        right: 0
         +rwd(md)
             right: 10px
-            left: unset
-            bottom: -32px
         &:hover
             transform: translateY(-50%) scale(1.35)
     #coin
@@ -318,6 +335,10 @@
         +rwd(md)
             left: -50px
             width: 90px
+    span
+        font-size: 16px
+        +rwd(md)
+            font-size: 24px
 #furnitureContainer
     background-color: $lightBg
     border-radius: 8px
@@ -347,8 +368,6 @@
             transform: translateY(-50%)
             animation: hint-right .5s ease-in alternate infinite
     .furnitures
-        overflow: scroll
-        max-height: 55vh
         flex-direction: column
         gap: 12px
         +rwd(sm)
@@ -356,7 +375,6 @@
         +rwd(md)
             flex-direction: row
             max-height: unset
-        // flex-wrap: wrap
     .furniture
         position: relative
         background-color: $main
@@ -425,22 +443,6 @@
     margin-bottom: 1rem
     padding: 1rem 2rem
     border-bottom: 1px solid $secondaryGrey
-.adoption
-    +rwd(md)
-        max-height: 80vh
-        width: 40vw
-    .keyword
-        border-radius: 50px
-        background-color: $accentSubDark
-        color: $white
-        padding: 6px 12px
-        margin-right: 8px
-    .action
-        gap: 16px
-        img
-            border-radius: 50%
-            overflow: hidden
-            border: 1px solid #000
 .mission-rwd
     img
         width: 68px
@@ -450,26 +452,37 @@
         padding-bottom: 1rem
         border-bottom: 1px solid $secondaryGrey
         text-align: left
+        flex-direction: column
+        align-items: self-start
+        +rwd(md)
+            flex-direction: row
 
 // 留言板
+.comment-board .scroll
+    max-height: 55vh
+
 .comment-lists
     display: flex
     flex-direction: column
     padding-top: 16px
 .comment
     display: flex
+    flex-direction: column
     align-items: start
     padding-bottom: 8px
     margin-bottom: 16px
     text-align: left
+    +rwd(md)
+        flex-direction: row
     img
         border-radius: 50%
         max-width: 40px
     .message
-        margin-left: 8px
         width: 100%
-        padding: 12px
         border-radius: 8px
+        padding: 12px
+        +rwd(md)
+            margin-left: 8px
         &:not(.input)
             background-color: #e5e1ce
 .my-inpt
@@ -496,12 +509,18 @@ ul.carousel-lids
 .scroll
     max-height: 35vh
     overflow-y: scroll
+    -ms-overflow-style: none
+    scrollbar-width: none
     +rwd(md)
         max-height: 40vh
     &.sm-only
         +rwd(md)
             max-height: unset
             overflow: initial
+    &::-webkit-scrollbar
+        display: none
+    &.furnitures, &.adopt
+        max-height: 55vh
 
 // 側邊進度
 .progress-hint-lists
@@ -545,7 +564,7 @@ ul.carousel-lids
     background-size: 100% 100%
     background-position-x: center
     background-repeat: no-repeat
-    max-height: unset !important
+    // max-height: unset !important
     box-shadow: none
     padding: 80px 50px
     +rwd(md)
@@ -553,3 +572,6 @@ ul.carousel-lids
     ul
         list-style: initial
         padding-left: 1rem
+    .close
+        top: -30px
+        right: 30px

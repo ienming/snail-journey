@@ -25,15 +25,14 @@ const Header = {
                 {
                     name: "toggleMusic",
                     seudo: "關閉背景音樂",
-                    icon: true
                 },{
                     name: "logOut",
                     seudo: "登出"
+                },{
+                    name: "quest",
+                    seudo: "填寫問卷",
+                    icon: "./src/img/icons/cursor_speak.png"
                 }
-                // ,{
-                //     name: "clearData",
-                //     seudo: "清除資料（測試用）"
-                // }
             ]
         }
     },
@@ -51,6 +50,9 @@ const Header = {
                 }else {
                     this.$emit('switch-board', true)
                 }
+            }
+            if (name == 'quest'){
+                window.open('https://www.surveycake.com/s/QWGb8', '_blank')
             }
         },
         switchBgMusic(v){
