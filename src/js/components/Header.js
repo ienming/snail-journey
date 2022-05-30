@@ -24,15 +24,11 @@ const Header = {
                 },
                 {
                     name: "toggleMusic",
-<<<<<<< HEAD
-                    seudo: "切換背景音樂",
+                    seudo: "關閉背景音樂",
                     icon: true
                 },{
                     name: "logOut",
                     seudo: "登出"
-=======
-                    seudo: "開關背景音樂",
->>>>>>> 56e8b8358882653c3d402c5740ca2c71415d9c1b
                 }
                 // ,{
                 //     name: "clearData",

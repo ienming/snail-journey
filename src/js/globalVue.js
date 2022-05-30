@@ -314,11 +314,8 @@ const vm = new Vue({
         },
         startGame() {
             this.interaction.nowLoading = false
-<<<<<<< HEAD
-            this.interaction.nowPlaying = true
             // fetch data from API
             this.doGetUser()
-=======
             // Enter Animation
             window.setTimeout(()=>{
                 gsap.to(this.app.map, 5, {
@@ -330,7 +327,6 @@ const vm = new Vue({
             }, 300)
             // play bg Music
             this.switchBg(true)
->>>>>>> 56e8b8358882653c3d402c5740ca2c71415d9c1b
         },
         checkAns(correct) {
             if (correct) {
