@@ -4234,9 +4234,7 @@ ul.carousel-lids {
 
 .scroll {
   max-height: 35vh;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none; }
+  overflow-y: scroll; }
   @media (min-width: 768px) {
     .scroll {
       max-height: 40vh; } }
