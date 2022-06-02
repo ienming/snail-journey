@@ -4242,8 +4242,6 @@ ul.carousel-lids {
     .scroll.sm-only {
       max-height: unset;
       overflow: initial; } }
-  .scroll::-webkit-scrollbar {
-    display: none; }
   .scroll.furnitures, .scroll.adopt {
     max-height: 55vh; }
 
