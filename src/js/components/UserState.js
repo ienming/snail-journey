@@ -4,16 +4,16 @@ const UserState = {
         <div @click="switchUserState" class="icon">
             <img :src="foldImg" />
         </div>
-        <h3>蝸牛探險家</h3>
-        <p class="t-z-1 mb-1 t-c-g">連續登入：365天</p>
-        <p class="t-z-2 t-w-5">每日環境清潔：{{userGotTrashes.length}}/{{dailyTrashes.length}}</p>
-        <p class="t-z-2 t-w-5">巷弄秩序維護：{{userJudges.length}}/{{dailyGuys.length}}</p>
+        <h3>Snail Explorer</h3>
+        <p class="t-z-1 mb-1 t-c-g">Continuously log in：365 days</p>
+        <p class="t-z-2 t-w-5">Missions for cleaning up everday：{{userGotTrashes.length}}/{{dailyTrashes.length}}</p>
+        <p class="t-z-2 t-w-5">Missions for keep in order：{{userJudges.length}}/{{dailyGuys.length}}</p>
         <section>
-            <p class="t-z-2 t-w-5">綠洲散步</p>
+            <p class="t-z-2 t-w-5">Wandering in Snail Oasis</p>
             <div v-for="el of explors" class="d-flex">
                 <img :src="el.finished ? './src/img/icons/checked.svg' : './src/img/icons/checked_notyet.svg'" class="icon mr-1 d-inline-block"/>
-                <span v-if="el.finished" class="t-z-2">走遍{{el.name}}了！</span>
-                <span v-else class="t-z-2">{{el.name}}還有沒認識的鄰居喔</span>
+                <span v-if="el.finished" class="t-z-2">Visit all neighborhoods in {{el.name}}！</span>
+                <span v-else class="t-z-2">{{el.name}}Have'nt visited all neighborhoods</span>
             </div>
         </section>
     </div>
@@ -31,13 +31,13 @@ const UserState = {
                 let obj = {}, blockName
                 switch (prop){
                     case 'block1':
-                        blockName = "文藝生活區"
+                        blockName = "Literary Area"
                         break;
                     case 'block2':
-                        blockName = "慢活甜點區"
+                        blockName = "Downshifring Area"
                         break;
                     case 'block3':
-                        blockName = "職人區"
+                        blockName = "Professions Area"
                         break;
                 }
                 obj.name = blockName

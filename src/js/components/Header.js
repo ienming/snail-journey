@@ -19,15 +19,15 @@ const Header = {
             pages: [
                 {
                     name: "showBillBoard",
-                    seudo: "綠洲生活公約",
+                    seudo: "Snail Oasis living contention",
                     icon: "./src/img/icons/billboard.png"
                 },
                 {
                     name: "toggleMusic",
-                    seudo: "開關背景音樂",
+                    seudo: "Switch on and off the music",
                 },{
                     name: "quest",
-                    seudo: "填寫問卷",
+                    seudo: "Go for the questionnaire",
                     icon: "./src/img/icons/questionnaire.png"
                 }
                 // ,{

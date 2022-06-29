@@ -7,7 +7,7 @@ const PersonalPage = {
                 <personal-coin @switch-furnitures="switchFurnitures" :coins="userCoins"></personal-coin>
                 <img src="./src/img/icons/exit.png" alt="離開房間" @click="$emit('switch-personal-page')" class="game-ui icon" />
                 <transition name="fade">
-                    <p class="hint" v-if="!explored">找綠洲裡的村民聊天、好好探索這個地方來解鎖家具吧！</p>
+                    <p class="hint" v-if="!explored">Chat with villagers in the oasis and unlock the furniture after exploring each areas</p>
                 </transition>
             </div>
             <template name="fade">
@@ -20,8 +20,8 @@ const PersonalPage = {
             <transition name="fade">
                 <div class="mock" v-if="firstShouldShow">
                     <div class="card t-a-c w-75 w-md-un">
-                        <h3>歡迎來到蝸牛綠洲！</h3>
-                        <p class="my-1">這裡是你在綠洲裡的家，雖然現在還空空蕩蕩的，只要和村民聊天、探索完各個區域，就能從上方的櫃子裡挑選喜歡的家具喔。快來佈置蝸牛綠洲裡的溫馨小窩吧！</p>
+                        <h3>Welcome to Snail Oasis!</h3>
+                        <p class="my-1">Here is the room for you living in the oasis. Although it is empty right now, you can make it a cozy world with furniture in the top closet icons after exploring each area of Snail Oasis!</p>
                         <img src="./src/img/icons/plus.png" style="max-height: 60px;" />
                         <close-btn now-show="first" @switch-first="switchFirst"></close-btn>
                     </div>
@@ -285,15 +285,15 @@ const Furnitures = {
                 let blockName = "", cate=""
                 switch(el.block*1){
                     case 1:
-                        blockName = "文藝生活區",
+                        blockName = "Literary Area",
                         cate = "lit"
                         break;
                     case 2:
-                        blockName = "慢活甜點區",
+                        blockName = "Desserts Area",
                         cate = "des"
                         break;
                     case 3:
-                        blockName = "職人區",
+                        blockName = "Professions Area",
                         cate = "tra"
                         break;
                 }
@@ -344,21 +344,21 @@ const BuyConfirm = {
     <div class="mock">
         <div id="buyConfirm">
             <template v-if="buyable == 'able'">
-                <p>確定要將「{{ furniture.name }}」加入房間內嗎？</p>
+                <p>Are you sure you want to add "{{ furniture.name }}" into the room？</p>
             </template>
             <template v-else-if="buyable == 'bought'">
-                <p>已將「{{ furniture.name }}」加入房間！</p>
+                <p>Put "{{ furniture.name }}" into the room！</p>
             </template>
             <template v-else>
-                <p>蝸牛幣似乎不夠喔......常常來維護環境或是加入認養行動，獲取蝸牛幣吧！</p>
+                <p>Seems like you don't have enough Snail Coins...take part in local affairs for more!</p>
             </template>
             <div class="mt-1 t-a-c">
                 <template v-if="buyable == 'able'">
-                    <button class="my-btn" @click="buy">確認</button>
-                    <button class="my-btn outline" @click="discard">放棄</button>
+                    <button class="my-btn" @click="buy">Confirm</button>
+                    <button class="my-btn outline" @click="discard">Discard</button>
                 </template>
                 <template v-else>
-                    <button class="my-btn" @click="discard">關閉</button>
+                    <button class="my-btn" @click="discard">Cancel</button>
                 </template>
             </div>
         </div>
@@ -415,8 +415,8 @@ const DisplayShelf = {
                     <div class="popup t-a-c w-md-50">
                         <div class="scroll">
                             <section>
-                                <h3>探索區域徽章</h3>
-                                <p v-if="achievedEmpty" class="t-z-2 t-c-g">沒有探索完的區域喔。</br>快去找蝸牛們聊天、認識一下蝸牛綠洲吧！</p>
+                                <h3>Exlporation Area Badges</h3>
+                                <p v-if="achievedEmpty" class="t-z-2 t-c-g">You have not explored the whole area.</br>Try to chat with villagers and understand the place!</p>
                                 <div class="d-flex jcc mt-1 flex-column flex-md-row">
                                     <div class="badge col-md-4"
                                         :class="{ locked: !el.achieved }"
@@ -427,12 +427,12 @@ const DisplayShelf = {
                                 </div>
                             </section>
                             <section class="mt-2">
-                                <h3>認養蝸牛綠洲議題</h3>
+                                <h3>Projects participated in local affairs</h3>
                                 <p class="t-c-g my-1">*目前認養社區活動僅供學術研究測試用，連結不會通往其他網頁為正常狀況。*</p>
-                                <p v-if="adoptedEmpty" class="t-z-2 t-c-g">沒有加入的認養方案喔。</p>
+                                <p v-if="adoptedEmpty" class="t-z-2 t-c-g">There is no local affairs you participated</p>
                                 <ul class="d-flex jcc mt-1 adoption-lists" v-else>
                                     <a :href="el.link" target="_blank" v-for="el of userAdopted">
-                                        <li class="d-flex aic descrip-lid" data-lid="前往詳細方案內容">
+                                        <li class="d-flex aic descrip-lid" data-lid="Go to details">
                                                 <img src="./src/img/icons/checked.svg" class="icon" />
                                                 <p class="my-1 my-md-0 mx-md-1">{{ el.title }}</p>
                                                 <p class="t-z-2">

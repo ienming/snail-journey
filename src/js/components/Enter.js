@@ -7,11 +7,11 @@ const Enter = {
                         <img src="./src/img/logo.png" class="logo"/>
                         <transition name="fade">
                             <div class="t-a-c" v-if="!loading">
-                                <p class="t-c-g t-z-1 mt-1">請注意音量</p>
-                                <p class="t-c-g t-z-1 mt-1">若無法進入，請關閉廣告攔截後重新整理</p>
-                                <p class="t-c-g t-z-1" style="padding: 8px 16px; background-color: white; border-radius: 50px;">建議使用電腦或筆電開始體驗</p>
+                                <p class="t-c-g t-z-1 mt-1">Caution to the volume</p>
+                                <p class="t-c-g t-z-1 mt-1">Please switch off the ad block extension if you cannot enter</p>
+                                <p class="t-c-g t-z-1" style="padding: 8px 16px; background-color: white; border-radius: 50px;">Use computer for the better experience</p>
                                 <button class="mt-2 my-btn w-100" @click="startGame">
-                                    進入綠洲
+                                    Enter Oasis
                                 </button>
                             </div>
                         </transition>
@@ -50,7 +50,7 @@ const NoviceTeach = {
             <div class="mock" v-if="noviceHasShown">
                 <div class="wrapper">
                     <div class="popup dialogue novice">
-                        <h2 class="t-c-g t-a-c mb-1" style="opacity: 0.5">新手導引</h2>
+                        <h2 class="t-c-g t-a-c mb-1" style="opacity: 0.5">Notivce Guide</h2>
                         <transition-group name="fade-right">
                             <div v-for="(teach,idx) of teaches" :key="teach.title" v-show="idx == nowStep" class="t-a-c fade-right-item">
                                 <h2 class="t-z-4">{{teach.title}}</h2>
@@ -59,9 +59,9 @@ const NoviceTeach = {
                             </div>
                         </transition-group>
                         <div class="d-flex jcb mt-1">
-                            <button class="small t-w-6" @click="moveStep('prev')">前一個</button>
-                            <button class="small t-w-6" @click="moveStep('next')" v-if="nowStep !== teaches.length-1">下一個</button>
-                            <button class="small t-w-6" @click="switchNovice()" v-else>完成</button>
+                            <button class="small t-w-6" @click="moveStep('prev')">Back</button>
+                            <button class="small t-w-6" @click="moveStep('next')" v-if="nowStep !== teaches.length-1">Next</button>
+                            <button class="small t-w-6" @click="switchNovice()" v-else>Cancel</button>
                         </div>
                         <nav>
                             <ul class="carousel-lids">
@@ -79,28 +79,28 @@ const NoviceTeach = {
             noviceHasShown: true,
             teaches: [
                 {
-                    title: "探索綠洲",
-                    content: "拖曳地圖、到處看看，和蝸牛村民聊聊天。蝸牛綠洲，慢慢行！",
+                    title: "Explore Snail Oasis",
+                    content: "Drag and drop the map and see what's going on with villagers!",
                     img: "./src/img/teach_explore.png"
                 },{
-                    title: "維護秩序",
-                    content: "街區裡有時會出現進行活動的人，拖拉左下角的圖案到有「按讚圖標」的人身上，守護蝸牛綠洲的秩序、獲得蝸牛幣吧！",
+                    title: "Keep the order",
+                    content: "Sometimes there will be people who are doing activities in the block. Drag the pattern in the lower left corner to the person with the 'ike icon', protect the order of Snail Oasis, and get Snail Coins!",
                     img: "./src/img/teach_guy.png"
                 },{
-                    title: "清掃街道",
-                    content: "有人亂丟垃圾！請你幫忙把垃圾撿起來，一起保持巷弄的乾淨整潔。",
+                    title: "Maintain the environment",
+                    content: "Someone is littering! Please help to pick up the rubbish and keep the alleys clean and tidy together.",
                     img: "./src/img/teach_trash.png"
                 },{
-                    title: "蒐集蝸牛幣",
-                    content: "守護街區的秩序並維持環境整潔，就能獲得蝸牛幣，可以用在佈置家裡的房間，或是到實體合作店家換取折扣喔！",
+                    title: "Collect Snail Coins",
+                    content: "Guard the order of the neighborhood and keep the environment clean and tidy for Snail Coins, which can be used to decorate the room at home, or exchange for discounts at physical cooperative stores!",
                     img: "./src/img/teach_coin.png"
                 },{
-                    title: "佈置自己的房間",
-                    content: "和蝸牛們聊天、認識街區，用「蝸牛幣」把家具放到自己家裡吧！打造舒服的小天地！",
+                    title: "Decorate your home",
+                    content: "Chat with snails, get to know the neighborhood, and use Snail Coins to put furniture in your home! Create a cozy little world!",
                     img: "./src/img/teach_furniture.png"
                 },{
-                    title: "認養行動案",
-                    content: "店裡的蝸牛村民似乎有什麼計劃正在進行，有興趣加入、成為這裡的一份子嗎？認養行動案，成為蝸牛綠洲的 VIP 吧！",
+                    title: "Take part in local affairs",
+                    content: "Villager seems to have some plans going on, are you interested in joining and being a part of it? Adopt action case and become a relation parter of Snail Oasis!",
                     img: "./src/img/teach_adopt.png"
                 }
             ],
@@ -143,8 +143,8 @@ const Narrative = {
                     <img :src=cut.src />
                     <div class="my-2 descrip-container">
                         <p class="descrip" v-html="cut.descrip"></p>
-                        <p class="t-z-1 mt-1 mt-md-0 mr-md-2" style="opacity: 0.7" v-if="cut.name !== 4">（點擊畫面任何地方繼續）</p>
-                        <p class="t-z-1" style="opacity: 0.7" v-else>（點擊畫面進入蝸牛綠洲）</p>
+                        <p class="t-z-1 mt-1 mt-md-0 mr-md-2" style="opacity: 0.7" v-if="cut.name !== 4">（click everywhere to continue）</p>
+                        <p class="t-z-1" style="opacity: 0.7" v-else>（click everywhere to continue）</p>
                     </div>
                 </section>
             </transition-group>
@@ -160,19 +160,19 @@ const Narrative = {
                 {
                     name: 1,
                     src: './src/img/open/shot1.png',
-                    descrip: "我住在忙碌的城市裡......</br>看著人來人往川流不息，緊繃而快速的生活步調"
+                    descrip: "I'm living in the busy city...</br>people are always busy for their works and lives"
                 },{
                     name: 2,
                     src: './src/img/open/shot2.png',
-                    descrip: "有時也需要一個地方喘息......</br>這天我收到一個邀請"
+                    descrip: "Sometimes I think I need the place to take a rest...</br>There comes the invitation one day"
                 },{
                     name: 3,
                     src: './src/img/open/shot3.png',
-                    descrip: "再見喧囂！</br>我要去度假了～"
+                    descrip: "Farewell to the business</br>I'm going on my vacation..."
                 },{
                     name: 4,
                     src: './src/img/open/shot4.png',
-                    descrip: "這裡就是蝸牛綠洲了！"
+                    descrip: "Welcome to Snail Oasis!"
                 }
             ]
         }

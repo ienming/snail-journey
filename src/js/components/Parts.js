@@ -123,7 +123,7 @@ const CTA = {
     props: {
         title: {
             title: String,
-            default: "加入認養"
+            default: "Take part in local affairs"
         },
         large: {
             type: Boolean,
@@ -185,7 +185,7 @@ const InputText = {
         },
         placeholder: {
             type: String,
-            default: "內容說明文字"
+            default: "contents"
         },
         id: {
             type: String,
@@ -323,8 +323,8 @@ const BillBoard = {
             <div class="mock" v-if="boardHasShown">
                 <aside class="bill-board card w-100 w-md-un">
                     <div class="px-md-2 scroll">
-                        <h2 class="t-a-c mb-1">蝸牛綠洲生活公約</h2>
-                        <p>歡迎來到「蝸牛綠洲」！作為這個社區的新成員，除了享受慢活的氣氛之外，有什麼問題只要點開畫面右上方的公布欄就能看到囉！</p>
+                        <h2 class="t-a-c mb-1">Snail Oasis Living Convention</h2>
+                        <p>Welcome to Snail Oasis! As the newcomer of the neighborhood, please enjoy the downshifting spirits of the place! If you have any questions, just go for the icon on the top right corner of the screen.</p>
                         <accordion :accordions="rules" class="pt-2 scroll"></accordion>
                     </div>
                     <close-btn nowShow="board" @switch-board="switchBoard"></close-btn>
@@ -337,31 +337,31 @@ const BillBoard = {
         return {
             rules: [
                 {
-                    title: "探索綠洲",
+                    title: "Explore Snail Oasis",
                     content: "將游標移到地圖上並呈現下圖「有箭號的手」時，按住滑鼠不放可以拖曳整張地圖；或上下滾動滑鼠滾輪以放大縮小地圖。",
                     img: "./src/img/icons/cursor_move.png"
                 },{
-                    title: "敦親睦鄰、和村民聊天親近地方",
+                    title: "Chat with villagers to understand the place",
                     content: "當滑鼠游標變成「對話的樣子」時，可以開始和村民聊天、認識地方喔。",
                     img: "./src/img/teach_explore.png"
                 },{
-                    title: "賺取蝸牛幣，佈置房間",
+                    title: "Earn Snail Coins to decorate your house",
                     content: "畫面左方有「房屋」圖標的黃色房子是你的新家，探索不同區域、清掃垃圾、維持秩序或加入認養行動都可以獲得蝸牛幣。存夠蝸牛幣之後，就能在房間裡透過打開「櫥櫃」圖標添購新的傢俱囉！未來還可能到實體店家換取折扣。",
                     img: "./src/img/teach_furniture.png"
                 },{
-                    title: "隨手撿起街道垃圾，維護純淨綠洲",
+                    title: "Pick up rubbish to protect the beautiful oasis",
                     content: "街區的整潔需要每天關照，尋找散落在街道裡的垃圾，當游標變成「垃圾桶」的時候可以撿起垃圾、獲得蝸牛幣！",
                     img: "./src/img/billboard_trash.png"
                 },{
-                    title: "打抱不平、提防危害秩序的蛇和青蛙",
+                    title: "Beware of noisy snakes and frogs",
                     content: "拖拉畫面左下方的「讚」和「倒讚」圖標，到蛇、青蛙或清掃街道的人身上吧！每小時只會出現一次，常常上來看看有什麼新的社區活動變化吧～",
                     img: "./src/img/teach_guy.png"
                 },{
-                    title: "加入社區行動案",
+                    title: "Take part in local affairs",
                     content: "當村民頭上出現「燈泡」圖標時，表示有可以加入的社區行動案發布了！有興趣的話，直接和蝸牛巷的居民接洽，一起維護實體環境吧！",
                     img: "./src/img/teach_adopt.png"
                 },{
-                    title: "抓住神出鬼沒的神秘蝸牛",
+                    title: "Catch the mysterious Snails!",
                     content: "每到週末綠洲中都會出現跑得又急又快的神秘蝸牛，快抓住他吧！",
                     img: "./src/img/billboard_specials.png"
                 }
