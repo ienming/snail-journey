@@ -75,10 +75,10 @@
                                             </div>
                                             <!-- 有認養行動案就顯示 -->
                                             <div v-if="adoptable" class="mt-1">
-                                                <button @click="switchProgram" class="my-btn t-z-1 t-c-g adopt-btn">社區方案啟動中～加入認養！</button>
+                                                <button @click="switchProgram" class="my-btn t-z-1 t-c-g adopt-btn">Projects for local affairs are starting~ Join to become the relation parters of the place.</button>
                                                 <div class="d-flex aic mt-1 info-btn" @click="showSysTxt('蝸牛綠洲邀請你一起和在地的居民、商家共同維護這裡的美好，商家能自由提出替街區共好的方案，以折扣、禮盒、工作坊等方式邀請民眾加入。你也能藉此和蝸牛巷有更深的連結，快來成為一份子吧！', '認養行動案')">
                                                     <img src="./src/img/icons/pwd_show.svg" class="icon" />
-                                                    <button>什麼是認養？</button>
+                                                    <button>What happens if I took part in？</button>
                                                 </div>
                                             </div>
                                             <!-- 關閉對話 -->
@@ -113,7 +113,7 @@
                         <p class="t-c-g t-w-5 my-1" v-if="sys.abs">{{sys.abs}}</p>
                         <p>{{sys.say}}</p>
                         <div class="t-a-c mt-1">
-                            <button @click="closeSysTxt" class="my-btn" style="margin: 0 8px;">確定</button>
+                            <button @click="closeSysTxt" class="my-btn" style="margin: 0 8px;">Confirm</button>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ function initMission(el){
         // 首先確認是不是點到開啟新任務的NPC
         if (el.enterGame == 1 && nowUserMissionProgress.length == 0){ //而且玩家這條任務還沒開啟
             vm.$data.nowSpeak = el.gameSpeaks[0]
-            vm.$data.btnTxt = "下一步"
+            vm.$data.btnTxt = "Next"
             vm.$data.adoptable = false
             vm.$data.interaction.nowAns = true
         }
@@ -15,7 +15,7 @@ function initMission(el){
             vm.$data.adoptable = true
         }else{
             vm.$data.adoptable = false
-            vm.$data.btnTxt = "關閉"
+            vm.$data.btnTxt = "Cancel"
         }
         console.log(`任務${el.mission}結束，講一下廢話`)
     }

@@ -332,7 +332,7 @@ const vm = new Vue({
                 this.interaction.nowAns = true
             } else {
                 this.nowSpeak = this.nowNPC.gameSpeakN
-                this.btnTxt = "關閉"
+                this.btnTxt = "Cancel"
                 this.showMissionBtn = undefined
                 this.interaction.nowAns = false
             }
@@ -385,7 +385,7 @@ const vm = new Vue({
                         }
                         // 判斷是不是倒數
                         if (this.finishedProgress + 1 == this.nowNPC.gameSpeaks.length) {
-                            this.btnTxt = "關閉"
+                            this.btnTxt = "Cancel"
                             // 判斷是不是有認養方案
                             if (this.nowNPC.adoptable){
                                 this.adoptable = true
@@ -434,19 +434,19 @@ const vm = new Vue({
                     let output, badgeURl
                     switch (blockFinished) {
                         case 1:
-                            output = "文藝生活區",
+                            output = "Literary Area",
                             badgeURl = "badge_lit"
                             break;
                         case 2:
-                            output = "慢活甜點區",
+                            output = "Desserts Area",
                             badgeURl = "badge_des"
                             break;
                         case 3:
-                            output = "職人區",
+                            output = "Professions Area",
                             badgeURl = "badge_tra"
                     }
                     this.user.coins += 1200
-                    this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '區域探索完成！', `./src/img/${badgeURl}.png`)
+                    this.showSysTxt(`Explored all in the ${output}！You can know put the furniture under ${output} category`, 'Finish Area Exploration！', `./src/img/${badgeURl}.png`)
                 }, 800)
             }
         },

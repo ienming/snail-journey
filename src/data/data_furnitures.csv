@@ -1,22 +1,22 @@
 ﻿name,block,id,x,y,txt,price
-蝸牛烤箱,2,oven,131,448,家庭式蝸牛烤箱。,500
-書桌,1,desk,44,207,普通的書桌，工作時待得地方。,200
-渦輪造型立燈,1,lamp,13,142,渦輪立燈，遠看像發光的蝸牛殼。,800
-小枕頭,1,littlePillow,56,207,書桌上的小枕頭，累了就趴下。,200
-牆壁書架,1,booksOnWall,70,131,慢活必備書架。,200
-調味料架,2,seasonings,92,352,柴米油鹽醬醋茶。,200
-植栽,2,plant,15,472,一般的植栽。肚子餓可以直接生吃。,200
-相框,1,photo,384,131,記錄了在蝸牛綠洲裡度過的美好時光。,80
-小蝸牛扇,3,fan,301,501,蝸牛扇：蝸牛造型循環扇，增加空氣流通，降低染疫機率。,600
-沙發,2,sofa,386,481,一般的沙發，軟硬適中。,200
-小茶几,3,teaTable,517,509,茶几，上面可以放招神蝸牛。,150
-椅子,3,chair,154,253,符合蝸體工學的椅子，但久坐仍是健康大敵。,100
-大抱枕,2,pillow,420,204,柔軟的大抱枕。,500
-衣架,3,airer,290,204,換下來的蝸牛殼記得架好才不會皺掉。,1000
-床頭櫃鬧鐘,1,bedDesk,516,249,蝸牛造型鬧鐘，比你還會貪睡。,200
-捲捲時鐘,3,clock,433,404,時尚的時鐘，盯著他彷彿進入時光隧道......,200
-蝸食垃圾桶,3,trashCan,81,510,放在地上就會幫你吃掉垃圾。,300
-蝸居鍋具,2,pot,67,457,台灣人都知道的電鍋。,150
-半蝸牛造型立燈,2,lamp2,354,415,造型立燈。替家裡增加慵懶的黃光。,400
-招神蝸牛,1,shrine,521,483,招財、保平安、迎桃花的萬用蝸牛。,1200
-蝸牛輪腳踏車,3,bike,331,339,,1600
+Snail Oven,2,oven,131,448,Home-style snail oven.,500
+Desk,1,desk,44,207,Ordinary desk. The place for work times.,200
+Styled Standing Lamp,1,lamp,13,142,Turbine standing lamps look like glowing snail shells from a distance.,800
+Little Pillow,1,littlePillow,56,207,The small pillow on the desk for you to lie down when you are tired.,200
+Bookshelf,1,booksOnWall,70,131,A must-have bookshelf for slow living.,200
+Seanoning shelf,2,seasonings,92,352,柴米油鹽醬醋茶。,200
+Plants,2,plant,15,472,General plants. You can eat it raw if you are hungry.,200
+Photoframe,1,photo,384,131,Documented the wonderful time spent in Snail Oasis.,80
+Snail Fan,3,fan,301,501,The snail-shaped circulating fan increases air circulation and reduces the chance of infection.,600
+Sofa,2,sofa,386,481,Normal sofa.,200
+Coffee Table,3,teaTable,517,509,A good place for putting Snail God.,150
+Chair,3,chair,154,253,A chair that conforms to snail engineering but sedentary is still the enemy of health.,100
+Big Pillow,2,pillow,420,204,Soft big pillow.,500
+Arier,3,airer,290,204,Remember to set up the replaced snail shell so that it will not wrinkle.,1000
+Bedesk with alarm,1,bedDesk,516,249,Snails alarm which is not useful to wake you up.,200
+Rolling Clock,3,clock,433,404,When you need to get sleep just stare at it.,200
+Snails Eating Trashcan,3,trashCan,81,510,It will eat all trash just put it down on the floor.,300
+Snails Pots,2,pot,67,457,The pot that every Taiwanese knows.,150
+Half-snail Styling Standing Lamp,2,lamp2,354,415,Add lazy yellow light to your home.,400
+Snail God,1,shrine,521,483,God snails to get wealth...keep health and help you find the MR right.,1200
+Snail Bicycle,3,bike,331,339,You can move extremely slow with the bike.,1600
