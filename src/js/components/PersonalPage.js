@@ -412,7 +412,7 @@ const DisplayShelf = {
         <transition name="fade">
             <div class="mock">
                 <div class="wrapper">
-                    <div class="popup t-a-c w-md-50">
+                    <div class="popup t-a-c">
                         <div class="scroll">
                             <section>
                                 <h3>探索區域徽章</h3>
@@ -427,6 +427,7 @@ const DisplayShelf = {
                                     </div>
                                 </div>
                             </section>
+                            <hr class="my-3" />
                             <section class="mt-2">
                                 <h3>認養蝸牛綠洲議題</h3>
                                 <p class="t-c-g my-1">*目前認養社區活動僅供學術研究測試用，連結不會通往其他網頁為正常狀況。*</p>
@@ -533,7 +534,7 @@ const UnlockMap = {
         <div class="mock">
             <div class="wrapper">
                 <div class="popup t-a-c w-md-50">
-                    <p>這區的全部蝸牛：</p>
+                    <p class="mb-1">這區的全部蝸牛：</p>
                     <div class="flexable jcc ain">
                         <img v-for="snail of nowUnlockSnails" class="mx-1" :style="snail.visited?'':'filter:brightness(0%)'" :src="snail.img" :alt="snail.name" style="height: 80px;" />
                     </div>

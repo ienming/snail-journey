@@ -3899,8 +3899,7 @@ footer {
   margin-top: 1.5rem; }
   @media (min-width: 768px) {
     .popup {
-      max-width: 40vw;
-      padding: 32px;
+      max-width: 576px;
       margin-top: 0; } }
   .popup.dialogue {
     width: 350px;
@@ -4237,7 +4236,8 @@ ul.carousel-lids {
   overflow-y: scroll; }
   @media (min-width: 768px) {
     .scroll {
-      max-height: 40vh; } }
+      max-height: 40vh;
+      padding: 16px; } }
   @media (min-width: 768px) {
     .scroll.sm-only {
       max-height: unset;
