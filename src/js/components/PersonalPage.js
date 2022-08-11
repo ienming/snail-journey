@@ -520,7 +520,6 @@ const DisplayShelf = {
     },
     methods: {
         showUnlockMap: function(el){
-            alert('show Unlock Map of '+el.badgeName)
             this.unlockMapIsShown = true
             this.nowShowUnlock = el.badgeName
         }
@@ -534,6 +533,10 @@ const UnlockMap = {
         <div class="mock">
             <div class="wrapper">
                 <div class="popup t-a-c w-md-50">
+                    <p>這區的全部蝸牛：</p>
+                    <div class="flexable jcc ain">
+                        <img v-for="snail of nowUnlockSnails" class="mx-1" :style="snail.visited?'':'filter:brightness(0%)'" :src="snail.img" :alt="snail.name" style="height: 80px;" />
+                    </div>
                     <close-btn now-show="unlock" @switch-unlock="$emit('switch-unlock')"></close-btn>
                 </div>
             </div>
@@ -542,7 +545,58 @@ const UnlockMap = {
     `,
     props: ['showUnlockMap', 'nowShowUnlock'],
     data(){
-        return {}
+        return {
+            allSnails: JSON.parse(JSON.stringify(vm.$data.achievement.map)),
+            userExplored: JSON.parse(JSON.stringify(vm.$data.user.achievements))
+        }
+    },
+    computed: {
+        nowBlock(){
+            let idx = this.nowShowUnlock.indexOf('_')
+            let block = this.nowShowUnlock.slice(idx+1)
+            return block
+        },
+        nowSnails(){
+            switch (this.nowBlock){
+                case 'lit':
+                    return this.allSnails.block1
+                    break;
+                case 'des':
+                    return this.allSnails.block2
+                    break;
+                case 'tra':
+                    return this.allSnails.block3
+                    break;
+            }
+        },
+        nowVisSnails(){
+            switch (this.nowBlock){
+                case 'lit':
+                    return this.userExplored.block1
+                    break;
+                case 'des':
+                    return this.userExplored.block2
+                    break;
+                case 'tra':
+                    return this.userExplored.block3
+                    break;
+            }
+        },
+        nowUnlockSnails(){
+            let snails = []
+            this.nowSnails.forEach(el=>{
+                let obj = {}
+                obj.name = el
+                obj.img = `./src/img/${el}.png`
+                if (this.nowVisSnails.includes(el)){
+                    obj.visited = true
+                }else{
+                    obj.visited = false
+                }
+                snails.push(obj)
+            })
+            return snails
+        }
     }
 }
 Vue.component("unlock-map", UnlockMap)
