@@ -421,6 +421,7 @@ const DisplayShelf = {
                                     <div class="badge col-md-4"
                                         :class="{ locked: !el.achieved }"
                                         v-for="el of userAchieved">
+                                        <p @click="showUnlockMap(el)">解鎖條件</p>
                                         <img :src="el.imgSrc" />
                                         <p class="mt-1 t-z-2">{{el.descrip}}</p>
                                     </div>
@@ -446,6 +447,9 @@ const DisplayShelf = {
                         <close-btn now-show="display-shelf" @switch-display-shelf="$emit('switch-display-shelf')"></close-btn>
                     </div>
                 </div>
+                <transition name="fade">
+                    <unlock-map :show-unlock-map="unlockMapIsShown" :now-show-unlock="nowShowUnlock" @switch-unlock="unlockMapIsShown = !unlockMapIsShown"></unlock-map>
+                </transition>
             </div>
         </transition>
     `,
@@ -459,7 +463,9 @@ const DisplayShelf = {
             allAchievements: {},
             allAdoptions: [],
             achievedNum: 0,
-            adoptedNum: 0
+            adoptedNum: 0,
+            unlockMapIsShown: false,
+            nowShowUnlock: ''
         }
     },
     computed: {
@@ -511,6 +517,32 @@ const DisplayShelf = {
                 return false
             }else return true
         }
+    },
+    methods: {
+        showUnlockMap: function(el){
+            alert('show Unlock Map of '+el.badgeName)
+            this.unlockMapIsShown = true
+            this.nowShowUnlock = el.badgeName
+        }
     }
 }
 Vue.component("display-shelf", DisplayShelf)
+
+const UnlockMap = {
+    template: `
+    <section v-if="showUnlockMap" key="unlockMap">
+        <div class="mock">
+            <div class="wrapper">
+                <div class="popup t-a-c w-md-50">
+                    <close-btn now-show="unlock" @switch-unlock="$emit('switch-unlock')"></close-btn>
+                </div>
+            </div>
+        </div>
+    </section>
+    `,
+    props: ['showUnlockMap', 'nowShowUnlock'],
+    data(){
+        return {}
+    }
+}
+Vue.component("unlock-map", UnlockMap)
