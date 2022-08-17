@@ -1,10 +1,10 @@
 const NoviceGuide = {
     template: `
     <transition name="fade">
-        <div class="mock" style="">
+        <div class="mock por" style="z-index: 101;">
             <div class="wrapper flex-column flex-md-row">
                 <transition-group name="fade" mode="out-in">
-                    <div v-for="(guide, idx) of guides" :key="guide.speak" v-show="idx+1 == nowSpeakStep">
+                    <div v-for="(guide, idx) of nowGuides" :key="guide.speak" v-show="idx+1 == nowSpeakStep">
                         <div class="mr-md-2 speak-img">
                             <img alt="" :src="guide.img">
                         </div>
@@ -19,9 +19,6 @@ const NoviceGuide = {
                                                 </div>
                                             </div>
                                     </div>
-                                </div>
-                                <div class="close">
-                                    <img src="src/img/icons/close.svg" alt="">
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-import { scale, getRandom } from './global.mjs'
+import { callVueSys, scale, getRandom } from './global.mjs'
 import { clickSoundEffect } from './sound.mjs'
 import { fetchNPC, normalHouses, fetchInfo } from './data.mjs'
 import { initMission } from './gameExplore.mjs'
@@ -103,10 +103,9 @@ function createItem(el){
                 } else if (el.personal){
                     // 打開自己房間
                     vm.$data.interaction.showPersonalPage = true
-                    if (vm.$data.interaction.noviceStep == 1){
-                        let str = "新手任務階段一達成"
-                        let abs = "找到自己家"
-                        callVueSys(str, abs)
+                    if (vm.$data.interaction.noviceStep == 2){
+                        console.log("新手任務階段一達成")
+                        vm.$data.showNoviceGuide = true
                     }
                 } else {
                     vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup

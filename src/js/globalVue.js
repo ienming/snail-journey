@@ -338,18 +338,16 @@ const vm = new Vue({
         switchNoviceGuide(obj){
             this.showNoviceGuide = !this.showNoviceGuide
             if (!this.showNoviceGuide){
-                switch (this.interaction.noviceStep){
-                    case 1:
-                        this.headerPages.unshift({
-                            name: "mission-hint",
-                            seudo: "任務提示",
-                            icon: "./src/img/icons/lightbulb.png"
-                        })
-                        this.mission = {
-                            name: obj.title,
-                            hint: obj.content
-                        }
-                    break;
+                if (this.interaction.noviceStep == 1){
+                    this.headerPages.unshift({
+                        name: "mission-hint",
+                        seudo: "任務提示",
+                        icon: "./src/img/icons/lightbulb.png"
+                    })
+                }
+                this.mission = {
+                    name: obj.title,
+                    hint: obj.content
                 }
                 this.interaction.noviceStep += 1
             }
