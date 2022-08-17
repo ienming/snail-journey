@@ -9,7 +9,8 @@ const vm = new Vue({
             showPersonalPage: false,
             showHouse: false,
             houseName: "",
-            nowAns: true
+            nowAns: true,
+            noviceStep: 1
         },
         sys: {
             popup: false,
@@ -334,18 +335,23 @@ const vm = new Vue({
         switchBoard(v){
             this.boardHasShown = v
         },
-        switchNoviceGuide(){
+        switchNoviceGuide(obj){
             this.showNoviceGuide = !this.showNoviceGuide
             if (!this.showNoviceGuide){
-                this.mission = {
-                    name: "新手導引",
-                    hint: "一些提示"
+                switch (this.interaction.noviceStep){
+                    case 1:
+                        this.headerPages.unshift({
+                            name: "mission-hint",
+                            seudo: "任務提示",
+                            icon: "./src/img/icons/lightbulb.png"
+                        })
+                        this.mission = {
+                            name: obj.title,
+                            hint: obj.content
+                        }
+                    break;
                 }
-                this.headerPages.unshift({
-                    name: "mission-hint",
-                    seudo: "任務提示",
-                    icon: "./src/img/icons/lightbulb.png"
-                })
+                this.interaction.noviceStep += 1
             }
         },
         startGame() {

@@ -327,7 +327,7 @@ const MissionHint = {
                 </div>
                 <div class="col-12 col-md-8">
                     <h3 class="t-z-2">{{mission.name}}</h3>
-                    <p>{{mission.hint}}</p>
+                    <p v-html="mission.hint"></p>
                 </div>
             </div>
             <close-btn nowShow="mission" @switch-mission="switchMission"></close-btn>

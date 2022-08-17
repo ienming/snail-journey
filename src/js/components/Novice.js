@@ -4,7 +4,7 @@ const NoviceGuide = {
         <div class="mock" style="">
             <div class="wrapper flex-column flex-md-row">
                 <transition-group name="fade" mode="out-in">
-                    <div v-for="(guide, idx) of guides" :key="guide.speak" v-show="idx+1 == nowStep">
+                    <div v-for="(guide, idx) of guides" :key="guide.speak" v-show="idx+1 == nowSpeakStep">
                         <div class="mr-md-2 speak-img">
                             <img alt="" :src="guide.img">
                         </div>
@@ -33,17 +33,25 @@ const NoviceGuide = {
     `,
     props: [],
     mounted(){
-        this.fetchData()
+        this.fetchSpeaks()
+        this.fetchSteps()
     },
     data(){
         return {
             guides: [],
-            nowStep: 1,
-            btnTxt: '下一步'
+            nowSpeakStep: 1,
+            btnTxt: '下一步',
+            missionSteps: []
+        }
+    },
+    computed: {
+        nowGuides(){
+            let arr = this.guides.filter(guide => guide.step == vm.$data.interaction.noviceStep)
+            return arr
         }
     },
     methods: {
-        fetchData(){
+        fetchSpeaks(){
             axios.get("src/data/data_novice.csv", {})
             .then((res) => {
                 let rows = res.data.split("\n");
@@ -59,25 +67,49 @@ const NoviceGuide = {
                     let obj = {
                         name: d[keyMap.name],
                         speak: d[keyMap.speak],
-                        img: 'src/img/'+d[keyMap.name]+'.png'
+                        img: 'src/img/'+d[keyMap.name]+'.png',
+                        step: d[keyMap.step]
                     }
                     this.guides.push(obj)
                 });
             })
             .catch((error) => { console.error(error) })
         },
+        fetchSteps(){
+            axios.get("src/data/data_novice_step.csv", {})
+            .then((res) => {
+                let rows = res.data.split("\n");
+                let keyMap = {};
+                for (let i =0; i<rows[0].length; i++){
+                    if (rows[0].split(",")[i] !== undefined){
+                        keyMap[rows[0].split(",")[i].trim()] = i
+                    }
+                }
+                rows.shift();
+                rows.forEach((el) => {
+                    let d = el.split(",");
+                    let obj = {
+                        step: d[keyMap.step],
+                        title: d[keyMap.title],
+                        content: d[keyMap.content],
+                        img: d[keyMap.img]
+                    }
+                    this.missionSteps.push(obj)
+                });
+            })
+            .catch((error) => { console.error(error) })
+        },
         nxt(){
-            if (this.nowStep < this.guides.length){
-                this.nowStep ++
+            if (this.nowSpeakStep < this.nowGuides.length){
+                this.nowSpeakStep ++
             }else{
-                this.$emit('close-novice-guide')
-                let title = "新手導引"
-                let content = `
-                    找到自己家
-                    <img src="src/img/icons/home.png" />
-                `
-                let img = "src/img/icons/lightbulb.png"
-                vm.showSysTxt(content, title, img)
+                let obj = {}
+                let nowMissionStep = this.missionSteps.findIndex(el=>el.step == vm.$data.interaction.noviceStep)
+                obj.title = this.missionSteps[nowMissionStep].title
+                obj.content = this.missionSteps[nowMissionStep].content
+                obj.img = this.missionSteps[nowMissionStep].img
+                vm.showSysTxt(obj.content, obj.title, obj.img)
+                this.$emit('close-novice-guide', obj)
             }
         }
     }

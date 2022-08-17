@@ -1,5 +1,9 @@
-name,speak
-snail_scissor,hi
-snail_hito,hoh
-snail_scissor,?????
-snail_hito,yesyes
+name,speak,step
+snail_scissor,hi,1
+snail_hito,hoh,1
+snail_scissor,?????,1
+snail_hito,yesyes,1
+snail_scissor,hooray,2
+snail_hito,I am good,2
+snail_scissor,hahaha,2
+snail_hito,gogo,2

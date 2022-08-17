@@ -101,7 +101,13 @@ function createItem(el){
                     vm.$data.interaction.showHouse = true
                     vm.$data.interaction.houseName = el.name
                 } else if (el.personal){
+                    // 打開自己房間
                     vm.$data.interaction.showPersonalPage = true
+                    if (vm.$data.interaction.noviceStep == 1){
+                        let str = "新手任務階段一達成"
+                        let abs = "找到自己家"
+                        callVueSys(str, abs)
+                    }
                 } else {
                     vm.$data.interaction.showPopup = !vm.$data.interaction.showPopup
                     vm.$data.itemSpeak = el.name
