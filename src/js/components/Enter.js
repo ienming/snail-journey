@@ -185,9 +185,9 @@ const Narrative = {
     methods: {
         nxt(){
             if (this.nowCut < this.cuts.length){
-                if (this.nowCut == this.cuts.length -1){
-                    clearInterval(this.timer)
-                }
+                // if (this.nowCut == this.cuts.length -1){
+                //     clearInterval(this.timer)
+                // }
                 this.nowCut ++
             }else{
                 this.enterOasis()

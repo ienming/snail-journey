@@ -74,6 +74,7 @@ const NoviceGuide = {
                 let title = "新手導引"
                 let content = `
                     找到自己家
+                    <img src="src/img/icons/home.png" />
                 `
                 let img = "src/img/icons/lightbulb.png"
                 vm.showSysTxt(content, title, img)

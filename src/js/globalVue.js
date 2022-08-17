@@ -337,7 +337,6 @@ const vm = new Vue({
         switchNoviceGuide(){
             this.showNoviceGuide = !this.showNoviceGuide
             if (!this.showNoviceGuide){
-                this.showMissionHint = true
                 this.mission = {
                     name: "新手導引",
                     hint: "一些提示"

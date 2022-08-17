@@ -321,7 +321,7 @@ const MissionHint = {
     template: `
     <transition name="fade">
         <aside class="card mission-hint">
-            <div class="px-md-2 scroll d-flex">
+            <div class="d-flex flex-column flex-md-row px-md-2 scroll">
                 <div class="col-12 col-md-4">
                     <img src="/src/img/icons/lightbulb.png" />
                 </div>
@@ -352,7 +352,7 @@ const BillBoard = {
         <transition name="fade">
             <div class="mock" v-if="boardHasShown">
                 <aside class="bill-board card w-100 w-md-un">
-                    <div class="px-md-2 scroll">
+                    <div class="px-2 px-md-3 scroll">
                         <h2 class="t-a-c mb-1">蝸牛綠洲生活公約</h2>
                         <p>歡迎來到「蝸牛綠洲」！作為這個社區的新成員，除了享受慢活的氣氛之外，有什麼問題只要點開畫面右上方的公布欄就能看到囉！</p>
                         <accordion :accordions="rules" class="pt-2 scroll"></accordion>
