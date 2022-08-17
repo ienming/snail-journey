@@ -138,6 +138,14 @@ const vm = new Vue({
             }
             return output
         },
+        noviceExplored(){
+            let explored = false
+            Object.values(this.userGotAchievements).forEach(el=>{
+                if (el.indexOf('finished') !== -1 && this.interaction.noviceStep == 3)
+                explored = true
+            })
+            return explored
+        },
         missionBtns() {
             if (this.showMissionBtn) {
                 let btns = this.showMissionBtn.split("+") //包有多個選項內容的陣列
@@ -286,7 +294,7 @@ const vm = new Vue({
                     this.bgSound.play()
                 }
             }
-        }
+        },
     },
     methods: {
         autoBgMusic(){
@@ -487,7 +495,12 @@ const vm = new Vue({
                     }
                     this.user.coins += 1200
                     this.showSysTxt(`探索完${output}了！可以新增${output}的家具到房間裡囉`, '區域探索完成！', `./src/img/${badgeURl}.png`)
-                }, 800)
+                    if (this.noviceExplored){
+                        window.setTimeout(()=>{
+                            this.toNextNovice()
+                        }, 800)
+                    }
+                }, 400)
             }
         },
         shiftHint(){
@@ -495,6 +508,9 @@ const vm = new Vue({
             window.setTimeout(()=>{
                 this.sys.hints.shift()
             }, 800)
+        },
+        toNextNovice(){
+            this.showNoviceGuide = true
         },
         doPostUser() {
             console.log(`Bearer ${localStorage.token}`)

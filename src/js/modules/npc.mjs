@@ -104,7 +104,6 @@ function createItem(el){
                     // 打開自己房間
                     vm.$data.interaction.showPersonalPage = true
                     if (vm.$data.interaction.noviceStep == 2){
-                        console.log("新手任務階段一達成")
                         vm.$data.showNoviceGuide = true
                     }
                 } else {
