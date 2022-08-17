@@ -13,25 +13,9 @@ const Header = {
             </nav>
         </header>
     `,
-    props: ['bgSound', 'bgIsPlaying', 'boardHasShown'],
+    props: ['bgSound', 'bgIsPlaying', 'boardHasShown', 'pages'],
     data(){
-        return {
-            pages: [
-                {
-                    name: "showBillBoard",
-                    seudo: "綠洲生活公約",
-                    icon: "./src/img/icons/billboard.png"
-                },
-                {
-                    name: "toggleMusic",
-                    seudo: "開關背景音樂",
-                }
-                // ,{
-                //     name: "clearData",
-                //     seudo: "清除資料（測試用）"
-                // }
-            ]
-        }
+        return {}
     },
     methods: {
         switchPage(name){

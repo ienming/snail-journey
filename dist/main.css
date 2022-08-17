@@ -205,6 +205,9 @@ button {
 .t-c {
   color: #c09079; }
 
+.t-c-w {
+  color: #ffffff; }
+
 .t-c-g {
   color: #787878; }
 
@@ -551,6 +554,9 @@ p, span, a, ul {
 
 .por {
   position: relative; }
+
+.poa {
+  position: absolute; }
 
 .flexable {
   display: flex;
@@ -2738,6 +2744,16 @@ section.container {
 .my-btn.link.small .icon-container {
   width: 14px; }
 
+.mybtn-sec {
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding: 8px;
+  transition: 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  opacity: 0.5; }
+  .mybtn-sec:hover {
+    opacity: .8; }
+
 .my-cta-container {
   background-color: #c09079;
   border-radius: 50px;
@@ -4308,6 +4324,12 @@ ul.carousel-lids {
   top: -40px; }
   #avatar > img {
     max-width: 80px; }
+
+.mission-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
 
 html, body {
   width: 100%;

@@ -317,6 +317,36 @@ const ProgressHint = {
 }
 Vue.component('progress-hint', ProgressHint)
 
+const MissionHint = {
+    template: `
+    <transition name="fade">
+        <aside class="card mission-hint">
+            <div class="px-md-2 scroll d-flex">
+                <div class="col-12 col-md-4">
+                    <img src="/src/img/icons/lightbulb.png" />
+                </div>
+                <div class="col-12 col-md-8">
+                    <h3 class="t-z-2">{{mission.name}}</h3>
+                    <p>{{mission.hint}}</p>
+                </div>
+            </div>
+            <close-btn nowShow="mission" @switch-mission="switchMission"></close-btn>
+        </aside>
+    </transition>
+    `,
+    props: ['mission'],
+    data() {
+        return {
+        }
+    },
+    methods: {
+        switchMission(){
+            this.$emit('switch-mission-hint')
+        }
+    }
+}
+Vue.component('mission-hint', MissionHint)
+
 const BillBoard = {
     template: `
         <transition name="fade">

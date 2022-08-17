@@ -13,7 +13,7 @@
 <body>
     <div id="app">
         <!-- Header -->
-        <my-header @switch-personalpage="switchPersonalPage" @switch-bg="switchBg" :bg-sound="bgSound" :bg-is-playing="bgIsPlaying" :board-has-shown="boardHasShown" @switch-board="switchBoard"></my-header>
+        <my-header @switch-personalpage="switchPersonalPage" @switch-bg="switchBg" :bg-sound="bgSound" :bg-is-playing="bgIsPlaying" :board-has-shown="boardHasShown" :pages="headerPages" @switch-board="switchBoard" @switch-mission-hint="switchMissionHint"></my-header>
         <!-- 測試使用者狀態 -->
         <user-state :achievements="user.achievements" :user-achieved="userGotAchievements"
                     :daily-trashes="dailyTrashes" :user-got-trashes="user.gotTrashes"
@@ -21,11 +21,12 @@
         <!-- 進場動畫 -->
         <enter :loading="interaction.nowLoading" :bg-is-playing="bgIsPlaying" @start-game="startGame" @switch-bg="switchBg"></enter>
         <!-- 分鏡敘事 -->
-        <narrative v-if="firstShouldShow"></narrative>
+        <narrative v-if="firstShouldShow && showNarrative"></narrative>
         <!-- 側邊公布欄 -->
         <bill-board :board-has-shown="boardHasShown" @switch-board="switchBoard"></bill-board>
         <!-- 新手教學 -->
-        <novice-teach v-if="firstShouldShow"></novice-teach>
+        <!-- <novice-teach v-if="firstShouldShow"></novice-teach> -->
+        <novice-guide v-if="firstShouldShow && showNoviceGuide" @close-novice-guide="switchNoviceGuide"></novice-guide>
         <!-- 主要遊戲畫面 -->
         <div id="canvasContainer"></div>
         <!-- Personal Page -->
@@ -110,8 +111,8 @@
                 <div class="wrapper">
                     <div class="popup t-a-c dialogue">
                         <img :src="sys.img" alt="" v-if="sys.img" style="max-height: 80px;">
-                        <p class="t-c-g t-w-5 my-1" v-if="sys.abs">{{sys.abs}}</p>
-                        <p>{{sys.say}}</p>
+                        <h4 class="t-c-g t-w-5 t-z-5 my-1" v-if="sys.abs">{{sys.abs}}</h4>
+                        <p v-html="sys.say"></p>
                         <div class="t-a-c mt-1">
                             <button @click="closeSysTxt" class="my-btn" style="margin: 0 8px;">確定</button>
                         </div>
@@ -121,6 +122,8 @@
         </transition>
         <!-- 側邊進度提示 -->
         <progress-hint :hints="sys.hints" @hint-hide="shiftHint"></progress-hint>
+        <!-- 任務進度提示 -->
+        <mission-hint v-if="showMissionHint" :mission="mission" @switch-mission-hint="switchMissionHint"></mission-hint>
     </div>
 
     <!-- Vue -->
@@ -149,6 +152,7 @@
     <script src="src/js/components/LogIn.js"></script>
     <script src="src/js/components/Enter.js"></script>
     <script src="src/js/components/Header.js"></script>
+    <script src="src/js/components/Novice.js"></script>
     <script src="src/js/globalVue.js"></script>
 </body>
 

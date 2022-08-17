@@ -138,13 +138,13 @@ const Narrative = {
     template: `
     <transition name="fade">
         <div class="wrapper narrative" @click="nxt" v-if="narrativeHasShown">
+            <span @click.self="enterOasis" class="mybtn-sec t-c-w poa t-z-1" style="top: 50px; right: 50px;">跳過進場動畫</span>
             <transition-group name="fade-right">
                 <section v-for="cut of cuts" :key="cut.name" v-show="nowCut == cut.name" class="d-flex flex-column flex-md-row aic">
                     <img :src=cut.src />
                     <div class="my-2 descrip-container">
                         <p class="descrip" v-html="cut.descrip"></p>
-                        <p class="t-z-1 mt-1 mt-md-0 mr-md-2" style="opacity: 0.7" v-if="cut.name !== 4">（點擊畫面任何地方繼續）</p>
-                        <p class="t-z-1" style="opacity: 0.7" v-else>（點擊畫面進入蝸牛綠洲）</p>
+                        <p class="t-z-1" style="opacity: 0.7" v-if="cut.name == 4">（點擊畫面進入蝸牛綠洲）</p>
                     </div>
                 </section>
             </transition-group>
@@ -156,19 +156,20 @@ const Narrative = {
         return {
             narrativeHasShown: true,
             nowCut: 1,
+            timer: setInterval(this.nxt, 4000),
             cuts: [
                 {
                     name: 1,
                     src: './src/img/open/shot1.png',
-                    descrip: "我住在忙碌的城市裡......</br>看著人來人往川流不息，緊繃而快速的生活步調"
+                    descrip: "我住在忙碌的城市裡......</br>看著人來人往川流不息，緊繃而快速的生活步調",
                 },{
                     name: 2,
                     src: './src/img/open/shot2.png',
-                    descrip: "有時也需要一個地方喘息......</br>這天我收到一個邀請"
+                    descrip: "有時也需要一個地方喘息......</br>這天我收到一個邀請",
                 },{
                     name: 3,
                     src: './src/img/open/shot3.png',
-                    descrip: "再見喧囂！</br>我要去度假了～"
+                    descrip: "再見喧囂！</br>我要去度假了～",
                 },{
                     name: 4,
                     src: './src/img/open/shot4.png',
@@ -179,14 +180,17 @@ const Narrative = {
     },
     mounted(){
         this.splitText()
+        this.timer
     },
     methods: {
         nxt(){
-            if (this.nowCut == this.cuts.length){
-                this.narrativeHasShown = false
-                this.$emit('enter-oasis')
-            }else{
+            if (this.nowCut < this.cuts.length){
+                if (this.nowCut == this.cuts.length -1){
+                    clearInterval(this.timer)
+                }
                 this.nowCut ++
+            }else{
+                this.enterOasis()
             }
         },
         splitText(){
@@ -203,6 +207,10 @@ const Narrative = {
                 }
                 arr = []
             })
+        },
+        enterOasis(){
+            this.narrativeHasShown = false
+            this.$emit('enter-oasis')
         }
     }
 }

@@ -16,7 +16,26 @@ const vm = new Vue({
             say: "",
             hints: []
         },
-        boardHasShown: true,
+        headerPages: [
+            {
+                name: "showBillBoard",
+                seudo: "綠洲生活公約",
+                icon: "./src/img/icons/billboard.png"
+            },
+            {
+                name: "toggleMusic",
+                seudo: "開關背景音樂",
+            }
+            // ,{
+            //     name: "clearData",
+            //     seudo: "清除資料（測試用）"
+            // }
+        ],
+        mission: null,
+        showNarrative: false,
+        showNoviceGuide: false,
+        showMissionHint: false,
+        boardHasShown: false,
         showFirstHint: true,
         bgSound: undefined,
         bgIsPlaying: false,
@@ -306,14 +325,34 @@ const vm = new Vue({
         switchMsg(){
             console.log("關閉留言板")
         },
+        switchMissionHint(){
+            this.showMissionHint = !this.showMissionHint
+        },
         switchProgram() {
             this.showProgram = true
         },
         switchBoard(v){
             this.boardHasShown = v
         },
+        switchNoviceGuide(){
+            this.showNoviceGuide = !this.showNoviceGuide
+            if (!this.showNoviceGuide){
+                this.showMissionHint = true
+                this.mission = {
+                    name: "新手導引",
+                    hint: "一些提示"
+                }
+                this.headerPages.unshift({
+                    name: "mission-hint",
+                    seudo: "任務提示",
+                    icon: "./src/img/icons/lightbulb.png"
+                })
+            }
+        },
         startGame() {
             this.interaction.nowLoading = false
+            this.showNarrative = true
+            this.showNoviceGuide = true
             // Enter Animation
             window.setTimeout(()=>{
                 gsap.to(this.app.map, 5, {
