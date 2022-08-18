@@ -339,6 +339,13 @@ const vm = new Vue({
         },
         switchProgram() {
             this.showProgram = true
+            // 判斷是否在新手教學
+            if (this.interaction.noviceStep == 5){
+                this.showNoviceGuide = true
+                window.setTimeout(()=>{
+                    this.interaction.noviceStep = 'finished'
+                })
+            }
         },
         switchBoard(v){
             this.boardHasShown = v
@@ -352,6 +359,8 @@ const vm = new Vue({
                         seudo: "任務提示",
                         icon: "./src/img/icons/lightbulb.png"
                     })
+                }else if (this.interaction.noviceStep == 5){
+                    this.headerPages.shift()
                 }
                 this.mission = {
                     name: obj.title,

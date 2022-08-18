@@ -102,10 +102,12 @@ const NoviceGuide = {
             }else{
                 let obj = {}
                 let nowMissionStep = this.missionSteps.findIndex(el=>el.step == vm.$data.interaction.noviceStep)
-                obj.title = this.missionSteps[nowMissionStep].title
-                obj.content = this.missionSteps[nowMissionStep].content
-                obj.img = this.missionSteps[nowMissionStep].img
-                vm.showSysTxt(obj.content, obj.title, obj.img)
+                if (nowMissionStep < 5){
+                    obj.title = this.missionSteps[nowMissionStep].title
+                    obj.content = this.missionSteps[nowMissionStep].content
+                    obj.img = this.missionSteps[nowMissionStep].img
+                    vm.showSysTxt(obj.content, obj.title, obj.img)
+                }
                 this.$emit('close-novice-guide', obj)
             }
         }

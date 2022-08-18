@@ -391,6 +391,10 @@ const BuyConfirm = {
                 vm.$data.user.furnitures.push(obj)
                 // 顯示已購買、關閉視窗
                 this.buyable = "bought"
+                // 判斷是否在新手教學
+                if (vm.$data.user.furnitures.length == 1 && vm.$data.interaction.noviceStep == 4){
+                    vm.$data.showNoviceGuide = true
+                }
             }else{
                 this.buyable = "disable"
             }
