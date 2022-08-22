@@ -2694,7 +2694,8 @@ section.container {
   background-color: #3e856c;
   padding: .25rem .75rem;
   color: #ffffff;
-  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer; }
   @media (min-width: 768px) {
     .my-btn {
       font-size: 14px; } }
@@ -4330,6 +4331,9 @@ ul.carousel-lids {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); }
+
+.game-ui img:not(.icon) {
+  width: 32px; }
 
 html, body {
   width: 100%;

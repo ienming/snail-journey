@@ -322,12 +322,9 @@ const MissionHint = {
     <transition name="fade">
         <aside class="card mission-hint">
             <div class="d-flex flex-column flex-md-row px-md-2 scroll">
-                <div class="col-12 col-md-4">
-                    <img src="/src/img/icons/lightbulb.png" />
-                </div>
-                <div class="col-12 col-md-8">
-                    <h3 class="t-z-2">{{mission.name}}</h3>
-                    <p v-html="mission.hint"></p>
+                <div class="game-ui">
+                    <h3 class="t-z-2 t-a-c">{{mission.name}}</h3>
+                    <p v-html="mission.hint" class="t-a-c"></p>
                 </div>
             </div>
             <close-btn nowShow="mission" @switch-mission="switchMission"></close-btn>

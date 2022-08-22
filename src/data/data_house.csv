@@ -1,7 +1,6 @@
-﻿name,host_name,x,y,link
-web,snail_mryeh,50,200,https://trd.culture.tw/home/zh-tw/historicbuildings/104867
-commentBoard,snail_cinnamon,200,280,
-web,snail_bookstore,150,150,https://www.facebook.com/zdbook
-podcast,snail_bookstore,100,150,https://podcasts.apple.com/us/podcast/%E4%B8%80%E6%9C%AC%E6%9C%95%E7%B6%93-what-nonsense/id1567737516
-commentBoard,snail_bookstore,200,180,
-web,snail_dorayaki,100,150,https://www.instagram.com/sai915067/
+﻿name,host_name,x,y,intro,link
+web,snail_mryeh,50,200,葉石濤先生在蝸牛巷的故居,https://trd.culture.tw/home/zh-tw/historicbuildings/104867
+commentBoard,snail_cinnamon,200,280,認養方案留言板,
+web,snail_bookstore,150,150,書城官網,https://www.facebook.com/zdbook
+podcast,snail_bookstore,100,150,書城Podcast,https://podcasts.apple.com/us/podcast/%E4%B8%80%E6%9C%AC%E6%9C%95%E7%B6%93-what-nonsense/id1567737516
+web,snail_dorayaki,430,350,阿櫃日式手作銅鑼燒,https://www.instagram.com/sai915067/

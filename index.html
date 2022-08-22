@@ -112,7 +112,9 @@
                     <div class="popup t-a-c dialogue">
                         <img :src="sys.img" alt="" v-if="sys.img" style="max-height: 80px;">
                         <h4 class="t-c-g t-w-5 t-z-5 my-1" v-if="sys.abs">{{sys.abs}}</h4>
-                        <p v-html="sys.say"></p>
+                        <div class="game-ui">
+                            <p v-html="sys.say"></p>
+                        </div>
                         <div class="t-a-c mt-1">
                             <button @click="closeSysTxt" class="my-btn" style="margin: 0 8px;">確定</button>
                         </div>

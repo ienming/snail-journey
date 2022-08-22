@@ -425,7 +425,8 @@ const DisplayShelf = {
                                     <div class="badge col-md-4"
                                         :class="{ locked: !el.achieved }"
                                         v-for="el of userAchieved">
-                                        <p @click="showUnlockMap(el)">解鎖條件</p>
+                                        <h3>{{el.areaName}}</h3>
+                                        <p class="my-btn small my-1 d-inline-block outline" @click="showUnlockMap(el)">解鎖條件</p>
                                         <img :src="el.imgSrc" />
                                         <p class="mt-1 t-z-2">{{el.descrip}}</p>
                                     </div>
@@ -488,12 +489,15 @@ const DisplayShelf = {
                 switch (prop){
                     case 'block1':
                         obj[prop].badgeName = 'badge_lit'
+                        obj[prop].areaName = '文藝生活區'
                         break;
                     case 'block2':
                         obj[prop].badgeName = 'badge_des'
+                        obj[prop].areaName = '慢活甜點區'
                         break;
                     case 'block3':
                         obj[prop].badgeName = 'badge_tra'
+                        obj[prop].areaName = '職人區'
                         break;
                 }
                 obj[prop].imgSrc = `./src/img/${obj[prop].badgeName}.png`
@@ -537,8 +541,8 @@ const UnlockMap = {
     <section v-if="showUnlockMap" key="unlockMap">
         <div class="mock">
             <div class="wrapper">
-                <div class="popup t-a-c w-md-50">
-                    <p class="mb-1">這區的全部蝸牛：</p>
+                <div class="popup t-a-c">
+                    <p class="mb-1">{{nowArea}} 的全部蝸牛：</p>
                     <div class="flexable jcc ain">
                         <img v-for="snail of nowUnlockSnails" class="mx-1" :style="snail.visited?'':'filter:brightness(0%)'" :src="snail.img" :alt="snail.name" style="height: 80px;" />
                     </div>
@@ -560,6 +564,19 @@ const UnlockMap = {
             let idx = this.nowShowUnlock.indexOf('_')
             let block = this.nowShowUnlock.slice(idx+1)
             return block
+        },
+        nowArea(){
+            switch (this.nowBlock){
+                case 'lit':
+                    return '文藝生活區'
+                    break;
+                case 'des':
+                    return '慢活甜點區'
+                    break;
+                case 'tra':
+                    return '職人區'
+                    break;
+            }
         },
         nowSnails(){
             switch (this.nowBlock){

@@ -1,17 +1,23 @@
 ﻿name,speak,step
-snail_scissor,哈囉,1
-snail_hito,喔齁,1
-snail_scissor,?????,1
-snail_hito,好呀,1
-snail_scissor,hooray,2
-snail_hito,我好棒,2
-snail_scissor,哈哈哈,2
-snail_hito,ｇｏｇｏｇｏ！,2
-snail_hito,探索玩了！,3
-snail_scissor,好呀,3
-snail_hito,接下來呢,3
-snail_scissor,你會了！,4
-snail_hito,是,4
-snail_scissor,接下來就剩認養,4
-snail_scissor,終於完成！希望你喜歡,5
-snail_hito,><',5
+snail_info,歡迎光臨蝸牛綠洲！在這旅居的期間，一邊住在這裡，一邊花點時間了解地方正在發生的事情吧～,1
+snail_hito,太興奮了！,1
+snail_info,那麼首先得先去找到居住的地方才行呢，你的房間在有著 <img src='src/img/icons/home.png' /> 圖標的房子裡，快去找找吧。,1
+snail_hito,OK！,1
+snail_info,Hooray！恭喜你找到了。從今以後這裡可說是中繼站，要買傢俱還是查看事情都可以在這喔。,2
+snail_hito,我好棒（？,2
+snail_info,哈哈哈，那麼安頓好之後就要去到處轉轉了。在綠洲裡有不少人聚在一起，做著彼此呼應的事情，很值得一看呢。,2
+snail_info,找一群有興趣的人，了解一下他們在幹嘛吧！點擊房間裡的 <img src='src/img/room/triumph.png' /> 獎盃後，可以查看各個群體解鎖的條件喔。,2
+snail_hito,ＧＯＧＯＧＯ！,2
+snail_hito,探索完了！挺有意思的。,3
+snail_info,太好了！這樣你對於這個地方也有一點認識了吧。,3
+snail_hito,接下來呢？還有什麼事情可以做嗎？,3
+snail_info,探索完各個群體之後，作為獎勵我會給你只能在綠洲裡使用的蝸牛幣 <img src='src/img/coin.png' /> ，可以用來裝飾自己的房間！,3
+snail_hito,可以裝飾自己的房間！要怎麼做？,3
+snail_info,在房間裡找到 <img src='src/img/icons/plus.png' /> 圖標，就可以購買剛剛探索完解鎖的傢俱囉！,3
+snail_info,你會了！,4
+snail_hito,好可愛的蝸牛家具QQ,4
+snail_info,是不是很期待全部解鎖的樣子！最後要帶你看看在綠洲裡發生的事情，綠洲裡的居民有時會發起地方活動,4
+snail_info,當頭上出現  <img src='src/img/icons/lightbulb.png' /> 圖標，就表示他有正在發起的活動，過去了解一下，有興趣也不妨加入哦！,4
+snail_info,完成了！剩下就交給你自由在這裡閒逛了，好好享受離開繁忙的人生吧！,5
+snail_info,其他地圖中發現的垃圾 <img src='src/img/trash_paper.png' /> 和有著<img src='src/img/icons/judge.png' /> 圖標的人都有相應的小遊戲獎勵，可以到右上角的公約 <img src='src/img/icons/billboard.png' />裡了解。,5
+snail_info,如果還有其他問題，歡迎來找我 <img src='src/img/snail_info.png' style='width: 62px;'/> 解決你的問題，希望你喜歡這個地方～,5

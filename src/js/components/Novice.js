@@ -13,7 +13,7 @@ const NoviceGuide = {
                                 <div class="scroll">
                                     <div class="game-ui">
                                             <div>
-                                                <p>{{guide.speak}}</p>
+                                                <p v-html="guide.speak"></p>
                                                 <div class="t-a-r">
                                                     <button class="my-btn mt-1 outline" @click="nxt">{{btnTxt}}</button>
                                                 </div>
@@ -89,7 +89,6 @@ const NoviceGuide = {
                         step: d[keyMap.step],
                         title: d[keyMap.title],
                         content: d[keyMap.content],
-                        img: d[keyMap.img]
                     }
                     this.missionSteps.push(obj)
                 });
@@ -105,7 +104,6 @@ const NoviceGuide = {
                     let obj = {}
                     obj.title = this.missionSteps[nowMissionStep].title
                     obj.content = this.missionSteps[nowMissionStep].content
-                    obj.img = this.missionSteps[nowMissionStep].img
                     vm.showSysTxt(obj.content, obj.title, obj.img)
                     this.$emit('close-novice-guide', obj)
                 }else{

@@ -1,5 +1,5 @@
-﻿step,title,content,img
-1,Novice Guide_step1,Find your home <img src='src/img/icons/home.png' />,src/img/icons/lightbulb.png
-2,Novice Guide_step2,點擊房間內的獎盃、找到傳統區域的解鎖欄後探索完該區域,src/img/icons/lightbulb.png
-3,Novice Guide_step3,買一個家具吧！,src/img/icons/lightbulb.png
-4,Novice Guide_step4,找到有認養方案的居民,src/img/icons/lightbulb.png
+﻿step,title,content
+1,找到在綠洲暫居的房間,尋找有 <img src='src/img/icons/home.png' /> 圖標的房子，它是你在這暫居的空間。
+2,探索綠洲,到綠洲裡逛逛、和蝸牛聊天，解鎖不同區域的知識。點擊房間內的<img src='src/img/room/triumph.png' />  獎盃，可以查看各個區域的解鎖條件喔！
+3,裝飾自己的家,回到自己家裡找 <img src='src/img/icons/plus.png' /> 圖標，買一個家具吧！
+4,了解地方事,有提出認養方案的居民頭上會有  <img src='src/img/icons/lightbulb.png' /> 圖標，了解一下他在發起什麼活動。

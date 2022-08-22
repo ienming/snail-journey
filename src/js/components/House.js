@@ -14,7 +14,8 @@ const House = {
             pixi: {
                 app: undefined,
                 houseScale: 0,
-                originScale: 0.349375 //(719-80*2)/1600 macBook 螢幕大小作為原點
+                originScale: 0.349375, //(719-80*2)/1600 macBook 螢幕大小作為原點
+                itemSpeakContainer: null
             },
             items: undefined,
             sprites: {},
@@ -61,6 +62,7 @@ const House = {
                         hostName: d[keyMap.host_name],
                         x: d[keyMap.x],
                         y: d[keyMap.y],
+                        intro: d[keyMap.intro]
                     };
                     if (d[keyMap.link]){
                         obj.link = d[keyMap.link]
@@ -91,7 +93,10 @@ const House = {
             this.pixi.app.stage.addChild(house)
             // 
             this.pixi.itemsContainer = new PIXI.Container()
+            this.pixi.itemSpeakContainer = new PIXI.Container()
+            this.pixi.itemSpeakContainer.name = 'itemSpeakContainer'
             this.pixi.app.stage.addChild(this.pixi.itemsContainer)
+            this.pixi.app.stage.addChild(this.pixi.itemSpeakContainer)
             this.draw() //初始化房間
         },
         draw(){
@@ -128,6 +133,13 @@ const House = {
                 container.addChild(icon)
                 // 增加互動
                 this.pixi.itemsContainer.addChild(container)
+                container.on("mouseover", ()=>{
+                    // 說明hover 的放大鏡是啥
+                    this.itemHoverSpeak(container.name, container.x, container.y, item.intro)
+                })
+                container.on("mouseout", ()=>{
+                    this.cleanAllItemSpeak()
+                })
             })
         },
         drawSnail(){
@@ -232,6 +244,54 @@ const House = {
         },
         switchCommentBoard(){
             this.commentHasShown = !this.commentHasShown
+        },
+        cleanAllItemSpeak(){
+            while(this.pixi.itemSpeakContainer.children.length > 0){
+                this.pixi.itemSpeakContainer.removeChild(this.pixi.itemSpeakContainer.children[0])
+            }
+        },
+        itemHoverSpeak(item, x, y, txt = '沒有說話'){
+            // 清掉目前畫面上的所有
+            this.cleanAllItemSpeak()
+            // 說話的內容
+            let arr = [], step = 12, line = 0, padding = 12, fz = 16, r=16
+            for (let i=0; i<txt.length; i+=step){
+                arr.push(txt.slice(i, i+step))
+                line ++
+            }
+            let str = arr.join("\n")
+            const style = new PIXI.TextStyle({
+                fontSize: fz
+            })
+            let said = new PIXI.Text(str, style)
+            said.x = padding
+            said.y = padding
+            // 對話框
+            let rect = new PIXI.Graphics()
+            let w, h
+            if (line == 1){
+                w = fz*txt.length+padding*2
+            }else {
+                w = fz*step+padding*2
+            }
+            h = line*(fz*1.25)+padding*2
+            rect.beginFill(0xf4f3ed)
+            rect.drawRoundedRect(0, 0, w, h, r)
+            rect.endFill()
+            this.pixi.itemSpeakContainer.addChild(rect)
+            this.pixi.itemSpeakContainer.addChild(said)
+            // 動畫
+            this.pixi.itemSpeakContainer.x = x
+            this.pixi.itemSpeakContainer.y = y
+            this.pixi.itemSpeakContainer.alpha = 0
+            this.pixi.itemSpeakContainer.scale = 0
+            this.pixi.itemSpeakContainer.pivot.set(-20, 5)
+            gsap.to(this.pixi.itemSpeakContainer, .4, {
+                pixi: {
+                    scale: 1,
+                    alpha: 1,
+                }
+            })
         }
     }
 }
