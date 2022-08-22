@@ -342,9 +342,9 @@ const vm = new Vue({
             // 判斷是否在新手教學
             if (this.interaction.noviceStep == 5){
                 this.showNoviceGuide = true
-                window.setTimeout(()=>{
-                    this.interaction.noviceStep = 'finished'
-                })
+                // window.setTimeout(()=>{
+                //     this.interaction.noviceStep = 'finished'
+                // })
             }
         },
         switchBoard(v){
@@ -362,12 +362,14 @@ const vm = new Vue({
                 }else if (this.interaction.noviceStep == 5){
                     this.headerPages.shift()
                 }
+            }
+            if (obj){
                 this.mission = {
                     name: obj.title,
                     hint: obj.content
                 }
-                this.interaction.noviceStep += 1
             }
+            this.interaction.noviceStep += 1
         },
         startGame() {
             this.interaction.nowLoading = false
