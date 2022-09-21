@@ -15,7 +15,7 @@ const Adoption = {
                 </figure>
             </div>
             </div>
-            <basic-link class="mt-1" title="認養方案詳細說明"></basic-link>
+            <basic-link class="mt-1" title="認養方案詳細說明" :url="program.link"></basic-link>
             <p class="t-c-g my-1">*目前認養社區活動僅供學術研究測試用，本地商家預計推行之行動計畫尚在籌備中，店家不會收到您所認養的活動資料，請安心使用*</p>
             <div @click="adopt" class="mt-2 my-btn p-2 t-a-c adopt-btn">{{ program.linkName }}</div>
         </div>
